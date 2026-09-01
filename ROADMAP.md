@@ -107,10 +107,13 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 
 ## Beginner
 
-1. **Image fundamentals** — arrays, channels, dtype, range, normalization, thresholding, and measurement. *(available)*
-2. **Filtering and edges** — convolution, kernels, smoothing, gradients, and noise trade-offs.
-3. **Features and matching** — corners, descriptors, correspondence, and geometric verification.
-4. **First image classifier** — datasets, splits, baselines, training loops, and confusion matrices.
+1. **Modern Computer Vision Foundations** — task contracts, image tensors, convolution, receptive fields, CNNs, transfer learning, pretrained encoders, embeddings, leakage, shortcut learning, metrics, shift testing, and enterprise decision policy. *(available)*
+2. **Modern architecture benchmarking** — residual, ConvNeXt, efficient and hybrid designs; profiling, adaptation depth, and target-hardware trade-offs.
+3. **Vision transformers** — patches, positions, attention, hierarchy, CNN/ViT trade-offs, and resolution shift.
+4. **Self-supervised representations** — contrastive, masked, and teacher-student learning; probing, retrieval, and collapse prevention.
+5. **Detection, keypoints, and metric learning** — localisation, matching, identity, and task-specific error diagnosis.
+6. **Segmentation and tracking** — dense outputs, instances, temporal identity, and promptable-model comparison.
+7. **Vision foundation models** — promptable and open-vocabulary vision, foundation segmentation, embeddings, and adaptation.
 
 ## Intermediate
 

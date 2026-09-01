@@ -20,7 +20,7 @@
         <div class="hero-copy">
           <p class="eyebrow">OPEN SOURCE · NOTEBOOK FIRST · MEASUREMENT LED</p>
           <h1>Teach machines<br /><span>to see carefully.</span></h1>
-          <p class="lede">Start with pixels you can inspect. Build a baseline, break it on purpose, measure the failure, and carry that discipline into learned vision systems.</p>
+          <p class="lede">Start with pixels you can inspect, then compare learned representations with real modern encoders. Break the system on purpose, measure the failure, and carry that discipline into multimodal, spatial, embodied, and enterprise vision.</p>
           <div class="actions"><a class="button primary" href="#curriculum">Start learning ↓</a><a class="text-link" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/ROADMAP.md">View roadmap ↗</a></div>
         </div>
         <div class="viewfinder" role="img" aria-label="Abstract camera viewfinder focused on a bright circular object">
@@ -51,38 +51,43 @@
 
       <section id="curriculum" class="curriculum">
         <div class="section-heading">
-          <div><p class="eyebrow">THE CURRICULUM MAP</p><h2>One path.<br />Four levels.</h2></div>
+          <div><p class="eyebrow">THE CURRICULUM MAP</p><h2>One path.<br />Five levels.</h2></div>
           <p>Complete lessons link to runnable notebooks and source chapters. Planned tracks make the progression explicit without pretending unfinished material is available.</p>
         </div>
         <div class="level-tabs" role="tablist" aria-label="Curriculum level">
-          <button role="tab" aria-selected="true" data-level="all">All</button><button role="tab" aria-selected="false" data-level="beginner">Beginner</button><button role="tab" aria-selected="false" data-level="intermediate">Intermediate</button><button role="tab" aria-selected="false" data-level="advanced">Advanced</button><button role="tab" aria-selected="false" data-level="enterprise">Enterprise</button>
+          <button role="tab" aria-selected="true" data-level="all">All</button><button role="tab" aria-selected="false" data-level="beginner">Beginner</button><button role="tab" aria-selected="false" data-level="intermediate">Intermediate</button><button role="tab" aria-selected="false" data-level="advanced">Advanced</button><button role="tab" aria-selected="false" data-level="enterprise">Enterprise</button><button role="tab" aria-selected="false" data-level="capstone">Capstone</button>
         </div>
         <div class="lesson-grid" id="lesson-grid">
-          <button class="lesson-card available selected" data-level="beginner" data-lesson="fundamentals"><span class="pill">BEGINNER · 01</span><span class="status">AVAILABLE</span><h3>Image fundamentals</h3><p>Pixels, channels, dtype, range, thresholding, metrics, and an illumination-shift failure.</p><span class="arrow">→</span></button>
-          <article class="lesson-card" data-level="intermediate"><span class="pill">INTERMEDIATE</span><span class="status">PLANNED</span><h3>Learned vision systems</h3><p>Convolutional networks, detection, segmentation, data quality, and evaluation.</p></article>
-          <article class="lesson-card" data-level="advanced"><span class="pill">ADVANCED</span><span class="status">PLANNED</span><h3>Robust and efficient vision</h3><p>Video, transformers, multimodal systems, robustness, inference, and operations.</p></article>
-          <article class="lesson-card" data-level="enterprise"><span class="pill">ENTERPRISE</span><span class="status">PLANNED</span><h3>Governed vision platforms</h3><p>Privacy, responsible use, assurance, human oversight, and fleet operations.</p></article>
+          <button class="lesson-card available selected" data-level="beginner" data-lesson="foundations"><span class="pill">BEGINNER · 01</span><span class="status">AVAILABLE</span><h3>Modern Computer Vision Foundations</h3><p>Pixels, CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and review policy.</p><span class="arrow">→</span></button>
+          <article class="lesson-card" data-level="intermediate"><span class="pill">INTERMEDIATE</span><span class="status">PLANNED</span><h3>Multimodal understanding</h3><p>Vision-language models, grounding, document vision, multimodal RAG, video, and visual agents.</p></article>
+          <article class="lesson-card" data-level="advanced"><span class="pill">ADVANCED</span><span class="status">PLANNED</span><h3>Spatial and embodied vision</h3><p>Geometry, reconstruction, 3D/4D scenes, world models, VLA systems, and simulation.</p></article>
+          <article class="lesson-card" data-level="enterprise"><span class="pill">ENTERPRISE</span><span class="status">PLANNED</span><h3>Governed vision platforms</h3><p>Edge systems, evaluation, observability, security, robustness, privacy, and governance.</p></article>
+          <article class="lesson-card" data-level="capstone"><span class="pill">CAPSTONE</span><span class="status">PLANNED</span><h3>Integrated vision systems</h3><p>Inspection, multimodal knowledge, video operations, spatial twins, and embodied agents.</p></article>
         </div>
       </section>
 
       <section class="workspace" id="workspace" aria-labelledby="lesson-title">
-        <div class="workspace-heading"><div><p class="eyebrow">BEGINNER · LESSON 01</p><h2 id="lesson-title">Image fundamentals</h2></div><p class="duration">45–60 MIN · CPU ONLY</p></div>
+        <div class="workspace-heading"><div><p class="eyebrow">BEGINNER · COURSE 01</p><h2 id="lesson-title">Modern Computer Vision Foundations</h2></div><p class="duration">6–8 HOURS · CPU DEFAULT</p></div>
         <div class="workspace-tabs" role="tablist" aria-label="Lesson view"><button role="tab" aria-selected="true" data-view="learn">01 / Learn</button><button role="tab" aria-selected="false" data-view="lab">02 / Lab</button><button role="tab" aria-selected="false" data-view="checkpoint">03 / Checkpoint</button></div>
         <div class="view active" id="learn" role="tabpanel">
-          <div><p class="eyebrow">OUTCOME</p><p class="outcome">Trace an image from numeric representation to binary prediction, measure the result, and diagnose a real distribution shift.</p><p>A vision pipeline is a chain of contracts. Shape, channel meaning, dtype, and numeric range must be explicit before any transformation or model can be trusted.</p><div class="actions"><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/beginner/01-image-fundamentals/README.md">Read the chapter ↗</a><a class="text-link" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/beginner/01-image-fundamentals/image_fundamentals.ipynb">Open notebook ↗</a></div></div>
-          <aside class="signal-panel"><p class="eyebrow">WATCH FOR</p><ul><li>Range mismatch</li><li>Illumination shift</li><li>Metric blindness</li><li>Evaluation leakage</li></ul></aside>
+          <div><p class="eyebrow">OUTCOME</p><p class="outcome">Frame a vision task, learn and reuse visual representations, measure clean and shifted performance, and turn model confidence into a bounded enterprise decision.</p><p>Follow one five-class quality-inspection scenario from image contracts and convolution through scratch CNN training, frozen ResNet/ConvNeXt embeddings, partial fine-tuning, failure analysis, abstention, and monitoring.</p><div class="actions"><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/beginner/01-modern-computer-vision-foundations/README.md">Read the chapter ↗</a><a class="text-link" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/beginner/01-modern-computer-vision-foundations/lab.ipynb">Open notebook ↗</a></div></div>
+          <aside class="signal-panel"><p class="eyebrow">WATCH FOR</p><ul><li>Output-contract mismatch</li><li>Duplicate leakage</li><li>Background shortcuts</li><li>Source and capture shift</li><li>Overconfident automation</li></ul></aside>
         </div>
         <div class="view" id="lab" role="tabpanel" hidden>
-          <div><p class="eyebrow">PRACTICAL LAB</p><p class="outcome">Build the fixed-threshold baseline, sweep the decision boundary, darken the scene, and measure a bounded recalibration.</p><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/beginner/01-image-fundamentals/image_fundamentals.ipynb">Run the guided notebook ↗</a></div>
-          <pre aria-label="Example Python"><code>image, target = make_scene()
-prediction = segment(image, threshold=0.50)
-metrics = evaluate(prediction, target)
-assert metrics.intersection_over_union &gt;= 0.95</code></pre>
+          <div><p class="eyebrow">PRACTICAL LAB</p><p class="outcome">Compare a scratch CNN, two frozen pretrained encoders, and partial fine-tuning; inspect embeddings; inject shift; and save an enterprise decision record.</p><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/beginner/01-modern-computer-vision-foundations/lab.ipynb">Run the guided notebook ↗</a></div>
+          <pre aria-label="Example Python"><code>model, weights, _ = build_frozen_encoder("resnet18")
+features, labels, _ = extract_features(model, weights, frame)
+probe.fit(features[train_rows], labels[train_rows])
+shifted_probs = probe.predict_proba(shifted_features)
+stress = quality_metrics(test_labels, shifted_probs)</code></pre>
         </div>
         <div class="view" id="checkpoint" role="tabpanel" hidden>
           <form id="quiz-form">
-            <fieldset><legend>Why is checking dtype and numeric range part of the model contract?</legend><label><input type="radio" name="q1" value="0" /> It makes every image visually sharper.</label><label><input type="radio" name="q1" value="1" /> The same numeric threshold means different things in `[0, 1]` and `[0, 255]`.</label><label><input type="radio" name="q1" value="0" /> It guarantees generalization to new cameras.</label></fieldset>
-            <fieldset><legend>A darker scene sharply reduces recall. What is the best first diagnosis?</legend><label><input type="radio" name="q2" value="1" /> The intensity distribution shifted relative to the fixed threshold.</label><label><input type="radio" name="q2" value="0" /> IoU is mathematically invalid for masks.</label><label><input type="radio" name="q2" value="0" /> The target circle changed class.</label></fieldset>
+            <fieldset><legend>What should determine the first model-family decision?</legend><label><input type="radio" name="q1" value="1" /> The required output contract, annotation, decision cost, and constraints.</label><label><input type="radio" name="q1" value="0" /> Whichever checkpoint has the most parameters.</label><label><input type="radio" name="q1" value="0" /> The colour palette of the dashboard.</label></fieldset>
+            <fieldset><legend>The same image appears in train and validation under different filenames. What is the core problem?</legend><label><input type="radio" name="q2" value="0" /> Harmless augmentation.</label><label><input type="radio" name="q2" value="1" /> Duplicate leakage that inflates validation evidence.</label><label><input type="radio" name="q2" value="0" /> Calibration drift after deployment.</label></fieldset>
+            <fieldset><legend>What does a frozen linear probe test most directly?</legend><label><input type="radio" name="q3" value="1" /> Whether the pretrained representation already separates the target classes.</label><label><input type="radio" name="q3" value="0" /> Whether every encoder layer can memorize the training set.</label><label><input type="radio" name="q3" value="0" /> Whether input images have identical dimensions.</label></fieldset>
+            <fieldset><legend>Clean macro F1 is strong but collapses on a held-out factory. What should you inspect first?</legend><label><input type="radio" name="q4" value="1" /> Source slices, preprocessing, shortcuts, and capture-distribution differences.</label><label><input type="radio" name="q4" value="0" /> Only the training loss from the final epoch.</label><label><input type="radio" name="q4" value="0" /> Replace the model with the largest available VLM immediately.</label></fieldset>
+            <fieldset><legend>What is the safest default for Unknown/Ambiguous or low-confidence samples?</legend><label><input type="radio" name="q5" value="0" /> Force the highest-scoring class into an automated action.</label><label><input type="radio" name="q5" value="1" /> Abstain and route the sample to a defined human-review workflow.</label><label><input type="radio" name="q5" value="0" /> Remove those samples from monitoring.</label></fieldset>
             <button class="button primary" type="submit">Check answers</button><p id="quiz-result" class="quiz-result" aria-live="polite"></p>
           </form>
         </div>

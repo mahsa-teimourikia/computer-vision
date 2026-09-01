@@ -2,13 +2,14 @@ VENV ?= .venv
 PYTHON ?= $(VENV)/bin/python
 PIP = $(PYTHON) -m pip
 
-.PHONY: help setup test notebooks notebook-check links pages
+.PHONY: help setup test notebooks notebook-check diagrams links pages
 
 help:
 	@echo "make setup          Create the environment and install contributor tools"
 	@echo "make test           Run deterministic tests"
 	@echo "make notebooks      Start JupyterLab in the curriculum directory"
 	@echo "make notebook-check Execute all credential-free notebooks"
+	@echo "make diagrams       Validate and render course diagrams"
 	@echo "make links          Validate the learning-product structure and local links"
 	@echo "make pages          Preview the static Learning Hub"
 
@@ -25,7 +26,10 @@ notebooks:
 	PYTHONPATH=. $(PYTHON) -m jupyterlab curriculum
 
 notebook-check:
-	PYTHONPATH=. $(PYTHON) scripts/execute_notebooks.py --timeout 90
+	PYTHONPATH=. $(PYTHON) scripts/execute_notebooks.py --timeout 300
+
+diagrams:
+	$(PYTHON) scripts/render_course_diagrams.py curriculum/beginner/01-modern-computer-vision-foundations/assets/specs/*.json
 
 links:
 	$(PYTHON) scripts/validate_structure.py

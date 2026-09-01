@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title description">
+<title id="title">An enterprise vision system is a monitored decision loop</title>
+<desc id="description">A monitored enterprise pipeline flows from capture and data checks to representation learning, evaluation, policy, and action, with a feedback route from monitoring to data.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1200" height="650" fill="#F7FAFC"/>
+<text x="50" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">An enterprise vision system is a monitored decision loop</text>
+<rect x="50" y="100" width="1100" height="460" rx="20" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="2"/>
+<text x="72" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">OFFLINE BUILD → ONLINE DECISION</text>
+<polyline points="250,270 290,270" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="475,270 515,270" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="700,270 740,270" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="925,270 965,270" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1045,330 1045,458 790,458" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="410,458 162,458 162,330" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="202" y="441" width="116" height="24" rx="6" fill="#F7FAFC"/>
+<text x="260" y="458" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">feedback</text>
+<rect x="75" y="210" width="175" height="120" rx="16" fill="#FFF7E6" stroke="#D9822B" stroke-width="2" filter="url(#shadow)"/>
+<text x="162.5" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Capture + profile</text>
+<text x="162.5" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">contracts · lineage · splits</text>
+<rect x="290" y="210" width="185" height="120" rx="16" fill="#EAF4FF" stroke="#2F80ED" stroke-width="2" filter="url(#shadow)"/>
+<text x="382.5" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Learn representation</text>
+<text x="382.5" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">scratch or pretrained</text>
+<rect x="515" y="210" width="185" height="120" rx="16" fill="#EAFBF3" stroke="#219653" stroke-width="2" filter="url(#shadow)"/>
+<text x="607.5" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Evaluate + stress</text>
+<text x="607.5" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">metrics · slices · shifts</text>
+<rect x="740" y="210" width="185" height="120" rx="16" fill="#F3EDFF" stroke="#7B61FF" stroke-width="2" filter="url(#shadow)"/>
+<text x="832.5" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Decision policy</text>
+<text x="832.5" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">threshold · review · abstain</text>
+<rect x="965" y="210" width="160" height="120" rx="16" fill="#F3EDFF" stroke="#7B61FF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1045.0" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Action</text>
+<text x="1045.0" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">accept · reject · inspect</text>
+<rect x="410" y="405" width="380" height="105" rx="16" fill="#FFF0F3" stroke="#D64562" stroke-width="2" filter="url(#shadow)"/>
+<text x="600.0" y="439" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Monitor outcomes and drift</text>
+<text x="600.0" y="467" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">quality · latency · human overrides</text>
+</svg>

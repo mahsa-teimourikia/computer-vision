@@ -1,0 +1,251 @@
+{
+  "version": "1.0",
+  "id": "cnn-representation-hierarchy",
+  "title": "CNN layers trade spatial detail for semantic abstraction",
+  "purpose": "Explain the hierarchy learned by repeated convolution, nonlinearity, and downsampling.",
+  "output": {
+    "svg": "curriculum/beginner/01-modern-computer-vision-foundations/assets/cnn-representation-hierarchy.svg",
+    "alt_text": "A CNN hierarchy flows from pixels to edges and textures, parts, objects, and a task head while receptive field and semantic abstraction increase."
+  },
+  "canvas": {
+    "width": 1200,
+    "height": 620,
+    "margin": 50,
+    "background": "#F7FAFC"
+  },
+  "layout": {
+    "type": "pipeline",
+    "direction": "left-to-right"
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "input": {
+        "fill": "#FFF7E6",
+        "stroke": "#D9822B"
+      },
+      "feature": {
+        "fill": "#EAF4FF",
+        "stroke": "#2F80ED"
+      },
+      "semantic": {
+        "fill": "#EAFBF3",
+        "stroke": "#219653"
+      },
+      "decision": {
+        "fill": "#F3EDFF",
+        "stroke": "#7B61FF"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "hierarchy",
+      "label": "Receptive field and semantic abstraction increase →",
+      "bounds": {
+        "x": 50,
+        "y": 100,
+        "width": 1100,
+        "height": 420
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D9E2EC"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "pixels",
+      "group": "hierarchy",
+      "type": "input",
+      "label": "Pixels",
+      "subtitle": "H × W × C",
+      "bounds": {
+        "x": 75,
+        "y": 230,
+        "width": 170,
+        "height": 120
+      },
+      "ports": {
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "edges",
+      "group": "hierarchy",
+      "type": "feature",
+      "label": "Edges · textures",
+      "subtitle": "local patterns",
+      "bounds": {
+        "x": 285,
+        "y": 230,
+        "width": 180,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "parts",
+      "group": "hierarchy",
+      "type": "feature",
+      "label": "Parts",
+      "subtitle": "corners · motifs",
+      "bounds": {
+        "x": 505,
+        "y": 230,
+        "width": 170,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "objects",
+      "group": "hierarchy",
+      "type": "semantic",
+      "label": "Objects · context",
+      "subtitle": "task-relevant concepts",
+      "bounds": {
+        "x": 715,
+        "y": 230,
+        "width": 185,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "head",
+      "group": "hierarchy",
+      "type": "decision",
+      "label": "Task head",
+      "subtitle": "class · box · mask",
+      "bounds": {
+        "x": 940,
+        "y": 230,
+        "width": 180,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "h1",
+      "kind": "primary",
+      "from": {
+        "node": "pixels",
+        "port": "out"
+      },
+      "to": {
+        "node": "edges",
+        "port": "in"
+      },
+      "route": [
+        [
+          245,
+          290
+        ],
+        [
+          285,
+          290
+        ]
+      ]
+    },
+    {
+      "id": "h2",
+      "kind": "primary",
+      "from": {
+        "node": "edges",
+        "port": "out"
+      },
+      "to": {
+        "node": "parts",
+        "port": "in"
+      },
+      "route": [
+        [
+          465,
+          290
+        ],
+        [
+          505,
+          290
+        ]
+      ]
+    },
+    {
+      "id": "h3",
+      "kind": "primary",
+      "from": {
+        "node": "parts",
+        "port": "out"
+      },
+      "to": {
+        "node": "objects",
+        "port": "in"
+      },
+      "route": [
+        [
+          675,
+          290
+        ],
+        [
+          715,
+          290
+        ]
+      ]
+    },
+    {
+      "id": "h4",
+      "kind": "primary",
+      "from": {
+        "node": "objects",
+        "port": "out"
+      },
+      "to": {
+        "node": "head",
+        "port": "in"
+      },
+      "route": [
+        [
+          900,
+          290
+        ],
+        [
+          940,
+          290
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "min_clearance": 20,
+    "status": "validated"
+  }
+}

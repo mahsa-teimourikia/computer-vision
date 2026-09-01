@@ -1,0 +1,329 @@
+{
+  "version": "1.0",
+  "id": "transfer-learning",
+  "title": "Transfer learning is a spectrum of adaptation cost and flexibility",
+  "purpose": "Compare feature extraction, head training, partial fine-tuning, and full fine-tuning.",
+  "output": {
+    "svg": "curriculum/beginner/01-modern-computer-vision-foundations/assets/transfer-learning.svg",
+    "alt_text": "A pretrained encoder branches into frozen feature extraction, a trained task head, partial fine-tuning, and full fine-tuning with increasing compute and flexibility."
+  },
+  "canvas": {
+    "width": 1200,
+    "height": 740,
+    "margin": 50,
+    "background": "#F7FAFC"
+  },
+  "layout": {
+    "type": "branch",
+    "direction": "left-to-right"
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "source": {
+        "fill": "#FFF7E6",
+        "stroke": "#D9822B"
+      },
+      "encoder": {
+        "fill": "#EAF4FF",
+        "stroke": "#2F80ED"
+      },
+      "frozen": {
+        "fill": "#EAFBF3",
+        "stroke": "#219653"
+      },
+      "tuned": {
+        "fill": "#F3EDFF",
+        "stroke": "#7B61FF"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "source",
+      "label": "REUSABLE REPRESENTATION",
+      "bounds": {
+        "x": 50,
+        "y": 120,
+        "width": 500,
+        "height": 540
+      },
+      "fill": "#F8FBFF",
+      "stroke": "#A8C7FA"
+    },
+    {
+      "id": "adapt",
+      "label": "DOMAIN ADAPTATION OPTIONS",
+      "bounds": {
+        "x": 590,
+        "y": 120,
+        "width": 560,
+        "height": 540
+      },
+      "fill": "#FBF9FF",
+      "stroke": "#C9B8FF"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "pretraining",
+      "group": "source",
+      "type": "source",
+      "label": "Large source dataset",
+      "subtitle": "broad visual supervision",
+      "bounds": {
+        "x": 90,
+        "y": 235,
+        "width": 190,
+        "height": 120
+      },
+      "ports": {
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "encoder",
+      "group": "source",
+      "type": "encoder",
+      "label": "Pretrained encoder",
+      "subtitle": "ResNet · ConvNeXt · ViT",
+      "bounds": {
+        "x": 320,
+        "y": 235,
+        "width": 190,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "probe",
+      "group": "adapt",
+      "type": "frozen",
+      "label": "Frozen embedding + probe",
+      "subtitle": "lowest cost · strong baseline",
+      "bounds": {
+        "x": 650,
+        "y": 165,
+        "width": 430,
+        "height": 95
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        }
+      }
+    },
+    {
+      "id": "head",
+      "group": "adapt",
+      "type": "frozen",
+      "label": "Train a new task head",
+      "subtitle": "encoder stays frozen",
+      "bounds": {
+        "x": 650,
+        "y": 295,
+        "width": 430,
+        "height": 95
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        }
+      }
+    },
+    {
+      "id": "partial",
+      "group": "adapt",
+      "type": "tuned",
+      "label": "Fine-tune the final stage",
+      "subtitle": "more flexibility · moderate risk",
+      "bounds": {
+        "x": 650,
+        "y": 425,
+        "width": 430,
+        "height": 95
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        }
+      }
+    },
+    {
+      "id": "full",
+      "group": "adapt",
+      "type": "tuned",
+      "label": "Fine-tune the full encoder",
+      "subtitle": "highest cost · strongest data need",
+      "bounds": {
+        "x": 650,
+        "y": 555,
+        "width": 430,
+        "height": 80
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "t0",
+      "kind": "primary",
+      "from": {
+        "node": "pretraining",
+        "port": "out"
+      },
+      "to": {
+        "node": "encoder",
+        "port": "in"
+      },
+      "route": [
+        [
+          280,
+          295
+        ],
+        [
+          320,
+          295
+        ]
+      ]
+    },
+    {
+      "id": "t1",
+      "kind": "primary",
+      "from": {
+        "node": "encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "probe",
+        "port": "in"
+      },
+      "route": [
+        [
+          510,
+          295
+        ],
+        [
+          570,
+          295
+        ],
+        [
+          570,
+          212
+        ],
+        [
+          650,
+          212
+        ]
+      ]
+    },
+    {
+      "id": "t2",
+      "kind": "primary",
+      "from": {
+        "node": "encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "head",
+        "port": "in"
+      },
+      "route": [
+        [
+          510,
+          295
+        ],
+        [
+          570,
+          295
+        ],
+        [
+          570,
+          342
+        ],
+        [
+          650,
+          342
+        ]
+      ]
+    },
+    {
+      "id": "t3",
+      "kind": "primary",
+      "from": {
+        "node": "encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "partial",
+        "port": "in"
+      },
+      "route": [
+        [
+          510,
+          295
+        ],
+        [
+          570,
+          295
+        ],
+        [
+          570,
+          472
+        ],
+        [
+          650,
+          472
+        ]
+      ]
+    },
+    {
+      "id": "t4",
+      "kind": "primary",
+      "from": {
+        "node": "encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "full",
+        "port": "in"
+      },
+      "route": [
+        [
+          510,
+          295
+        ],
+        [
+          570,
+          295
+        ],
+        [
+          570,
+          595
+        ],
+        [
+          650,
+          595
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "min_clearance": 20,
+    "status": "validated"
+  }
+}

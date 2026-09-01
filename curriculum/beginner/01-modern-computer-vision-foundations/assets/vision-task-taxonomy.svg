@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 690" role="img" aria-labelledby="title description">
+<title id="title">Vision tasks differ by the output contract they must produce</title>
+<desc id="description">Three grouped columns classify vision tasks into perception, geometry and motion, and multimodal semantics.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1200" height="690" fill="#F7FAFC"/>
+<text x="50" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Vision tasks differ by the output contract they must produce</text>
+<rect x="50" y="100" width="340" height="520" rx="20" fill="#F8FBFF" stroke="#A8C7FA" stroke-width="2"/>
+<text x="72" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">WHAT AND WHERE</text>
+<rect x="430" y="100" width="340" height="520" rx="20" fill="#F7FCF9" stroke="#A7D7BE" stroke-width="2"/>
+<text x="452" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">WHERE AND HOW IT MOVES</text>
+<rect x="810" y="100" width="340" height="520" rx="20" fill="#FBF9FF" stroke="#C9B8FF" stroke-width="2"/>
+<text x="832" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">WHAT IT MEANS</text>
+<rect x="80" y="170" width="280" height="105" rx="16" fill="#EAF4FF" stroke="#2F80ED" stroke-width="2" filter="url(#shadow)"/>
+<text x="220.0" y="204" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Classification</text>
+<text x="220.0" y="232" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">one label per image</text>
+<rect x="80" y="315" width="280" height="105" rx="16" fill="#EAF4FF" stroke="#2F80ED" stroke-width="2" filter="url(#shadow)"/>
+<text x="220.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Detection · segmentation</text>
+<text x="220.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">boxes, masks, instances</text>
+<rect x="80" y="460" width="280" height="105" rx="16" fill="#EAF4FF" stroke="#2F80ED" stroke-width="2" filter="url(#shadow)"/>
+<text x="220.0" y="494" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Tracking · pose</text>
+<text x="220.0" y="522" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">identity and keypoints</text>
+<rect x="460" y="170" width="280" height="105" rx="16" fill="#EAFBF3" stroke="#219653" stroke-width="2" filter="url(#shadow)"/>
+<text x="600.0" y="204" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Depth · optical flow</text>
+<text x="600.0" y="232" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">distance and motion fields</text>
+<rect x="460" y="315" width="280" height="105" rx="16" fill="#EAFBF3" stroke="#219653" stroke-width="2" filter="url(#shadow)"/>
+<text x="600.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">3D reconstruction</text>
+<text x="600.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">shape, camera, scene</text>
+<rect x="460" y="460" width="280" height="105" rx="16" fill="#EAFBF3" stroke="#219653" stroke-width="2" filter="url(#shadow)"/>
+<text x="600.0" y="494" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Dynamic scenes</text>
+<text x="600.0" y="522" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">time-aware 3D / 4D</text>
+<rect x="840" y="170" width="280" height="105" rx="16" fill="#F3EDFF" stroke="#7B61FF" stroke-width="2" filter="url(#shadow)"/>
+<text x="980.0" y="204" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Retrieval · embeddings</text>
+<text x="980.0" y="232" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">rank by visual meaning</text>
+<rect x="840" y="315" width="280" height="105" rx="16" fill="#F3EDFF" stroke="#7B61FF" stroke-width="2" filter="url(#shadow)"/>
+<text x="980.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Vision-language</text>
+<text x="980.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">caption, answer, ground</text>
+<rect x="840" y="460" width="280" height="105" rx="16" fill="#F3EDFF" stroke="#7B61FF" stroke-width="2" filter="url(#shadow)"/>
+<text x="980.0" y="494" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Visual agents</text>
+<text x="980.0" y="522" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">observe, reason, act</text>
+</svg>

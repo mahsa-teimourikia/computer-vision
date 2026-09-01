@@ -52,7 +52,7 @@ Every state-of-the-art lesson must date its review; cite primary papers, officia
 
 ### Beginner — modern perception and representation
 
-`B01 Image contracts → B02 Modern architectures → B03 Vision transformers → B04 Self-supervised learning → B05 Detection/keypoints/metric learning → B06 Segmentation/tracking → B07 Vision foundation models`
+`B01 Modern CV foundations → B02 Architecture benchmarking → B03 Vision transformers → B04 Self-supervised learning → B05 Detection/keypoints/metric learning → B06 Segmentation/tracking → B07 Vision foundation models`
 
 ### Intermediate — multimodal understanding and agents
 
@@ -84,8 +84,8 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 
 | # | Course | Level | Core concepts | Primary technologies | Practical lab | Prerequisites |
 | --- | --- | --- | --- | --- | --- | --- |
-| B01 | Image contracts and measurable baselines | Beginner | Shape, channels, dtype/range, preprocessing, threshold baseline, metrics, shift | NumPy, Matplotlib, Pillow/OpenCV | Manufacturing component segmentation under lighting shift | Python/NumPy |
-| B02 | Modern vision architectures | Beginner | Convolution, receptive fields, residual/hybrid networks, transfer, adaptation | PyTorch, torchvision, timm | Defect classifier: linear probe vs fine-tuning | B01 |
+| B01 | Modern Computer Vision Foundations | Beginner | Task taxonomy, image contracts, convolution, receptive fields, CNNs, transfer, embeddings, augmentation, leakage, metrics, shift, failure analysis | NumPy, Pillow, PyTorch, torchvision, scikit-learn | Five-class visual inspection: scratch CNN vs frozen ResNet/ConvNeXt vs partial fine-tuning | Python/NumPy/basic ML/PyTorch |
+| B02 | Modern architecture benchmarking | Beginner | Residual/ConvNeXt/efficient/hybrid design, scaling, profiling, adaptation depth, export constraints | PyTorch, torchvision, timm, profiling/export tools | Reproducible backbone benchmark on target-quality and latency budgets | B01 |
 | B03 | Vision transformers | Beginner | Patches, positions, attention, hierarchy, CNN/ViT trade-offs | PyTorch, timm, Transformers | Satellite land-use classifier under resolution shift | B02 |
 | B04 | Self-supervised visual representation | Beginner | Contrastive learning, masked modeling, collapse, probing, embeddings | PyTorch, Transformers/timm, FAISS | Product-image similarity with frozen encoders | B03 |
 | B05 | Detection, keypoints, and metric learning | Beginner | Anchor/anchor-free, DETR, NMS, keypoints, re-identification | torchvision, Detectron2/OpenMMLab, Ultralytics comparison | Warehouse package/person detection and re-ID | B02, B04 |
@@ -125,23 +125,23 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 
 ### Beginner
 
-#### B01 — Image contracts and measurable baselines
+#### B01 — Modern Computer Vision Foundations
 
-- **Why it matters:** representation mistakes invalidate every downstream model.
-- **Objectives/concepts:** inspect shape/channel/dtype/range; build a deterministic baseline; calculate IoU/precision/recall; diagnose lighting shift.
-- **Technologies:** NumPy, Matplotlib, Pillow/OpenCV comparison.
-- **Research:** official NumPy/scikit-image/OpenCV data-type and threshold references.
-- **Lab/deliverable:** manufacturing component mask, threshold sweep, failure injection, metric report, production input contract.
-- **Enterprise relevance/prerequisites:** camera boundary validation and release baselines; Python/NumPy.
+- **Why it matters:** every later architecture relies on correct task framing, image contracts, useful representations, honest evaluation, and controlled decisions.
+- **Objectives/concepts:** classify vision tasks by output contract; inspect shape/channel/dtype/range; derive convolution and receptive field; train a compact CNN; compare frozen and partially fine-tuned pretrained encoders; inspect embeddings; detect duplicate leakage and shortcuts; measure source shift; analyse failures; define abstention and monitoring.
+- **Technologies:** NumPy, Pillow, Matplotlib, pandas, scikit-learn, PyTorch, torchvision.
+- **Research:** CNN/ResNet/ConvNeXt foundations, shortcut learning and distribution shift, plus an orientation map to ViT, DINOv3, CLIP/SigLIP, SAM-family, spatial, world-model, and VLA systems.
+- **Lab/deliverable:** a five-class enterprise visual-quality inspection experiment with a generated multi-source dataset, scratch CNN, real ResNet-18 and ConvNeXt-Tiny weights, PCA/nearest-neighbour diagnostics, shift stress test, comparison table, review threshold, and JSON decision record.
+- **Enterprise relevance/prerequisites:** establishes the evidence and risk vocabulary used throughout the curriculum; Python, NumPy, basic ML, introductory PyTorch.
 
-#### B02 — Modern vision architectures
+#### B02 — Modern architecture benchmarking
 
-- **Why it matters:** practitioners must understand inductive bias and adaptation before selecting larger models.
-- **Objectives/concepts:** receptive fields, residual connections, ConvNeXt/hybrid design, transfer learning, freezing, fine-tuning.
-- **Technologies:** PyTorch, torchvision, timm.
-- **Research:** ResNet, EfficientNet, ConvNeXt and current architecture documentation.
-- **Lab/deliverable:** defect-classification linear probe vs partial/full fine-tuning with calibration and latency comparison.
-- **Enterprise relevance/prerequisites:** cost-effective adaptation and robust baselines; B01.
+- **Why it matters:** the foundations course introduces representation and transfer; this course makes architecture selection a controlled quality/latency/memory experiment.
+- **Objectives/concepts:** residual and ConvNeXt blocks, compound scaling, efficient/hybrid networks, profiling, adaptation depth, compilation/export constraints, and target-hardware benchmarking.
+- **Technologies:** PyTorch, torchvision, timm, `torch.profiler`, ONNX Runtime where justified.
+- **Research:** ResNet, EfficientNet, ConvNeXt/ConvNeXt V2, representative efficient and hybrid architectures, and current model documentation.
+- **Lab/deliverable:** reproducible backbone benchmark with frozen, partial, and full adaptation under fixed data, resolution, latency, and memory budgets.
+- **Enterprise relevance/prerequisites:** defensible architecture selection and cost control; B01.
 
 #### B03 — Vision transformers
 

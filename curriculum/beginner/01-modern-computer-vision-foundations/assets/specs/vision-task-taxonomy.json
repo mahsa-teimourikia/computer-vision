@@ -1,0 +1,209 @@
+{
+  "version": "1.0",
+  "id": "vision-task-taxonomy",
+  "title": "Vision tasks differ by the output contract they must produce",
+  "purpose": "Organize common tasks by perception, geometry, and semantic interaction outputs.",
+  "output": {
+    "svg": "curriculum/beginner/01-modern-computer-vision-foundations/assets/vision-task-taxonomy.svg",
+    "alt_text": "Three grouped columns classify vision tasks into perception, geometry and motion, and multimodal semantics."
+  },
+  "canvas": {
+    "width": 1200,
+    "height": 690,
+    "margin": 50,
+    "background": "#F7FAFC"
+  },
+  "layout": {
+    "type": "grouped-grid",
+    "columns": 3
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "perception": {
+        "fill": "#EAF4FF",
+        "stroke": "#2F80ED"
+      },
+      "geometry": {
+        "fill": "#EAFBF3",
+        "stroke": "#219653"
+      },
+      "semantic": {
+        "fill": "#F3EDFF",
+        "stroke": "#7B61FF"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "perception",
+      "label": "WHAT AND WHERE",
+      "bounds": {
+        "x": 50,
+        "y": 100,
+        "width": 340,
+        "height": 520
+      },
+      "fill": "#F8FBFF",
+      "stroke": "#A8C7FA"
+    },
+    {
+      "id": "geometry",
+      "label": "WHERE AND HOW IT MOVES",
+      "bounds": {
+        "x": 430,
+        "y": 100,
+        "width": 340,
+        "height": 520
+      },
+      "fill": "#F7FCF9",
+      "stroke": "#A7D7BE"
+    },
+    {
+      "id": "semantic",
+      "label": "WHAT IT MEANS",
+      "bounds": {
+        "x": 810,
+        "y": 100,
+        "width": 340,
+        "height": 520
+      },
+      "fill": "#FBF9FF",
+      "stroke": "#C9B8FF"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "classify",
+      "group": "perception",
+      "type": "perception",
+      "label": "Classification",
+      "subtitle": "one label per image",
+      "bounds": {
+        "x": 80,
+        "y": 170,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "localize",
+      "group": "perception",
+      "type": "perception",
+      "label": "Detection · segmentation",
+      "subtitle": "boxes, masks, instances",
+      "bounds": {
+        "x": 80,
+        "y": 315,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "track",
+      "group": "perception",
+      "type": "perception",
+      "label": "Tracking · pose",
+      "subtitle": "identity and keypoints",
+      "bounds": {
+        "x": 80,
+        "y": 460,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "depth",
+      "group": "geometry",
+      "type": "geometry",
+      "label": "Depth · optical flow",
+      "subtitle": "distance and motion fields",
+      "bounds": {
+        "x": 460,
+        "y": 170,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "reconstruct",
+      "group": "geometry",
+      "type": "geometry",
+      "label": "3D reconstruction",
+      "subtitle": "shape, camera, scene",
+      "bounds": {
+        "x": 460,
+        "y": 315,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "dynamic",
+      "group": "geometry",
+      "type": "geometry",
+      "label": "Dynamic scenes",
+      "subtitle": "time-aware 3D / 4D",
+      "bounds": {
+        "x": 460,
+        "y": 460,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "retrieve",
+      "group": "semantic",
+      "type": "semantic",
+      "label": "Retrieval · embeddings",
+      "subtitle": "rank by visual meaning",
+      "bounds": {
+        "x": 840,
+        "y": 170,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "vlm",
+      "group": "semantic",
+      "type": "semantic",
+      "label": "Vision-language",
+      "subtitle": "caption, answer, ground",
+      "bounds": {
+        "x": 840,
+        "y": 315,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    },
+    {
+      "id": "agent",
+      "group": "semantic",
+      "type": "semantic",
+      "label": "Visual agents",
+      "subtitle": "observe, reason, act",
+      "bounds": {
+        "x": 840,
+        "y": 460,
+        "width": 280,
+        "height": 105
+      },
+      "ports": {}
+    }
+  ],
+  "edges": [],
+  "validation": {
+    "min_clearance": 20,
+    "status": "validated"
+  }
+}

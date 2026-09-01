@@ -1,6 +1,6 @@
-# Computer Vision Field Guide
+# Computer Vision & Multimodal AI Field Guide
 
-> A notebook-first path from image fundamentals to dependable, production-ready computer vision systems.
+> A notebook-first path from pixels and learned representations to dependable multimodal, spatial, embodied, and enterprise vision systems.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Learning materials](https://github.com/mahsa-teimourikia/computer-vision/actions/workflows/validate-learning.yml/badge.svg)](https://github.com/mahsa-teimourikia/computer-vision/actions/workflows/validate-learning.yml)
@@ -11,7 +11,7 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The first complete vertical slice is [Image Fundamentals](curriculum/beginner/01-image-fundamentals/README.md). It teaches arrays, channels, dtype, normalization, thresholding, and quantitative comparison without requiring a GPU, model download, or API key.
+The first complete vertical slice is [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md). It teaches image contracts, convolution, receptive fields, CNNs, transfer learning, embeddings, data leakage, shortcut learning, metrics, source shift, failure analysis, and enterprise decision policy. Its CPU-friendly [lab](curriculum/beginner/01-modern-computer-vision-foundations/lab.ipynb) compares a scratch CNN, frozen ResNet-18 and ConvNeXt-Tiny encoders, and partial fine-tuning with real torchvision weights.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -49,11 +49,11 @@ See [ROADMAP.md](ROADMAP.md) for the complete topic map, 2026 state-of-the-art r
 ```text
 curriculum/
 ├── beginner/
-│   └── 01-image-fundamentals/
+│   └── 01-modern-computer-vision-foundations/
 │       ├── README.md
-│       ├── image_fundamentals.ipynb
+│       ├── lab.ipynb
 │       ├── requirements.txt
-│       └── assets/
+│       └── assets/            # validated SVGs + coordinate specs
 ├── intermediate/
 ├── advanced/
 ├── enterprise/

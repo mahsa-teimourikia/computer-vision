@@ -1,0 +1,339 @@
+{
+  "version": "1.0",
+  "id": "enterprise-vision-pipeline",
+  "title": "An enterprise vision system is a monitored decision loop",
+  "purpose": "Connect data contracts, models, decision policy, human review, and monitoring.",
+  "output": {
+    "svg": "curriculum/beginner/01-modern-computer-vision-foundations/assets/enterprise-vision-pipeline.svg",
+    "alt_text": "A monitored enterprise pipeline flows from capture and data checks to representation learning, evaluation, policy, and action, with a feedback route from monitoring to data."
+  },
+  "canvas": {
+    "width": 1200,
+    "height": 650,
+    "margin": 50,
+    "background": "#F7FAFC"
+  },
+  "layout": {
+    "type": "feedback-pipeline",
+    "direction": "left-to-right"
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "data": {
+        "fill": "#FFF7E6",
+        "stroke": "#D9822B"
+      },
+      "model": {
+        "fill": "#EAF4FF",
+        "stroke": "#2F80ED"
+      },
+      "evaluate": {
+        "fill": "#EAFBF3",
+        "stroke": "#219653"
+      },
+      "decision": {
+        "fill": "#F3EDFF",
+        "stroke": "#7B61FF"
+      },
+      "monitor": {
+        "fill": "#FFF0F3",
+        "stroke": "#D64562"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "pipeline",
+      "label": "OFFLINE BUILD → ONLINE DECISION",
+      "bounds": {
+        "x": 50,
+        "y": 100,
+        "width": 1100,
+        "height": 460
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D9E2EC"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "capture",
+      "group": "pipeline",
+      "type": "data",
+      "label": "Capture + profile",
+      "subtitle": "contracts · lineage · splits",
+      "bounds": {
+        "x": 75,
+        "y": 210,
+        "width": 175,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "bottom"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "learn",
+      "group": "pipeline",
+      "type": "model",
+      "label": "Learn representation",
+      "subtitle": "scratch or pretrained",
+      "bounds": {
+        "x": 290,
+        "y": 210,
+        "width": 185,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "evaluate",
+      "group": "pipeline",
+      "type": "evaluate",
+      "label": "Evaluate + stress",
+      "subtitle": "metrics · slices · shifts",
+      "bounds": {
+        "x": 515,
+        "y": 210,
+        "width": 185,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "pipeline",
+      "type": "decision",
+      "label": "Decision policy",
+      "subtitle": "threshold · review · abstain",
+      "bounds": {
+        "x": 740,
+        "y": 210,
+        "width": 185,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "act",
+      "group": "pipeline",
+      "type": "decision",
+      "label": "Action",
+      "subtitle": "accept · reject · inspect",
+      "bounds": {
+        "x": 965,
+        "y": 210,
+        "width": 160,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "monitor",
+      "group": "pipeline",
+      "type": "monitor",
+      "label": "Monitor outcomes and drift",
+      "subtitle": "quality · latency · human overrides",
+      "bounds": {
+        "x": 410,
+        "y": 405,
+        "width": 380,
+        "height": 105
+      },
+      "ports": {
+        "in": {
+          "side": "right"
+        },
+        "out": {
+          "side": "left"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "p1",
+      "kind": "primary",
+      "from": {
+        "node": "capture",
+        "port": "out"
+      },
+      "to": {
+        "node": "learn",
+        "port": "in"
+      },
+      "route": [
+        [
+          250,
+          270
+        ],
+        [
+          290,
+          270
+        ]
+      ]
+    },
+    {
+      "id": "p2",
+      "kind": "primary",
+      "from": {
+        "node": "learn",
+        "port": "out"
+      },
+      "to": {
+        "node": "evaluate",
+        "port": "in"
+      },
+      "route": [
+        [
+          475,
+          270
+        ],
+        [
+          515,
+          270
+        ]
+      ]
+    },
+    {
+      "id": "p3",
+      "kind": "primary",
+      "from": {
+        "node": "evaluate",
+        "port": "out"
+      },
+      "to": {
+        "node": "policy",
+        "port": "in"
+      },
+      "route": [
+        [
+          700,
+          270
+        ],
+        [
+          740,
+          270
+        ]
+      ]
+    },
+    {
+      "id": "p4",
+      "kind": "primary",
+      "from": {
+        "node": "policy",
+        "port": "out"
+      },
+      "to": {
+        "node": "act",
+        "port": "in"
+      },
+      "route": [
+        [
+          925,
+          270
+        ],
+        [
+          965,
+          270
+        ]
+      ]
+    },
+    {
+      "id": "p5",
+      "kind": "primary",
+      "from": {
+        "node": "act",
+        "port": "out"
+      },
+      "to": {
+        "node": "monitor",
+        "port": "in"
+      },
+      "route": [
+        [
+          1045,
+          330
+        ],
+        [
+          1045,
+          458
+        ],
+        [
+          790,
+          458
+        ]
+      ]
+    },
+    {
+      "id": "p6",
+      "kind": "secondary",
+      "label": "feedback",
+      "label_at": [
+        260,
+        458
+      ],
+      "from": {
+        "node": "monitor",
+        "port": "out"
+      },
+      "to": {
+        "node": "capture",
+        "port": "in"
+      },
+      "route": [
+        [
+          410,
+          458
+        ],
+        [
+          162,
+          458
+        ],
+        [
+          162,
+          330
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "min_clearance": 20,
+    "status": "validated"
+  }
+}

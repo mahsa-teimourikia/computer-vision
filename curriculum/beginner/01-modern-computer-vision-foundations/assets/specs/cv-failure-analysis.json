@@ -1,0 +1,481 @@
+{
+  "version": "1.0",
+  "id": "cv-failure-analysis",
+  "title": "Failure analysis traces an error back to the system layer that created it",
+  "purpose": "Provide a repeatable taxonomy for diagnosing computer vision errors.",
+  "output": {
+    "svg": "curriculum/beginner/01-modern-computer-vision-foundations/assets/cv-failure-analysis.svg",
+    "alt_text": "An observed error is traced through data, representation, shift, and decision-policy failure buckets before a targeted mitigation and retest."
+  },
+  "canvas": {
+    "width": 1200,
+    "height": 740,
+    "margin": 50,
+    "background": "#F7FAFC"
+  },
+  "layout": {
+    "type": "diagnostic-tree",
+    "direction": "top-to-bottom"
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "error": {
+        "fill": "#FFF0F3",
+        "stroke": "#D64562"
+      },
+      "cause": {
+        "fill": "#FFF7E6",
+        "stroke": "#D9822B"
+      },
+      "test": {
+        "fill": "#EAF4FF",
+        "stroke": "#2F80ED"
+      },
+      "action": {
+        "fill": "#EAFBF3",
+        "stroke": "#219653"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "observe",
+      "label": "OBSERVE",
+      "bounds": {
+        "x": 50,
+        "y": 100,
+        "width": 250,
+        "height": 220
+      },
+      "fill": "#FFF9FA",
+      "stroke": "#F0B7C2"
+    },
+    {
+      "id": "diagnose",
+      "label": "DIAGNOSE BY SLICE",
+      "bounds": {
+        "x": 340,
+        "y": 100,
+        "width": 810,
+        "height": 420
+      },
+      "fill": "#FFFCF7",
+      "stroke": "#F0C99A"
+    },
+    {
+      "id": "improve",
+      "label": "MITIGATE AND VERIFY",
+      "bounds": {
+        "x": 340,
+        "y": 555,
+        "width": 810,
+        "height": 135
+      },
+      "fill": "#F7FCF9",
+      "stroke": "#A7D7BE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "error",
+      "group": "observe",
+      "type": "error",
+      "label": "Observed error",
+      "subtitle": "wrong · uncertain · late",
+      "bounds": {
+        "x": 80,
+        "y": 175,
+        "width": 190,
+        "height": 105
+      },
+      "ports": {
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "data",
+      "group": "diagnose",
+      "type": "cause",
+      "label": "Data failure",
+      "subtitle": "label · duplicate · shortcut",
+      "bounds": {
+        "x": 375,
+        "y": 165,
+        "width": 330,
+        "height": 105
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "shift",
+      "group": "diagnose",
+      "type": "cause",
+      "label": "Shift failure",
+      "subtitle": "source · lighting · process",
+      "bounds": {
+        "x": 780,
+        "y": 165,
+        "width": 330,
+        "height": 105
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "representation",
+      "group": "diagnose",
+      "type": "test",
+      "label": "Representation failure",
+      "subtitle": "missed texture, shape, or context",
+      "bounds": {
+        "x": 375,
+        "y": 345,
+        "width": 330,
+        "height": 105
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "diagnose",
+      "type": "test",
+      "label": "Decision-policy failure",
+      "subtitle": "threshold · calibration · no abstain",
+      "bounds": {
+        "x": 780,
+        "y": 345,
+        "width": 330,
+        "height": 105
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "mitigate",
+      "group": "improve",
+      "type": "action",
+      "label": "Targeted mitigation → rerun the same slices and stress tests",
+      "subtitle": "change one layer, measure the trade-off, preserve the evidence",
+      "bounds": {
+        "x": 375,
+        "y": 600,
+        "width": 735,
+        "height": 70
+      },
+      "ports": {
+        "in1": {
+          "side": "top",
+          "offset": 0.2
+        },
+        "in2": {
+          "side": "top",
+          "offset": 0.4
+        },
+        "in3": {
+          "side": "top",
+          "offset": 0.6
+        },
+        "in4": {
+          "side": "top",
+          "offset": 0.8
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "f1",
+      "kind": "primary",
+      "from": {
+        "node": "error",
+        "port": "out"
+      },
+      "to": {
+        "node": "data",
+        "port": "in"
+      },
+      "route": [
+        [
+          270,
+          228
+        ],
+        [
+          320,
+          228
+        ],
+        [
+          320,
+          218
+        ],
+        [
+          375,
+          218
+        ]
+      ]
+    },
+    {
+      "id": "f2",
+      "kind": "primary",
+      "from": {
+        "node": "error",
+        "port": "out"
+      },
+      "to": {
+        "node": "shift",
+        "port": "in"
+      },
+      "route": [
+        [
+          270,
+          228
+        ],
+        [
+          320,
+          228
+        ],
+        [
+          320,
+          80
+        ],
+        [
+          750,
+          80
+        ],
+        [
+          750,
+          218
+        ],
+        [
+          780,
+          218
+        ]
+      ]
+    },
+    {
+      "id": "f3",
+      "kind": "primary",
+      "from": {
+        "node": "error",
+        "port": "out"
+      },
+      "to": {
+        "node": "representation",
+        "port": "in"
+      },
+      "route": [
+        [
+          270,
+          228
+        ],
+        [
+          320,
+          228
+        ],
+        [
+          320,
+          398
+        ],
+        [
+          375,
+          398
+        ]
+      ]
+    },
+    {
+      "id": "f4",
+      "kind": "primary",
+      "from": {
+        "node": "error",
+        "port": "out"
+      },
+      "to": {
+        "node": "policy",
+        "port": "in"
+      },
+      "route": [
+        [
+          270,
+          228
+        ],
+        [
+          320,
+          228
+        ],
+        [
+          320,
+          500
+        ],
+        [
+          750,
+          500
+        ],
+        [
+          750,
+          398
+        ],
+        [
+          780,
+          398
+        ]
+      ]
+    },
+    {
+      "id": "f5",
+      "kind": "secondary",
+      "from": {
+        "node": "data",
+        "port": "out"
+      },
+      "to": {
+        "node": "mitigate",
+        "port": "in1"
+      },
+      "route": [
+        [
+          540,
+          270
+        ],
+        [
+          350,
+          270
+        ],
+        [
+          350,
+          550
+        ],
+        [
+          522,
+          550
+        ],
+        [
+          522,
+          600
+        ]
+      ]
+    },
+    {
+      "id": "f6",
+      "kind": "secondary",
+      "from": {
+        "node": "representation",
+        "port": "out"
+      },
+      "to": {
+        "node": "mitigate",
+        "port": "in2"
+      },
+      "route": [
+        [
+          540,
+          450
+        ],
+        [
+          540,
+          550
+        ],
+        [
+          669,
+          550
+        ],
+        [
+          669,
+          600
+        ]
+      ]
+    },
+    {
+      "id": "f7",
+      "kind": "secondary",
+      "from": {
+        "node": "shift",
+        "port": "out"
+      },
+      "to": {
+        "node": "mitigate",
+        "port": "in3"
+      },
+      "route": [
+        [
+          945,
+          270
+        ],
+        [
+          1130,
+          270
+        ],
+        [
+          1130,
+          550
+        ],
+        [
+          816,
+          550
+        ],
+        [
+          816,
+          600
+        ]
+      ]
+    },
+    {
+      "id": "f8",
+      "kind": "secondary",
+      "from": {
+        "node": "policy",
+        "port": "out"
+      },
+      "to": {
+        "node": "mitigate",
+        "port": "in4"
+      },
+      "route": [
+        [
+          945,
+          450
+        ],
+        [
+          945,
+          600
+        ],
+        [
+          963,
+          600
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "min_clearance": 20,
+    "status": "validated"
+  }
+}

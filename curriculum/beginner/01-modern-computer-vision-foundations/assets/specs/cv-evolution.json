@@ -1,0 +1,251 @@
+{
+  "version": "1.0",
+  "id": "cv-evolution",
+  "title": "Computer vision evolved from features to adaptable representations",
+  "purpose": "Show the conceptual progression from hand-crafted pipelines to vision foundation models.",
+  "output": {
+    "svg": "curriculum/beginner/01-modern-computer-vision-foundations/assets/cv-evolution.svg",
+    "alt_text": "A five-stage timeline from hand-crafted features through CNNs, pretrained encoders, vision transformers, and adaptable foundation models."
+  },
+  "canvas": {
+    "width": 1200,
+    "height": 560,
+    "margin": 50,
+    "background": "#F7FAFC"
+  },
+  "layout": {
+    "type": "timeline",
+    "direction": "left-to-right"
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "legacy": {
+        "fill": "#FFF7E6",
+        "stroke": "#D9822B"
+      },
+      "learned": {
+        "fill": "#EAF4FF",
+        "stroke": "#2F80ED"
+      },
+      "modern": {
+        "fill": "#EAFBF3",
+        "stroke": "#219653"
+      },
+      "foundation": {
+        "fill": "#F3EDFF",
+        "stroke": "#7B61FF"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "evolution",
+      "label": "Increasing transferability and task breadth",
+      "bounds": {
+        "x": 50,
+        "y": 100,
+        "width": 1100,
+        "height": 370
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D9E2EC"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "features",
+      "group": "evolution",
+      "type": "legacy",
+      "label": "Hand-crafted\nfeatures",
+      "subtitle": "SIFT · HOG · rules",
+      "bounds": {
+        "x": 75,
+        "y": 205,
+        "width": 180,
+        "height": 125
+      },
+      "ports": {
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "cnn",
+      "group": "evolution",
+      "type": "learned",
+      "label": "Task-specific\nCNNs",
+      "subtitle": "features learned from labels",
+      "bounds": {
+        "x": 290,
+        "y": 205,
+        "width": 180,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "pretrained",
+      "group": "evolution",
+      "type": "learned",
+      "label": "Pretrained\nencoders",
+      "subtitle": "transfer and fine-tuning",
+      "bounds": {
+        "x": 505,
+        "y": 205,
+        "width": 180,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "vit",
+      "group": "evolution",
+      "type": "modern",
+      "label": "Vision\ntransformers",
+      "subtitle": "global token interactions",
+      "bounds": {
+        "x": 720,
+        "y": 205,
+        "width": 180,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "vfm",
+      "group": "evolution",
+      "type": "foundation",
+      "label": "Adaptable vision\nfoundation models",
+      "subtitle": "prompts · open vocabulary",
+      "bounds": {
+        "x": 935,
+        "y": 205,
+        "width": 190,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "kind": "primary",
+      "from": {
+        "node": "features",
+        "port": "out"
+      },
+      "to": {
+        "node": "cnn",
+        "port": "in"
+      },
+      "route": [
+        [
+          255,
+          268
+        ],
+        [
+          290,
+          268
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "kind": "primary",
+      "from": {
+        "node": "cnn",
+        "port": "out"
+      },
+      "to": {
+        "node": "pretrained",
+        "port": "in"
+      },
+      "route": [
+        [
+          470,
+          268
+        ],
+        [
+          505,
+          268
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "kind": "primary",
+      "from": {
+        "node": "pretrained",
+        "port": "out"
+      },
+      "to": {
+        "node": "vit",
+        "port": "in"
+      },
+      "route": [
+        [
+          685,
+          268
+        ],
+        [
+          720,
+          268
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "kind": "primary",
+      "from": {
+        "node": "vit",
+        "port": "out"
+      },
+      "to": {
+        "node": "vfm",
+        "port": "in"
+      },
+      "route": [
+        [
+          900,
+          268
+        ],
+        [
+          935,
+          268
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "min_clearance": 20,
+    "status": "validated"
+  }
+}

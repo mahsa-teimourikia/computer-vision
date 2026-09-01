@@ -18,19 +18,24 @@ for (const button of viewButtons) {
   });
 }
 
-document.querySelector("[data-lesson='fundamentals']").addEventListener("click", () => {
+document.querySelector("[data-lesson='foundations']").addEventListener("click", () => {
   document.querySelector("#workspace").scrollIntoView({ behavior:"smooth", block:"start" });
 });
 
 document.querySelector("#quiz-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  const answered = [data.get("q1"), data.get("q2")];
+  const names = [...event.currentTarget.querySelectorAll("fieldset input")]
+    .map((input) => input.name)
+    .filter((name, index, all) => all.indexOf(name) === index);
+  const answered = names.map((name) => data.get(name));
   const result = document.querySelector("#quiz-result");
   if (answered.includes(null)) {
-    result.textContent = "Answer both questions before checking your score.";
+    result.textContent = "Answer every question before checking your score.";
     return;
   }
   const score = answered.reduce((total,value) => total + Number(value),0);
-  result.textContent = score === 2 ? "2/2 — Ready to extend the lab." : `${score}/2 — Revisit the input contract and illumination-shift sections, then try again.`;
+  result.textContent = score === names.length
+    ? `${score}/${names.length} — Ready to extend the lab.`
+    : `${score}/${names.length} — Revisit task contracts, leakage, transfer, shift, and abstention, then try again.`;
 });

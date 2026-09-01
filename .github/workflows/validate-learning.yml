@@ -24,6 +24,10 @@ jobs:
           python -m ipykernel install --user --name computer-vision-field-guide --display-name "Computer Vision Field Guide"
       - name: Validate structure and local links
         run: python scripts/validate_structure.py
+      - name: Validate deterministic diagrams
+        run: |
+          python scripts/render_course_diagrams.py curriculum/beginner/01-modern-computer-vision-foundations/assets/specs/*.json
+          git diff --exit-code -- curriculum/beginner/01-modern-computer-vision-foundations/assets
       - name: Run tests
         env:
           PYTHONPATH: .
@@ -31,4 +35,4 @@ jobs:
       - name: Execute credential-free notebooks
         env:
           PYTHONPATH: .
-        run: python scripts/execute_notebooks.py --timeout 90
+        run: python scripts/execute_notebooks.py --timeout 300

@@ -51,7 +51,7 @@ def validate_markdown_links() -> None:
 
 def validate_hub() -> None:
     page = (ROOT / "hub/index.html").read_text(encoding="utf-8")
-    required = ["Learn", "Lab", "Checkpoint", "Image fundamentals", "oneplusi.io"]
+    required = ["Learn", "Lab", "Checkpoint", "Modern Computer Vision Foundations", "oneplusi.io"]
     for text in required:
         if text not in page:
             raise AssertionError(f"Hub is missing required content: {text}")

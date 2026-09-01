@@ -57,7 +57,7 @@ h1 span { color:var(--blue); }
 .level-tabs,.workspace-tabs { display:flex; gap:.5rem; margin:3rem 0 1.5rem; flex-wrap:wrap; }
 .level-tabs button,.workspace-tabs button { border:1px solid var(--line); background:transparent; padding:.8rem 1rem; font-weight:800; cursor:pointer; }
 .level-tabs button[aria-selected="true"],.workspace-tabs button[aria-selected="true"] { background:var(--blue); color:white; border-color:var(--blue); }
-.lesson-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+.lesson-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
 .lesson-card { min-height:280px; border:0; padding:1.5rem; background:var(--paper); color:var(--ink); text-align:left; position:relative; }
 button.lesson-card { cursor:pointer; }
 .lesson-card.selected { background:var(--aqua); }

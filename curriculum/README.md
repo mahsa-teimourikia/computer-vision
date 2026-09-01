@@ -19,10 +19,13 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 
 ## Beginner
 
-- [01 · Image fundamentals](beginner/01-image-fundamentals/README.md) — inspect pixels, channels, dtype and range; build and evaluate a deterministic threshold segmenter.
-- Filtering and edges *(planned)*
-- Features and matching *(planned)*
-- First image classifier *(planned)*
+- [01 · Modern Computer Vision Foundations](beginner/01-modern-computer-vision-foundations/README.md) — move from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and an enterprise review policy.
+- Modern architecture benchmarking *(planned)*
+- Vision transformers *(planned)*
+- Self-supervised visual representation *(planned)*
+- Detection, keypoints, and metric learning *(planned)*
+- Segmentation and tracking *(planned)*
+- Vision foundation models and open vocabularies *(planned)*
 
 ## Intermediate
 
