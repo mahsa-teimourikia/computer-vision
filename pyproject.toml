@@ -1,0 +1,29 @@
+[project]
+name = "computer-vision-field-guide"
+version = "0.1.0"
+description = "Runnable learning materials for computer vision"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+learner = [
+    "jupyterlab>=4.0",
+    "ipykernel>=6.29",
+    "matplotlib>=3.8",
+    "pillow>=10.0",
+]
+contributor = [
+    "computer-vision-field-guide[learner]",
+    "pytest>=8.0",
+    "nbclient>=0.10",
+    "nbformat>=5.10",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools]
+py-modules = []
+packages = []
