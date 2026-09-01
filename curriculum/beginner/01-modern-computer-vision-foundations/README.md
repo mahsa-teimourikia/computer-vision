@@ -407,7 +407,7 @@ The requirements file uses [`constraints-tested.txt`](constraints-tested.txt) to
 
 Tested on:
 
-- Python 3.11 in GitHub Actions and Python 3.13 locally;
+- Python 3.13 locally and in GitHub Actions;
 - NumPy 2.5.2, Pillow 12.3.0, Matplotlib 3.11.1, pandas 3.0.5;
 - scikit-learn 1.9.0; and
 - PyTorch 2.13.0 with torchvision 0.28.0.
