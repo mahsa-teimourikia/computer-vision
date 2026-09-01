@@ -16,6 +16,7 @@ setup:
 	python3 -m venv $(VENV)
 	$(PIP) install --upgrade pip
 	$(PIP) install -e '.[contributor]'
+	$(PYTHON) -m ipykernel install --user --name computer-vision-field-guide --display-name "Computer Vision Field Guide"
 
 test:
 	PYTHONPATH=. $(PYTHON) -m pytest -q

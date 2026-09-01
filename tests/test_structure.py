@@ -11,5 +11,6 @@ def test_available_topics_follow_the_learning_contract():
     for topic in topic_roots:
         notebooks = list(topic.glob("*.ipynb"))
         assert len(notebooks) == 1, topic
-        assert (topic / "lab.py").is_file(), topic
         assert (topic / "assets").is_dir(), topic
+        assert (topic / "requirements.txt").is_file(), topic
+        assert not list(topic.glob("*.py")), topic

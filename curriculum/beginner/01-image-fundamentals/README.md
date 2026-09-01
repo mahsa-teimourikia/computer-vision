@@ -68,7 +68,7 @@ Precision asks how many predicted foreground pixels were correct; recall asks ho
 
 ## Worked scenario and implementation
 
-The reusable [`lab.py`](lab.py) creates a dark image with a bright circular component, adds seeded noise, applies thresholds, and calculates pixel-level metrics. The [guided notebook](image_fundamentals.ipynb) first establishes a baseline, sweeps thresholds, then injects a darker illumination condition.
+The [guided notebook](image_fundamentals.ipynb) uses NumPy and Matplotlib directly to create a dark image with a bright circular component, add seeded noise, visualize the array and target, apply thresholds, and calculate pixel-level metrics. It first establishes a baseline, sweeps thresholds, then injects a darker illumination condition.
 
 The pipeline is intentionally NumPy-only. Framework-free code makes dtype, range, shape, prediction, and metric behavior visible before higher-level APIs package those mechanics.
 

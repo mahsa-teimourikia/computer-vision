@@ -21,9 +21,13 @@ def validate_topics() -> None:
         notebooks = list(topic.glob("*.ipynb"))
         if len(notebooks) != 1:
             raise AssertionError(f"{topic.relative_to(ROOT)} must own exactly one notebook")
-        for required in (topic / "lab.py", topic / "assets"):
+        for required in (topic / "assets", topic / "requirements.txt"):
             if not required.exists():
                 raise AssertionError(f"Missing required topic resource: {required.relative_to(ROOT)}")
+        if list(topic.glob("*.py")):
+            raise AssertionError(
+                f"Teaching code must stay in the notebook; unexpected Python module in {topic.relative_to(ROOT)}"
+            )
         data = json.loads(notebooks[0].read_text(encoding="utf-8"))
         if data.get("nbformat") != 4 or not data.get("cells"):
             raise AssertionError(f"Invalid notebook: {notebooks[0].relative_to(ROOT)}")

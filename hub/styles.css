@@ -39,7 +39,18 @@ h1 span { color:var(--blue); }
 .method span { color:var(--blue); font-weight:900; }
 .method h3 { margin:.5rem 0; }
 .method p { line-height:1.5; margin:0; }
-.curriculum,.workspace { padding:clamp(4rem,7vw,7rem) clamp(1.25rem,7vw,7rem); }
+.pathway,.curriculum,.workspace { padding:clamp(4rem,7vw,7rem) clamp(1.25rem,7vw,7rem); }
+.pathway { background:var(--ink); color:white; }
+.pathway .section-heading>p { color:rgba(255,255,255,.72); }
+.pathway-list { margin-top:3rem; display:grid; grid-template-columns:repeat(2,1fr); border:1px solid rgba(255,255,255,.22); }
+.pathway-list article { min-height:210px; padding:1.6rem; border-right:1px solid rgba(255,255,255,.22); border-bottom:1px solid rgba(255,255,255,.22); }
+.pathway-list article:nth-child(2n) { border-right:0; }
+.pathway-list article:nth-last-child(-n+2) { border-bottom:0; }
+.pathway-list span { color:var(--aqua); font-size:.7rem; letter-spacing:.15em; font-weight:900; }
+.pathway-list h3 { font-size:1.65rem; margin:1.6rem 0 .8rem; }
+.pathway-list p { margin:0; line-height:1.6; color:rgba(255,255,255,.76); }
+.pathway-actions { display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap; margin-top:2rem; }
+.pathway .primary { background:var(--aqua); color:var(--ink); }
 .section-heading,.workspace-heading { display:flex; justify-content:space-between; gap:3rem; align-items:end; }
 .section-heading h2,.workspace-heading h2 { font-size:clamp(2.8rem,6vw,5rem); line-height:.95; letter-spacing:-.055em; margin:.8rem 0 0; }
 .section-heading>p { max-width:560px; line-height:1.6; }
@@ -70,5 +81,5 @@ label { display:block; margin:.9rem 0; line-height:1.4; }
 footer { background:var(--ink); color:white; padding:2rem clamp(1.25rem,7vw,7rem); display:flex; justify-content:space-between; gap:1rem; font-size:.75rem; letter-spacing:.08em; font-weight:800; }
 :focus-visible { outline:3px solid var(--coral); outline-offset:3px; }
 @media (max-width:900px) { .hero { grid-template-columns:1fr; } .viewfinder { max-width:340px; } .lesson-grid { grid-template-columns:repeat(2,1fr); } .view { grid-template-columns:1fr; } .section-heading { display:block; } }
-@media (max-width:620px) { .nav nav a:not(:last-child) { display:none; } .hero { min-height:auto; } .method,.lesson-grid { grid-template-columns:1fr; } .method article { border-right:0; border-bottom:1px solid var(--line); } .workspace-heading,footer { align-items:flex-start; flex-direction:column; } .lesson-card { min-height:220px; } }
+@media (max-width:620px) { .nav nav a:not(:last-child) { display:none; } .hero { min-height:auto; } .method,.pathway-list,.lesson-grid { grid-template-columns:1fr; } .method article { border-right:0; border-bottom:1px solid var(--line); } .pathway-list article,.pathway-list article:nth-child(2n),.pathway-list article:nth-last-child(-n+2) { border-right:0; border-bottom:1px solid rgba(255,255,255,.22); } .pathway-list article:last-child { border-bottom:0; } .workspace-heading,footer { align-items:flex-start; flex-direction:column; } .lesson-card { min-height:220px; } }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }

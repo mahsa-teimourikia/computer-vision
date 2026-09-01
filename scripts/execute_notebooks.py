@@ -29,7 +29,7 @@ def main() -> None:
             NotebookClient(
                 notebook,
                 timeout=args.timeout,
-                kernel_name="python3",
+                kernel_name="computer-vision-field-guide",
                 resources={"metadata": {"path": str(lesson_copy)}},
             ).execute()
             print(f"executed: {source.relative_to(root)}")
