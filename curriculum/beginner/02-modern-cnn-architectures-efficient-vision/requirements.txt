@@ -1,0 +1,9 @@
+-c constraints-tested.txt
+
+numpy
+matplotlib
+pillow
+pandas
+scikit-learn
+torch
+torchvision

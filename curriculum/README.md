@@ -20,7 +20,7 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 ## Beginner
 
 - [01 · Modern Computer Vision Foundations](beginner/01-modern-computer-vision-foundations/README.md) — move from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and an enterprise review policy.
-- Modern CNN Architectures & Efficient Vision *(planned)*
+- [02 · Modern CNN Architectures & Efficient Vision](beginner/02-modern-cnn-architectures-efficient-vision/README.md) — understand residual, mobile, efficient, and modernized ConvNet designs; compare five encoders; and select against measured deployment constraints.
 - Vision Transformers *(planned)*
 - Self-Supervised Visual Representation Learning *(planned)*
 - Object Detection *(planned)*

@@ -1,3 +1,3 @@
-# Full knowledge check
+# Knowledge checks
 
-The course-wide quiz will live here once multiple complete lessons are available. The current five-question checkpoint is embedded in the [Learning Hub](../hub/index.html#checkpoint) and links back to Modern Computer Vision Foundations.
+Each completed course has a focused five-question checkpoint embedded in the [Learning Hub](../hub/index.html#curriculum). The available checks cover Modern Computer Vision Foundations and Modern CNN Architectures & Efficient Vision. A cumulative assessment will be added only after the beginner sequence is large enough to test transfer across lessons.

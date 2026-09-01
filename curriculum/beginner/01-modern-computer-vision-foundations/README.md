@@ -507,6 +507,8 @@ Answer each question in two or three sentences, using evidence from the lab wher
 
 If any answer depends only on a metric value or library name, revisit the corresponding experiment. Then use the [Learning Hub checkpoint](../../../hub/index.html#checkpoint) to defend the output contract, split policy, representation choice, shift result, review threshold, and pilot recommendation.
 
+Continue to [Course 02 — Modern CNN Architectures & Efficient Vision](../02-modern-cnn-architectures-efficient-vision/) to inspect residual, mobile, efficient, and modernized convolutional designs and select among them with measured deployment evidence.
+
 ---
 
 **One+i Engineering Field Guide** · Course 01 of the Computer Vision curriculum · See the [curriculum map](../../README.md)

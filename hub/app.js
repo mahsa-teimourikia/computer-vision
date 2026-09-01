@@ -9,33 +9,47 @@ for (const button of levelButtons) {
   });
 }
 
-const viewButtons = document.querySelectorAll("[data-view]");
-const views = document.querySelectorAll(".view");
-for (const button of viewButtons) {
-  button.addEventListener("click", () => {
-    for (const peer of viewButtons) peer.setAttribute("aria-selected", String(peer === button));
-    for (const view of views) view.hidden = view.id !== button.dataset.view;
+const availableCards = document.querySelectorAll("button.lesson-card[data-workspace]");
+const workspaces = document.querySelectorAll("[data-workspace-panel]");
+
+for (const card of availableCards) {
+  card.addEventListener("click", () => {
+    for (const peer of availableCards) peer.classList.toggle("selected", peer === card);
+    for (const workspace of workspaces) {
+      workspace.hidden = workspace.dataset.workspacePanel !== card.dataset.workspace;
+    }
+    document.querySelector(`[data-workspace-panel="${card.dataset.workspace}"]`)
+      .scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
 
-document.querySelector("[data-lesson='foundations']").addEventListener("click", () => {
-  document.querySelector("#workspace").scrollIntoView({ behavior:"smooth", block:"start" });
-});
-
-document.querySelector("#quiz-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const names = [...event.currentTarget.querySelectorAll("fieldset input")]
-    .map((input) => input.name)
-    .filter((name, index, all) => all.indexOf(name) === index);
-  const answered = names.map((name) => data.get(name));
-  const result = document.querySelector("#quiz-result");
-  if (answered.includes(null)) {
-    result.textContent = "Answer every question before checking your score.";
-    return;
+for (const workspace of workspaces) {
+  const viewButtons = workspace.querySelectorAll("[data-view]");
+  const views = workspace.querySelectorAll(".view");
+  for (const button of viewButtons) {
+    button.addEventListener("click", () => {
+      for (const peer of viewButtons) peer.setAttribute("aria-selected", String(peer === button));
+      for (const view of views) view.hidden = view.id !== button.dataset.view;
+    });
   }
-  const score = answered.reduce((total,value) => total + Number(value),0);
-  result.textContent = score === names.length
-    ? `${score}/${names.length} — Ready to extend the lab.`
-    : `${score}/${names.length} — Revisit task contracts, leakage, transfer, shift, and abstention, then try again.`;
-});
+}
+
+for (const form of document.querySelectorAll(".quiz-form")) {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const names = [...form.querySelectorAll("fieldset input")]
+      .map((input) => input.name)
+      .filter((name, index, all) => all.indexOf(name) === index);
+    const answered = names.map((name) => data.get(name));
+    const result = form.querySelector(".quiz-result");
+    if (answered.includes(null)) {
+      result.textContent = "Answer every question before checking your score.";
+      return;
+    }
+    const score = answered.reduce((total, value) => total + Number(value), 0);
+    result.textContent = score === names.length
+      ? `${score}/${names.length} — Ready to extend the lab.`
+      : `${score}/${names.length} — Revisit ${form.dataset.review}, then try again.`;
+  });
+}

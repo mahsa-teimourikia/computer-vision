@@ -108,7 +108,7 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 ## Beginner
 
 1. **Modern Computer Vision Foundations** — task contracts, image tensors, convolution, receptive fields, CNNs, transfer learning, pretrained encoders, embeddings, leakage, shortcut learning, metrics, shift testing, and enterprise decision policy. *(available)*
-2. **Modern CNN Architectures & Efficient Vision** — residual, ConvNeXt, efficient and hybrid designs; profiling, adaptation depth, and target-hardware trade-offs.
+2. **Modern CNN Architectures & Efficient Vision** — residual, ConvNeXt, efficient and hybrid designs; profiling, adaptation depth, and target-hardware trade-offs. *(available)*
 3. **Vision Transformers** — patches, positions, attention, hierarchy, CNN/ViT trade-offs, and resolution shift.
 4. **Self-Supervised Visual Representation Learning** — contrastive, masked, and teacher-student learning; probing, retrieval, and collapse prevention.
 5. **Object Detection** — localisation, matching, DETR/YOLO-style systems, small-object slices, error diagnosis, and the transition from closed-set to open-set detection.
