@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "id": "residual-block",
+  "title": "Residual shortcuts: identity when shapes match, projection when they do not",
+  "purpose": "Compare identity and projection shortcuts in residual blocks.",
+  "output": {
+    "svg": "curriculum/beginner/02-modern-cnn-architectures-efficient-vision/assets/residual-block.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Two residual block flows. An identity shortcut sends an unchanged tensor around a residual branch when shapes match. A projection shortcut applies a one-by-one convolution and stride before addition when channels or resolution change."
+  },
+  "canvas": {"width": 1400, "height": 760, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 50, "min_layer_gap": 80, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "input": {"fill": "#FFFFFF", "stroke": "#52606D"},
+      "branch": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "projection": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "merge": {"fill": "#E5F7F6", "stroke": "#16A3A5"}
+    }
+  },
+  "groups": [
+    {"id": "identity", "label": "IDENTITY SHORTCUT · SAME H × W × C", "bounds": {"x": 50, "y": 110, "width": 620, "height": 580}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "projection", "label": "PROJECTION SHORTCUT · SHAPE CHANGES", "bounds": {"x": 730, "y": 110, "width": 620, "height": 580}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "i_input", "group": "identity", "label": "Input x", "subtitle": "H × W × C", "type": "input", "bounds": {"x": 90, "y": 250, "width": 130, "height": 100}, "ports": {"main": {"side": "right", "offset": 0.35}, "shortcut": {"side": "bottom", "offset": 0.5}}},
+    {"id": "i_branch", "group": "identity", "label": "Residual branch", "subtitle": "F(x) · shape preserved", "type": "branch", "bounds": {"x": 280, "y": 210, "width": 180, "height": 120}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "i_add", "group": "identity", "label": "Add + activate", "subtitle": "y = F(x) + x", "type": "merge", "bounds": {"x": 500, "y": 250, "width": 140, "height": 120}, "ports": {"main": {"side": "left", "offset": 0.25}, "shortcut": {"side": "bottom", "offset": 0.5}}},
+    {"id": "p_input", "group": "projection", "label": "Input x", "subtitle": "H × W × Cᵢₙ", "type": "input", "bounds": {"x": 770, "y": 250, "width": 130, "height": 100}, "ports": {"main": {"side": "right", "offset": 0.35}, "shortcut": {"side": "bottom", "offset": 0.5}}},
+    {"id": "p_branch", "group": "projection", "label": "Residual branch", "subtitle": "F(x) · stride or width", "type": "branch", "bounds": {"x": 950, "y": 190, "width": 180, "height": 120}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "p_project", "group": "projection", "label": "1 × 1 projection", "subtitle": "Wₛ * x · match shape", "type": "projection", "bounds": {"x": 950, "y": 470, "width": 180, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "p_add", "group": "projection", "label": "Add + activate", "subtitle": "y = F(x) + Wₛ*x", "type": "merge", "bounds": {"x": 1180, "y": 250, "width": 140, "height": 120}, "ports": {"main": {"side": "left", "offset": 0.25}, "shortcut": {"side": "bottom", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "i_main_in", "from": {"node": "i_input", "port": "main"}, "to": {"node": "i_branch", "port": "in"}, "kind": "primary", "route": [[220, 285], [250, 285], [250, 270], [280, 270]]},
+    {"id": "i_main_out", "from": {"node": "i_branch", "port": "out"}, "to": {"node": "i_add", "port": "main"}, "kind": "primary", "route": [[460, 270], [480, 270], [480, 280], [500, 280]]},
+    {"id": "i_shortcut", "from": {"node": "i_input", "port": "shortcut"}, "to": {"node": "i_add", "port": "shortcut"}, "label": "identity", "label_at": [365, 445], "kind": "secondary", "route": [[155, 350], [155, 450], [570, 450], [570, 370]]},
+    {"id": "p_main_in", "from": {"node": "p_input", "port": "main"}, "to": {"node": "p_branch", "port": "in"}, "kind": "primary", "route": [[900, 285], [925, 285], [925, 250], [950, 250]]},
+    {"id": "p_main_out", "from": {"node": "p_branch", "port": "out"}, "to": {"node": "p_add", "port": "main"}, "kind": "primary", "route": [[1130, 250], [1155, 250], [1155, 280], [1180, 280]]},
+    {"id": "p_shortcut_in", "from": {"node": "p_input", "port": "shortcut"}, "to": {"node": "p_project", "port": "in"}, "label": "reshape", "label_at": [915, 525], "kind": "secondary", "route": [[835, 350], [835, 525], [950, 525]]},
+    {"id": "p_shortcut_out", "from": {"node": "p_project", "port": "out"}, "to": {"node": "p_add", "port": "shortcut"}, "kind": "secondary", "route": [[1130, 525], [1250, 525], [1250, 370]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

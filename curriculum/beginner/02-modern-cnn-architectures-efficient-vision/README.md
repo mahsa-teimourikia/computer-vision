@@ -66,6 +66,8 @@ flowchart LR
     F --> G[Deployment-aware selection]
 ```
 
+![CNN architecture families arranged by design priority, from plain hierarchies through optimization, mobile efficiency, coordinated scaling, and modernized convolution.](assets/cnn-family-evolution.svg)
+
 This progression is not a claim that each family replaces the previous one. ResNets remain valuable baselines; MobileNet-style models target constrained devices; EfficientNet formalizes scaling; and ConvNeXt shows how far a pure ConvNet can go when its macro- and micro-design are modernized.
 
 ## 1. Depth, optimization, and the degradation problem
@@ -91,6 +93,8 @@ $$
 $$
 
 where $\mathbf{W}_s$ is commonly a $1\times1$ convolution with the required stride.
+
+![Identity and projection residual shortcuts compared side by side.](assets/residual-block.svg)
 
 ### Basic blocks, bottlenecks, and stages
 
@@ -118,6 +122,8 @@ convolution parameters. This makes the expensive $3\times3$ operator act on a na
 
 ## 2. Efficient convolutional operators
 
+![Dense, grouped, depthwise, and pointwise convolution compared by channel connectivity and parameter formula.](assets/efficient-convolution.svg)
+
 ### Grouped convolution
 
 With $G$ groups, channels are partitioned into $G$ independent convolution problems. The dense-convolution parameter count becomes
@@ -137,6 +143,8 @@ $$
 $$
 
 Compared with $K_hK_wC_{in}C_{out}$ for dense convolution, this can be dramatically smaller. Yet lower MACs do **not** guarantee lower latency. Kernel implementation, memory movement, tensor shape, parallelism, compiler fusion, and the target accelerator all matter. The notebook measures this discrepancy rather than treating FLOPs as elapsed time.
+
+Before loading a pretrained backbone, the notebook runs an executable operator-cost experiment. It verifies the manual parameter/MAC counts, reports measured latency for all three operator patterns, and compares theoretical MAC reduction with observed speedup. The chosen batch-1 shape deliberately exposes fixed overhead and backend efficiency: depthwise plus pointwise work can have far fewer MACs without a proportional latency improvement.
 
 ### Squeeze-and-excitation
 
@@ -212,6 +220,8 @@ The notebook uses official pretrained weights and replaces each classification h
 
 ## 5. Measure the thing you actually care about
 
+![Static artifact, analytic workload, and measured runtime metrics shown as distinct evidence classes.](assets/systems-metrics.svg)
+
 These quantities are related but not interchangeable:
 
 | Quantity | What it measures | What it misses |
@@ -230,7 +240,7 @@ A useful latency protocol includes:
 3. warm-up runs before measurement;
 4. synchronization around asynchronous accelerator work;
 5. repeated measurements rather than one sample;
-6. median plus a tail percentile such as p90 or p95;
+6. median, interquartile range, and tail percentiles such as p90 and p95;
 7. batch 1 for interactive/edge latency and a larger batch for throughput; and
 8. hardware, software versions, power mode, and thread settings in the report.
 
@@ -279,6 +289,8 @@ These corruptions are controlled tests, not a complete model of the physical wor
 
 ## 9. Pareto fronts and deployment contracts
 
+![Conceptual Pareto front showing non-dominated candidates, a dominated candidate, and the constraints-first decision rule.](assets/pareto-model-selection.svg)
+
 A model is Pareto-dominated when another option is at least as good on every chosen objective and strictly better on one. For quality $Q$ to maximize and cost $C$ to minimize, model $a$ dominates model $b$ when
 
 $$
@@ -298,6 +310,8 @@ It then evaluates three illustrative contracts:
 | Edge camera | package size, memory, and predictable batch-1 latency | strict size/latency limits, minimum recall |
 
 The included thresholds are teaching defaults calibrated to the observed run. A real contract must be written with product, safety, operations, and hardware owners before selection.
+
+> **Threshold scope:** the numeric limits in the notebook are demonstration thresholds for that notebook runtime only. They are not realistic targets for a cloud GPU, factory workstation, or edge camera until replaced and measured on those exact systems.
 
 ## Notebook
 

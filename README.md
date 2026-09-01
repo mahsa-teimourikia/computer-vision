@@ -63,7 +63,7 @@ curriculum/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt
-│       └── assets/            # executable-figure policy
+│       └── assets/            # deterministic SVGs + coordinate specs
 ├── intermediate/
 ├── advanced/
 ├── enterprise/

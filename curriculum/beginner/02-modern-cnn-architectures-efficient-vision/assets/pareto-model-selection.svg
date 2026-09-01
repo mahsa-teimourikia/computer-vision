@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" role="img" aria-labelledby="title description">
+<title id="title">Pareto selection keeps trade-offs visible</title>
+<desc id="description">A conceptual quality-versus-cost plane shows three non-dominated candidates along a Pareto front and one dominated candidate. Candidate B dominates D because B has higher quality at lower cost. A side panel explains that constraints come before preference.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1400" height="800" fill="#F7F9FC"/>
+<text x="50" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Pareto selection keeps trade-offs visible</text>
+<rect x="50" y="120" width="930" height="620" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="72" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">QUALITY ↑ · COST →</text>
+<rect x="1040" y="120" width="310" height="620" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="1062" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">DEPLOYMENT DECISION</text>
+<polyline points="320,567 360,567 360,388 400,388" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="302" y="433" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="360" y="450" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">Pareto front</text>
+<polyline points="620,357 660,357 660,248 700,248" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="620,404 660,404 660,562 700,562" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="602" y="458" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="660" y="475" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">B dominates D</text>
+<rect x="120" y="530" width="200" height="105" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="220.0" y="564" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Candidate A</text>
+<text x="220.0" y="592" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">low cost · useful quality</text>
+<text x="220.0" y="610" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">NON-DOMINATED</text>
+<rect x="400" y="320" width="220" height="105" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="510.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Candidate B</text>
+<text x="510.0" y="382" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">balanced trade-off</text>
+<text x="510.0" y="400" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">NON-DOMINATED</text>
+<rect x="700" y="180" width="220" height="105" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="810.0" y="214" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Candidate C</text>
+<text x="810.0" y="242" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">high cost · highest quality</text>
+<text x="810.0" y="260" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">NON-DOMINATED</text>
+<rect x="700" y="510" width="220" height="105" rx="16" fill="#FFFFFF" stroke="#8492A6" stroke-width="2" filter="url(#shadow)"/>
+<text x="810.0" y="544" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Candidate D</text>
+<text x="810.0" y="572" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">higher cost · lower quality</text>
+<text x="810.0" y="590" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">DOMINATED BY B</text>
+<rect x="1080" y="280" width="230" height="190" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1195.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">1 · Apply hard limits</text>
+<text x="1195.0" y="336" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">2 · Keep feasible points</text>
+<text x="1195.0" y="358" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">3 · Choose a trade-off</text>
+<text x="1195.0" y="386" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">The front narrows options.</text>
+<text x="1195.0" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">It does not choose values for you.</text>
+</svg>

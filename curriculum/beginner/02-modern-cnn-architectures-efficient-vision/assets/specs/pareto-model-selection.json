@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "id": "pareto-model-selection",
+  "title": "Pareto selection keeps trade-offs visible",
+  "purpose": "Explain dominated and non-dominated model candidates without using notebook measurements.",
+  "output": {
+    "svg": "curriculum/beginner/02-modern-cnn-architectures-efficient-vision/assets/pareto-model-selection.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A conceptual quality-versus-cost plane shows three non-dominated candidates along a Pareto front and one dominated candidate. Candidate B dominates D because B has higher quality at lower cost. A side panel explains that constraints come before preference."
+  },
+  "canvas": {"width": 1400, "height": 800, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "bottom-left-to-top-right", "min_node_gap": 45, "min_layer_gap": 80, "node_padding": {"x": 20, "y": 14}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "pareto": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "dominated": {"fill": "#FFFFFF", "stroke": "#8492A6"},
+      "rule": {"fill": "#FFF1DF", "stroke": "#F59E42"}
+    }
+  },
+  "groups": [
+    {"id": "plot", "label": "QUALITY ↑ · COST →", "bounds": {"x": 50, "y": 120, "width": 930, "height": 620}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "decision", "label": "DEPLOYMENT DECISION", "bounds": {"x": 1040, "y": 120, "width": 310, "height": 620}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "candidate_a", "group": "plot", "label": "Candidate A", "subtitle": "low cost · useful quality\nNON-DOMINATED", "type": "pareto", "bounds": {"x": 120, "y": 530, "width": 200, "height": 105}, "ports": {"front": {"side": "right", "offset": 0.35}}},
+    {"id": "candidate_b", "group": "plot", "label": "Candidate B", "subtitle": "balanced trade-off\nNON-DOMINATED", "type": "pareto", "bounds": {"x": 400, "y": 320, "width": 220, "height": 105}, "ports": {"front_in": {"side": "left", "offset": 0.65}, "front_out": {"side": "right", "offset": 0.35}, "dominates": {"side": "right", "offset": 0.8}}},
+    {"id": "candidate_c", "group": "plot", "label": "Candidate C", "subtitle": "high cost · highest quality\nNON-DOMINATED", "type": "pareto", "bounds": {"x": 700, "y": 180, "width": 220, "height": 105}, "ports": {"front": {"side": "left", "offset": 0.65}}},
+    {"id": "candidate_d", "group": "plot", "label": "Candidate D", "subtitle": "higher cost · lower quality\nDOMINATED BY B", "type": "dominated", "bounds": {"x": 700, "y": 510, "width": 220, "height": 105}, "ports": {"dominated": {"side": "left", "offset": 0.5}}},
+    {"id": "rule", "group": "decision", "label": "1 · Apply hard limits\n2 · Keep feasible points\n3 · Choose a trade-off", "subtitle": "The front narrows options.\nIt does not choose values for you.", "type": "rule", "bounds": {"x": 1080, "y": 280, "width": 230, "height": 190}, "ports": {}}
+  ],
+  "edges": [
+    {"id": "front_ab", "from": {"node": "candidate_a", "port": "front"}, "to": {"node": "candidate_b", "port": "front_in"}, "label": "Pareto front", "label_at": [360, 450], "kind": "primary", "route": [[320, 567], [360, 567], [360, 388], [400, 388]]},
+    {"id": "front_bc", "from": {"node": "candidate_b", "port": "front_out"}, "to": {"node": "candidate_c", "port": "front"}, "kind": "primary", "route": [[620, 357], [660, 357], [660, 248], [700, 248]]},
+    {"id": "b_dominates_d", "from": {"node": "candidate_b", "port": "dominates"}, "to": {"node": "candidate_d", "port": "dominated"}, "label": "B dominates D", "label_at": [660, 475], "kind": "secondary", "route": [[620, 404], [660, 404], [660, 562], [700, 562]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

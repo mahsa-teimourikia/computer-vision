@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "id": "efficient-convolution",
+  "title": "Efficient convolution changes channel connectivity, not just arithmetic",
+  "purpose": "Compare dense, grouped, depthwise, and pointwise convolution.",
+  "output": {
+    "svg": "curriculum/beginner/02-modern-cnn-architectures-efficient-vision/assets/efficient-convolution.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Four vertical operator flows compare dense convolution connecting every input to every output, grouped convolution splitting channels, depthwise convolution using one spatial filter per channel, and pointwise one-by-one convolution mixing channels."
+  },
+  "canvas": {"width": 1600, "height": 820, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 50, "min_layer_gap": 70, "node_padding": {"x": 20, "y": 14}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "channels": {"fill": "#FFFFFF", "stroke": "#52606D"},
+      "dense": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "grouped": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "depthwise": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "pointwise": {"fill": "#FFF1DF", "stroke": "#F59E42"}
+    }
+  },
+  "groups": [
+    {"id": "dense_g", "label": "DENSE CONVOLUTION", "bounds": {"x": 50, "y": 110, "width": 330, "height": 650}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "grouped_g", "label": "GROUPED CONVOLUTION", "bounds": {"x": 440, "y": 110, "width": 330, "height": 650}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "depthwise_g", "label": "DEPTHWISE CONVOLUTION", "bounds": {"x": 830, "y": 110, "width": 330, "height": 650}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "pointwise_g", "label": "POINTWISE MIXING", "bounds": {"x": 1220, "y": 110, "width": 330, "height": 650}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "d_in", "group": "dense_g", "label": "Cᵢₙ channels", "type": "channels", "bounds": {"x": 100, "y": 190, "width": 230, "height": 85}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "d_op", "group": "dense_g", "label": "K × K dense filters", "subtitle": "every input → every output", "type": "dense", "bounds": {"x": 100, "y": 350, "width": 230, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "d_out", "group": "dense_g", "label": "Cₒᵤₜ channels", "subtitle": "K² Cᵢₙ Cₒᵤₜ params", "type": "channels", "bounds": {"x": 100, "y": 550, "width": 230, "height": 100}, "ports": {"in": {"side": "top"}}},
+    {"id": "g_in", "group": "grouped_g", "label": "Cᵢₙ channels", "type": "channels", "bounds": {"x": 490, "y": 190, "width": 230, "height": 85}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "g_op", "group": "grouped_g", "label": "G independent groups", "subtitle": "limited cross-group mixing", "type": "grouped", "bounds": {"x": 490, "y": 350, "width": 230, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "g_out", "group": "grouped_g", "label": "Cₒᵤₜ channels", "subtitle": "K² Cᵢₙ Cₒᵤₜ / G params", "type": "channels", "bounds": {"x": 490, "y": 550, "width": 230, "height": 100}, "ports": {"in": {"side": "top"}}},
+    {"id": "dw_in", "group": "depthwise_g", "label": "Cᵢₙ channels", "type": "channels", "bounds": {"x": 880, "y": 190, "width": 230, "height": 85}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "dw_op", "group": "depthwise_g", "label": "One K × K per channel", "subtitle": "spatial filtering only", "type": "depthwise", "bounds": {"x": 880, "y": 350, "width": 230, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "dw_out", "group": "depthwise_g", "label": "Cᵢₙ channels", "subtitle": "K² Cᵢₙ params", "type": "channels", "bounds": {"x": 880, "y": 550, "width": 230, "height": 100}, "ports": {"in": {"side": "top"}}},
+    {"id": "pw_in", "group": "pointwise_g", "label": "Cᵢₙ channels", "type": "channels", "bounds": {"x": 1270, "y": 190, "width": 230, "height": 85}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "pw_op", "group": "pointwise_g", "label": "1 × 1 channel mixing", "subtitle": "no spatial neighborhood", "type": "pointwise", "bounds": {"x": 1270, "y": 350, "width": 230, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "pw_out", "group": "pointwise_g", "label": "Cₒᵤₜ channels", "subtitle": "Cᵢₙ Cₒᵤₜ params", "type": "channels", "bounds": {"x": 1270, "y": 550, "width": 230, "height": 100}, "ports": {"in": {"side": "top"}}}
+  ],
+  "edges": [
+    {"id": "d1", "from": {"node": "d_in", "port": "out"}, "to": {"node": "d_op", "port": "in"}, "kind": "primary", "route": [[215, 275], [215, 350]]},
+    {"id": "d2", "from": {"node": "d_op", "port": "out"}, "to": {"node": "d_out", "port": "in"}, "kind": "primary", "route": [[215, 460], [215, 550]]},
+    {"id": "g1", "from": {"node": "g_in", "port": "out"}, "to": {"node": "g_op", "port": "in"}, "kind": "primary", "route": [[605, 275], [605, 350]]},
+    {"id": "g2", "from": {"node": "g_op", "port": "out"}, "to": {"node": "g_out", "port": "in"}, "kind": "primary", "route": [[605, 460], [605, 550]]},
+    {"id": "dw1", "from": {"node": "dw_in", "port": "out"}, "to": {"node": "dw_op", "port": "in"}, "kind": "primary", "route": [[995, 275], [995, 350]]},
+    {"id": "dw2", "from": {"node": "dw_op", "port": "out"}, "to": {"node": "dw_out", "port": "in"}, "kind": "primary", "route": [[995, 460], [995, 550]]},
+    {"id": "pw1", "from": {"node": "pw_in", "port": "out"}, "to": {"node": "pw_op", "port": "in"}, "kind": "primary", "route": [[1385, 275], [1385, 350]]},
+    {"id": "pw2", "from": {"node": "pw_op", "port": "out"}, "to": {"node": "pw_out", "port": "in"}, "kind": "primary", "route": [[1385, 460], [1385, 550]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

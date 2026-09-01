@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "id": "cnn-family-evolution",
+  "title": "CNN families encode different design priorities",
+  "purpose": "Show the conceptual progression from plain CNNs to modern deployment-aware ConvNets.",
+  "output": {
+    "svg": "curriculum/beginner/02-modern-cnn-architectures-efficient-vision/assets/cnn-family-evolution.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A left-to-right sequence from plain CNNs to ResNet, MobileNet, EfficientNet, and ConvNeXt, labeled respectively hierarchy, optimization, hardware-aware efficiency, coordinated scaling, and modernized convolution."
+  },
+  "canvas": {"width": 1600, "height": 620, "margin": 60, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 70, "min_layer_gap": 80, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "baseline": {"fill": "#FFFFFF", "stroke": "#52606D"},
+      "optimization": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "mobile": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "scaling": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "modern": {"fill": "#F0EEFF", "stroke": "#7667E8"}
+    }
+  },
+  "groups": [
+    {"id": "evolution", "label": "ARCHITECTURE EVOLUTION · COMPLEMENTARY PHILOSOPHIES, NOT A UNIVERSAL RANKING", "bounds": {"x": 60, "y": 120, "width": 1480, "height": 410}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "plain", "group": "evolution", "label": "Plain CNN", "subtitle": "local hierarchy\ndepth becomes difficult", "type": "baseline", "bounds": {"x": 100, "y": 250, "width": 220, "height": 140}, "ports": {"out": {"side": "right"}}},
+    {"id": "resnet", "group": "evolution", "label": "ResNet", "subtitle": "identity shortcuts\noptimization", "type": "optimization", "bounds": {"x": 400, "y": 250, "width": 220, "height": 140}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "mobile", "group": "evolution", "label": "MobileNet", "subtitle": "inverted residuals\nhardware-aware efficiency", "type": "mobile", "bounds": {"x": 700, "y": 250, "width": 220, "height": 140}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "efficient", "group": "evolution", "label": "EfficientNet", "subtitle": "depth · width · resolution\ncoordinated scaling", "type": "scaling", "bounds": {"x": 1000, "y": 250, "width": 220, "height": 140}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "convnext", "group": "evolution", "label": "ConvNeXt", "subtitle": "modern block + recipe\npure convolution", "type": "modern", "bounds": {"x": 1300, "y": 250, "width": 200, "height": 140}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "plain", "port": "out"}, "to": {"node": "resnet", "port": "in"}, "kind": "primary", "route": [[320, 320], [400, 320]]},
+    {"id": "e2", "from": {"node": "resnet", "port": "out"}, "to": {"node": "mobile", "port": "in"}, "kind": "primary", "route": [[620, 320], [700, 320]]},
+    {"id": "e3", "from": {"node": "mobile", "port": "out"}, "to": {"node": "efficient", "port": "in"}, "kind": "primary", "route": [[920, 320], [1000, 320]]},
+    {"id": "e4", "from": {"node": "efficient", "port": "out"}, "to": {"node": "convnext", "port": "in"}, "kind": "primary", "route": [[1220, 320], [1300, 320]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

@@ -33,9 +33,34 @@ def test_course_02_contains_the_declared_architecture_benchmark():
         "torch.profiler",
         "pareto_mask",
         "deployment_decision.json",
+        "plain-deep",
+        "residual-deep",
+        "mac_reduction_vs_dense",
+        "iqr_ms",
+        "nearest_neighbor_retention",
+        "CONTRACT_THRESHOLD_NOTICE",
     ]:
         assert required in source
 
     assert "representation drift" in source_lower
 
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_02_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/02-modern-cnn-architectures-efficient-vision/assets")
+    expected = {
+        "residual-block.svg",
+        "efficient-convolution.svg",
+        "cnn-family-evolution.svg",
+        "systems-metrics.svg",
+        "pareto-model-selection.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

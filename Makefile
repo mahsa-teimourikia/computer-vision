@@ -29,7 +29,7 @@ notebook-check:
 	PYTHONPATH=. $(PYTHON) scripts/execute_notebooks.py --timeout 300
 
 diagrams:
-	$(PYTHON) scripts/render_course_diagrams.py curriculum/beginner/01-modern-computer-vision-foundations/assets/specs/*.json
+	$(PYTHON) scripts/render_course_diagrams.py curriculum/beginner/*/assets/specs/*.json
 
 links:
 	$(PYTHON) scripts/validate_structure.py

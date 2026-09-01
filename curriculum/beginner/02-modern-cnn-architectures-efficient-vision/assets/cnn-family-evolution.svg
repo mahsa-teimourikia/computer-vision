@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 620" role="img" aria-labelledby="title description">
+<title id="title">CNN families encode different design priorities</title>
+<desc id="description">A left-to-right sequence from plain CNNs to ResNet, MobileNet, EfficientNet, and ConvNeXt, labeled respectively hierarchy, optimization, hardware-aware efficiency, coordinated scaling, and modernized convolution.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="620" fill="#F7F9FC"/>
+<text x="60" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">CNN families encode different design priorities</text>
+<rect x="60" y="120" width="1480" height="410" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="82" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">ARCHITECTURE EVOLUTION · COMPLEMENTARY PHILOSOPHIES, NOT A UNIVERSAL RANKING</text>
+<polyline points="320,320 400,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="620,320 700,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="920,320 1000,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1220,320 1300,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="100" y="250" width="220" height="140" rx="16" fill="#FFFFFF" stroke="#52606D" stroke-width="2" filter="url(#shadow)"/>
+<text x="210.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Plain CNN</text>
+<text x="210.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">local hierarchy</text>
+<text x="210.0" y="330" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">depth becomes difficult</text>
+<rect x="400" y="250" width="220" height="140" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="510.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">ResNet</text>
+<text x="510.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">identity shortcuts</text>
+<text x="510.0" y="330" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">optimization</text>
+<rect x="700" y="250" width="220" height="140" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="810.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">MobileNet</text>
+<text x="810.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">inverted residuals</text>
+<text x="810.0" y="330" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">hardware-aware efficiency</text>
+<rect x="1000" y="250" width="220" height="140" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1110.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">EfficientNet</text>
+<text x="1110.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">depth · width · resolution</text>
+<text x="1110.0" y="330" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">coordinated scaling</text>
+<rect x="1300" y="250" width="200" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1400.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">ConvNeXt</text>
+<text x="1400.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">modern block + recipe</text>
+<text x="1400.0" y="330" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">pure convolution</text>
+</svg>

@@ -26,8 +26,8 @@ jobs:
         run: python scripts/validate_structure.py
       - name: Validate deterministic diagrams
         run: |
-          python scripts/render_course_diagrams.py curriculum/beginner/01-modern-computer-vision-foundations/assets/specs/*.json
-          git diff --exit-code -- curriculum/beginner/01-modern-computer-vision-foundations/assets
+          python scripts/render_course_diagrams.py curriculum/beginner/*/assets/specs/*.json
+          git diff --exit-code -- curriculum/beginner/*/assets
       - name: Run tests
         env:
           PYTHONPATH: .
