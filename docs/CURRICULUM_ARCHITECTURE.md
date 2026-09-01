@@ -86,7 +86,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 | --- | --- | --- | --- | --- | --- | --- |
 | B01 | Modern Computer Vision Foundations | Beginner | Task taxonomy, image contracts, convolution, receptive fields, CNNs, transfer, embeddings, augmentation, leakage, metrics, shift, failure analysis | NumPy, Pillow, PyTorch, torchvision, scikit-learn | Five-class visual inspection: scratch CNN vs frozen ResNet/ConvNeXt vs partial fine-tuning | Python/NumPy/basic ML/PyTorch |
 | B02 | Modern CNN Architectures & Efficient Vision | Beginner | Residual/ConvNeXt/efficient/hybrid design, scaling, profiling, adaptation depth, export constraints | PyTorch, torchvision, timm, profiling/export tools | Reproducible backbone benchmark on target-quality and latency budgets | B01 |
-| B03 | Vision transformers | Beginner | Patches, positions, attention, hierarchy, CNN/ViT trade-offs | PyTorch, timm, Transformers | Satellite land-use classifier under resolution shift | B02 |
+| B03 | Vision transformers | Beginner | Patches, positions, attention, hierarchy, CNN/ViT/Swin trade-offs | PyTorch, torchvision, timm/Transformers review | Industrial inspection benchmark under patch-size, source, and resolution shift | B02 |
 | B04 | Self-Supervised Visual Representation Learning | Beginner | Contrastive learning, masked modeling, collapse, probing, embeddings | PyTorch, Transformers/timm, FAISS | Product-image similarity with frozen encoders | B03 |
 | B05 | Object Detection | Beginner | Anchor/anchor-free prediction, assignment, DETR matching, NMS, AP, error decomposition and open-set transition | torchvision, Detectron2/OpenMMLab, Ultralytics comparison | Warehouse package detector with small-object and occlusion slices | B02, B04 |
 | B06 | Segmentation & Promptable Segmentation | Beginner | Semantic/instance/panoptic masks, losses, boundaries, prompts and mask quality | torchvision, OpenMMLab, SAM-family comparison | Segment conveyor parts and compare task-specific with promptable baselines | B05 |
@@ -145,13 +145,13 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Lab/deliverable:** reproducible backbone benchmark with frozen, partial, and full adaptation under fixed data, resolution, latency, and memory budgets.
 - **Enterprise relevance/prerequisites:** defensible architecture selection and cost control; B01.
 
-#### B03 — Vision transformers
+#### B03 — Vision transformers *(available)*
 
 - **Why it matters:** transformers underpin modern vision and multimodal foundation models.
-- **Objectives/concepts:** patch embeddings, positional information, attention, hierarchy, scaling, CNN/ViT/hybrid trade-offs.
-- **Technologies:** PyTorch, timm, Transformers.
-- **Research:** ViT, Swin and representative hybrid/efficient transformer papers.
-- **Lab/deliverable:** resolution-shift experiment comparing CNN and ViT-family backbones on satellite imagery.
+- **Objectives/concepts:** patch embeddings, positional information, manual and multi-head attention, pre-norm blocks, hierarchy, token scaling, CNN/ViT/Swin trade-offs, attention-distance diagnostics, and resolution interpolation.
+- **Technologies:** PyTorch and torchvision in the executable lab; timm, Transformers, profiling, and deployment runtimes in the tooling review.
+- **Research:** ViT, DeiT, Swin, FlexiViT, NaViT, attention-interpretability limits, and the transition to self-supervised foundation backbones.
+- **Lab/deliverable:** source-aware industrial inspection experiment with patchification, linear/Conv2d equivalence, manual attention verification, a tiny ViT, four official pretrained encoders, patch-size and resolution studies, attention diagnostics, systems profiling, and a JSON decision record.
 - **Enterprise relevance/prerequisites:** architecture selection under data/compute constraints; B02.
 
 #### B04 — Self-Supervised Visual Representation Learning

@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "id": "vit-swin-hierarchy",
+  "title": "Flat ViT and hierarchical Swin",
+  "purpose": "Compare a constant-resolution ViT token grid with Swin stages and patch merging.",
+  "output": {
+    "svg": "curriculum/beginner/03-vision-transformers/assets/vit-swin-hierarchy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A flat Vision Transformer keeps a 14 by 14 token grid through global attention blocks. Swin begins with a finer grid, applies local and shifted windows, and repeatedly merges patches to build four hierarchical feature stages."
+  },
+  "canvas": {"width": 1600, "height": 760, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 45, "min_layer_gap": 70, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "patch": {"fill": "#E8F2FF", "stroke": "#2878C8"},
+      "global": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "window": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "merge": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "output": {"fill": "#EAF7EA", "stroke": "#3D9B55"}
+    }
+  },
+  "groups": [
+    {"id": "vit", "label": "FLAT ViT · ONE TOKEN SCALE", "bounds": {"x": 50, "y": 110, "width": 650, "height": 580}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "swin", "label": "SWIN · HIERARCHICAL WINDOWS", "bounds": {"x": 800, "y": 110, "width": 750, "height": 580}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "v_patch", "group": "vit", "label": "Patch embed", "subtitle": "14 × 14 × D", "type": "patch", "bounds": {"x": 90, "y": 285, "width": 150, "height": 110}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "v_global", "group": "vit", "label": "Global attention", "subtitle": "196 × 196 per head", "type": "global", "bounds": {"x": 300, "y": 265, "width": 170, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "v_stack", "group": "vit", "label": "Repeat blocks", "subtitle": "grid stays 14 × 14", "type": "global", "bounds": {"x": 530, "y": 265, "width": 140, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "s_stage1", "group": "swin", "label": "Stage 1", "subtitle": "windows · H/4", "type": "window", "bounds": {"x": 840, "y": 265, "width": 130, "height": 125}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "s_stage2", "group": "swin", "label": "Stage 2", "subtitle": "shift + merge · H/8", "type": "merge", "bounds": {"x": 1015, "y": 265, "width": 130, "height": 125}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "s_stage3", "group": "swin", "label": "Stage 3", "subtitle": "shift + merge · H/16", "type": "merge", "bounds": {"x": 1190, "y": 265, "width": 130, "height": 125}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "s_stage4", "group": "swin", "label": "Stage 4", "subtitle": "merge · H/32", "type": "output", "bounds": {"x": 1365, "y": 265, "width": 150, "height": 125}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "v1", "from": {"node": "v_patch", "port": "out"}, "to": {"node": "v_global", "port": "in"}, "kind": "primary", "route": [[240, 340], [270, 340], [270, 330], [300, 330]]},
+    {"id": "v2", "from": {"node": "v_global", "port": "out"}, "to": {"node": "v_stack", "port": "in"}, "kind": "primary", "route": [[470, 330], [530, 330]]},
+    {"id": "s1", "from": {"node": "s_stage1", "port": "out"}, "to": {"node": "s_stage2", "port": "in"}, "kind": "primary", "route": [[970, 328], [1015, 328]]},
+    {"id": "s2", "from": {"node": "s_stage2", "port": "out"}, "to": {"node": "s_stage3", "port": "in"}, "kind": "primary", "route": [[1145, 328], [1190, 328]]},
+    {"id": "s3", "from": {"node": "s_stage3", "port": "out"}, "to": {"node": "s_stage4", "port": "in"}, "kind": "primary", "route": [[1320, 328], [1365, 328]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

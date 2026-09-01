@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "id": "cnn-vit-swin-comparison",
+  "title": "Three visual backbones, three mixing strategies",
+  "purpose": "Compare CNN, flat ViT, and Swin by mixing operator, hierarchy, and systems trade-off.",
+  "output": {
+    "svg": "curriculum/beginner/03-vision-transformers/assets/cnn-vit-swin-comparison.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Three columns compare a hierarchical CNN using shared local convolution, a flat Vision Transformer using global content-dependent attention, and Swin using local shifted-window attention with patch-merging stages."
+  },
+  "canvas": {"width": 1500, "height": 840, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 50, "min_layer_gap": 70, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "mix": {"fill": "#E8F2FF", "stroke": "#2878C8"},
+      "bias": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "systems": {"fill": "#FFF1DF", "stroke": "#F59E42"}
+    }
+  },
+  "groups": [
+    {"id": "cnn", "label": "HIERARCHICAL CNN", "bounds": {"x": 50, "y": 110, "width": 430, "height": 660}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "vit", "label": "FLAT ViT", "bounds": {"x": 535, "y": 110, "width": 430, "height": 660}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "swin", "label": "HIERARCHICAL SWIN", "bounds": {"x": 1020, "y": 110, "width": 430, "height": 660}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "c_mix", "group": "cnn", "label": "Shared convolution", "subtitle": "local, content-independent weights", "type": "mix", "bounds": {"x": 105, "y": 180, "width": 320, "height": 120}, "ports": {"out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "c_bias", "group": "cnn", "label": "Strong spatial bias", "subtitle": "locality + weight sharing", "type": "bias", "bounds": {"x": 105, "y": 365, "width": 320, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "c_system", "group": "cnn", "label": "Mature kernels", "subtitle": "hierarchy · target profiling", "type": "systems", "bounds": {"x": 105, "y": 550, "width": 320, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "v_mix", "group": "vit", "label": "Global attention", "subtitle": "content-dependent token mixing", "type": "mix", "bounds": {"x": 590, "y": 180, "width": 320, "height": 120}, "ports": {"out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "v_bias", "group": "vit", "label": "Weaker spatial bias", "subtitle": "explicit positions · one scale", "type": "bias", "bounds": {"x": 590, "y": 365, "width": 320, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "v_system", "group": "vit", "label": "Quadratic interactions", "subtitle": "token budget drives cost", "type": "systems", "bounds": {"x": 590, "y": 550, "width": 320, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "s_mix", "group": "swin", "label": "Shifted windows", "subtitle": "local content-dependent mixing", "type": "mix", "bounds": {"x": 1075, "y": 180, "width": 320, "height": 120}, "ports": {"out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "s_bias", "group": "swin", "label": "Local + hierarchical", "subtitle": "window bias + patch merging", "type": "bias", "bounds": {"x": 1075, "y": 365, "width": 320, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "s_system", "group": "swin", "label": "Near-linear window cost", "subtitle": "operator support still matters", "type": "systems", "bounds": {"x": 1075, "y": 550, "width": 320, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "c1", "from": {"node": "c_mix", "port": "out"}, "to": {"node": "c_bias", "port": "in"}, "kind": "primary", "route": [[265, 300], [265, 365]]},
+    {"id": "c2", "from": {"node": "c_bias", "port": "out"}, "to": {"node": "c_system", "port": "in"}, "kind": "primary", "route": [[265, 485], [265, 550]]},
+    {"id": "v1", "from": {"node": "v_mix", "port": "out"}, "to": {"node": "v_bias", "port": "in"}, "kind": "primary", "route": [[750, 300], [750, 365]]},
+    {"id": "v2", "from": {"node": "v_bias", "port": "out"}, "to": {"node": "v_system", "port": "in"}, "kind": "primary", "route": [[750, 485], [750, 550]]},
+    {"id": "s1", "from": {"node": "s_mix", "port": "out"}, "to": {"node": "s_bias", "port": "in"}, "kind": "primary", "route": [[1235, 300], [1235, 365]]},
+    {"id": "s2", "from": {"node": "s_bias", "port": "out"}, "to": {"node": "s_system", "port": "in"}, "kind": "primary", "route": [[1235, 485], [1235, 550]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}
+

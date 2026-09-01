@@ -64,3 +64,52 @@ def test_course_02_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_course_03_contains_the_declared_transformer_benchmark():
+    course = Path("curriculum/beginner/03-vision-transformers")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "patchify",
+        "scaled_dot_product_attention",
+        "PatchEmbed",
+        "MultiHeadSelfAttention",
+        "TransformerBlock",
+        "TinyViT",
+        "ResNet-50",
+        "ConvNeXt-Tiny",
+        "ViT-B/16",
+        "Swin-T",
+        "interpolate_embeddings",
+        "small_defect_recall",
+        "p95_ms_b1",
+        "attention_distance",
+        "transformer_decision.json",
+        "CONTRACT_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "attention is not a causal explanation" in source_lower
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_03_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/03-vision-transformers/assets")
+    expected = {
+        "patch-token-pipeline.svg",
+        "attention-qkv.svg",
+        "transformer-encoder-block.svg",
+        "vit-swin-hierarchy.svg",
+        "cnn-vit-swin-comparison.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

@@ -57,6 +57,7 @@ def validate_hub() -> None:
         "Checkpoint",
         "Modern Computer Vision Foundations",
         "Modern CNN Architectures &amp; Efficient Vision",
+        "Vision Transformers",
         "oneplusi.io",
     ]
     for text in required:

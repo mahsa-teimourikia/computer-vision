@@ -11,12 +11,13 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The first two complete courses form a connected foundations sequence:
+The first three complete courses form a connected foundations sequence:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
+3. [Vision Transformers](curriculum/beginner/03-vision-transformers/README.md) moves from patches, positions, and manual attention to a minimal ViT, a controlled CNN/ViT/Swin benchmark, resolution interpolation, attention-distance diagnostics, and architecture selection.
 
-Both CPU-friendly notebooks use common PyTorch, torchvision, and scikit-learn APIs and keep all teaching code inside the notebook.
+All three CPU-friendly notebooks use common PyTorch, torchvision, and scikit-learn APIs and keep all teaching code inside the notebook.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -59,7 +60,12 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # validated SVGs + coordinate specs
-│   └── 02-modern-cnn-architectures-efficient-vision/
+│   ├── 02-modern-cnn-architectures-efficient-vision/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 03-vision-transformers/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt

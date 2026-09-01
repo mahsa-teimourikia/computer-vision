@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "id": "transformer-encoder-block",
+  "title": "Pre-normalized transformer encoder block",
+  "purpose": "Show attention and MLP sublayers with their residual paths.",
+  "output": {
+    "svg": "curriculum/beginner/03-vision-transformers/assets/transformer-encoder-block.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Input tokens pass through layer normalization and multi-head self-attention, then are added to the first residual path. A second layer normalization and token-wise MLP feed another residual addition."
+  },
+  "canvas": {"width": 1700, "height": 680, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 40, "min_layer_gap": 70, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "input": {"fill": "#FFFFFF", "stroke": "#52606D"},
+      "norm": {"fill": "#E8F2FF", "stroke": "#2878C8"},
+      "attention": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "mlp": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "merge": {"fill": "#E5F7F6", "stroke": "#16A3A5"}
+    }
+  },
+  "groups": [
+    {"id": "block", "label": "ONE PRE-NORM ENCODER BLOCK", "bounds": {"x": 50, "y": 100, "width": 1600, "height": 500}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "input", "group": "block", "label": "Tokens X", "subtitle": "B × N × D", "type": "input", "bounds": {"x": 90, "y": 225, "width": 150, "height": 110}, "ports": {"main": {"side": "right", "offset": 0.35}, "skip": {"side": "bottom", "offset": 0.5}}},
+    {"id": "ln1", "group": "block", "label": "LayerNorm", "subtitle": "pre-norm", "type": "norm", "bounds": {"x": 310, "y": 210, "width": 150, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "mha", "group": "block", "label": "Multi-head\nattention", "subtitle": "mix tokens", "type": "attention", "bounds": {"x": 530, "y": 195, "width": 170, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "add1", "group": "block", "label": "Residual add", "subtitle": "X′ = X + MHA", "type": "merge", "bounds": {"x": 770, "y": 225, "width": 155, "height": 110}, "ports": {"main": {"side": "left", "offset": 0.3}, "skip": {"side": "bottom", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}, "skip2": {"side": "bottom", "offset": 0.75}}},
+    {"id": "ln2", "group": "block", "label": "LayerNorm", "subtitle": "pre-norm", "type": "norm", "bounds": {"x": 1000, "y": 210, "width": 150, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "mlp", "group": "block", "label": "Token-wise MLP", "subtitle": "expand · GELU · project", "type": "mlp", "bounds": {"x": 1220, "y": 195, "width": 180, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "add2", "group": "block", "label": "Residual add", "subtitle": "Y = X′ + MLP", "type": "merge", "bounds": {"x": 1470, "y": 225, "width": 145, "height": 110}, "ports": {"main": {"side": "left", "offset": 0.3}, "skip": {"side": "bottom", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "input_ln", "from": {"node": "input", "port": "main"}, "to": {"node": "ln1", "port": "in"}, "kind": "primary", "route": [[240, 264], [270, 264], [270, 265], [310, 265]]},
+    {"id": "ln_mha", "from": {"node": "ln1", "port": "out"}, "to": {"node": "mha", "port": "in"}, "kind": "primary", "route": [[460, 265], [530, 265], [530, 260]]},
+    {"id": "mha_add", "from": {"node": "mha", "port": "out"}, "to": {"node": "add1", "port": "main"}, "kind": "primary", "route": [[700, 260], [735, 260], [735, 258], [770, 258]]},
+    {"id": "skip1", "from": {"node": "input", "port": "skip"}, "to": {"node": "add1", "port": "skip"}, "label": "identity", "label_at": [500, 445], "kind": "secondary", "route": [[165, 335], [165, 450], [848, 450], [848, 335]]},
+    {"id": "add_ln", "from": {"node": "add1", "port": "out"}, "to": {"node": "ln2", "port": "in"}, "kind": "primary", "route": [[925, 280], [960, 280], [960, 265], [1000, 265]]},
+    {"id": "ln_mlp", "from": {"node": "ln2", "port": "out"}, "to": {"node": "mlp", "port": "in"}, "kind": "primary", "route": [[1150, 265], [1220, 265], [1220, 260]]},
+    {"id": "mlp_add", "from": {"node": "mlp", "port": "out"}, "to": {"node": "add2", "port": "main"}, "kind": "primary", "route": [[1400, 260], [1435, 260], [1435, 258], [1470, 258]]},
+    {"id": "skip2", "from": {"node": "add1", "port": "skip2"}, "to": {"node": "add2", "port": "skip"}, "label": "identity", "label_at": [1190, 515], "kind": "secondary", "route": [[886, 335], [886, 520], [1542, 520], [1542, 335]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

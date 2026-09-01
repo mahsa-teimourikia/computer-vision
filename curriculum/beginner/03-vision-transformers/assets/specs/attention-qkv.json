@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "id": "attention-qkv",
+  "title": "Scaled dot-product attention: match, normalize, and mix",
+  "purpose": "Trace token embeddings through query, key, value, attention score, and output operations.",
+  "output": {
+    "svg": "curriculum/beginner/03-vision-transformers/assets/attention-qkv.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Token embeddings fan out into query, key, and value projections. Queries and keys form scaled pairwise scores, softmax normalizes each query row, and the weights mix values into output tokens."
+  },
+  "canvas": {"width": 1700, "height": 720, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 40, "min_layer_gap": 70, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "input": {"fill": "#FFFFFF", "stroke": "#52606D"},
+      "query": {"fill": "#E8F2FF", "stroke": "#2878C8"},
+      "key": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "value": {"fill": "#EAF7EA", "stroke": "#3D9B55"},
+      "score": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "mix": {"fill": "#E5F7F6", "stroke": "#16A3A5"}
+    }
+  },
+  "groups": [
+    {"id": "attention", "label": "ONE ATTENTION HEAD · BATCH DIMENSION OMITTED", "bounds": {"x": 50, "y": 100, "width": 1600, "height": 550}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "tokens", "group": "attention", "label": "Tokens X", "subtitle": "N × D", "type": "input", "bounds": {"x": 90, "y": 295, "width": 160, "height": 110}, "ports": {"q": {"side": "right", "offset": 0.2}, "k": {"side": "right", "offset": 0.5}, "v": {"side": "right", "offset": 0.8}}},
+    {"id": "q", "group": "attention", "label": "Queries Q", "subtitle": "XWQ · N × dₖ", "type": "query", "bounds": {"x": 340, "y": 155, "width": 170, "height": 100}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "k", "group": "attention", "label": "Keys K", "subtitle": "XWK · N × dₖ", "type": "key", "bounds": {"x": 340, "y": 310, "width": 170, "height": 100}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "v", "group": "attention", "label": "Values V", "subtitle": "XWV · N × dᵥ", "type": "value", "bounds": {"x": 340, "y": 465, "width": 170, "height": 100}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "scores", "group": "attention", "label": "Pairwise scores", "subtitle": "QKᵀ / √dₖ · N × N", "type": "score", "bounds": {"x": 620, "y": 230, "width": 190, "height": 115}, "ports": {"q": {"side": "left", "offset": 0.3}, "k": {"side": "left", "offset": 0.7}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "softmax", "group": "attention", "label": "Row softmax", "subtitle": "weights A · N × N", "type": "score", "bounds": {"x": 900, "y": 230, "width": 180, "height": 115}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "weighted", "group": "attention", "label": "Weighted values", "subtitle": "AV · N × dᵥ", "type": "mix", "bounds": {"x": 1170, "y": 370, "width": 200, "height": 115}, "ports": {"weights": {"side": "left", "offset": 0.3}, "values": {"side": "left", "offset": 0.75}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "output", "group": "attention", "label": "Output tokens", "subtitle": "N × dᵥ", "type": "mix", "bounds": {"x": 1470, "y": 370, "width": 150, "height": 115}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "to_q", "from": {"node": "tokens", "port": "q"}, "to": {"node": "q", "port": "in"}, "kind": "primary", "route": [[250, 317], [290, 317], [290, 205], [340, 205]]},
+    {"id": "to_k", "from": {"node": "tokens", "port": "k"}, "to": {"node": "k", "port": "in"}, "kind": "primary", "route": [[250, 350], [295, 350], [295, 360], [340, 360]]},
+    {"id": "to_v", "from": {"node": "tokens", "port": "v"}, "to": {"node": "v", "port": "in"}, "kind": "primary", "route": [[250, 383], [290, 383], [290, 515], [340, 515]]},
+    {"id": "q_scores", "from": {"node": "q", "port": "out"}, "to": {"node": "scores", "port": "q"}, "kind": "primary", "route": [[510, 205], [565, 205], [565, 264], [620, 264]]},
+    {"id": "k_scores", "from": {"node": "k", "port": "out"}, "to": {"node": "scores", "port": "k"}, "kind": "primary", "route": [[510, 360], [565, 360], [565, 310], [620, 310]]},
+    {"id": "scores_softmax", "from": {"node": "scores", "port": "out"}, "to": {"node": "softmax", "port": "in"}, "kind": "primary", "route": [[810, 288], [900, 288]]},
+    {"id": "weights_mix", "from": {"node": "softmax", "port": "out"}, "to": {"node": "weighted", "port": "weights"}, "kind": "primary", "route": [[1080, 288], [1120, 288], [1120, 404], [1170, 404]]},
+    {"id": "values_mix", "from": {"node": "v", "port": "out"}, "to": {"node": "weighted", "port": "values"}, "kind": "primary", "route": [[510, 515], [1110, 515], [1110, 456], [1170, 456]]},
+    {"id": "mix_output", "from": {"node": "weighted", "port": "out"}, "to": {"node": "output", "port": "in"}, "kind": "primary", "route": [[1370, 428], [1470, 428]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

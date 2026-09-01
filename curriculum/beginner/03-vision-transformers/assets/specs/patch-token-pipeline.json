@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "id": "patch-token-pipeline",
+  "title": "From image grid to transformer decision",
+  "purpose": "Show the complete Vision Transformer representation pipeline.",
+  "output": {
+    "svg": "curriculum/beginner/03-vision-transformers/assets/patch-token-pipeline.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An image is divided into non-overlapping patches, linearly projected into tokens, combined with position information, mixed by transformer encoder blocks, pooled into a representation, and classified."
+  },
+  "canvas": {"width": 1600, "height": 520, "margin": 50, "background": "#F7F9FC", "grid": 10},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 50, "min_layer_gap": 70, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "input": {"fill": "#FFFFFF", "stroke": "#52606D"},
+      "patch": {"fill": "#E8F2FF", "stroke": "#2878C8"},
+      "position": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "attention": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "representation": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "output": {"fill": "#EAF7EA", "stroke": "#3D9B55"}
+    }
+  },
+  "groups": [
+    {"id": "pipeline", "label": "VISION TRANSFORMER DATA FLOW", "bounds": {"x": 50, "y": 100, "width": 1500, "height": 350}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "image", "group": "pipeline", "label": "Image grid", "subtitle": "B × C × H × W", "type": "input", "bounds": {"x": 90, "y": 220, "width": 180, "height": 110}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "patches", "group": "pipeline", "label": "Patch + project", "subtitle": "N patches → D dims", "type": "patch", "bounds": {"x": 340, "y": 220, "width": 180, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "position", "group": "pipeline", "label": "Add position", "subtitle": "and optional CLS token", "type": "position", "bounds": {"x": 590, "y": 220, "width": 180, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "blocks", "group": "pipeline", "label": "Encoder blocks", "subtitle": "attention + MLP", "type": "attention", "bounds": {"x": 840, "y": 220, "width": 180, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "pool", "group": "pipeline", "label": "Representation", "subtitle": "CLS or mean pool", "type": "representation", "bounds": {"x": 1090, "y": 220, "width": 180, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "decision", "group": "pipeline", "label": "Task head", "subtitle": "measured decision", "type": "output", "bounds": {"x": 1340, "y": 220, "width": 170, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "image", "port": "out"}, "to": {"node": "patches", "port": "in"}, "kind": "primary", "route": [[270, 275], [340, 275]]},
+    {"id": "e2", "from": {"node": "patches", "port": "out"}, "to": {"node": "position", "port": "in"}, "kind": "primary", "route": [[520, 275], [590, 275]]},
+    {"id": "e3", "from": {"node": "position", "port": "out"}, "to": {"node": "blocks", "port": "in"}, "kind": "primary", "route": [[770, 275], [840, 275]]},
+    {"id": "e4", "from": {"node": "blocks", "port": "out"}, "to": {"node": "pool", "port": "in"}, "kind": "primary", "route": [[1020, 275], [1090, 275]]},
+    {"id": "e5", "from": {"node": "pool", "port": "out"}, "to": {"node": "decision", "port": "in"}, "kind": "primary", "route": [[1270, 275], [1340, 275]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}
+
