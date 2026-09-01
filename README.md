@@ -34,7 +34,7 @@ Enterprise CV
 ```
 
 | Domain | Focus |
-| --- | --- | --- |
+| --- | --- |
 | Foundations | Modern architectures; detection, segmentation, and tracking; vision transformers; self-supervised learning |
 | Vision Foundation Models | Promptable and open-vocabulary vision, foundation segmentation, and vision embeddings |
 | Multimodal Vision | Vision-language models, multimodal reasoning and RAG, video LLMs, and visual agents |
