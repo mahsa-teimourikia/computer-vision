@@ -103,11 +103,11 @@ Silent contract violations often produce plausible tensors and poor models. Exam
 
 ### Convolution and inductive bias
 
-For a 2D input (X) and kernel (K), a single-channel cross-correlation at location ((i,j)) is:
+For a 2D input $X$ and kernel $K$, a single-channel cross-correlation at location $(i,j)$ is:
 
-\[
+$$
 Y_{i,j}=\sum_m\sum_n K_{m,n}X_{i+m,j+n}.
-\]
+$$
 
 Deep-learning libraries call this operation convolution even though the kernel is not flipped. Three properties made CNNs unusually effective:
 
@@ -117,19 +117,19 @@ Deep-learning libraries call this operation convolution even though the kernel i
 
 These are inductive biases: assumptions that reduce the amount of data needed. They are useful when a pattern matters regardless of location, but can be harmful when absolute position or global context is essential.
 
-For kernel size (k), padding (p), dilation (d), stride (s), and input size (n), the output size is:
+For kernel size $k$, padding $p$, dilation $d$, stride $s$, and input size $n$, the output size is:
 
-\[
+$$
 \left\lfloor \frac{n+2p-d(k-1)-1}{s}+1 \right\rfloor.
-\]
+$$
 
 ### Receptive fields
 
-The theoretical receptive field is the input region that can affect a feature. Starting with receptive field (r_0=1) and jump (j_0=1):
+The theoretical receptive field is the input region that can affect a feature. Starting with receptive field $r_0=1$ and jump $j_0=1$:
 
-\[
+$$
 j_l=j_{l-1}s_l, \qquad r_l=r_{l-1}+(k_l-1)d_lj_{l-1}.
-\]
+$$
 
 Stacking two `3×3` stride-one convolutions yields a `5×5` receptive field while inserting a nonlinearity between them. Downsampling expands receptive field quickly but removes spatial detail. Detection and segmentation architectures therefore combine multiple scales or restore resolution with decoders.
 
@@ -154,11 +154,11 @@ The lab compares all but full fine-tuning. `ResNet-18` provides a strong residua
 
 ### Embeddings are useful beyond classification
 
-An encoder maps an image (x) to a vector (z=f_\theta(x)\). After L2 normalization, cosine similarity is the dot product:
+An encoder maps an image $x$ to a vector $z=f_\theta(x)$. After L2 normalization, cosine similarity is the dot product:
 
-\[
+$$
 \operatorname{sim}(z_i,z_j)=\frac{z_i^Tz_j}{\lVert z_i\rVert_2\lVert z_j\rVert_2}.
-\]
+$$
 
 The same embeddings can support nearest-neighbour inspection, retrieval, clustering, weak labelling, duplicate discovery, drift monitoring, and multimodal retrieval. PCA in the lab is a diagnostic projection—not proof that the full high-dimensional representation is linearly separable.
 
@@ -199,13 +199,13 @@ The official [MVTec Anomaly Detection dataset](https://www.mvtec.com/research-te
 
 ## 6. Metrics are decision proxies
 
-Let (TP, FP, TN, FN) describe a binary decision:
+Let $TP$, $FP$, $TN$, and $FN$ describe a binary decision:
 
-\[
+$$
 \text{precision}=\frac{TP}{TP+FP},\qquad
 \text{recall}=\frac{TP}{TP+FN},\qquad
-F_1=2\frac{PR}{P+R}.
-\]
+F_1=2\frac{\text{precision}\,\text{recall}}{\text{precision}+\text{recall}}.
+$$
 
 For multiclass quality inspection:
 
