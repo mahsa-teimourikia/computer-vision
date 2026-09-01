@@ -20,12 +20,14 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 ## Beginner
 
 - [01 · Modern Computer Vision Foundations](beginner/01-modern-computer-vision-foundations/README.md) — move from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and an enterprise review policy.
-- Modern architecture benchmarking *(planned)*
-- Vision transformers *(planned)*
-- Self-supervised visual representation *(planned)*
-- Detection, keypoints, and metric learning *(planned)*
-- Segmentation and tracking *(planned)*
-- Vision foundation models and open vocabularies *(planned)*
+- Modern CNN Architectures & Efficient Vision *(planned)*
+- Vision Transformers *(planned)*
+- Self-Supervised Visual Representation Learning *(planned)*
+- Object Detection *(planned)*
+- Segmentation & Promptable Segmentation *(planned)*
+- Visual Embeddings, Metric Learning & Retrieval *(planned)*
+- Tracking, Keypoints & Pose *(planned)*
+- Vision Foundation Models & Open-Vocabulary Vision *(planned)*
 
 ## Intermediate
 

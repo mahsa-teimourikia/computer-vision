@@ -2,7 +2,7 @@
 
 > From pixels to learned representations: build an auditable visual-quality system, compare a CNN trained from scratch with real pretrained encoders, stress it under source shift, and decide what is safe to automate.
 
-**Level:** Beginner · **Estimated time:** 6–8 hours · **Lab:** [`lab.ipynb`](lab.ipynb) · **Prerequisites:** Python, NumPy, basic machine learning, and introductory PyTorch
+**Level:** Beginner · **Estimated time:** 8–10 hours · **Lab:** [`lab.ipynb`](lab.ipynb) · **Prerequisites:** Python, NumPy, basic machine learning, and introductory PyTorch
 
 ## Why this course exists
 
@@ -23,13 +23,15 @@ You will work with a deterministic, procedurally generated industrial dataset. I
 By the end, you can:
 
 - frame a vision problem by its input, output, annotation, metric, and decision cost;
-- explain image tensors, convolution, receptive fields, inductive bias, and representation hierarchies;
+- inspect every conversion from a Pillow image to a normalized PyTorch tensor and diagnose common contract failures;
+- verify manual convolution against PyTorch, inspect learned filters and feature maps, and measure receptive fields;
 - build and train a compact CNN from scratch in PyTorch;
 - use real torchvision `ResNet-18` and `ConvNeXt-Tiny` pretrained weights as visual encoders;
 - compare frozen transfer, partial fine-tuning, and scratch training without conflating validation and test data;
-- inspect embeddings with cosine similarity, nearest neighbours, and PCA;
+- inspect embeddings with cosine similarity, nearest neighbours, PCA, and dataset-intelligence flags;
 - find duplicate leakage, class/source imbalance, shortcut learning, and domain shift;
-- choose metrics and review thresholds from business error costs;
+- measure calibration under shift and choose abstention thresholds from automation, safety, review-load, and cost trade-offs;
+- use a bounded Grad-CAM diagnostic to test whether a CNN is responding to the component or its background;
 - write an evidence-backed enterprise recommendation with risk boundaries and monitoring requirements; and
 - place CNNs and transfer learning in the 2026 landscape of self-supervised, promptable, open-vocabulary, multimodal, spatial, and embodied vision.
 
@@ -40,9 +42,9 @@ By the end, you can:
 | Frame | What output and decision does the system owe? | task contract and error-cost assumptions |
 | Profile | Is the data trustworthy and representative? | class/source counts, hashes, image contracts |
 | Learn | Which representation works with this data budget? | scratch CNN and two pretrained encoders |
-| Inspect | What geometry did the model learn? | nearest neighbours and PCA projections |
-| Stress | Where does performance break? | source slices, shifted test, failure gallery |
-| Decide | What should be automated or reviewed? | comparison table, abstention policy, risk memo |
+| Inspect | What geometry and evidence did the model learn? | nearest neighbours, PCA, dataset flags, feature maps, Grad-CAM |
+| Stress | Where does performance and confidence break? | source slices, shifted test, calibration, failure gallery |
+| Decide | What should be automated or reviewed? | policy curves, expected cost, abstention threshold, risk memo |
 
 ![Enterprise vision pipeline](assets/enterprise-vision-pipeline.svg)
 
@@ -101,6 +103,31 @@ An RGB image loaded by Pillow or NumPy usually has shape `H × W × C`, unsigned
 
 Silent contract violations often produce plausible tensors and poor models. Examples include BGR/RGB swaps, applying normalization twice, stretching a rectangular object, leaking random augmentation into validation, or using preprocessing inconsistent with pretrained weights.
 
+### The executable image-tensor contract
+
+The notebook makes each boundary visible rather than treating `transforms.ToTensor()` as magic:
+
+```text
+Pillow RGB image
+    ↓ np.asarray
+NumPy H × W × C · uint8 · [0, 255]
+    ↓ astype(float32) / 255
+NumPy H × W × C · float32 · [0, 1]
+    ↓ torch.from_numpy(...).permute(2, 0, 1)
+PyTorch C × H × W
+    ↓ (x - channel_mean) / channel_std
+normalized PyTorch tensor
+```
+
+At each stage the lab prints shape, dtype, minimum/maximum, per-channel mean/standard deviation, and a named pixel. It then demonstrates four failure contracts:
+
+| Failure | Tensor still valid? | What changes | Correct control |
+| --- | --- | --- | --- |
+| RGB/BGR swap | yes | red and blue semantics exchange | declare colour order at ingestion |
+| HWC passed as CHW | often | convolution interprets height as channels | assert rank and channel position |
+| Double normalization | yes | values move far outside the trained distribution | centralize preprocessing once |
+| Forced square resize | yes | geometry and defect thickness distort | crop/pad or document distortion tolerance |
+
 ### Convolution and inductive bias
 
 For a 2D input $X$ and kernel $K$, a single-channel cross-correlation at location $(i,j)$ is:
@@ -123,6 +150,8 @@ $$
 \left\lfloor \frac{n+2p-d(k-1)-1}{s}+1 \right\rfloor.
 $$
 
+The notebook computes a Sobel-like response twice: once with explicit nested loops and once with `torch.nn.functional.conv2d`. An assertion proves numerical equivalence before the course moves to filters learned by gradient descent. After training, the same section visualizes the scratch CNN’s first-layer kernels and activation maps so learners can connect the primitive to the network.
+
 ### Receptive fields
 
 The theoretical receptive field is the input region that can affect a feature. Starting with receptive field $r_0=1$ and jump $j_0=1$:
@@ -132,6 +161,8 @@ j_l=j_{l-1}s_l, \qquad r_l=r_{l-1}+(k_l-1)d_lj_{l-1}.
 $$
 
 Stacking two `3×3` stride-one convolutions yields a `5×5` receptive field while inserting a nonlinearity between them. Downsampling expands receptive field quickly but removes spatial detail. Detection and segmentation architectures therefore combine multiple scales or restore resolution with decoders.
+
+The lab calculates the theoretical field directly from the scratch network’s `Conv2d` and `MaxPool2d` modules, captures activations at successive convolution stages, and backpropagates from one feature-map location to show the empirical input support. The empirical support can be smaller than the theoretical field because nonlinearities suppress some paths.
 
 ![CNN representation hierarchy](assets/cnn-representation-hierarchy.svg)
 
@@ -152,6 +183,19 @@ Training from scratch asks one dataset to teach both a visual vocabulary and the
 
 The lab compares all but full fine-tuning. `ResNet-18` provides a strong residual CNN baseline; `ConvNeXt-Tiny` modernizes a pure CNN with design choices informed by transformers. Both use official torchvision weights and preprocessing metadata. No model outputs are mocked.
 
+### Bridge from CNNs to vision transformers
+
+| Property | Classical CNN | Modern CNN, such as ConvNeXt | Vision Transformer |
+| --- | --- | --- | --- |
+| Locality | built into kernels | built in, with larger/deeper stages | induced by patches or learned attention patterns |
+| Weight sharing | convolution kernels | convolution kernels | shared token projections and attention blocks |
+| Global interaction | indirect through depth/downsampling | indirect, often with larger effective fields | direct through self-attention |
+| Data efficiency | relatively strong | strong | often depends heavily on pretraining and augmentation |
+| Scaling | good | very good | excellent at large data/compute scale |
+| Spatial bias | strong | strong but modernized | weaker by default; architecture/pretraining supplies structure |
+
+If CNNs are so effective, why did transformers become central to vision foundation models? This course leaves that as an evidence question for Course 03: compare interaction range, scaling, pretraining, transfer, and systems cost rather than repeating “attention is all you need.”
+
 ### Embeddings are useful beyond classification
 
 An encoder maps an image $x$ to a vector $z=f_\theta(x)$. After L2 normalization, cosine similarity is the dot product:
@@ -161,6 +205,14 @@ $$
 $$
 
 The same embeddings can support nearest-neighbour inspection, retrieval, clustering, weak labelling, duplicate discovery, drift monitoring, and multimodal retrieval. PCA in the lab is a diagnostic projection—not proof that the full high-dimensional representation is linearly separable.
+
+The lab converts those ideas into a dataset-intelligence table. For every sample it records its nearest neighbour, similarity, label agreement, source agreement, prediction margin, and maximum similarity to training data. These signals surface:
+
+- exact or near-duplicate candidates;
+- possible mislabels or inherently ambiguous pairs;
+- hard, low-margin examples;
+- out-of-distribution candidates far from training support; and
+- neighbourhoods dominated by one source, a warning that the representation may encode a camera or factory shortcut.
 
 ## 4. Augmentation, invariance, and shortcut risk
 
@@ -197,6 +249,22 @@ A shortcut is predictive in the development data but not causally tied to the in
 
 The official [MVTec Anomaly Detection dataset](https://www.mvtec.com/research-teaching/datasets/mvtec-ad) is an excellent research benchmark with 15 categories, more than 5,000 high-resolution images, and pixel-precise anomaly masks. Its `CC BY-NC-SA 4.0` terms make it an inappropriate default to redistribute inside an enterprise-oriented repository, and its anomaly protocol does not directly supply this course’s five decision classes. The lab therefore generates a small auditable dataset locally. MVTec AD remains a valuable optional noncommercial extension; review its current licence before use.
 
+### Optional real-world extension: VisA
+
+The [Visual Anomaly (VisA) dataset](https://registry.opendata.aws/visa/) is a better licensing fit for an optional industrial extension: its official AWS entry and [Amazon research repository](https://github.com/amazon-science/spot-diff) identify 12 object subsets, image- and pixel-level annotations, and a `CC BY 4.0` dataset licence. It is not redistributed here.
+
+Use one subset—such as `candle`, `capsules`, or `cashew`—to keep the exercise bounded:
+
+1. download VisA directly from its official no-account AWS Open Data resource;
+2. record the access date, archive checksum, licence, and selected subset;
+3. profile real resolutions, corrupt files, label counts, and acquisition variation;
+4. build a grouped split without using the test set for threshold selection;
+5. extract frozen ResNet-18 embeddings and fit a normal/anomaly probe;
+6. inspect nearest-neighbour disagreements, low-support samples, and source/appearance clusters; and
+7. compare the real-data failure slices with the clean procedural experiment.
+
+The notebook includes an opt-in adapter activated by `CV_VISA_DIR=/path/to/VisA/<subset>`. It does nothing by default, preserving credential-free execution.
+
 ## 6. Metrics are decision proxies
 
 Let $TP$, $FP$, $TN$, and $FN$ describe a binary decision:
@@ -221,6 +289,29 @@ For multiclass quality inspection:
 
 Metrics must be reported by source, class, and shift. Confidence is not correctness: neural softmax scores may be miscalibrated, especially after distribution shift. Calibration, threshold selection, and abstention are decision-layer work, not model accuracy.
 
+### Calibration under shift
+
+For confidence bins $B_m$, expected calibration error is:
+
+$$
+\operatorname{ECE}=\sum_{m=1}^{M}\frac{|B_m|}{n}
+\left|\operatorname{acc}(B_m)-\operatorname{conf}(B_m)\right|.
+$$
+
+A reliability diagram compares mean confidence with empirical accuracy in each bin. ECE compresses that diagram into one number, so report both: ECE depends on binning and can hide class- or source-specific problems. The notebook compares known-source validation with degraded `Factory_C`, then plots correct/incorrect confidence histograms. The intended observation is not a guaranteed numeric drop; it is whether accuracy, ECE, and overconfidence move differently under the measured shift.
+
+### Abstention is an operating policy
+
+For each confidence threshold, the notebook measures:
+
+- automation rate and human-review rate;
+- automatic defect false-negative rate;
+- operational defect recall, treating reviewed defects as intercepted;
+- automatic false-positive rate; and
+- expected cost under explicit example weights.
+
+The cost weights are a scenario assumption, not a universal truth. The threshold is selected on validation evidence, then evaluated unchanged on clean and shifted `Factory_C`. This separation turns “pick 0.70” into a reviewable policy design.
+
 ## 7. Failure analysis as an engineering loop
 
 ![Computer-vision failure analysis](assets/cv-failure-analysis.svg)
@@ -233,6 +324,10 @@ Metrics must be reported by source, class, and shift. Confidence is not correctn
 6. Record the trade-off; never erase a regression with a new aggregate average.
 
 Useful failure buckets include label ambiguity, exact/near duplicate leakage, missing context, background shortcut, underrepresented source, low-resolution signal, preprocessing mismatch, overconfident shift error, threshold error, and unacceptable latency.
+
+### A small explanation diagnostic
+
+The notebook applies Grad-CAM to one correct and one incorrect scratch-CNN prediction. It overlays a coarse class-sensitive heatmap and asks whether the response covers the defect/component or the label-correlated background. Grad-CAM is a post-hoc diagnostic, not causal proof, a fairness certificate, or an authorization signal. Use it to generate testable data hypotheses, then verify those hypotheses with interventions and slices.
 
 ## 8. Modern tooling review
 
@@ -281,13 +376,18 @@ Open [`lab.ipynb`](lab.ipynb) and run top to bottom. The notebook contains every
 
 - generates and saves the five-class dataset with three capture sources;
 - profiles labels, sources, shape, channels, and exact hashes;
+- traces one image through Pillow, NumPy, float conversion, channel permutation, and normalization;
+- demonstrates RGB/BGR exchange, wrong channel order, double normalization, and aspect-ratio distortion;
 - catches and removes a deliberate train/validation duplicate;
-- visualizes tensor contracts and learned/manual convolution filters;
+- verifies manual convolution against `conv2d`, then visualizes learned filters, activations, and receptive fields;
 - trains a compact CNN from scratch;
 - extracts real `ResNet-18` and `ConvNeXt-Tiny` embeddings using official weights;
 - trains frozen linear probes and partially fine-tunes ResNet’s final stage;
 - visualizes nearest neighbours and PCA;
+- flags embedding-space duplicate, mislabel, hard-example, OOD, and source-cluster candidates;
 - evaluates clean, source-sliced, and shifted performance;
+- plots reliability diagrams, confidence histograms, ECE, and abstention/cost curves;
+- overlays Grad-CAM on correct and incorrect examples;
 - surfaces confident mistakes and a failure gallery;
 - compares accuracy, macro F1, defect recall, review rate, runtime, and parameter cost; and
 - saves a JSON enterprise decision artifact.
@@ -303,7 +403,14 @@ python -m pip install -r curriculum/beginner/01-modern-computer-vision-foundatio
 jupyter lab curriculum/beginner/01-modern-computer-vision-foundations/lab.ipynb
 ```
 
-The first execution downloads official torchvision weights. A CPU-friendly configuration is the default. Set `CV_FULL_RUN=1` before starting Jupyter for more generated samples and training epochs. The default is for learning and CI, not benchmarking.
+The requirements file uses [`constraints-tested.txt`](constraints-tested.txt) to reproduce the tested scientific stack. The first execution downloads official torchvision weights. A CPU-friendly configuration is the default. Set `CV_FULL_RUN=1` before starting Jupyter for more generated samples and training epochs. The default is for learning and CI, not benchmarking.
+
+Tested on:
+
+- Python 3.11 in GitHub Actions and Python 3.13 locally;
+- NumPy 2.5.2, Pillow 12.3.0, Matplotlib 3.11.1, pandas 3.0.5;
+- scikit-learn 1.9.0; and
+- PyTorch 2.13.0 with torchvision 0.28.0.
 
 ### Success criteria
 
@@ -312,7 +419,9 @@ A sound result is not “the largest number wins.” Your final recommendation m
 - use the untouched held-out source for the final comparison;
 - report macro F1 and defect recall, not accuracy alone;
 - measure performance under a documented visual shift;
+- report calibration and confidence behaviour under that shift;
 - define an `Unknown/Ambiguous` and low-confidence human-review route;
+- justify the selected threshold with automation, safety, review-load, and cost curves;
 - explain at least three failure examples;
 - state whether the evidence supports a pilot, a limited assistive workflow, or no deployment; and
 - list monitoring signals and rollback triggers.
@@ -329,7 +438,7 @@ This course does not validate a safety-critical inspection system, certify synth
 | In-process PyTorch training | reproducible jobs, signed environments, experiment tracking |
 | One random seed | repeated runs, confidence intervals, power analysis |
 | Simple source split | time/source/entity-grouped validation protocol |
-| Softmax confidence | held-out calibration and selective-risk curves |
+| Reliability diagram + binned ECE | repeated calibration, class/source calibration, selective-risk curves |
 | Local JSON decision | model card, approval record, risk register |
 | Manual failure gallery | searchable error store and slice dashboards |
 | Synthetic stress transform | replayed production corruptions and shadow traffic |
@@ -349,13 +458,13 @@ Monitor input validity, source mix, embedding drift, class/review rates, latency
 ### Intermediate
 
 4. Replace the random split with a time-ordered split inside each source.
-5. Add perceptual-hash or embedding-based near-duplicate detection.
-6. Calibrate one model with temperature scaling using validation data only.
-7. Plot selective risk as the review threshold changes.
+5. Add perceptual-hash detection and compare it with the embedding flags.
+6. Calibrate one model with temperature scaling using validation data only, then recompute ECE under shift.
+7. Change the policy cost weights and explain why the selected threshold moves.
 
 ### Advanced / enterprise
 
-8. Substitute a licensed dataset and document data rights, lineage, and deletion policy.
+8. Complete the VisA extension and document data rights, checksum, lineage, split policy, and deletion policy.
 9. Add a self-supervised or image-text encoder through `timm` or `transformers`; preserve its official preprocessing.
 10. Export the chosen encoder/head through ONNX and measure quality and latency drift.
 11. Design a shadow-mode evaluation with human reviewers and delayed ground truth.
@@ -370,6 +479,9 @@ Monitor input validity, source mix, embedding drift, class/review rates, latency
 - He et al., [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), 2015.
 - Geirhos et al., [Shortcut Learning in Deep Neural Networks](https://www.nature.com/articles/s42256-020-00257-z), 2020.
 - Recht et al., [Do ImageNet Classifiers Generalize to ImageNet?](https://arxiv.org/abs/1902.10811), 2019.
+- Guo et al., [On Calibration of Modern Neural Networks](https://proceedings.mlr.press/v70/guo17a.html), 2017.
+- Selvaraju et al., [Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization](https://openaccess.thecvf.com/content_iccv_2017/html/Selvaraju_Grad-CAM_Visual_Explanations_ICCV_2017_paper.html), 2017.
+- Zou et al., [SPot-the-Difference Self-Supervised Pre-training for Anomaly Detection and Segmentation](https://arxiv.org/abs/2207.14315), 2022; [official VisA dataset registry](https://registry.opendata.aws/visa/).
 
 ### Practical APIs
 

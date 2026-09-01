@@ -52,13 +52,13 @@ Every state-of-the-art lesson must date its review; cite primary papers, officia
 
 ### Beginner — modern perception and representation
 
-`B01 Modern CV foundations → B02 Architecture benchmarking → B03 Vision transformers → B04 Self-supervised learning → B05 Detection/keypoints/metric learning → B06 Segmentation/tracking → B07 Vision foundation models`
+`B01 Modern CV foundations → B02 Modern CNNs/efficient vision → B03 Vision transformers → B04 Self-supervised learning → B05 Object detection → B06 Segmentation/promptable segmentation → B07 Embeddings/metric learning/retrieval → B08 Tracking/keypoints/pose → B09 Vision foundation models/open-vocabulary vision`
 
 ### Intermediate — multimodal understanding and agents
 
 `I01 VLM architecture → I02 Visual grounding/reasoning → I03 Document intelligence → I04 Multimodal RAG → I05 Video intelligence → I06 Visual agents`
 
-`I07 Synthetic data and dataset engines` branches from B07 and supports advanced/enterprise work.
+`I07 Synthetic data and dataset engines` branches from B08/B09 and supports advanced/enterprise work.
 
 ### Advanced — spatial and embodied intelligence
 
@@ -85,20 +85,22 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 | # | Course | Level | Core concepts | Primary technologies | Practical lab | Prerequisites |
 | --- | --- | --- | --- | --- | --- | --- |
 | B01 | Modern Computer Vision Foundations | Beginner | Task taxonomy, image contracts, convolution, receptive fields, CNNs, transfer, embeddings, augmentation, leakage, metrics, shift, failure analysis | NumPy, Pillow, PyTorch, torchvision, scikit-learn | Five-class visual inspection: scratch CNN vs frozen ResNet/ConvNeXt vs partial fine-tuning | Python/NumPy/basic ML/PyTorch |
-| B02 | Modern architecture benchmarking | Beginner | Residual/ConvNeXt/efficient/hybrid design, scaling, profiling, adaptation depth, export constraints | PyTorch, torchvision, timm, profiling/export tools | Reproducible backbone benchmark on target-quality and latency budgets | B01 |
+| B02 | Modern CNN Architectures & Efficient Vision | Beginner | Residual/ConvNeXt/efficient/hybrid design, scaling, profiling, adaptation depth, export constraints | PyTorch, torchvision, timm, profiling/export tools | Reproducible backbone benchmark on target-quality and latency budgets | B01 |
 | B03 | Vision transformers | Beginner | Patches, positions, attention, hierarchy, CNN/ViT trade-offs | PyTorch, timm, Transformers | Satellite land-use classifier under resolution shift | B02 |
-| B04 | Self-supervised visual representation | Beginner | Contrastive learning, masked modeling, collapse, probing, embeddings | PyTorch, Transformers/timm, FAISS | Product-image similarity with frozen encoders | B03 |
-| B05 | Detection, keypoints, and metric learning | Beginner | Anchor/anchor-free, DETR, NMS, keypoints, re-identification | torchvision, Detectron2/OpenMMLab, Ultralytics comparison | Warehouse package/person detection and re-ID | B02, B04 |
-| B06 | Segmentation and tracking | Beginner | Semantic/instance/panoptic masks, association, temporal identity | torchvision, OpenMMLab, SAM-family comparison | Conveyor-belt parts across video | B05 |
-| B07 | Vision foundation models and open vocabularies | Beginner | Frozen backbones, prompts, open-vocabulary detection, concept segmentation | DINO/CLIP/SAM-family, Grounding DINO/OWL-style models | Add a novel defect concept with minimal labels | B04, B06 |
-| I01 | Vision-language model architecture and adaptation | Intermediate | Encoders, projectors, tokens, cross-attention, instruction tuning, PEFT | Transformers, PyTorch, PEFT | Adapt an open VLM to inspection explanations | B07 |
+| B04 | Self-Supervised Visual Representation Learning | Beginner | Contrastive learning, masked modeling, collapse, probing, embeddings | PyTorch, Transformers/timm, FAISS | Product-image similarity with frozen encoders | B03 |
+| B05 | Object Detection | Beginner | Anchor/anchor-free prediction, assignment, DETR matching, NMS, AP, error decomposition and open-set transition | torchvision, Detectron2/OpenMMLab, Ultralytics comparison | Warehouse package detector with small-object and occlusion slices | B02, B04 |
+| B06 | Segmentation & Promptable Segmentation | Beginner | Semantic/instance/panoptic masks, losses, boundaries, prompts and mask quality | torchvision, OpenMMLab, SAM-family comparison | Segment conveyor parts and compare task-specific with promptable baselines | B05 |
+| B07 | Visual Embeddings, Metric Learning & Retrieval | Beginner | Siamese models, contrastive/triplet objectives, similarity search, re-identification, hard-negative mining, retrieval metrics | PyTorch, FAISS/Qdrant comparison, FiftyOne optional | Product retrieval and duplicate/mislabel/OOD discovery | B04, B05 |
+| B08 | Tracking, Keypoints & Pose | Beginner | Association, temporal identity, occlusion, keypoints, pose, temporal metrics | torchvision, OpenCV, reviewed tracking/pose toolkits | Track and estimate pose for warehouse people/packages through occlusion | B05, B07 |
+| B09 | Vision Foundation Models & Open-Vocabulary Vision | Beginner | Frozen backbones, prompts, open-vocabulary detection, concept segmentation, open-world errors | DINO/CLIP/SAM-family, Grounding DINO/OWL-style models | Add a novel defect concept with minimal labels | B04, B06, B07 |
+| I01 | Vision-language model architecture and adaptation | Intermediate | Encoders, projectors, tokens, cross-attention, instruction tuning, PEFT | Transformers, PyTorch, PEFT | Adapt an open VLM to inspection explanations | B09 |
 | I02 | Visual grounding and reasoning | Intermediate | Regions, referring expressions, counting, comparison, charts, evidence | Transformers, task evaluators | Evidence-backed reasoning over dashboards and site images | I01 |
 | I03 | Enterprise document intelligence | Intermediate | OCR, layout, tables, charts, diagrams, structured extraction | PyMuPDF/Docling, OCR, LayoutParser, VLMs, Pydantic | Insurance loss-report extraction with provenance | I01, I02 |
-| I04 | Multimodal retrieval and RAG | Intermediate | Page/region/image/video embeddings, late interaction, reranking, grounding | Transformers, FAISS/Qdrant, document tooling | Search manuals, diagrams, tables, and inspection images | B04, I03 |
-| I05 | Video intelligence and temporal reasoning | Intermediate | Sampling, action/event recognition, localization, tracking, long video | PyTorchVideo/torchvision, decord/OpenCV, video VLMs | Logistics event search and temporal QA | B06, I01 |
+| I04 | Multimodal retrieval and RAG | Intermediate | Page/region/image/video embeddings, late interaction, reranking, grounding | Transformers, FAISS/Qdrant, document tooling | Search manuals, diagrams, tables, and inspection images | B07, I03 |
+| I05 | Video intelligence and temporal reasoning | Intermediate | Sampling, action/event recognition, localization, tracking, long video | PyTorchVideo/torchvision, decord/OpenCV, video VLMs | Logistics event search and temporal QA | B08, I01 |
 | I06 | Visual agents and tool use | Intermediate | Perception-tool loops, multimodal memory, plans, approvals, verification | VLM SDKs, typed Python tools, retrieval, workflow graphs when justified | Factory anomaly agent with ticket draft and human gate | I02, I04, I05 |
-| I07 | Synthetic data and dataset engines | Intermediate | Generation, simulation, domain randomization, rare events, sim-to-real | Blender/Isaac Sim where justified, Albumentations, FiftyOne | Rare warehouse hazard dataset with reality-gap audit | B06, B07 |
-| A01 | Camera geometry, depth, and pose | Advanced | Calibration, epipolar geometry, depth, pose, odometry, uncertainty | OpenCV, Kornia, PyTorch | Calibrate cameras and estimate depth/pose for a workcell | B03, B05 |
+| I07 | Synthetic data and dataset engines | Intermediate | Generation, simulation, domain randomization, rare events, sim-to-real | Blender/Isaac Sim where justified, Albumentations, FiftyOne | Rare warehouse hazard dataset with reality-gap audit | B08, B09 |
+| A01 | Camera geometry, depth, and pose | Advanced | Calibration, epipolar geometry, depth, pose, odometry, uncertainty | OpenCV, Kornia, PyTorch | Calibrate cameras and estimate depth/pose for a workcell | B03, B08 |
 | A02 | 3D representations and neural rendering | Advanced | Point clouds, meshes, voxels, implicit fields, NeRF, Gaussians | Open3D, PyTorch3D, Nerfstudio, gsplat | Compare representations for a scanned asset | A01 |
 | A03 | 3D reconstruction systems | Advanced | SfM, MVS, camera estimation, fusion, quality metrics | COLMAP, Open3D, Nerfstudio | Reconstruct a construction site from images/video | A01, A02 |
 | A04 | Dynamic and 4D vision | Advanced | Scene flow, dynamic reconstruction, temporal consistency, dynamic Gaussians | PyTorch, Open3D, research implementations | Model moving equipment in a dynamic scene | I05, A03 |
@@ -107,13 +109,13 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 | A07 | Vision-language-action systems | Advanced | Observations/actions, behavior cloning, diffusion policies, VLA adaptation | LeRobot, PyTorch, open VLA checkpoints | Language-conditioned manipulation from demonstrations | I01, A01, A06 |
 | A08 | Embodied AI in simulation | Advanced | Closed-loop policies, navigation/manipulation, feedback, recovery, sim-to-real | MuJoCo, ManiSkill; Habitat/Isaac Lab by scenario | Observe-plan-act-correct warehouse task | A07, I07 |
 | E01 | Production and streaming vision architecture | Enterprise | RTSP, ingestion, queues, async/batching, storage, lineage, SLOs | GStreamer/OpenCV, Kafka where justified, cloud-neutral services | Multi-camera inspection pipeline under backpressure | I05 |
-| E02 | Efficient inference and edge vision | Enterprise | Profiling, compilation, quantization, distillation, power/memory | ONNX Runtime, TensorRT/Triton, OpenVINO/Core ML alternatives | Export and benchmark on a defined edge target | B07, E01 |
-| E03 | Evaluation and assurance | Enterprise | Task/VLM/RAG/3D/agent metrics, slices, calibration, uncertainty, gates | pytest, FiftyOne, MLflow/W&B optional, custom evaluators | Versioned evaluation harness and release gate | B07, I04, A05 |
+| E02 | Efficient inference and edge vision | Enterprise | Profiling, compilation, quantization, distillation, power/memory | ONNX Runtime, TensorRT/Triton, OpenVINO/Core ML alternatives | Export and benchmark on a defined edge target | B09, E01 |
+| E03 | Evaluation and assurance | Enterprise | Task/VLM/RAG/3D/agent metrics, slices, calibration, uncertainty, gates | pytest, FiftyOne, MLflow/W&B optional, custom evaluators | Versioned evaluation harness and release gate | B09, I04, A05 |
 | E04 | Vision observability and data engines | Enterprise | Camera/image/embedding drift, clusters, latency/GPU/cost, safe samples | OpenTelemetry, Prometheus/Grafana, FiftyOne, data stores | Detect lighting/camera drift and open a review queue | E01, E03 |
 | E05 | Security and robustness | Enterprise | Patches, spoofing, poisoning, visual/multimodal injection, unsafe tools | Adversarial test harnesses, sandboxed tools, policy layer | Red-team a visual maintenance agent | I06, E03 |
 | E06 | Privacy, governance, and responsible vision | Enterprise | Biometrics, consent, retention, provenance, copyright, bias, audit | Datasheets/model cards, policy-as-code, access/audit controls | Governance pack and demographic/slice review | E03, E05 |
 | E07 | Enterprise CV platform lifecycle | Enterprise | Registry, CI/CD, staged rollout, rollback, fleet/device identity, FinOps | Containers, model registry, orchestration, IaC concepts | Canary a multimodal service with rollback and cost SLO | E02, E04, E06 |
-| C01 | Enterprise visual inspection platform | Capstone | Anomaly, segmentation, VLM evidence, history, review, observability | Selected stack from B–E | Production-style manufacturing inspection platform | B07, I06, E07 |
+| C01 | Enterprise visual inspection platform | Capstone | Anomaly, segmentation, VLM evidence, history, review, observability | Selected stack from B–E | Production-style manufacturing inspection platform | B09, I06, E07 |
 | C02 | Multimodal enterprise knowledge system | Capstone | Documents/images/charts/video RAG, attribution, authorization | Document AI, embeddings, vector store, VLM | Governed multimodal knowledge assistant | I04, E03, E06 |
 | C03 | Video intelligence platform | Capstone | Events, tracking, temporal reasoning, search, alerts | Video stack, VLM, retrieval, streaming | Auditable logistics video operations platform | I05, E01, E04, E05 |
 | C04 | Spatial intelligence system | Capstone | Reconstruction, objects, relations, questions, spatial memory | COLMAP/Open3D/Nerfstudio, VLM, graph store | Queryable construction-site spatial twin | A05, E03, E06 |
@@ -128,13 +130,13 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 #### B01 — Modern Computer Vision Foundations
 
 - **Why it matters:** every later architecture relies on correct task framing, image contracts, useful representations, honest evaluation, and controlled decisions.
-- **Objectives/concepts:** classify vision tasks by output contract; inspect shape/channel/dtype/range; derive convolution and receptive field; train a compact CNN; compare frozen and partially fine-tuned pretrained encoders; inspect embeddings; detect duplicate leakage and shortcuts; measure source shift; analyse failures; define abstention and monitoring.
+- **Objectives/concepts:** classify vision tasks by output contract; inspect and deliberately break image-tensor boundaries; verify convolution; calculate and probe receptive fields; train a compact CNN; compare frozen and partially fine-tuned pretrained encoders; use embeddings for dataset intelligence; detect leakage and shortcuts; measure source shift and calibration; analyse failures with bounded Grad-CAM; define cost-aware abstention and monitoring.
 - **Technologies:** NumPy, Pillow, Matplotlib, pandas, scikit-learn, PyTorch, torchvision.
 - **Research:** CNN/ResNet/ConvNeXt foundations, shortcut learning and distribution shift, plus an orientation map to ViT, DINOv3, CLIP/SigLIP, SAM-family, spatial, world-model, and VLA systems.
-- **Lab/deliverable:** a five-class enterprise visual-quality inspection experiment with a generated multi-source dataset, scratch CNN, real ResNet-18 and ConvNeXt-Tiny weights, PCA/nearest-neighbour diagnostics, shift stress test, comparison table, review threshold, and JSON decision record.
+- **Lab/deliverable:** a five-class enterprise visual-quality inspection experiment with a generated multi-source dataset, tensor-contract fault injection, manual/framework convolution equivalence, learned-filter and receptive-field inspection, scratch CNN, real ResNet-18 and ConvNeXt-Tiny weights, embedding triage, calibration and reliability plots, shift stress test, Grad-CAM, cost-aware abstention curves, optional VisA adapter, and JSON decision record.
 - **Enterprise relevance/prerequisites:** establishes the evidence and risk vocabulary used throughout the curriculum; Python, NumPy, basic ML, introductory PyTorch.
 
-#### B02 — Modern architecture benchmarking
+#### B02 — Modern CNN Architectures & Efficient Vision
 
 - **Why it matters:** the foundations course introduces representation and transfer; this course makes architecture selection a controlled quality/latency/memory experiment.
 - **Objectives/concepts:** residual and ConvNeXt blocks, compound scaling, efficient/hybrid networks, profiling, adaptation depth, compilation/export constraints, and target-hardware benchmarking.
@@ -152,7 +154,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Lab/deliverable:** resolution-shift experiment comparing CNN and ViT-family backbones on satellite imagery.
 - **Enterprise relevance/prerequisites:** architecture selection under data/compute constraints; B02.
 
-#### B04 — Self-supervised visual representation
+#### B04 — Self-Supervised Visual Representation Learning
 
 - **Why it matters:** transferable embeddings reduce dependence on task labels and power retrieval/foundation systems.
 - **Objectives/concepts:** contrastive objectives, masked modeling, teacher-student learning, collapse, probing, dense vs global features.
@@ -161,32 +163,50 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Lab/deliverable:** product-similarity system comparing a text-aligned encoder and self-supervised encoder across domain slices.
 - **Enterprise relevance/prerequisites:** search, few-label adaptation, drift representations; B03.
 
-#### B05 — Detection, keypoints, and metric learning
+#### B05 — Object Detection
 
-- **Why it matters:** localization and identity remain core inputs to video, robotics, and spatial systems.
-- **Objectives/concepts:** anchors, assignment, DETR matching, NMS, AP, keypoints, embeddings, re-identification.
+- **Why it matters:** localization is the bridge from image-level decisions to counting, inspection, safety, video, and robotics.
+- **Objectives/concepts:** anchor and anchor-free prediction, assignment, DETR matching, NMS, AP, localization/classification error decomposition, small-object evaluation, and the closed-set-to-open-set transition.
 - **Technologies:** torchvision plus a reviewed Detectron2/OpenMMLab/Ultralytics path.
-- **Research:** Faster R-CNN, DETR-family, modern YOLO-family documentation, keypoint and metric-learning references.
-- **Lab/deliverable:** warehouse detector/re-ID baseline with small-object and occlusion failure slices.
-- **Enterprise relevance/prerequisites:** inventory, safety, logistics, human/object tracking; B02, B04.
+- **Research:** Faster R-CNN, DETR-family, modern YOLO-family documentation, and current detector model cards.
+- **Lab/deliverable:** warehouse detector baseline with small-object, occlusion, source, and confidence failure slices.
+- **Enterprise relevance/prerequisites:** inventory, safety, logistics, and defect localization; B02, B04.
 
-#### B06 — Segmentation and tracking
+#### B06 — Segmentation & Promptable Segmentation
 
-- **Why it matters:** masks and temporal identity support measurement, editing, inspection, video, and spatial reasoning.
-- **Objectives/concepts:** semantic/instance/panoptic tasks, losses, boundary quality, association, occlusion, temporal consistency.
+- **Why it matters:** masks support precise measurement and evidence, while promptable segmentation changes how new concepts are introduced.
+- **Objectives/concepts:** semantic/instance/panoptic tasks, mask losses, class imbalance, boundary quality, prompts, zero/few-shot transfer, and open-world errors.
 - **Technologies:** torchvision/OpenMMLab and SAM-family comparison.
-- **Research:** Mask R-CNN, modern mask transformers, tracking baselines, SAM 2/3 evolution.
-- **Lab/deliverable:** conveyor parts segmented and tracked through occlusion with mask/identity metrics.
-- **Enterprise relevance/prerequisites:** precise evidence and process analytics; B05.
+- **Research:** Mask R-CNN, modern mask transformers, and the SAM 2/3 evolution.
+- **Lab/deliverable:** segment conveyor parts and defects; compare task-specific and promptable baselines with mask/boundary metrics.
+- **Enterprise relevance/prerequisites:** precise evidence, editing, and inspection; B05.
 
-#### B07 — Vision foundation models and open vocabularies
+#### B07 — Visual Embeddings, Metric Learning & Retrieval
+
+- **Why it matters:** embeddings turn visual data into searchable structure and expose duplicates, mislabels, hard examples, and source clusters.
+- **Objectives/concepts:** Siamese encoders, contrastive/triplet objectives, positive and negative sampling, re-identification, approximate nearest neighbours, retrieval metrics, and embedding-space dataset intelligence.
+- **Technologies:** PyTorch, FAISS/Qdrant comparison, and FiftyOne as an optional inspection layer.
+- **Research:** metric-learning foundations, modern retrieval encoders, and current vector-search documentation.
+- **Lab/deliverable:** product retrieval and re-identification system with duplicate, mislabel, OOD, and hard-negative discovery.
+- **Enterprise relevance/prerequisites:** catalog search, data quality, identity, and drift analysis; B04, B05.
+
+#### B08 — Tracking, Keypoints & Pose
+
+- **Why it matters:** temporal identity and structured landmarks are essential for video analytics, ergonomics, robotics, and spatial systems.
+- **Objectives/concepts:** detection association, occlusion, track lifecycle, temporal consistency, keypoint heatmaps, pose metrics, identity switches, and uncertainty.
+- **Technologies:** torchvision, OpenCV, and a reviewed tracking/pose toolkit path.
+- **Research:** modern tracking-by-detection, transformer trackers, keypoint and pose-estimation references.
+- **Lab/deliverable:** track warehouse people/packages and estimate pose through occlusion with identity and keypoint metrics.
+- **Enterprise relevance/prerequisites:** safety, logistics, video search, and human/object motion; B05, B07.
+
+#### B09 — Vision Foundation Models & Open-Vocabulary Vision
 
 - **Why it matters:** promptable and open-vocabulary models change adaptation from fixed taxonomies to reusable perception components.
-- **Objectives/concepts:** frozen encoders, prompts, zero/few-shot transfer, concept segmentation, open-world errors, adapters.
+- **Objectives/concepts:** frozen encoders, prompts, zero/few-shot transfer, concept segmentation, open-vocabulary detection, open-world errors, and adapters.
 - **Technologies:** CLIP/DINO/SAM-family, Grounding DINO/OWL-style models, Transformers.
 - **Research:** [DINOv3](https://ai.meta.com/research/publications/dinov3/), [SAM 3](https://ai.meta.com/research/publications/sam-3-segment-anything-with-concepts/) and primary open-vocabulary references.
 - **Lab/deliverable:** add a novel defect concept with minimal labels; compare task-specific and foundation approaches.
-- **Enterprise relevance/prerequisites:** faster adaptation with governance/licensing review; B04, B06.
+- **Enterprise relevance/prerequisites:** faster adaptation with governance/licensing review; B04, B06, B07.
 
 ### Intermediate
 
@@ -197,7 +217,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Technologies:** PyTorch, Transformers, PEFT, representative open checkpoints.
 - **Research:** LLaVA-style adapters, Flamingo-style cross-attention, current open VLM reports including [Qwen3-VL](https://arxiv.org/abs/2511.21631).
 - **Lab/deliverable:** adapt and compare VLMs for inspection explanations with evidence fields.
-- **Enterprise relevance/prerequisites:** explainable multimodal interfaces and model selection; B07.
+- **Enterprise relevance/prerequisites:** explainable multimodal interfaces and model selection; B09.
 
 #### I02 — Visual grounding and reasoning
 
@@ -224,7 +244,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Technologies:** Transformers, FAISS/Qdrant, document tools, VLMs.
 - **Research:** CLIP-style retrieval, late-interaction research, multimodal RAG evaluation sources.
 - **Lab/deliverable:** manuals/diagrams/inspection-image assistant with evidence attribution and permission filters.
-- **Enterprise relevance/prerequisites:** governed multimodal knowledge systems; B04, I03.
+- **Enterprise relevance/prerequisites:** governed multimodal knowledge systems; B07, I03.
 
 #### I05 — Video intelligence and temporal reasoning
 
@@ -233,7 +253,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Technologies:** OpenCV/decord, torchvision/PyTorchVideo where maintained, video VLMs.
 - **Research:** video transformers, SAM video memory, long-video and streaming multimodal work.
 - **Lab/deliverable:** logistics event index with temporal evidence, missed-event analysis, and throughput profile.
-- **Enterprise relevance/prerequisites:** operations, safety, media, and monitoring; B06, I01.
+- **Enterprise relevance/prerequisites:** operations, safety, media, and monitoring; B08, I01.
 
 #### I06 — Visual agents and tool use
 
@@ -251,7 +271,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Technologies:** Blender/Isaac Sim by scenario, Albumentations, FiftyOne.
 - **Research:** domain-randomization, synthetic-to-real and data-engine primary studies; world-model generation as frontier.
 - **Lab/deliverable:** rare warehouse-hazard dataset plus provenance, coverage, bias, and reality-gap report.
-- **Enterprise relevance/prerequisites:** scalable data acquisition with validation; B06, B07.
+- **Enterprise relevance/prerequisites:** scalable data acquisition with validation; B08, B09.
 
 ### Advanced
 
@@ -262,7 +282,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Technologies:** OpenCV, Kornia, PyTorch.
 - **Research:** foundational multiview geometry plus current monocular depth/pose foundation work.
 - **Lab/deliverable:** calibrated workcell with depth/pose estimates, uncertainty, and known-degeneracy tests.
-- **Enterprise relevance/prerequisites:** robotics, measurement, mapping, AR; B03, B05.
+- **Enterprise relevance/prerequisites:** robotics, measurement, mapping, AR; B03, B08.
 
 #### A02 — 3D representations and neural rendering
 
@@ -345,7 +365,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Technologies:** ONNX Runtime; TensorRT/Triton for NVIDIA; OpenVINO/Core ML alternatives by target.
 - **Research/docs:** official runtime/export docs and MLPerf-style methodology where applicable.
 - **Lab/deliverable:** source-vs-export accuracy and performance report on a named hardware target.
-- **Enterprise relevance/prerequisites:** defensible deployment selection; B07, E01.
+- **Enterprise relevance/prerequisites:** defensible deployment selection; B09, E01.
 
 #### E03 — Evaluation and assurance
 
@@ -354,7 +374,7 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 - **Technologies:** pytest, FiftyOne, portable metric code; MLflow/W&B optional.
 - **Research/docs:** benchmark primary sources and evaluator limitations for every task.
 - **Lab/deliverable:** versioned cross-task evaluation harness with regression and release gates.
-- **Enterprise relevance/prerequisites:** release evidence and accountable decisions; B07, I04, A05.
+- **Enterprise relevance/prerequisites:** release evidence and accountable decisions; B09, I04, A05.
 
 #### E04 — Vision observability and data engines
 
@@ -397,9 +417,9 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 #### C01 — Enterprise visual inspection platform
 
 - **Why/objectives:** unite anomaly detection, segmentation, foundation perception, history, VLM evidence and human review.
-- **Technologies/research:** selected and justified from B07, I04/I06 and E01–E07; current primary model sources.
+- **Technologies/research:** selected and justified from B09, I04/I06 and E01–E07; current primary model sources.
 - **Lab/deliverable:** deployable manufacturing platform, evaluation pack, observability dashboard, threat model and review workflow.
-- **Enterprise relevance/prerequisites:** end-to-end quality operations; B07, I06, E07.
+- **Enterprise relevance/prerequisites:** end-to-end quality operations; B09, I06, E07.
 
 #### C02 — Multimodal enterprise knowledge system
 
@@ -436,23 +456,28 @@ Enterprise topics are cross-cutting gates, not an afterthought. Their dedicated 
 ```mermaid
 flowchart TD
   B01 --> B02 --> B03 --> B04
-  B02 --> B05 --> B06 --> B07
+  B02 --> B05 --> B06
   B04 --> B05
   B04 --> B07
+  B05 --> B07
+  B05 --> B08
+  B07 --> B08
+  B06 --> B09
+  B07 --> B09
 
-  B07 --> I01 --> I02
+  B09 --> I01 --> I02
   I02 --> I03 --> I04
-  B04 --> I04
-  B06 --> I05
+  B07 --> I04
+  B08 --> I05
   I01 --> I05
   I02 --> I06
   I04 --> I06
   I05 --> I06
-  B06 --> I07
-  B07 --> I07
+  B08 --> I07
+  B09 --> I07
 
   B03 --> A01
-  B05 --> A01 --> A02 --> A03 --> A04
+  B08 --> A01 --> A02 --> A03 --> A04
   I05 --> A04
   I02 --> A05
   A03 --> A05
@@ -464,8 +489,8 @@ flowchart TD
   I07 --> A08
 
   I05 --> E01 --> E02
-  B07 --> E02
-  B07 --> E03
+  B09 --> E02
+  B09 --> E03
   I04 --> E03
   A05 --> E03
   E01 --> E04
@@ -477,7 +502,7 @@ flowchart TD
   E04 --> E07
   E06 --> E07
 
-  B07 --> C01
+  B09 --> C01
   I06 --> C01
   E07 --> C01
   I04 --> C02

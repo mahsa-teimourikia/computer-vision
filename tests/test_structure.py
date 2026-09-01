@@ -13,4 +13,5 @@ def test_available_topics_follow_the_learning_contract():
         assert len(notebooks) == 1, topic
         assert (topic / "assets").is_dir(), topic
         assert (topic / "requirements.txt").is_file(), topic
+        assert (topic / "constraints-tested.txt").is_file(), topic
         assert not list(topic.glob("*.py")), topic

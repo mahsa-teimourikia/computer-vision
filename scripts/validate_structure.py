@@ -21,7 +21,7 @@ def validate_topics() -> None:
         notebooks = list(topic.glob("*.ipynb"))
         if len(notebooks) != 1:
             raise AssertionError(f"{topic.relative_to(ROOT)} must own exactly one notebook")
-        for required in (topic / "assets", topic / "requirements.txt"):
+        for required in (topic / "assets", topic / "requirements.txt", topic / "constraints-tested.txt"):
             if not required.exists():
                 raise AssertionError(f"Missing required topic resource: {required.relative_to(ROOT)}")
         if list(topic.glob("*.py")):
