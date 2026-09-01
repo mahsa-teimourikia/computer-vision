@@ -87,6 +87,12 @@ def test_course_03_contains_the_declared_transformer_benchmark():
         "small_defect_recall",
         "p95_ms_b1",
         "attention_distance",
+        "attention_weight_memory",
+        "global_vs_window_interactions",
+        "flash_attention_compiled",
+        "position_interpolation_summary",
+        "gradient_times_input",
+        "token_evolution",
         "transformer_decision.json",
         "CONTRACT_THRESHOLD_NOTICE",
     ]:

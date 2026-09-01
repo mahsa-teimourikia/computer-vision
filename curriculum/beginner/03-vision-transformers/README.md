@@ -54,7 +54,13 @@ By the end, you should be able to:
 25. measure how patch size changes quality, latency, memory, and lost detail;
 26. adapt learned position embeddings when input resolution changes;
 27. visualize attention as a model-internal interaction diagnostic, not a causal explanation; and
-28. choose an architecture against an explicit quality, resolution, and systems contract.
+28. calculate the concrete memory footprint of attention-weight tensors;
+29. explain how fused SDPA and FlashAttention preserve attention semantics while changing execution;
+30. compare global and fixed-window interaction counts numerically;
+31. visualize learned position-grid interpolation;
+32. compare attention with gradient-based attribution without treating either as ground truth;
+33. measure how token representations evolve through transformer depth; and
+34. choose an architecture against an explicit quality, resolution, and systems contract.
 
 ## Prerequisites
 
@@ -183,7 +189,49 @@ At patch size 16:
 | 384 | $24\times24$ | 576 | 331,776 | 8.6× |
 | 768 | $48\times48$ | 2,304 | 5,308,416 | 138.2× |
 
-Image area grows quadratically with resolution; global attention interaction count grows approximately with the square of image area. Kernel fusion and optimized scaled-dot-product attention can reduce realized memory traffic, but they do not erase the algorithmic scaling. Always report the framework, precision, backend, batch, resolution, and whether attention weights were explicitly returned.
+Image area grows quadratically with resolution; global attention interaction count grows approximately with the square of image area.
+
+### Make the attention-weight memory concrete
+
+For batch size $B$, heads $h$, and token count $N$, explicitly materialized attention weights contain
+
+$$
+B h N^2
+$$
+
+values per layer. ViT-B/16 at $224\times224$ has 196 patch tokens plus one class token and 12 heads:
+
+$$
+12\times197\times197=466{,}668\text{ values}.
+$$
+
+At four bytes per FP32 value, that is about 1.78 MiB **per layer, per sample**. At 384 pixels, 577 tokens require about 15.24 MiB per layer; at 768 pixels, 2,305 tokens require about 243 MiB per layer. Multiplying by 12 layers makes the naive retained-weight total especially vivid.
+
+This is not total runtime memory. Q/K/V projections, activations, MLP intermediates, model parameters, gradients, optimizer state, allocator behavior, kernel workspaces, batch size, precision, and whether backward is required all contribute. Conversely, a fused implementation may avoid storing the full score or probability matrix in high-bandwidth memory.
+
+The notebook calculates these values for FP32 and FP16/BF16, plots the growth, and keeps the estimate separate from measured peak process or accelerator memory.
+
+### Mathematical attention versus modern execution
+
+The equation defines semantics, not a required kernel schedule:
+
+```text
+Mathematical attention
+        ↓
+naive QKᵀ → materialize scores → softmax → materialize weights → multiply V
+        ↓
+large intermediate memory traffic
+
+Mathematical attention
+        ↓
+fused / memory-efficient SDPA → tile, normalize, and accumulate by blocks
+        ↓
+same attention result within numerical precision; different execution strategy
+```
+
+PyTorch's `scaled_dot_product_attention` can dispatch among available math, memory-efficient, and FlashAttention-style backends according to device, dtype, shapes, masks, dropout, and build support. FlashAttention is an exact, IO-aware formulation: it tiles the work so fewer reads and writes move between slow high-bandwidth memory and faster on-chip memory. “Exact” means it preserves the attention operation rather than replacing it with a sparse or low-rank approximation; floating-point ordering can still create small numerical differences.
+
+Fused kernels reduce intermediate storage and memory traffic, but they do **not** change the $N^2$ pairwise work of dense global attention. They also do not guarantee a speedup for every shape or backend. Report which backend actually ran and measure the target environment.
 
 ## 5. The pre-normalized encoder block
 
@@ -230,6 +278,20 @@ Swin introduces:
 4. a hierarchical increase in channel width as spatial resolution falls.
 
 Window attention changes global $N^2$ interaction growth to a cost that is approximately linear in image size for a fixed window size, while shifted windows allow cross-window communication over depth. It also reintroduces local and multiscale biases. Swin is a transformer family, but not a flat global-attention ViT.
+
+For a $56\times56$ token grid, $N=3{,}136$. One global-attention head forms
+
+$$
+3{,}136^2=9{,}834{,}496
+$$
+
+pairwise scores. With non-overlapping $7\times7$ windows, each token interacts with 49 tokens inside its window, for approximately
+
+$$
+3{,}136\times49=153{,}664
+$$
+
+scores—64 times fewer for that layer. The notebook computes both counts from image, patch, and window sizes rather than hard-coding the result. Window partitioning, shifting, padding, projections, MLPs, and memory layout still contribute to runtime, so fewer score entries do not imply an identical latency ratio.
 
 ## 8. CNN, ViT, and Swin without slogans
 
@@ -290,7 +352,7 @@ A single timing is fragile. Percentiles and distributions expose scheduler noise
 
 The tiny educational ViT compares patches 32, 16, and 8 at a bounded resolution. It records token count, validation quality, training time, latency, and an attention-memory estimate. The expected lesson is a trade-off, not monotonic improvement.
 
-The pretrained transformer experiment evaluates lower, native, and higher resolutions. Learned absolute position embeddings are bicubically interpolated as a two-dimensional grid. Quality and latency are remeasured because interpolation only fixes the tensor shape contract.
+The pretrained transformer experiment evaluates lower, native, and higher resolutions. Learned absolute position embeddings are bicubically interpolated as a two-dimensional grid. The notebook visualizes selected embedding dimensions before and after resizing the $14\times14$ learned grid to $24\times24$. The new positions are interpolated values, not newly learned evidence. Quality and latency are remeasured because interpolation only fixes the tensor shape contract.
 
 ## 11. Attention visualization and attention distance
 
@@ -304,7 +366,26 @@ $$
 
 Averaging across queries, samples, or heads can show whether later layers tend to mix across wider spatial ranges. It does not say that a long-distance edge caused the classifier decision.
 
-The gallery includes correct, incorrect when available, small-defect, large-defect, and held-out-source examples. Raw class-token attention is overlaid on the image and labeled as an **interaction diagnostic**. Attention can route information without being a faithful attribution. Residual paths, MLPs, value vectors, downstream probe weights, and cross-layer mixing all affect the prediction. For explanation work, compare multiple methods and perform perturbation or counterfactual tests.
+The gallery includes correct, incorrect when available, small-defect, large-defect, and held-out-source examples. Raw class-token attention is overlaid on the image and labeled as an **interaction diagnostic**. Attention can route information without being a faithful attribution. Residual paths, MLPs, value vectors, downstream probe weights, and cross-layer mixing all affect the prediction.
+
+For one sample, the notebook places the attention overlay beside gradient-times-input attribution for the frozen encoder plus linear probe. They answer different questions:
+
+- attention summarizes token-to-token mixing weights inside one layer;
+- the gradient view measures local sensitivity of the selected probe score to input pixels; and
+- neither is ground truth, a causal guarantee, or sufficient release evidence.
+
+Disagreement is informative. It should lead to perturbation, counterfactual, stability, and expert-review tests—not selection of whichever heatmap looks more intuitive.
+
+### Contextualized tokens through depth
+
+Patch projection creates independent local token content plus positions. Transformer blocks repeatedly contextualize those tokens. The notebook records one image at patch input and after blocks 1, 4, 8, and 12, then measures:
+
+- mean class-token-to-patch cosine similarity;
+- average patch-to-patch similarity;
+- spatial-neighbor similarity; and
+- variance across token representations.
+
+It also visualizes the patch-token similarity matrix at each depth. These metrics make representation change observable, but their direction is not inherently “better.” Increased similarity may reflect useful integration or representational collapse; reduced similarity may reflect specialization or instability. Downstream quality and failure slices provide the interpretation.
 
 ## 12. 2026 architecture radar
 
@@ -322,7 +403,7 @@ Any “state of the art” claim must name the task, split, metric, model/weight
 
 | Tool | Best fit | Strength | Limitation / review question |
 | --- | --- | --- | --- |
-| PyTorch + torchvision | This course’s transparent baseline | Official models, transforms, attention primitives, profiling | Smaller model catalog than research-focused libraries |
+| PyTorch + torchvision | This course’s transparent baseline | Official models, transforms, SDPA dispatch, profiling | Backend selection still depends on device, dtype, shape, and build support |
 | `timm` | Broad backbone research and controlled model creation | Large, consistent model/weight catalog | Model names, recipes, licenses, and preprocessing must be pinned |
 | Hugging Face Transformers | Foundation and multimodal model workflows | Model cards, processors, Hub integration, ViT/Swin/DINO-family APIs | Generic abstractions can hide resolution and output contracts |
 | `torch.profiler` | Operator and trace diagnosis | CPU/GPU events, shapes, memory, schedules | Profiling overhead; not a substitute for production load testing |
@@ -360,7 +441,11 @@ Then ask whether the benchmark actually measured those conditions. A high-qualit
 9. How do shifted windows let Swin communicate across window boundaries?
 10. Why is raw attention not automatically a causal explanation?
 11. Why does interpolating position embeddings not guarantee resolution robustness?
-12. Why is the highest-F1 backbone not automatically the best deployment choice?
+12. Why is attention-weight memory only one component of runtime memory?
+13. How can FlashAttention preserve dense-attention semantics while using less memory traffic?
+14. Why does fixed-window attention reduce interaction count without guaranteeing the same latency reduction?
+15. What different questions do attention and gradient attribution answer?
+16. Why is the highest-F1 backbone not automatically the best deployment choice?
 
 ## Non-goals and evidence limits
 
@@ -382,12 +467,38 @@ Running `lab.ipynb` from top to bottom produces:
 - per-class, small-defect, and source-shift evaluation;
 - latency distributions and token/interaction estimates;
 - a resolution-shift experiment with position interpolation;
-- attention galleries and layer/head attention-distance summaries; and
+- attention galleries and layer/head attention-distance summaries;
+- explicit attention-memory and global-versus-window interaction calculations;
+- learned position-grid interpolation heatmaps;
+- a one-example attention-versus-gradient attribution comparison;
+- token-representation evolution metrics and similarity matrices; and
 - `.artifacts/vision_transformer_benchmark/transformer_decision.json` with assumptions, evidence, limitations, and the selected candidate.
 
-## Next course
+## Next course: where do strong representations come from?
 
-Course 04 — Self-Supervised Visual Representation Learning moves from architecture to learning objective: contrastive, masked, and teacher–student pretraining; collapse prevention; frozen probing; dense versus global features; and the transition to modern vision foundation backbones.
+ViTs work especially well with large-scale pretraining, but architecture only determines how information **can** flow. The next question is what learning signal shapes the representation:
+
+```text
+Supervised labels
+      ↓
+task-defined semantic categories
+
+Contrastive learning
+      ↓
+relationships between augmented examples
+
+Masked image modeling
+      ↓
+predict missing visual information
+
+Teacher–student learning
+      ↓
+learn stable invariances without manual labels
+```
+
+Course 04 — Self-Supervised Visual Representation Learning moves from architecture to objective: contrastive, masked, and teacher–student pretraining; collapse prevention; frozen probing; and dense versus global features.
+
+> Architecture determines how information can flow. Pretraining determines what representations it learns.
 
 ## Primary references
 
@@ -401,6 +512,7 @@ Course 04 — Self-Supervised Visual Representation Learning moves from architec
 - Abnar and Zuidema, [Quantifying Attention Flow in Transformers](https://aclanthology.org/2020.acl-main.385/), ACL 2020.
 - Siméoni et al., [DINOv3](https://ai.meta.com/research/publications/dinov3/), Meta AI, 2025.
 - PyTorch, [`torch.nn.MultiheadAttention`](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) and [scaled dot-product attention tutorial](https://docs.pytorch.org/tutorials/intermediate/scaled_dot_product_attention_tutorial.html).
+- Dao et al., [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://papers.neurips.cc/paper_files/paper/2022/hash/67d57c32e20fd0a7a302cb81d36e40d5-Abstract-Conference.html), NeurIPS 2022.
+- PyTorch, [Accelerated PyTorch 2 Transformers](https://pytorch.org/blog/accelerated-pytorch-2/) and [SDPA backend documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html).
 - torchvision, [`vit_b_16`](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.vit_b_16.html) and [model/weight documentation](https://docs.pytorch.org/vision/stable/models.html).
 - Hugging Face, [`timm` documentation](https://huggingface.co/docs/timm/index) and [Vision Transformer documentation](https://huggingface.co/docs/transformers/model_doc/vit).
-
