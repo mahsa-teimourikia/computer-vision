@@ -492,9 +492,20 @@ Monitor input validity, source mix, embedding drift, class/review rates, latency
 - [scikit-learn metrics](https://scikit-learn.org/stable/api/sklearn.metrics.html)
 - [scikit-learn PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html)
 
-## Checkpoint
+## What you should now be able to explain without code
 
-After the notebook, use the [Learning Hub checkpoint](../../../hub/index.html#checkpoint). You should be able to defend the output contract, split policy, representation choice, shift result, review threshold, and pilot recommendation without referring to aggregate accuracy alone.
+Answer each question in two or three sentences, using evidence from the lab where useful:
+
+1. Why might 97% validation accuracy still produce an unsafe inspection system?
+2. Why can a pretrained encoder outperform a CNN trained specifically for your dataset?
+3. What is the difference between a feature map and an embedding?
+4. Why can confidence increase while reliability decreases?
+5. Why must train/test splitting sometimes happen by factory rather than by image?
+6. What does a receptive field tell us—and what does it not tell us?
+7. Why is the highest-accuracy model not automatically the best deployment choice?
+8. What changes as we move from task-specific CNNs toward foundation vision models?
+
+If any answer depends only on a metric value or library name, revisit the corresponding experiment. Then use the [Learning Hub checkpoint](../../../hub/index.html#checkpoint) to defend the output contract, split policy, representation choice, shift result, review threshold, and pilot recommendation.
 
 ---
 
