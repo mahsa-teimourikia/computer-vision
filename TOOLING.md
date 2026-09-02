@@ -1,6 +1,6 @@
 # Computer vision tooling review
 
-> Reviewed: 2026-08-31. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
+> Reviewed: 2026-09-01. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
 
 Tools are selected per lesson, not imposed as one universal framework. Every tooling decision should compare maintenance, portability, observability, licensing, reproducibility, hardware fit, exportability, and operational cost.
 
@@ -19,10 +19,12 @@ The course teaches the primitive before the framework. A framework example must 
 
 | Tool | Best fit | Strengths | Constraints to review |
 | --- | --- | --- | --- |
+| [PyTorch + torchvision detection](https://docs.pytorch.org/vision/stable/models.html#object-detection) | Transparent training/evaluation primitives and maintained Faster R-CNN, RetinaNet, FCOS, and SSD baselines | Tensor-level box, IoU, focal-loss, NMS, model, and weights APIs | Beta/evolving detector APIs, preprocessing/weight-enum parity, export support, and target-hardware profiling |
+| [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linear_sum_assignment.html) | Hungarian assignment experiments for set prediction | Trusted rectangular linear-sum assignment primitive | Cost construction, normalization, device transfer, and scaling remain explicit design choices |
 | [OpenMMLab](https://openmmlab.com/) (`MMDetection`, `MMSegmentation`, `MMTracking`, `MMDeploy`) | Reproducible task research and architecture comparison | Large configuration/model ecosystem; consistent task runners | Configuration complexity, cross-package version compatibility, and deployment operator support |
 | [Detectron2](https://detectron2.readthedocs.io/) | Detection and segmentation research | Strong reference implementations and extensible components | Confirm maintenance cadence and platform compatibility for a new production commitment |
-| [Ultralytics](https://docs.ultralytics.com/) | Fast detection, segmentation, pose, and tracking prototypes | Low-friction training/export workflow and broad deployment examples | AGPL/enterprise licensing, abstraction boundaries, and benchmark comparability |
-| [Hugging Face Transformers](https://huggingface.co/docs/transformers/tasks/object_detection) | Vision transformers and multimodal/foundation models | Model cards, processors, checkpoints, and interoperable training APIs | Remote-code trust, checkpoint license, preprocessing parity, and rapidly changing model APIs |
+| [Ultralytics](https://docs.ultralytics.com/) | YOLO26/YOLOE-26 detection, segmentation, pose, tracking, and export prototypes | Low-friction train/predict/export workflow, including documented end-to-end and open-vocabulary paths | AGPL-3.0 or enterprise licensing, abstraction boundaries, checkpoint/export versions, and benchmark comparability |
+| [Hugging Face Transformers](https://huggingface.co/docs/transformers/tasks/object_detection) | DETR/RT-DETR and Grounding DINO-style model/processor workflows | Model cards, processors, checkpoints, and interoperable training APIs | Immutable revisions, remote-code trust, checkpoint license, preprocessing parity, and rapidly changing model APIs |
 
 Do not compare frameworks using headline metrics copied from model pages. Re-run the same dataset split, preprocessing, resolution, precision, hardware, and metric implementation.
 

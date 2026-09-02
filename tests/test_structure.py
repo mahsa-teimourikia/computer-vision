@@ -188,3 +188,55 @@ def test_course_04_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_course_05_contains_the_declared_detection_lab():
+    course = Path("curriculum/beginner/05-object-detection")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "xyxy_to_xywh",
+        "box_iou",
+        "detection_events",
+        "precision_recall_ap",
+        "generate_anchors",
+        "TinyAnchorFreeDetector",
+        "sigmoid_focal_loss",
+        "local_xywh_to_global",
+        "manual_nms",
+        "torchvision_nms",
+        "threshold_sweep",
+        "source_size_evaluation",
+        "linear_sum_assignment",
+        "hungarian_cost",
+        "ULTRALYTICS_TESTED_VERSION",
+        "CV_ENABLE_GROUNDING_DINO",
+        "detector_decision.json",
+        "DEMONSTRATION_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "factory c is never used for gradient updates or threshold selection" in source_lower
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_05_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/05-object-detection/assets")
+    expected = {
+        "detection-output-contract.svg",
+        "anchor-vs-anchor-free.svg",
+        "feature-pyramid.svg",
+        "nms-duplicate-removal.svg",
+        "dense-vs-set-prediction.svg",
+        "closed-vs-open-vocabulary.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

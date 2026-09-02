@@ -1,0 +1,299 @@
+{
+  "version": 1,
+  "id": "anchor-vs-anchor-free",
+  "title": "Two ways to assign responsibility",
+  "purpose": "Compare anchor-based and anchor-free dense detection responsibilities.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/anchor-vs-anchor-free.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "The anchor-based path starts from predefined shapes and regresses offsets, while the anchor-free path starts from a responsible point and predicts box distances."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "anchored",
+      "label": "Anchor-based",
+      "bounds": {
+        "x": 64,
+        "y": 130,
+        "width": 700,
+        "height": 620
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "free",
+      "label": "Anchor-free",
+      "bounds": {
+        "x": 836,
+        "y": 130,
+        "width": 700,
+        "height": 620
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cell_a",
+      "group": "anchored",
+      "label": "Feature cell",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 330,
+        "width": 170,
+        "height": 100
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "anchors",
+      "group": "anchored",
+      "label": "Anchor bank",
+      "subtitle": "scales + aspect ratios",
+      "type": "operations",
+      "bounds": {
+        "x": 350,
+        "y": 310,
+        "width": 190,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "offsets",
+      "group": "anchored",
+      "label": "Match + offsets",
+      "subtitle": "positive / negative / ignore",
+      "type": "action",
+      "bounds": {
+        "x": 565,
+        "y": 310,
+        "width": 160,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "cell_f",
+      "group": "free",
+      "label": "Feature cell",
+      "type": "data",
+      "bounds": {
+        "x": 900,
+        "y": 330,
+        "width": 170,
+        "height": 100
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "point",
+      "group": "free",
+      "label": "Responsible point",
+      "subtitle": "center / inside box",
+      "type": "agent",
+      "bounds": {
+        "x": 1130,
+        "y": 310,
+        "width": 190,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "distances",
+      "group": "free",
+      "label": "Predict box",
+      "subtitle": "l, t, r, b + class",
+      "type": "service",
+      "bounds": {
+        "x": 1350,
+        "y": 310,
+        "width": 150,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "a1",
+      "from": {
+        "node": "cell_a",
+        "port": "out"
+      },
+      "to": {
+        "node": "anchors",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          290,
+          380
+        ],
+        [
+          350,
+          380
+        ]
+      ]
+    },
+    {
+      "id": "a2",
+      "from": {
+        "node": "anchors",
+        "port": "out"
+      },
+      "to": {
+        "node": "offsets",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          540,
+          380
+        ],
+        [
+          565,
+          380
+        ]
+      ]
+    },
+    {
+      "id": "f1",
+      "from": {
+        "node": "cell_f",
+        "port": "out"
+      },
+      "to": {
+        "node": "point",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1070,
+          380
+        ],
+        [
+          1130,
+          380
+        ]
+      ]
+    },
+    {
+      "id": "f2",
+      "from": {
+        "node": "point",
+        "port": "out"
+      },
+      "to": {
+        "node": "distances",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1320,
+          380
+        ],
+        [
+          1350,
+          380
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

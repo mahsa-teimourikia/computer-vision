@@ -15,6 +15,7 @@ learner = [
     "pillow==12.3.0",
     "pandas==3.0.5",
     "scikit-learn==1.9.0",
+    "scipy==1.17.1",
     "torch==2.13.0",
     "torchvision==0.28.0",
 ]
