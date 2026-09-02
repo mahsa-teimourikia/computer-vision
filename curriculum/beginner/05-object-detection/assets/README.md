@@ -7,6 +7,8 @@ These SVGs are rendered deterministically from coordinate specifications in [`sp
 - `feature-pyramid.svg`
 - `nms-duplicate-removal.svg`
 - `dense-vs-set-prediction.svg`
+- `detr-matching.svg`
+- `detection-error-taxonomy.svg`
 - `closed-vs-open-vocabulary.svg`
 
 Re-render them from the repository root:

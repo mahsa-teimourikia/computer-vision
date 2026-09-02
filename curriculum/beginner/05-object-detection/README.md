@@ -1,10 +1,10 @@
 # Beginner 05 — Object Detection
 
-> From localization and matching to YOLO, DETR, and open-vocabulary detection
+> From localization and matching to modern YOLO-style detectors, DETR, and open-vocabulary detection
 
 **Level:** Beginner<br>
 **Estimated time:** 10–12 hours<br>
-**Primary artifact:** [`lab.ipynb`](lab.ipynb)
+**Primary artifact:** [`lab.ipynb`](lab.ipynb)<br>
 **Prerequisites:** [Course 01](../01-modern-computer-vision-foundations/README.md), [Course 02](../02-modern-cnn-architectures-efficient-vision/README.md), [Course 03](../03-vision-transformers/README.md), and [Course 04](../04-self-supervised-visual-representation-learning/README.md)
 
 ## 1. Central question
@@ -44,7 +44,7 @@ The course succeeds when you can:
 2. implement IoU, greedy matching, AP, anchor assignment, and class-aware NMS;
 3. explain how one-stage, two-stage, and set-prediction detectors solve the same design problems differently;
 4. train and inspect a tiny anchor-free dense detector;
-5. evaluate confidence, duplicate, source, and object-size failure slices; and
+5. produce an automated instance-level error taxonomy plus confidence, duplicate, source, and object-size failure slices; and
 6. produce a bounded detector-selection artifact that separates measured evidence from optional ecosystem claims.
 
 This course does **not** reproduce COCO training, certify a safety system, compare proprietary services, establish a universal YOLO-versus-DETR winner, or teach segmentation yet. Course 06 extends boxes into pixel-level masks and promptable segmentation.
@@ -55,6 +55,7 @@ This course does **not** reproduce COCO training, certify a safety system, compa
 - Procedural data proves code paths, not deployment validity.
 - Confidence is not calibrated probability by default.
 - Camera, factory, shift, occlusion, and object-size slices must remain visible.
+- A mitigation that helps one controlled source shift is not a general solution to distribution shift.
 - Open-vocabulary prompts expand the output space but do not remove validation or unknown-object risk.
 
 ## 3. Learning objectives
@@ -78,7 +79,7 @@ By the end, you should be able to:
 - distinguish dense prediction from set prediction;
 - perform source-aware, threshold-aware, and size-aware error analysis;
 - explain detection calibration and end-to-end latency; and
-- place Grounding DINO-style open-vocabulary detection in the wider curriculum.
+- distinguish open-vocabulary category detection from phrase grounding and place Grounding DINO-style systems in the wider curriculum.
 
 ## 4. The detection output contract
 
@@ -223,6 +224,16 @@ area under the PR curve = AP
 
 Mean AP averages class AP values under a declared protocol. COCO's headline box metric averages AP across IoU thresholds `0.50:0.05:0.95`, classes, and its full evaluation rules. `AP50` is more tolerant of imprecise boxes; `AP75` and the multi-IoU average demand tighter localization.
 
+The notebook makes this concrete with one correct-class prediction at IoU `≈ 0.62`:
+
+```text
+Prediction A, IoU ≈ 0.62
+├── IoU ≥ 0.50 → correct under the AP50 matching rule
+└── IoU < 0.75 → incorrect under the AP75 matching rule
+```
+
+The object was found in an everyday sense, but its localization is not precise enough for the stricter contract.
+
 The notebook implements a transparent pedagogical AP calculation. It is not a drop-in replacement for `pycocotools`: crowd regions, ignore flags, area ranges, maximum detections, interpolation details, and dataset-specific rules must use the official evaluator for benchmark reporting.
 
 ### Object-size evaluation
@@ -345,7 +356,7 @@ Greedy class-aware NMS:
 
 NMS can remove a legitimate object in a crowded scene, retain duplicates below the overlap threshold, and change dramatically with score or IoU threshold. Class-agnostic NMS can suppress overlapping objects from different classes. Soft-NMS decays scores rather than deleting boxes, but adds its own policy and calibration behavior.
 
-The notebook implements NMS manually, verifies it against `torchvision.ops.nms`, visualizes before/after boxes, and sweeps thresholds.
+The notebook implements NMS manually, verifies it against `torchvision.ops.nms`, visualizes before/after boxes, and sweeps thresholds. It also injects two legitimate same-class objects whose boxes overlap at IoU `≈ 0.61`: NMS at `0.50` retains one, while NMS at `0.70` retains both. This demonstrates why “remove duplicates” is an incomplete mental model.
 
 ## 17. Modern YOLO-style detection
 
@@ -367,9 +378,9 @@ filtering and duplicate policy
 
 Modern families commonly use anchor-free heads, multi-scale outputs, IoU-family losses, export-oriented operations, and highly optimized training recipes. Model name alone does not specify preprocessing, assignment, checkpoint, license, NMS/end-to-end mode, export graph, quantization behavior, or target-hardware latency.
 
-### 2026 ecosystem note
+### Durable concept, versioned implementation
 
-Ultralytics documents YOLO26, released in January 2026, as its current family and reports a native end-to-end/NMS-free path plus an open-vocabulary YOLOE-26 extension. These are publisher-reported claims until reproduced under the target protocol. The current Ultralytics package and trained models are offered under AGPL-3.0 or an enterprise license. Because that obligation may conflict with private enterprise use, `ultralytics` is **not** a default dependency in this MIT learning repository. The notebook shows a guarded, version-pinned adapter (`ultralytics==8.4.138`) only after the learner explicitly enables it and accepts the applicable license and checkpoint terms.
+Named YOLO releases change faster than the underlying learning objective. The conceptual chapter therefore uses **modern YOLO-style detector** for the dense backbone–neck–head philosophy. Exact current releases, package versions, reported capabilities, and license terms live in the tooling review below. The optional notebook adapter remains version-pinned and disabled by default.
 
 Classic NMS remains essential course material because many deployed dense detectors and export paths still use it, and even end-to-end models need duplicate/error analysis.
 
@@ -387,6 +398,8 @@ Object queries are learned detection slots. They are not text labels such as “
 
 ### Hungarian matching
 
+![Object queries produce a prediction set; predictions and ground truth form a weighted cost matrix; Hungarian matching selects one global assignment.](assets/detr-matching.svg)
+
 Given predictions $i$ and ground-truth objects $j$, construct a cost such as
 
 $$
@@ -399,7 +412,7 @@ The Hungarian algorithm finds the one-to-one minimum-cost assignment. Unmatched 
 
 One-to-one training discourages multiple slots from claiming the same ground truth, which is why traditional NMS is absent from standard DETR inference. This is a property of the training formulation, not a guarantee that a model can never emit similar boxes.
 
-The notebook builds and visualizes a real cost matrix with `scipy.optimize.linear_sum_assignment`.
+The notebook builds and visualizes a real cost matrix with `scipy.optimize.linear_sum_assignment`. It displays classification, normalized L1, and GIoU costs separately, applies their weights, verifies their sum, and marks the final assignment across all four matrices. Hungarian matching is therefore visibly a **global weighted-cost decision**, not “closest box wins.”
 
 ### Limitations and evolution
 
@@ -422,11 +435,18 @@ RT-DETR and later real-time set-prediction systems narrow the historical speed g
 
 Neither philosophy determines success alone. Dataset coverage, object scale, annotation quality, calibration, latency contract, software license, and operational integration often dominate small benchmark differences.
 
-## 20. From closed-set to open-vocabulary detection
+## 20. From closed-set to open-vocabulary detection and phrase grounding
 
 ![Closed-set detection uses a fixed class head, while open-vocabulary detection aligns image regions with text prompts.](assets/closed-vs-open-vocabulary.svg)
 
 Closed-set detectors predict a taxonomy fixed during training. Open-vocabulary detectors align regions with text or multimodal representations so categories can be supplied at inference time.
+
+| Contract | Typical input | Typical question |
+| --- | --- | --- |
+| Open-vocabulary category detection | category names, including categories outside the fixed training taxonomy | “Where are the forklifts?” |
+| Phrase grounding | a noun phrase or referring expression with attributes or relations | “Where is the red fastener beside the housing?” |
+
+They overlap, but they are not identical. Category detection evaluates category-level discovery across an open label space. Phrase grounding localizes what a particular expression refers to and may depend on attributes, relations, or context beyond a class name.
 
 Grounding DINO combines a DETR-like detector with grounded language–image pretraining and can localize objects described by category names or referring expressions. This changes the output contract:
 
@@ -485,6 +505,8 @@ change data, model, threshold, or workflow
 
 ### Error taxonomy
 
+![Detection outcomes separate into per-instance errors and cross-instance small-object and source-shift slices.](assets/detection-error-taxonomy.svg)
+
 | Error | Evidence | Likely next check |
 | --- | --- | --- |
 | classification | good overlap, wrong label | taxonomy ambiguity, class balance, context shortcut |
@@ -493,6 +515,14 @@ change data, model, threshold, or workflow
 | background FP | no suitable ground truth | hard negatives, leakage, threshold/calibration |
 | missed object | unmatched ground truth | scale, occlusion, assignment, label coverage |
 | source-specific failure | AP/recall gap by factory | capture process, normalization, spurious source cue |
+
+The notebook automates this taxonomy. Every prediction becomes exactly one returned-box event—correct, localization error, wrong class, duplicate, or background FP—and every unclaimed target becomes a missed-object event. It outputs `Error type`, `Count`, `Rate`, and representative sample IDs, then saves both the event ledger and summary CSV. Small-object and source-shift failures remain explicit cross-event slices rather than being forced into mutually exclusive instance labels.
+
+### Interpreting the source-shift mitigation
+
+The deterministic corpus is intentional: it makes the same experiment reproducible. The photometric mitigation changes brightness, contrast, per-channel gain, and bias. It improves held-out Factory C under this generator, but the notebook also reports the residual development-to-Factory-C gap, strict-localization gap, and weak small/medium-object slices.
+
+> Photometric augmentation is one tested intervention for one declared capture shift. It is not evidence that illumination augmentation solves source shift generally; geometry, optics, process changes, label policy, novel objects, and temporal drift require their own tests.
 
 ### Calibration
 
@@ -535,11 +565,14 @@ The notebook follows one source-aware assembly-line scenario:
 7. train a tiny anchor-free dense detector with objectness, class, and box losses;
 8. decode candidates and implement class-aware NMS manually;
 9. verify NMS against torchvision and sweep confidence/NMS thresholds;
-10. inject source shift and small-object failures and measure mitigation trade-offs;
-11. construct a DETR-style Hungarian matching matrix;
-12. compare dense and set-prediction responsibilities;
-13. inspect maintained TorchVision, Transformers, Ultralytics, and Grounding DINO adapters without enabling network downloads by default; and
-14. save detections, evaluation tables, error slices, timing, and a governed decision artifact.
+10. inject an AP50-versus-AP75 localization case and a crowded-scene NMS failure;
+11. inject source shift and small-object failures, then report what mitigation changed and what remained weak;
+12. generate an automated detection-error event ledger and summary table;
+13. construct a DETR-style Hungarian matrix with visible classification, L1, GIoU, and total costs;
+14. compare dense and set-prediction responsibilities;
+15. distinguish open-vocabulary category detection from phrase grounding;
+16. inspect maintained TorchVision, Transformers, Ultralytics, and Grounding DINO adapters without enabling network downloads by default; and
+17. save detections, evaluation tables, error taxonomy, timing, and a governed decision artifact.
 
 Run locally:
 

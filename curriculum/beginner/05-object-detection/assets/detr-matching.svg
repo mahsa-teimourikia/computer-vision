@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+<title id="title">DETR matching creates one global assignment</title>
+<desc id="description">Object queries produce a prediction set. Predictions and ground-truth objects feed a weighted classification, L1, and GIoU cost matrix. The Hungarian algorithm selects a minimum-cost one-to-one assignment, leaving other queries as no-object.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="900" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">DETR matching creates one global assignment</text>
+<rect x="64" y="130" width="660" height="620" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="164" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Predictions and targets</text>
+<rect x="780" y="130" width="756" height="620" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="802" y="164" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Global one-to-one matching</text>
+<polyline points="310,315 390,315" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="650,315 740,315 740,353 820,353" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="650,585 740,585 740,425 820,425" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1090,380 1190,380" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1330,470 1330,570" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="110" y="250" width="200" height="130" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="210.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Object queries</text>
+<text x="210.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">learned slots</text>
+<rect x="390" y="250" width="260" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="520.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Prediction set</text>
+<text x="520.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">class + box per query</text>
+<rect x="390" y="520" width="260" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="520.0" y="554" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Ground truth</text>
+<text x="520.0" y="582" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">labeled boxes</text>
+<rect x="820" y="290" width="270" height="180" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="955.0" y="324" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Weighted cost matrix</text>
+<text x="955.0" y="352" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">class + L1 + GIoU</text>
+<rect x="1190" y="290" width="280" height="180" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1330.0" y="324" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Hungarian algorithm</text>
+<text x="1330.0" y="352" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">minimum total cost</text>
+<rect x="1190" y="570" width="280" height="110" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1330.0" y="604" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">One-to-one assignment</text>
+<text x="1330.0" y="632" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">unmatched queries → no object</text>
+</svg>
