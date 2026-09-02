@@ -252,3 +252,80 @@ def test_course_05_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_course_06_contains_the_declared_segmentation_lab():
+    course = Path("curriculum/beginner/06-segmentation-promptable-segmentation")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "mask_quality_report",
+        "bilinear: corrupted",
+        "binary_iou",
+        "dice_score",
+        "pixel_accuracy",
+        "per_class_iou",
+        "mean_iou",
+        "boundary_f1",
+        "empty_policy_examples",
+        "topology_signature",
+        "TinyUNet",
+        "ConvBlock",
+        "DownBlock",
+        "UpBlock",
+        "multiclass_dice_loss",
+        '"CE+Dice"',
+        "slice_table",
+        "point_prompt_proxy",
+        "box_prompt_proxy",
+        "prompt_sensitivity",
+        "box_error_propagation",
+        "LOCAL_PROMPT_ENGINE",
+        '"foundation_model": False',
+        "quality_rank_correlations",
+        "quality_calibration_buckets",
+        "correction_effort",
+        "TARGET_REVIEW_IOU",
+        "information_budget",
+        "SAM31_REPO_REVISION",
+        "SAM31_MODEL_REVISION",
+        "daa63191845a41281374e725f4c9e51c7a824460",
+        "record_sam31_quality_observation",
+        "RUN_SAM31",
+        "load_from_HF=False",
+        "course-06-segmentation-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "human_review_policy",
+        "operating_contract_comparison_not_a_ranking",
+    ]:
+        assert required in source
+
+    assert "local prompt proxy" in source_lower and "not a foundation model" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_06_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/06-segmentation-promptable-segmentation/assets")
+    expected = {
+        "segmentation-taxonomy.svg",
+        "unet-encoder-decoder.svg",
+        "semantic-vs-instance.svg",
+        "mask-metrics.svg",
+        "mask-rcnn.svg",
+        "query-mask-classification.svg",
+        "promptable-segmentation.svg",
+        "detector-segmenter-pipeline.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

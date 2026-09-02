@@ -1,0 +1,289 @@
+{
+  "version": 1,
+  "id": "detector-segmenter-pipeline",
+  "title": "Detection errors become segmentation prompt errors",
+  "purpose": "Show the detector-to-box-to-promptable-segmenter pipeline and human policy gate.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/detector-segmenter-pipeline.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An image enters a detector, whose box becomes a prompt. A promptable segmenter creates a precise mask, which is then accepted, reviewed, or rejected under policy. Box error propagates into mask error."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "course",
+      "label": "Segmentation output contracts",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 1472,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "image",
+      "group": "course",
+      "label": "Image",
+      "subtitle": "inspection frame",
+      "type": "data",
+      "bounds": {
+        "x": 80,
+        "y": 330,
+        "width": 190,
+        "height": 140
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "detector",
+      "group": "course",
+      "label": "Detector",
+      "subtitle": "class + box + score",
+      "type": "agent",
+      "bounds": {
+        "x": 350,
+        "y": 330,
+        "width": 230,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "box",
+      "group": "course",
+      "label": "Box prompt",
+      "subtitle": "perfect or perturbed",
+      "type": "action",
+      "bounds": {
+        "x": 660,
+        "y": 330,
+        "width": 230,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "segmenter",
+      "group": "course",
+      "label": "Promptable segmenter",
+      "subtitle": "image embedding + box",
+      "type": "agent",
+      "bounds": {
+        "x": 970,
+        "y": 330,
+        "width": 280,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "course",
+      "label": "Mask + policy",
+      "subtitle": "accept \u00b7 review \u00b7 reject",
+      "type": "service",
+      "bounds": {
+        "x": 1330,
+        "y": 330,
+        "width": 190,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "image_detector",
+      "from": {
+        "node": "image",
+        "port": "out"
+      },
+      "to": {
+        "node": "detector",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          270,
+          400
+        ],
+        [
+          350,
+          400
+        ]
+      ]
+    },
+    {
+      "id": "detector_box",
+      "from": {
+        "node": "detector",
+        "port": "out"
+      },
+      "to": {
+        "node": "box",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          580,
+          400
+        ],
+        [
+          660,
+          400
+        ]
+      ],
+      "label": "localization",
+      "label_at": [
+        620,
+        390
+      ]
+    },
+    {
+      "id": "box_segmenter",
+      "from": {
+        "node": "box",
+        "port": "out"
+      },
+      "to": {
+        "node": "segmenter",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          890,
+          400
+        ],
+        [
+          970,
+          400
+        ]
+      ],
+      "label": "prompt",
+      "label_at": [
+        930,
+        390
+      ]
+    },
+    {
+      "id": "segmenter_policy",
+      "from": {
+        "node": "segmenter",
+        "port": "out"
+      },
+      "to": {
+        "node": "policy",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1250,
+          400
+        ],
+        [
+          1330,
+          400
+        ]
+      ],
+      "label": "precise mask",
+      "label_at": [
+        1290,
+        390
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

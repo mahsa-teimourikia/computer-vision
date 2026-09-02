@@ -1,0 +1,412 @@
+{
+  "version": 1,
+  "id": "unet-encoder-decoder",
+  "title": "U-Net preserves semantics and spatial detail",
+  "purpose": "Show the contracting path, bottleneck, expanding path, and same-scale skip connections.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/unet-encoder-decoder.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Encoder stages reduce resolution into a bottleneck, decoder stages restore it, and two skip connections carry same-scale spatial detail across the U shape."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "unet",
+      "label": "Contracting path \u2192 bottleneck \u2192 expanding path",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 1472,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "enc_high",
+      "group": "unet",
+      "label": "Encoder H",
+      "subtitle": "high resolution",
+      "type": "data",
+      "bounds": {
+        "x": 110,
+        "y": 250,
+        "width": 210,
+        "height": 130
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.65
+        },
+        "skip": {
+          "side": "top",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "enc_low",
+      "group": "unet",
+      "label": "Encoder H/2",
+      "subtitle": "more context",
+      "type": "data",
+      "bounds": {
+        "x": 405,
+        "y": 390,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.65
+        },
+        "skip": {
+          "side": "top",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "bottleneck",
+      "group": "unet",
+      "label": "Bottleneck",
+      "subtitle": "H/4 semantics",
+      "type": "agent",
+      "bounds": {
+        "x": 700,
+        "y": 535,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "dec_low",
+      "group": "unet",
+      "label": "Decoder H/2",
+      "subtitle": "upsample + fuse",
+      "type": "service",
+      "bounds": {
+        "x": 995,
+        "y": 390,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.65
+        },
+        "skip": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "dec_high",
+      "group": "unet",
+      "label": "Decoder H",
+      "subtitle": "pixel logits",
+      "type": "service",
+      "bounds": {
+        "x": 1295,
+        "y": 250,
+        "width": 210,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.65
+        },
+        "skip": {
+          "side": "top",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "enc1_enc2",
+      "from": {
+        "node": "enc_high",
+        "port": "out"
+      },
+      "to": {
+        "node": "enc_low",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          320,
+          334
+        ],
+        [
+          360,
+          334
+        ],
+        [
+          360,
+          455
+        ],
+        [
+          405,
+          455
+        ]
+      ],
+      "label": "down",
+      "label_at": [
+        360,
+        385
+      ]
+    },
+    {
+      "id": "enc2_bottle",
+      "from": {
+        "node": "enc_low",
+        "port": "out"
+      },
+      "to": {
+        "node": "bottleneck",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          625,
+          474
+        ],
+        [
+          660,
+          474
+        ],
+        [
+          660,
+          600
+        ],
+        [
+          700,
+          600
+        ]
+      ],
+      "label": "down",
+      "label_at": [
+        660,
+        525
+      ]
+    },
+    {
+      "id": "bottle_dec2",
+      "from": {
+        "node": "bottleneck",
+        "port": "out"
+      },
+      "to": {
+        "node": "dec_low",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          920,
+          600
+        ],
+        [
+          955,
+          600
+        ],
+        [
+          955,
+          474
+        ],
+        [
+          995,
+          474
+        ]
+      ],
+      "label": "up",
+      "label_at": [
+        955,
+        535
+      ]
+    },
+    {
+      "id": "dec2_dec1",
+      "from": {
+        "node": "dec_low",
+        "port": "out"
+      },
+      "to": {
+        "node": "dec_high",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1215,
+          455
+        ],
+        [
+          1255,
+          455
+        ],
+        [
+          1255,
+          334
+        ],
+        [
+          1295,
+          334
+        ]
+      ],
+      "label": "up",
+      "label_at": [
+        1255,
+        395
+      ]
+    },
+    {
+      "id": "skip_high",
+      "from": {
+        "node": "enc_high",
+        "port": "skip"
+      },
+      "to": {
+        "node": "dec_high",
+        "port": "skip"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          215,
+          250
+        ],
+        [
+          215,
+          190
+        ],
+        [
+          1400,
+          190
+        ],
+        [
+          1400,
+          250
+        ]
+      ],
+      "label": "same-scale skip",
+      "label_at": [
+        800,
+        190
+      ]
+    },
+    {
+      "id": "skip_low",
+      "from": {
+        "node": "enc_low",
+        "port": "skip"
+      },
+      "to": {
+        "node": "dec_low",
+        "port": "skip"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          515,
+          390
+        ],
+        [
+          515,
+          300
+        ],
+        [
+          1105,
+          300
+        ],
+        [
+          1105,
+          390
+        ]
+      ],
+      "label": "same-scale skip",
+      "label_at": [
+        810,
+        300
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}
