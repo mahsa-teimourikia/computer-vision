@@ -1,4 +1,5 @@
 import json
+import tomllib
 from pathlib import Path
 
 
@@ -356,15 +357,25 @@ def test_course_07_contains_the_declared_retrieval_lab():
         "TinyMetricEncoder",
         "region_image",
         "difference_hash",
+        "duplicate_group_split",
+        "split_group_overlap",
+        "cross_split_group_overlap",
         "hard_negative_review",
         "ambiguous taxonomy / representation mismatch",
+        "simulated_reviewer_decision",
+        "simulated hidden-label oracle",
         "IndexFlatIP",
         "IndexHNSWFlat",
         "FAISS_WORKER_SOURCE",
         "ann_recall_at_k",
         "ANN_Recall@10",
+        "median_individual_query_ms",
+        "p95_individual_query_ms",
+        "individual_timing_samples",
         "filtered_retrieval",
         "post-filter after top-5",
+        "shallow_post_ms",
+        "mitigated_post_ms",
         "encoder_manifests",
         "cross_version_status",
         "neighbor_retention",
@@ -379,8 +390,14 @@ def test_course_07_contains_the_declared_retrieval_lab():
         assert required in source
 
     assert "factory c never supplies training gradients" in source_lower
+    assert "p95_ms_per_query" not in source
+    assert 'duplicate_pairs["split"] = [' not in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+    assert "faiss-cpu==1.15.0" not in project["project"]["optional-dependencies"]["learner"]
+    assert "faiss-cpu==1.15.0" in project["project"]["optional-dependencies"]["contributor"]
 
 
 def test_course_07_diagrams_are_reusable_and_accessible():

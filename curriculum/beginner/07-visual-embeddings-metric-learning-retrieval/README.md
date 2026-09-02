@@ -192,7 +192,7 @@ $$
 
 For example, `8 × 4 = 32` provides multiple positives per class and many negative candidates. Random image batches may contain no positive for an anchor, especially with many identities.
 
-The lab compares random, semi-hard, and batch-hard triplet policies while recording active-triplet fraction, loss, and held-out mAP. It then performs an offline mining round:
+The lab compares random, semi-hard, and batch-hard triplet policies while recording active-triplet fraction, loss, and held-out mAP. It then performs an offline mining round with **simulated oracle adjudication**:
 
 ![The hard-negative loop embeds the corpus, retrieves confusing wrong-label neighbours, reviews false negatives, and feeds approved examples back into training.](assets/hard-negative-mining.svg)
 
@@ -202,6 +202,8 @@ embed training corpus → retrieve nearest wrong-label item
 ```
 
 Mining without review can amplify label noise, duplicate leakage, and source shortcuts.
+
+In the synthetic lab, hidden `true_defect` supplies a known answer and simulates a reviewer accepting or rejecting each mined negative. This is not available in production. A deployed workflow needs qualified human or domain adjudication, an auditable decision, and a policy for uncertain or disputed relationships before the example enters training.
 
 ## 14. Supervised contrastive and proxy objectives
 
@@ -292,7 +294,7 @@ The lab evaluates full image, oracle crop, and oracle masked region separately a
 
 Exact duplicate, re-encoded copy, small crop, same object, and same semantic category are different relations. Dataset cleanup and leakage prevention often benefit from perceptual hashes plus embedding evidence.
 
-The notebook compares a difference-hash baseline with semantic embedding similarity, selects thresholds on a development pair set, and reports held-out duplicate precision and recall. A threshold is version-, preprocessing-, and corpus-specific.
+The notebook compares a difference-hash baseline with semantic embedding similarity, selects thresholds on a development pair set, and reports held-out duplicate precision and recall. It assigns underlying `duplicate_group` identities to development or test **before** constructing positive and negative pairs, restricts every pair member to the same partition, and asserts that the partitions have zero group overlap. A threshold is version-, preprocessing-, and corpus-specific.
 
 ## 23. Re-identification is retrieval with higher stakes
 
@@ -342,7 +344,7 @@ $$
 ANNRecall@K=\frac{|E_q\cap A_q|}{K}.
 $$
 
-Measure latency distribution and recall on the same query set. The lab sweeps `efSearch`, repeats timings, and plots measured median/p95 latency against ANN recall. Its small synthetic scale-up teaches methodology; it is not a hardware capacity claim.
+Measure latency distribution and recall on the same query set. The lab sweeps `efSearch`, times each query call individually over three sequential passes, and reports the median and p95 of those individual-query samples against ANN recall. The measurement includes local Python/FAISS call overhead and excludes concurrency, queuing, networking, payload fetch, and service saturation. Its perturbed-copy scale proxy validates the measurement method; it does not model real large-corpus graph structure, cache behavior, workload diversity, or production tail latency.
 
 ## 28. Memory and compression
 
@@ -513,15 +515,15 @@ The notebook follows one manufacturing archive from contract to operations:
 
 1. declare scenario, success criteria, risk boundaries, seed, offline/optional paths, and demonstration thresholds;
 2. generate components, defects, identities, Factory A/B/C capture styles, masks/boxes, duplicates, source shortcuts, and controlled label noise;
-3. make component, defect, and duplicate relevance executable;
+3. make component, defect, identity, and duplicate relevance executable;
 4. verify cosine/dot/L2 normalization equivalence;
 5. verify contrastive/triplet losses and retrieval metrics on known examples;
 6. extract official ResNet-18 full/crop/masked embeddings and build exact rankings;
 7. implement a shared tiny encoder, `P × K` batching, and random/semi-hard/batch-hard mining;
-8. perform an offline hard-negative feedback round and inspect false negatives;
+8. perform an offline hard-negative feedback round with explicit simulated oracle adjudication and inspect false negatives;
 9. compare frozen supervised, random, and domain metric-learned representations by contract and Factory C;
 10. compare full-image, crop, and masked-region source/semantic neighbour behavior;
-11. compare semantic embeddings with perceptual hashing for duplicate detection;
+11. split by underlying duplicate group before pair construction, assert no group leakage, and compare semantic embeddings with perceptual hashing;
 12. generate hard-negative and automated failure-review tables;
 13. verify NumPy, scikit-learn, and FAISS exact search;
 14. sweep FAISS HNSW `efSearch` against exact Recall@10 and latency;
@@ -549,7 +551,7 @@ The notebook writes `.artifacts/course-07-retrieval-evidence.json` with three to
 }
 ```
 
-Local evidence records similarity contracts, encoder/index manifests, dimensions, normalization, objective, sampling, ranking metrics, source bias, hard-negative review, exact parity, ANN recall/latency, memory, filters, migration, drift, and failures. Optional DINOv2 observations cannot overwrite local measurements. Production thresholds remain assumptions until measured on the target archive, workload, hardware, and policy boundary.
+Local evidence records similarity contracts, duplicate-group split integrity, encoder/index manifests, dimensions, normalization, objective, simulated mining adjudication, ranking metrics, source bias, hard-negative review, exact parity, individual-query ANN timing/recall, memory, filters, migration, drift, and failures. Optional DINOv2 observations cannot overwrite local measurements. Production thresholds remain assumptions until measured on the target archive, workload, hardware, and policy boundary.
 
 ## 41. Security, privacy, and governance
 

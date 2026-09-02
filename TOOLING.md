@@ -55,7 +55,7 @@ Teach the primitive first: view generation, similarity matrix, target mapping, s
 | [Qdrant](https://qdrant.tech/documentation/) | Governed vector service with payload filtering | Persistent collections, metadata filters, distributed deployment, and service observability | Adds an operating service; review tenancy, backups, consistency, network boundaries, cost, and client/server version compatibility |
 | [FiftyOne](https://docs.voxel51.com/) | Visual retrieval inspection and review queues | Links embeddings, samples, labels, similarity, duplicates, and human review | Keep metrics and index artifacts portable; review data access, plugin/version governance, and scaling architecture |
 
-The Course 07 default is an exact NumPy/scikit-learn baseline plus FAISS `IndexFlatIP` and HNSW on L2-normalized `float32` vectors. A hosted vector database is deliberately optional: production adoption requires metadata filtering, access control, backup/restore, observability, update semantics, and migration evidence—not only a nearest-neighbour demo.
+The Course 07 default is an exact NumPy/scikit-learn baseline plus FAISS `IndexFlatIP` and HNSW on L2-normalized `float32` vectors. Because FAISS introduces a native runtime, it remains in Course 07's tested requirements and the contributor/CI environment rather than the repository-wide learner extra used for Courses 01–06. A hosted vector database is deliberately optional: production adoption requires metadata filtering, access control, backup/restore, observability, update semantics, and migration evidence—not only a nearest-neighbour demo.
 
 ## Data, annotation, and evaluation
 
