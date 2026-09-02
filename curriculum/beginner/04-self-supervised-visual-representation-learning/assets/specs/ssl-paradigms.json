@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "ssl-paradigms",
+  "title": "Self-supervised visual learning paradigms",
+  "purpose": "Organize representative methods by learning signal rather than as a model catalogue.",
+  "output": {
+    "svg": "curriculum/beginner/04-self-supervised-visual-representation-learning/assets/ssl-paradigms.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Self-supervised visual learning branches into contrastive instance discrimination, non-contrastive teacher-student learning, self-distillation, and masked image modeling. SimCLR, MoCo, BYOL, DINO, and MAE appear as representative systems within those paradigms."
+  },
+  "canvas": {"width": 1480, "height": 780, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "root", "label": "Learning signal", "bounds": {"x": 64, "y": 112, "width": 1352, "height": 160}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "families", "label": "Method families", "bounds": {"x": 64, "y": 336, "width": 1352, "height": 370}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "ssl", "group": "root", "label": "Self-supervised visual learning", "subtitle": "targets constructed from the data", "type": "agent", "bounds": {"x": 558, "y": 154, "width": 364, "height": 94}, "ports": {"contrast": {"side": "bottom", "offset": 0.15}, "noncontrast": {"side": "bottom", "offset": 0.38}, "distill": {"side": "bottom", "offset": 0.62}, "masked": {"side": "bottom", "offset": 0.85}}},
+    {"id": "contrastive", "group": "families", "label": "Contrastive", "subtitle": "positives + negatives\nSimCLR · MoCo", "type": "service", "bounds": {"x": 112, "y": 424, "width": 246, "height": 146}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "noncontrastive", "group": "families", "label": "Non-contrastive", "subtitle": "asymmetry + stop-gradient\nBYOL", "type": "action", "bounds": {"x": 434, "y": 424, "width": 246, "height": 146}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "distillation", "group": "families", "label": "Self-distillation", "subtitle": "EMA teacher distributions\nDINO", "type": "agent", "bounds": {"x": 756, "y": 424, "width": 246, "height": 146}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "masked", "group": "families", "label": "Masked modeling", "subtitle": "predict missing patches\nMAE", "type": "data", "bounds": {"x": 1078, "y": 424, "width": 246, "height": 146}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "foundation", "group": "families", "label": "Large-scale foundation pretraining combines and scales these ideas", "subtitle": "DINOv2 · DINOv3 · domain-specific SSL", "type": "operations", "bounds": {"x": 406, "y": 600, "width": 668, "height": 82}, "ports": {}}
+  ],
+  "edges": [
+    {"id": "ssl_contrastive", "from": {"node": "ssl", "port": "contrast"}, "to": {"node": "contrastive", "port": "in"}, "kind": "primary", "route": [[613, 248], [613, 304], [235, 304], [235, 424]]},
+    {"id": "ssl_noncontrastive", "from": {"node": "ssl", "port": "noncontrast"}, "to": {"node": "noncontrastive", "port": "in"}, "kind": "primary", "route": [[696, 248], [696, 320], [557, 320], [557, 424]]},
+    {"id": "ssl_distillation", "from": {"node": "ssl", "port": "distill"}, "to": {"node": "distillation", "port": "in"}, "kind": "primary", "route": [[784, 248], [784, 320], [879, 320], [879, 424]]},
+    {"id": "ssl_masked", "from": {"node": "ssl", "port": "masked"}, "to": {"node": "masked", "port": "in"}, "kind": "primary", "route": [[867, 248], [867, 304], [1201, 304], [1201, 424]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

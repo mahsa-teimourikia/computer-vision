@@ -58,6 +58,7 @@ def validate_hub() -> None:
         "Modern Computer Vision Foundations",
         "Modern CNN Architectures &amp; Efficient Vision",
         "Vision Transformers",
+        "Self-Supervised Visual Representation Learning",
         "oneplusi.io",
     ]
     for text in required:

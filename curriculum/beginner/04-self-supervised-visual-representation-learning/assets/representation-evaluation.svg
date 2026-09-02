@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1540 800" role="img" aria-labelledby="title description">
+<title id="title">Evaluate the representation, not the pretraining loss</title>
+<desc id="description">A frozen encoder produces global and patch features. Global features feed linear probes, k-nearest neighbors, retrieval, and geometry diagnostics; patch features feed future dense tasks.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1540" height="800" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Evaluate the representation, not the pretraining loss</text>
+<rect x="64" y="112" width="500" height="610" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Freeze the learned encoder</text>
+<rect x="628" y="112" width="520" height="610" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="650" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Global representation evidence</text>
+<rect x="1212" y="112" width="264" height="610" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="1234" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Patch representation evidence</text>
+<polyline points="288,374 340,374" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="516,350 592,350 592,370 668,370" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="828,334 870,334 870,214 912,214" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="828,358 870,358 870,344 912,344" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="828,382 870,382 870,474 912,474" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="828,406 850,406 850,604 912,604" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="516,414 584,414 584,690 1184,690 1184,296 1254,296" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<polyline points="1344,352 1344,480" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="112" y="318" width="176" height="112" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="200.0" y="352" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Evaluation images</text>
+<text x="200.0" y="380" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">held-out source</text>
+<rect x="340" y="294" width="176" height="160" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="428.0" y="328" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Frozen encoder</text>
+<text x="428.0" y="356" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">no representation updates</text>
+<rect x="668" y="310" width="160" height="120" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="748.0" y="344" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Global features</text>
+<text x="748.0" y="372" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">CLS or pooled embedding</text>
+<rect x="912" y="164" width="180" height="100" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1002.0" y="198" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Linear probe</text>
+<text x="1002.0" y="226" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">label efficiency</text>
+<rect x="912" y="294" width="180" height="100" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1002.0" y="328" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">k-NN</text>
+<text x="1002.0" y="356" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">local class structure</text>
+<rect x="912" y="424" width="180" height="100" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1002.0" y="458" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Retrieval</text>
+<text x="1002.0" y="486" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">precision@k</text>
+<rect x="912" y="554" width="180" height="100" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1002.0" y="588" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Geometry</text>
+<text x="1002.0" y="616" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">rank · variance · source bias</text>
+<rect x="1254" y="240" width="180" height="112" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1344.0" y="274" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Patch features</text>
+<text x="1344.0" y="302" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">spatial tokens</text>
+<rect x="1254" y="480" width="180" height="112" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1344.0" y="514" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Future dense tasks</text>
+<text x="1344.0" y="542" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">detect · segment · depth</text>
+</svg>

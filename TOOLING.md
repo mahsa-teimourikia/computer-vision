@@ -26,6 +26,19 @@ The course teaches the primitive before the framework. A framework example must 
 
 Do not compare frameworks using headline metrics copied from model pages. Re-run the same dataset split, preprocessing, resolution, precision, hardware, and metric implementation.
 
+## Self-supervised learning and embedding systems
+
+| Tool | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| PyTorch + torchvision | Transparent objective and evaluation primitives | Autograd, common transforms, official supervised baselines, distributed building blocks | Augmentation validity, global-batch semantics, collapse monitoring, and probe design remain explicit responsibilities |
+| Official DINO/DINOv2/DINOv3 repositories | Paper reproduction and author-released checkpoints | Reference objectives, model families, pretrained global and dense features | Pin repository revision, checkpoint hash, preprocessing, source trust, model license, hardware, and nonstandard dependencies |
+| Hugging Face Transformers | Model/processor-style foundation-feature reuse | DINOv2 APIs, hidden states, model cards, cached artifacts | Processor defaults, remote artifacts/code, access, licenses, and fast-moving APIs |
+| `timm` | Broad backbone and pretraining research | Consistent model creation and extensive weight catalogue | Verify the exact recipe, upstream data, weight license, representation output, and normalization |
+| lightly / solo-learn | Packaged SSL training and research recipes | Losses, heads, memory banks, teacher–student methods, distributed workflows | Framework abstractions can hide matrix contracts, distributed batch assumptions, and recipe coupling |
+| FAISS | Large-scale embedding retrieval | Exact and approximate nearest-neighbour indexes with CPU/GPU options | Measure recall loss, filtering, updates, feature-version migration, tenant isolation, and memory |
+
+Teach the primitive first: view generation, similarity matrix, target mapping, stop-gradient, EMA, masking, and downstream evaluation should remain inspectable before adopting a packaged SSL trainer.
+
 ## Data, annotation, and evaluation
 
 | Tool | Role | Review notes |

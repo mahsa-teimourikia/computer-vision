@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "id": "teacher-student-learning",
+  "title": "Teacher–student learning without labels",
+  "purpose": "Explain online learning, stop-gradient targets, EMA updates, and DINO-style multi-view agreement.",
+  "output": {
+    "svg": "curriculum/beginner/04-self-supervised-visual-representation-learning/assets/teacher-student-learning.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Global and local crops enter a trainable student while global crops enter a stop-gradient teacher. Student and teacher distributions are matched, and an exponential moving average of student weights updates the teacher."
+  },
+  "canvas": {"width": 1480, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "views", "label": "Views from one image", "bounds": {"x": 64, "y": 112, "width": 330, "height": 570}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "networks", "label": "Asymmetric networks", "bounds": {"x": 458, "y": 112, "width": 620, "height": 570}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "signals", "label": "Learning signals", "bounds": {"x": 1142, "y": 112, "width": 274, "height": 570}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "global_crop", "group": "views", "label": "Global crop", "subtitle": "teacher + student", "type": "data", "bounds": {"x": 112, "y": 244, "width": 222, "height": 116}, "ports": {"student": {"side": "right", "offset": 0.35}, "teacher": {"side": "right", "offset": 0.75}}},
+    {"id": "local_crop", "group": "views", "label": "Local crops", "subtitle": "student only", "type": "data", "bounds": {"x": 112, "y": 466, "width": 222, "height": 116}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "student", "group": "networks", "label": "Student", "subtitle": "gradient update\nsharpened output", "type": "agent", "bounds": {"x": 512, "y": 234, "width": 208, "height": 146}, "ports": {"global": {"side": "left", "offset": 0.35}, "local": {"side": "left", "offset": 0.75}, "prediction": {"side": "right", "offset": 0.5}, "ema": {"side": "bottom", "offset": 0.5}}},
+    {"id": "teacher", "group": "networks", "label": "Teacher", "subtitle": "stop-gradient\ncentered target", "type": "agent", "bounds": {"x": 816, "y": 462, "width": 208, "height": 146}, "ports": {"view": {"side": "left", "offset": 0.5}, "target": {"side": "right", "offset": 0.5}, "ema": {"side": "top", "offset": 0.5}}},
+    {"id": "match", "group": "signals", "label": "Distribution match", "subtitle": "self-distillation loss", "type": "action", "bounds": {"x": 1190, "y": 270, "width": 178, "height": 126}, "ports": {"student": {"side": "left", "offset": 0.35}, "teacher": {"side": "left", "offset": 0.75}}}
+  ],
+  "edges": [
+    {"id": "global_student", "from": {"node": "global_crop", "port": "student"}, "to": {"node": "student", "port": "global"}, "kind": "primary", "route": [[334, 285], [430, 285], [430, 285], [512, 285]]},
+    {"id": "local_student", "from": {"node": "local_crop", "port": "out"}, "to": {"node": "student", "port": "local"}, "kind": "primary", "route": [[334, 524], [430, 524], [430, 344], [512, 344]]},
+    {"id": "global_teacher", "from": {"node": "global_crop", "port": "teacher"}, "to": {"node": "teacher", "port": "view"}, "kind": "secondary", "route": [[334, 331], [414, 331], [414, 535], [816, 535]]},
+    {"id": "student_match", "from": {"node": "student", "port": "prediction"}, "to": {"node": "match", "port": "student"}, "kind": "primary", "route": [[720, 307], [1120, 307], [1120, 314], [1190, 314]]},
+    {"id": "teacher_match", "from": {"node": "teacher", "port": "target"}, "to": {"node": "match", "port": "teacher"}, "kind": "secondary", "route": [[1024, 535], [1100, 535], [1100, 364], [1190, 364]]},
+    {"id": "student_ema", "from": {"node": "student", "port": "ema"}, "to": {"node": "teacher", "port": "ema"}, "label": "EMA: θt ← mθt + (1−m)θs", "label_at": [760, 420], "kind": "secondary", "route": [[616, 380], [616, 420], [920, 420], [920, 462]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

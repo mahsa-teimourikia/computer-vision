@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "architecture-objective-shift",
+  "title": "From processing architecture to learning objective",
+  "purpose": "Connect Courses 01–03 architecture choices to Course 04 self-supervised learning objectives.",
+  "output": {
+    "svg": "curriculum/beginner/04-self-supervised-visual-representation-learning/assets/architecture-objective-shift.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Two connected panels show that CNN, ViT, and Swin determine how information can flow, while contrastive, teacher-student, and masked objectives determine what representations are learned."
+  },
+  "canvas": {"width": 1400, "height": 660, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "processing", "label": "Courses 01–03 · processing architecture", "bounds": {"x": 64, "y": 112, "width": 580, "height": 470}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "learning", "label": "Course 04 · learning objective", "bounds": {"x": 756, "y": 112, "width": 580, "height": 470}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "pixels", "group": "processing", "label": "Images", "subtitle": "pixels and patches", "type": "data", "bounds": {"x": 112, "y": 246, "width": 180, "height": 104}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "architectures", "group": "processing", "label": "CNN · ViT · Swin", "subtitle": "information-flow bias", "type": "service", "bounds": {"x": 388, "y": 226, "width": 208, "height": 144}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "architecture_question", "group": "processing", "label": "How can information\nflow?", "type": "operations", "bounds": {"x": 250, "y": 430, "width": 220, "height": 92}, "ports": {}},
+    {"id": "unlabeled", "group": "learning", "label": "Unlabeled images", "subtitle": "structure is already present", "type": "data", "bounds": {"x": 800, "y": 226, "width": 208, "height": 144}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "objectives", "group": "learning", "label": "Contrast · Distill · Mask", "subtitle": "self-created targets", "type": "agent", "bounds": {"x": 1080, "y": 226, "width": 208, "height": 144}, "ports": {"in": {"side": "left", "offset": 0.5}, "architecture": {"side": "top", "offset": 0.5}}},
+    {"id": "learning_question", "group": "learning", "label": "What should the\nrepresentation learn?", "type": "action", "bounds": {"x": 920, "y": 430, "width": 240, "height": 92}, "ports": {}}
+  ],
+  "edges": [
+    {"id": "pixels_to_architecture", "from": {"node": "pixels", "port": "out"}, "to": {"node": "architectures", "port": "in"}, "kind": "primary", "route": [[292, 298], [388, 298]]},
+    {"id": "unlabeled_to_objective", "from": {"node": "unlabeled", "port": "out"}, "to": {"node": "objectives", "port": "in"}, "kind": "primary", "route": [[1008, 298], [1080, 298]]},
+    {"id": "architecture_to_objective", "from": {"node": "architectures", "port": "out"}, "to": {"node": "objectives", "port": "architecture"}, "label": "separate decisions", "label_at": [700, 196], "kind": "secondary", "route": [[596, 298], [700, 298], [700, 196], [1184, 196], [1184, 226]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

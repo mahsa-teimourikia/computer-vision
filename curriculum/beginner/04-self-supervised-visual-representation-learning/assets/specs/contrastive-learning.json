@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "id": "contrastive-learning",
+  "title": "Contrastive learning as view agreement",
+  "purpose": "Show how two augmentations, a shared encoder, and a projection head create positive pairs for NT-Xent.",
+  "output": {
+    "svg": "curriculum/beginner/04-self-supervised-visual-representation-learning/assets/contrastive-learning.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "One unlabeled image creates two augmented views. A shared encoder and projection head map both views to embeddings that form a positive pair, while other images in the batch provide negatives."
+  },
+  "canvas": {"width": 1500, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "views", "label": "Create two semantic-preserving views", "bounds": {"x": 64, "y": 112, "width": 420, "height": 570}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "encoding", "label": "Shared representation path", "bounds": {"x": 548, "y": 112, "width": 540, "height": 570}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "objective", "label": "Batch objective", "bounds": {"x": 1152, "y": 112, "width": 284, "height": 570}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "image", "group": "views", "label": "Unlabeled image", "type": "data", "bounds": {"x": 176, "y": 190, "width": 200, "height": 86}, "ports": {"view_a": {"side": "bottom", "offset": 0.3}, "view_b": {"side": "bottom", "offset": 0.7}}},
+    {"id": "view_a", "group": "views", "label": "View A", "subtitle": "crop · brightness · blur", "type": "service", "bounds": {"x": 128, "y": 330, "width": 220, "height": 112}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "view_b", "group": "views", "label": "View B", "subtitle": "independent transform", "type": "service", "bounds": {"x": 128, "y": 522, "width": 220, "height": 112}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "encoder_a", "group": "encoding", "label": "Encoder fθ", "subtitle": "representation h₁", "type": "agent", "bounds": {"x": 596, "y": 320, "width": 172, "height": 132}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "encoder_b", "group": "encoding", "label": "Encoder fθ", "subtitle": "shared weights · h₂", "type": "agent", "bounds": {"x": 596, "y": 524, "width": 172, "height": 108}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "project_a", "group": "encoding", "label": "Projection g", "subtitle": "z₁", "type": "action", "bounds": {"x": 856, "y": 320, "width": 172, "height": 132}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "project_b", "group": "encoding", "label": "Projection g", "subtitle": "z₂", "type": "action", "bounds": {"x": 856, "y": 524, "width": 172, "height": 108}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "ntxent", "group": "objective", "label": "NT-Xent", "subtitle": "positive: z₁ ↔ z₂\nnegatives: other views", "type": "operations", "bounds": {"x": 1204, "y": 396, "width": 180, "height": 156}, "ports": {"a": {"side": "left", "offset": 0.3}, "b": {"side": "left", "offset": 0.7}}}
+  ],
+  "edges": [
+    {"id": "image_view_a", "from": {"node": "image", "port": "view_a"}, "to": {"node": "view_a", "port": "in"}, "kind": "primary", "route": [[236, 276], [236, 300], [238, 300], [238, 330]]},
+    {"id": "image_view_b", "from": {"node": "image", "port": "view_b"}, "to": {"node": "view_b", "port": "in"}, "kind": "primary", "route": [[316, 276], [382, 276], [382, 486], [238, 486], [238, 522]]},
+    {"id": "view_a_encoder", "from": {"node": "view_a", "port": "out"}, "to": {"node": "encoder_a", "port": "in"}, "kind": "primary", "route": [[348, 386], [596, 386]]},
+    {"id": "view_b_encoder", "from": {"node": "view_b", "port": "out"}, "to": {"node": "encoder_b", "port": "in"}, "kind": "primary", "route": [[348, 578], [596, 578]]},
+    {"id": "encoder_project_a", "from": {"node": "encoder_a", "port": "out"}, "to": {"node": "project_a", "port": "in"}, "kind": "primary", "route": [[768, 386], [856, 386]]},
+    {"id": "encoder_project_b", "from": {"node": "encoder_b", "port": "out"}, "to": {"node": "project_b", "port": "in"}, "kind": "primary", "route": [[768, 578], [856, 578]]},
+    {"id": "project_a_loss", "from": {"node": "project_a", "port": "out"}, "to": {"node": "ntxent", "port": "a"}, "kind": "primary", "route": [[1028, 386], [1120, 386], [1120, 443], [1204, 443]]},
+    {"id": "project_b_loss", "from": {"node": "project_b", "port": "out"}, "to": {"node": "ntxent", "port": "b"}, "kind": "primary", "route": [[1028, 578], [1120, 578], [1120, 505], [1204, 505]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

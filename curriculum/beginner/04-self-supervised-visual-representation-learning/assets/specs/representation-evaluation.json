@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "id": "representation-evaluation",
+  "title": "Evaluate the representation, not the pretraining loss",
+  "purpose": "Show the frozen-encoder evaluation paths used for probing, nearest neighbors, retrieval, geometry, and dense transfer.",
+  "output": {
+    "svg": "curriculum/beginner/04-self-supervised-visual-representation-learning/assets/representation-evaluation.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A frozen encoder produces global and patch features. Global features feed linear probes, k-nearest neighbors, retrieval, and geometry diagnostics; patch features feed future dense tasks."
+  },
+  "canvas": {"width": 1540, "height": 800, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "encoder_path", "label": "Freeze the learned encoder", "bounds": {"x": 64, "y": 112, "width": 500, "height": 610}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "global_eval", "label": "Global representation evidence", "bounds": {"x": 628, "y": 112, "width": 520, "height": 610}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "dense_eval", "label": "Patch representation evidence", "bounds": {"x": 1212, "y": 112, "width": 264, "height": 610}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "images", "group": "encoder_path", "label": "Evaluation images", "subtitle": "held-out source", "type": "data", "bounds": {"x": 112, "y": 318, "width": 176, "height": 112}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "encoder", "group": "encoder_path", "label": "Frozen encoder", "subtitle": "no representation updates", "type": "agent", "bounds": {"x": 340, "y": 294, "width": 176, "height": 160}, "ports": {"in": {"side": "left", "offset": 0.5}, "global": {"side": "right", "offset": 0.35}, "patch": {"side": "right", "offset": 0.75}}},
+    {"id": "global_features", "group": "global_eval", "label": "Global features", "subtitle": "CLS or pooled embedding", "type": "data", "bounds": {"x": 668, "y": 310, "width": 160, "height": 120}, "ports": {"in": {"side": "left", "offset": 0.5}, "probe": {"side": "right", "offset": 0.2}, "knn": {"side": "right", "offset": 0.4}, "retrieval": {"side": "right", "offset": 0.6}, "geometry": {"side": "right", "offset": 0.8}}},
+    {"id": "linear_probe", "group": "global_eval", "label": "Linear probe", "subtitle": "label efficiency", "type": "service", "bounds": {"x": 912, "y": 164, "width": 180, "height": 100}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "knn", "group": "global_eval", "label": "k-NN", "subtitle": "local class structure", "type": "service", "bounds": {"x": 912, "y": 294, "width": 180, "height": 100}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "retrieval", "group": "global_eval", "label": "Retrieval", "subtitle": "precision@k", "type": "action", "bounds": {"x": 912, "y": 424, "width": 180, "height": 100}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "geometry", "group": "global_eval", "label": "Geometry", "subtitle": "rank · variance · source bias", "type": "operations", "bounds": {"x": 912, "y": 554, "width": 180, "height": 100}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "patch_features", "group": "dense_eval", "label": "Patch features", "subtitle": "spatial tokens", "type": "data", "bounds": {"x": 1254, "y": 240, "width": 180, "height": 112}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "dense_tasks", "group": "dense_eval", "label": "Future dense tasks", "subtitle": "detect · segment · depth", "type": "action", "bounds": {"x": 1254, "y": 480, "width": 180, "height": 112}, "ports": {"in": {"side": "top", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "images_encoder", "from": {"node": "images", "port": "out"}, "to": {"node": "encoder", "port": "in"}, "kind": "primary", "route": [[288, 374], [340, 374]]},
+    {"id": "encoder_global", "from": {"node": "encoder", "port": "global"}, "to": {"node": "global_features", "port": "in"}, "kind": "primary", "route": [[516, 350], [592, 350], [592, 370], [668, 370]]},
+    {"id": "global_linear", "from": {"node": "global_features", "port": "probe"}, "to": {"node": "linear_probe", "port": "in"}, "kind": "primary", "route": [[828, 334], [870, 334], [870, 214], [912, 214]]},
+    {"id": "global_knn", "from": {"node": "global_features", "port": "knn"}, "to": {"node": "knn", "port": "in"}, "kind": "primary", "route": [[828, 358], [870, 358], [870, 344], [912, 344]]},
+    {"id": "global_retrieval", "from": {"node": "global_features", "port": "retrieval"}, "to": {"node": "retrieval", "port": "in"}, "kind": "primary", "route": [[828, 382], [870, 382], [870, 474], [912, 474]]},
+    {"id": "global_geometry", "from": {"node": "global_features", "port": "geometry"}, "to": {"node": "geometry", "port": "in"}, "kind": "primary", "route": [[828, 406], [850, 406], [850, 604], [912, 604]]},
+    {"id": "encoder_patch", "from": {"node": "encoder", "port": "patch"}, "to": {"node": "patch_features", "port": "in"}, "kind": "secondary", "route": [[516, 414], [584, 414], [584, 690], [1184, 690], [1184, 296], [1254, 296]]},
+    {"id": "patch_dense", "from": {"node": "patch_features", "port": "out"}, "to": {"node": "dense_tasks", "port": "in"}, "kind": "primary", "route": [[1344, 352], [1344, 480]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

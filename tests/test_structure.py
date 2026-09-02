@@ -119,3 +119,57 @@ def test_course_03_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_course_04_contains_the_declared_ssl_learning_lab():
+    course = Path("curriculum/beginner/04-self-supervised-visual-representation-learning")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "ntxent_loss",
+        "temperature_results",
+        "UnlabeledPairs",
+        "domain_valid",
+        "domain_invalid",
+        "train_simclr",
+        "teacher_student_loss",
+        "distance_after_ema",
+        "TinyMaskedAutoencoder",
+        "masked-only MSE",
+        "Supervised ImageNet · ResNet-18",
+        "retrieval_precision_at_k",
+        "collapse_diagnostics",
+        "effective_rank",
+        "class_minus_source",
+        "LABEL_FRACTIONS",
+        "patch_features",
+        "CV_ENABLE_DINOV2",
+        "representation_decision.json",
+        "TEN_PERCENT_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "labels and source ids remain outside that training interface" in source_lower
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_04_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/04-self-supervised-visual-representation-learning/assets")
+    expected = {
+        "architecture-objective-shift.svg",
+        "ssl-paradigms.svg",
+        "contrastive-learning.svg",
+        "teacher-student-learning.svg",
+        "masked-image-modeling.svg",
+        "representation-evaluation.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

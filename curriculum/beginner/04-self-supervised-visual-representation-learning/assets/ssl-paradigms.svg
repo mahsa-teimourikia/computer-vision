@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 780" role="img" aria-labelledby="title description">
+<title id="title">Self-supervised visual learning paradigms</title>
+<desc id="description">Self-supervised visual learning branches into contrastive instance discrimination, non-contrastive teacher-student learning, self-distillation, and masked image modeling. SimCLR, MoCo, BYOL, DINO, and MAE appear as representative systems within those paradigms.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1480" height="780" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Self-supervised visual learning paradigms</text>
+<rect x="64" y="112" width="1352" height="160" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Learning signal</text>
+<rect x="64" y="336" width="1352" height="370" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="370" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Method families</text>
+<polyline points="613,248 613,304 235,304 235,424" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="696,248 696,320 557,320 557,424" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="784,248 784,320 879,320 879,424" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="867,248 867,304 1201,304 1201,424" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="558" y="154" width="364" height="94" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="740.0" y="188" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Self-supervised visual learning</text>
+<text x="740.0" y="216" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">targets constructed from the data</text>
+<rect x="112" y="424" width="246" height="146" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="235.0" y="458" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Contrastive</text>
+<text x="235.0" y="486" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">positives + negatives</text>
+<text x="235.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">SimCLR · MoCo</text>
+<rect x="434" y="424" width="246" height="146" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="557.0" y="458" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Non-contrastive</text>
+<text x="557.0" y="486" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">asymmetry + stop-gradient</text>
+<text x="557.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">BYOL</text>
+<rect x="756" y="424" width="246" height="146" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="879.0" y="458" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Self-distillation</text>
+<text x="879.0" y="486" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">EMA teacher distributions</text>
+<text x="879.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">DINO</text>
+<rect x="1078" y="424" width="246" height="146" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1201.0" y="458" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Masked modeling</text>
+<text x="1201.0" y="486" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">predict missing patches</text>
+<text x="1201.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">MAE</text>
+<rect x="406" y="600" width="668" height="82" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="740.0" y="634" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Large-scale foundation pretraining combines and scales these ideas</text>
+<text x="740.0" y="662" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">DINOv2 · DINOv3 · domain-specific SSL</text>
+</svg>

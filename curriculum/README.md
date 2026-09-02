@@ -22,7 +22,7 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 - [01 · Modern Computer Vision Foundations](beginner/01-modern-computer-vision-foundations/README.md) — move from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and an enterprise review policy.
 - [02 · Modern CNN Architectures & Efficient Vision](beginner/02-modern-cnn-architectures-efficient-vision/README.md) — understand residual, mobile, efficient, and modernized ConvNet designs; compare five encoders; and select against measured deployment constraints.
 - [03 · Vision Transformers](beginner/03-vision-transformers/README.md) — turn images into tokens, build attention and a minimal ViT, compare CNN/ViT/Swin representations, test resolution shift, and review transformer systems evidence.
-- Self-Supervised Visual Representation Learning *(planned)*
+- [04 · Self-Supervised Visual Representation Learning](beginner/04-self-supervised-visual-representation-learning/README.md) — learn without manual pretraining labels through contrastive, teacher–student, and masked objectives; diagnose collapse; and evaluate label efficiency, retrieval, global features, and patch features.
 - Object Detection *(planned)*
 - Segmentation & Promptable Segmentation *(planned)*
 - Visual Embeddings, Metric Learning & Retrieval *(planned)*

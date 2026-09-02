@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 660" role="img" aria-labelledby="title description">
+<title id="title">Masked image modeling with an asymmetric autoencoder</title>
+<desc id="description">An image is patchified, most patches are masked, visible tokens enter the expensive encoder, mask tokens and encoded visible tokens enter a lightweight decoder, and loss is measured on missing patches.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1520" height="660" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Masked image modeling with an asymmetric autoencoder</text>
+<rect x="64" y="112" width="620" height="470" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Construct the self-supervised target</text>
+<rect x="748" y="112" width="708" height="470" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="770" y="146" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Asymmetric encoder–decoder</text>
+<polyline points="244,320 308,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="458,320 522,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="650,301 724,301 724,314 796,314" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="972,314 1036,314" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1220,314 1284,314" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1354,378 1354,490 1220,490" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="586,384 586,490 1036,490" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="112" y="274" width="132" height="92" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="178.0" y="308" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Image</text>
+<rect x="308" y="256" width="150" height="128" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="383.0" y="290" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Patchify</text>
+<text x="383.0" y="318" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">N patch targets</text>
+<rect x="522" y="256" width="128" height="128" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="586.0" y="290" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Mask ~75%</text>
+<text x="586.0" y="318" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">keep visible subset</text>
+<rect x="796" y="238" width="176" height="152" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="884.0" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Encoder</text>
+<text x="884.0" y="300" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">visible tokens only</text>
+<text x="884.0" y="318" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">expensive path</text>
+<rect x="1036" y="238" width="184" height="152" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1128.0" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Light decoder</text>
+<text x="1128.0" y="300" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">encoded + mask tokens</text>
+<rect x="1284" y="250" width="140" height="128" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1354.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Reconstruct</text>
+<text x="1354.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">missing patch pixels</text>
+<rect x="1036" y="444" width="184" height="92" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1128.0" y="478" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Masked MSE</text>
+<text x="1128.0" y="506" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">only hidden patches</text>
+</svg>

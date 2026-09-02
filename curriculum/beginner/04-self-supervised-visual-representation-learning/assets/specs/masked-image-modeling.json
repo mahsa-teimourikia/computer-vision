@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "masked-image-modeling",
+  "title": "Masked image modeling with an asymmetric autoencoder",
+  "purpose": "Explain the MAE path from image patches through a visible-token encoder and lightweight reconstruction decoder.",
+  "output": {
+    "svg": "curriculum/beginner/04-self-supervised-visual-representation-learning/assets/masked-image-modeling.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An image is patchified, most patches are masked, visible tokens enter the expensive encoder, mask tokens and encoded visible tokens enter a lightweight decoder, and loss is measured on missing patches."
+  },
+  "canvas": {"width": 1520, "height": 660, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 44, "min_layer_gap": 72, "node_padding": {"x": 22, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif", "title_color": "#16324F",
+    "semantic_colors": {
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "corruption", "label": "Construct the self-supervised target", "bounds": {"x": 64, "y": 112, "width": 620, "height": 470}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "model", "label": "Asymmetric encoder–decoder", "bounds": {"x": 748, "y": 112, "width": 708, "height": 470}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "image", "group": "corruption", "label": "Image", "type": "data", "bounds": {"x": 112, "y": 274, "width": 132, "height": 92}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "patchify", "group": "corruption", "label": "Patchify", "subtitle": "N patch targets", "type": "service", "bounds": {"x": 308, "y": 256, "width": 150, "height": 128}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "mask", "group": "corruption", "label": "Mask ~75%", "subtitle": "keep visible subset", "type": "action", "bounds": {"x": 522, "y": 256, "width": 128, "height": 128}, "ports": {"in": {"side": "left", "offset": 0.5}, "visible": {"side": "right", "offset": 0.35}, "targets": {"side": "bottom", "offset": 0.5}}},
+    {"id": "encoder", "group": "model", "label": "Encoder", "subtitle": "visible tokens only\nexpensive path", "type": "agent", "bounds": {"x": 796, "y": 238, "width": 176, "height": 152}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "decoder", "group": "model", "label": "Light decoder", "subtitle": "encoded + mask tokens", "type": "agent", "bounds": {"x": 1036, "y": 238, "width": 184, "height": 152}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "reconstruct", "group": "model", "label": "Reconstruct", "subtitle": "missing patch pixels", "type": "service", "bounds": {"x": 1284, "y": 250, "width": 140, "height": 128}, "ports": {"in": {"side": "left", "offset": 0.5}, "loss": {"side": "bottom", "offset": 0.5}}},
+    {"id": "masked_loss", "group": "model", "label": "Masked MSE", "subtitle": "only hidden patches", "type": "operations", "bounds": {"x": 1036, "y": 444, "width": 184, "height": 92}, "ports": {"prediction": {"side": "right", "offset": 0.5}, "target": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "image_patchify", "from": {"node": "image", "port": "out"}, "to": {"node": "patchify", "port": "in"}, "kind": "primary", "route": [[244, 320], [308, 320]]},
+    {"id": "patchify_mask", "from": {"node": "patchify", "port": "out"}, "to": {"node": "mask", "port": "in"}, "kind": "primary", "route": [[458, 320], [522, 320]]},
+    {"id": "mask_encoder", "from": {"node": "mask", "port": "visible"}, "to": {"node": "encoder", "port": "in"}, "kind": "primary", "route": [[650, 301], [724, 301], [724, 314], [796, 314]]},
+    {"id": "encoder_decoder", "from": {"node": "encoder", "port": "out"}, "to": {"node": "decoder", "port": "in"}, "kind": "primary", "route": [[972, 314], [1036, 314]]},
+    {"id": "decoder_reconstruct", "from": {"node": "decoder", "port": "out"}, "to": {"node": "reconstruct", "port": "in"}, "kind": "primary", "route": [[1220, 314], [1284, 314]]},
+    {"id": "prediction_loss", "from": {"node": "reconstruct", "port": "loss"}, "to": {"node": "masked_loss", "port": "prediction"}, "kind": "primary", "route": [[1354, 378], [1354, 490], [1220, 490]]},
+    {"id": "targets_loss", "from": {"node": "mask", "port": "targets"}, "to": {"node": "masked_loss", "port": "target"}, "kind": "secondary", "route": [[586, 384], [586, 490], [1036, 490]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}
