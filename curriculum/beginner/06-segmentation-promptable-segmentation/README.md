@@ -200,7 +200,15 @@ $$
 Dice=\frac{2IoU}{1+IoU}.
 $$
 
-Per-class IoU exposes rare-class failures. Mean IoU averages declared classes; say whether background and absent classes are included. Define the empty/empty policy explicitly because libraries differ. Pixel accuracy, mIoU, Dice, foreground recall, and class prevalence answer different questions.
+Per-class IoU exposes rare-class failures. Mean IoU averages declared classes; say whether background and absent classes are included. This course uses the following explicit binary-mask policy, verified by notebook assertions:
+
+| Ground truth | Prediction | Region IoU / Dice | Boundary F1 |
+| --- | --- | ---: | ---: |
+| Empty | Empty | 1 | 1 |
+| Empty | Non-empty | 0 | 0 |
+| Non-empty | Empty | 0 | 0 |
+
+For class-averaged semantic evaluation, a class absent from both prediction and target is excluded as `NaN` rather than counted as a perfect class. Pixel accuracy, mIoU, Dice, foreground recall, and class prevalence answer different questions.
 
 ![IoU and Dice measure region overlap, while boundary F1 asks whether contours align within a declared tolerance.](assets/mask-metrics.svg)
 
@@ -208,7 +216,7 @@ Per-class IoU exposes rare-class failures. Mean IoU averages declared classes; s
 
 Area overlap can hide operationally important edge defects. Boundary F1 converts both masks to contours, matches predicted and target contour pixels within a declared tolerance, then computes harmonic mean precision/recall. Boundary IoU, contour distance, and Hausdorff distance are other possible contracts.
 
-Tolerance must be recorded in pixels or physical units. A two-pixel error means something different for a 16-pixel scratch, a 4K image, and a calibrated millimetre-scale inspection. The notebook compares predictions with similar overlap but different edges.
+Tolerance must be recorded in pixels or physical units. A two-pixel error means something different for a 16-pixel scratch, a 4K image, and a calibrated millimetre-scale inspection. The notebook compares predictions with similar overlap but different edges and includes a topology counterexample: a continuous ring can be split into disconnected pieces while retaining high IoU and Dice. Component count, holes, connectivity, or a task-specific topology metric may therefore belong in the acceptance contract.
 
 ## 13. Small, thin, and ambiguous regions
 
@@ -282,18 +290,20 @@ A single click on a person may reasonably mean shirt, person, person plus backpa
 
 ## 20. The current optional foundation adapter: SAM 3.1
 
-The 2026 review selects the official [Meta SAM 3 repository](https://github.com/facebookresearch/sam3) at commit `660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7` and the gated `facebook/sam3.1` checkpoint for the optional path. SAM 3.1 (released 2026-03-27) is the current official update and adds Object Multiplex for multi-object video tracking. SAM 3 also expands visual prompting into open-vocabulary text/exemplar concept segmentation.
+These claims were independently checked on 2026-09-01 against the immutable official [SAM 3 repository README](https://github.com/facebookresearch/sam3/blob/660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7/README.md), [SAM 3.1 release notes](https://github.com/facebookresearch/sam3/blob/660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7/RELEASE_SAM3p1.md), and [SAM License](https://github.com/facebookresearch/sam3/blob/660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7/LICENSE). The optional adapter pins repository commit `660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7` and gated Hugging Face model revision `daa63191845a41281374e725f4c9e51c7a824460` for `facebook/sam3.1`.
+
+Keep the generations separate: the SAM 3 base architecture has 848M parameters and supports text, exemplar, and visual prompts. The official SAM 3.1 notes are dated 2026-03-27 and describe the update as adding Object Multiplex, new checkpoints, and optimized multi-object video inference. The custom SAM License in the pinned source is dated 2025-11-19. These are versioned external facts, not timeless course assumptions.
 
 The selection is deliberately **not** part of default execution:
 
-- the official model has 848M parameters; the SAM 3.1 checkpoint is about 3.5 GB;
+- the official base model has 848M parameters;
 - official prerequisites are Python 3.12+, PyTorch 2.7+, CUDA 12.6+, and a CUDA GPU;
 - checkpoint access is gated and requires authentication;
 - code and weights use the custom **SAM License**, including use restrictions and redistribution obligations—not Apache 2.0;
 - the official repository is pinned rather than executing an unreviewed latest branch; and
 - optional results must record checkpoint hash, repository revision, hardware, prompts, and license acceptance.
 
-SAM 2.1 remains a useful Apache-2.0 image/video alternative with smaller checkpoints, but it is not mislabeled as the newest generation. The local notebook uses a transparent color-and-connectivity prompt proxy only to teach evaluation mechanics. Its outputs are labeled `local_prompt_proxy`, never “SAM results.”
+SAM 2.1 remains a useful Apache-2.0 image/video alternative with smaller checkpoints, but it is not mislabeled as the newest generation. The local notebook uses a transparent color-and-connectivity prompt proxy only to teach evaluation mechanics. Every raw prompt record carries the local identity, and the JSON evidence stores a top-level promptable-system contract with `"engine": "local_prompt_proxy"` and `"foundation_model": false`; these outputs are never presented as SAM results.
 
 ## 21. Prompt ambiguity, sensitivity, and refinement
 
@@ -305,7 +315,7 @@ Refinement is a conversation with the mask:
 initial prompt → initial mask → negative/positive correction or prior mask → refined mask
 ```
 
-The correction delta, reviewer, timestamp, original output, and final approved mask belong in the audit trail.
+The correction delta, reviewer, timestamp, original output, and final approved mask belong in the audit trail. Final IoU alone misses the operating cost: the notebook reports the IoU and boundary-F1 trajectory after each prompt and the number of prompts required to reach a declared target IoU. Its correction chooser is explicitly labeled as an oracle simulation because it uses the target mask to select the next click.
 
 ## 22. Automatic mask generation
 
@@ -333,6 +343,8 @@ This previews Course 09. Phrase grounding, open-vocabulary category detection, a
 
 Factories A/B and Factory C differ in appearance while sharing a nominal mask taxonomy. Compare overall and held-out-source metrics, then inspect which slice moved: contrast, edge ambiguity, texture, region size, or class. A promptable foundation model may generalize better, worse, or simply fail differently from a task-specific U-Net. Measure it; do not assume it.
 
+The notebook's U-Net and local prompt proxy are **not an apples-to-apples model leaderboard**. The U-Net receives only an image and predicts a fixed taxonomy automatically; the proxy receives a ground-truth-derived target box. Tables therefore retain the prompt contract and information budget beside every score. A direct rank without prompt cost and oracle information would be misleading.
+
 The minimum evidence table should include:
 
 | Slice | mIoU | Dice | Foreground recall | Boundary F1 | Count |
@@ -351,7 +363,7 @@ image → automatic mask → quality gate
                          └─ reviewer → point/box/refinement → approve or reject
 ```
 
-Quality estimates must be compared with actual IoU on a reviewed set. Low-quality routing thresholds should be selected from review capacity and error cost, not copied from a demo. Retain the original prediction, candidate quality, prompt sequence, reviewer edits, final mask, and model/checkpoint versions.
+Quality estimates must be compared with actual IoU and boundary F1 on a reviewed set. The notebook reports rank correlations and calibration buckets; a model-reported quality estimate is neither ground-truth IoU nor a calibrated probability. Low-quality routing thresholds should be selected from review capacity and error cost, not copied from a demo. Retain the original prediction, candidate quality, prompt sequence, reviewer edits, final mask, prompt count to target quality, and model/checkpoint versions.
 
 ## 26. Enterprise decision framework
 
@@ -401,16 +413,17 @@ The notebook runs one deterministic experiment:
 
 1. generate and profile a source-aware synthetic corpus;
 2. prove nearest-neighbor mask resizing;
-3. implement and verify overlap and boundary metrics;
+3. implement and assertion-check overlap, empty-mask, boundary, and topology contracts;
 4. trace and train a small U-Net;
 5. compare CE, Dice, and CE + Dice;
 6. evaluate size, shape, contrast, occlusion, boundary, and Factory C slices;
 7. recover instance IDs from connected components;
-8. evaluate local point, negative-point, box, refinement, and quality-score behavior;
-9. measure point and detector-box perturbation;
-10. save `.artifacts/course-06-segmentation-evidence.json`.
+8. evaluate explicitly labeled local-proxy point, negative-point, box, and refinement behavior;
+9. calibrate reported quality against actual IoU and boundary F1;
+10. measure point and detector-box perturbation plus prompts-to-target correction effort;
+11. save `.artifacts/course-06-segmentation-evidence.json`.
 
-The JSON keeps `locally_measured_evidence`, `optional_downloaded_model_observations`, and `unresolved_production_assumptions` separate. It includes dataset and mask contracts, model versions, loss comparison, semantic and boundary metrics, size slices, source shift, prompt sensitivity, box-error propagation, human-review policy, and limitations.
+The JSON keeps `locally_measured_evidence`, `optional_downloaded_model_observations`, and `unresolved_production_assumptions` separate. It includes dataset and mask contracts, model versions, loss comparison, semantic and boundary metrics, assertion-backed empty policies, topology diagnostics, size slices, source shift, prompt sensitivity, quality calibration, correction effort, box-error propagation, the information-budget warning, human-review policy, and limitations. The optional SAM partition separately records the pinned repository/model revisions and defines fields for reported quality, actual IoU, and boundary F1 when an authorized run is performed.
 
 ## 31. Tooling review
 
@@ -424,7 +437,7 @@ The JSON keeps `locally_measured_evidence`, `optional_downloaded_model_observati
 | segmentation-models-pytorch | production architecture library | Reviewed, not needed for this teaching U-Net |
 | pycocotools | COCO RLE and official-style mask evaluation | Recommended when COCO interchange is required; not needed locally |
 | Hugging Face Hub | authenticated checkpoint retrieval | Optional only; pin revision and artifact hash |
-| Official Meta SAM 3 repo | current SAM 3.1 adapter | Optional, isolated environment |
+| Official Meta SAM 3 repo | pinned SAM 3.1 adapter | Optional, isolated environment; immutable source revision |
 | CVAT / Label Studio | annotation and review workflows | Operational options; validate export contract |
 | FiftyOne | dataset and failure-slice inspection | Useful at scale; unnecessary for the self-contained lab |
 
@@ -441,7 +454,7 @@ The JSON keeps `locally_measured_evidence`, `optional_downloaded_model_observati
 - [Segment Anything](https://arxiv.org/abs/2304.02643)
 - [SAM 2: Segment Anything in Images and Videos](https://arxiv.org/abs/2408.00714)
 - [SAM 3: Segment Anything with Concepts](https://ai.meta.com/research/publications/sam-3-segment-anything-with-concepts/)
-- [SAM 3.1 official release notes](https://github.com/facebookresearch/sam3/blob/main/RELEASE_SAM3p1.md)
+- [SAM 3.1 official release notes, pinned revision](https://github.com/facebookresearch/sam3/blob/660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7/RELEASE_SAM3p1.md)
 
 ## 33. Official documentation
 
@@ -449,7 +462,8 @@ The JSON keeps `locally_measured_evidence`, `optional_downloaded_model_observati
 - [TorchVision semantic segmentation models](https://docs.pytorch.org/vision/stable/models.html#semantic-segmentation)
 - [TorchVision Mask R-CNN](https://docs.pytorch.org/vision/stable/models/mask_rcnn.html)
 - [COCO data format and API](https://github.com/cocodataset/cocoapi)
-- [Meta SAM 3 repository and license](https://github.com/facebookresearch/sam3)
+- [Meta SAM 3 repository README, pinned revision](https://github.com/facebookresearch/sam3/blob/660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7/README.md)
+- [Meta SAM License, pinned revision](https://github.com/facebookresearch/sam3/blob/660a5e9e1b8b4c02c0ad97229b88a09a6e4ff5b7/LICENSE)
 - [Meta SAM 2 repository](https://github.com/facebookresearch/sam2)
 - [CVAT mask annotation documentation](https://docs.cvat.ai/docs/manual/basics/types-of-shapes/)
 - [Label Studio image segmentation template](https://labelstud.io/templates/image_segmentation)
