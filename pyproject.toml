@@ -9,6 +9,7 @@ dependencies = [
 
 [project.optional-dependencies]
 learner = [
+    "faiss-cpu==1.15.0",
     "jupyterlab>=4.0",
     "ipykernel>=6.29",
     "matplotlib==3.11.1",

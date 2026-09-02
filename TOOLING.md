@@ -1,6 +1,6 @@
 # Computer vision tooling review
 
-> Reviewed: 2026-09-01. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
+> Reviewed: 2026-09-02. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
 
 Tools are selected per lesson, not imposed as one universal framework. Every tooling decision should compare maintenance, portability, observability, licensing, reproducibility, hardware fit, exportability, and operational cost.
 
@@ -44,6 +44,18 @@ Do not compare frameworks using headline metrics copied from model pages. Re-run
 | FAISS | Large-scale embedding retrieval | Exact and approximate nearest-neighbour indexes with CPU/GPU options | Measure recall loss, filtering, updates, feature-version migration, tenant isolation, and memory |
 
 Teach the primitive first: view generation, similarity matrix, target mapping, stop-gradient, EMA, masking, and downstream evaluation should remain inspectable before adopting a packaged SSL trainer.
+
+## Metric learning and retrieval systems
+
+| Tool | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| PyTorch + torchvision | Siamese, contrastive, triplet, supervised-contrastive, and proxy-learning experiments | Transparent objective, sampler, mining, normalization, and official supervised encoder APIs | Batch composition, false negatives, numerical stability, distributed mining semantics, and evaluation contracts remain explicit responsibilities |
+| [scikit-learn nearest neighbours](https://scikit-learn.org/stable/modules/neighbors.html) | Portable exact-search baselines and small corpora | Familiar API, auditable brute-force behavior, and useful parity checks | Not a large-scale vector-serving layer; confirm metric conventions, normalization, and memory scaling |
+| [FAISS](https://github.com/facebookresearch/faiss) | Local exact and approximate dense-vector indexes | `IndexFlat` ground truth, HNSW, inverted files, product quantization, CPU/GPU options, and index serialization | Tune ANN against exact recall; review native-runtime compatibility, filtering, deletion/update behavior, memory overhead, ID mapping, and embedding migrations |
+| [Qdrant](https://qdrant.tech/documentation/) | Governed vector service with payload filtering | Persistent collections, metadata filters, distributed deployment, and service observability | Adds an operating service; review tenancy, backups, consistency, network boundaries, cost, and client/server version compatibility |
+| [FiftyOne](https://docs.voxel51.com/) | Visual retrieval inspection and review queues | Links embeddings, samples, labels, similarity, duplicates, and human review | Keep metrics and index artifacts portable; review data access, plugin/version governance, and scaling architecture |
+
+The Course 07 default is an exact NumPy/scikit-learn baseline plus FAISS `IndexFlatIP` and HNSW on L2-normalized `float32` vectors. A hosted vector database is deliberately optional: production adoption requires metadata filtering, access control, backup/restore, observability, update semantics, and migration evidence—not only a nearest-neighbour demo.
 
 ## Data, annotation, and evaluation
 

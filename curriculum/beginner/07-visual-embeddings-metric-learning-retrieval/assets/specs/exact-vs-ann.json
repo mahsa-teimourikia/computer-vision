@@ -1,0 +1,349 @@
+{
+  "version": 1,
+  "id": "exact-vs-ann",
+  "title": "Exact search versus approximate candidates",
+  "purpose": "Compare exhaustive and candidate-pruned search and reconnect both at ANN recall evaluation.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/exact-vs-ann.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A query branches to exact exhaustive search and approximate candidate search; both feed an ANN recall, latency, and memory comparison."
+  },
+  "canvas": {
+    "width": 1700,
+    "height": 780,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Visual retrieval system",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1572,
+        "height": 616
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "query",
+      "group": "system",
+      "label": "Query vector",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 340,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "exact": {
+          "side": "right",
+          "offset": 0.3
+        },
+        "ann": {
+          "side": "right",
+          "offset": 0.7
+        }
+      }
+    },
+    {
+      "id": "exact",
+      "group": "system",
+      "label": "Exact Flat search",
+      "type": "service",
+      "bounds": {
+        "x": 450,
+        "y": 190,
+        "width": 270,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "scan all N vectors \u00b7 ground truth"
+    },
+    {
+      "id": "ann",
+      "group": "system",
+      "label": "Approximate search",
+      "type": "agent",
+      "bounds": {
+        "x": 450,
+        "y": 500,
+        "width": 270,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "navigate candidate subset"
+    },
+    {
+      "id": "compare",
+      "group": "system",
+      "label": "Evaluate trade-off",
+      "type": "action",
+      "bounds": {
+        "x": 900,
+        "y": 315,
+        "width": 300,
+        "height": 190
+      },
+      "ports": {
+        "exact": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "ann": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "ANN Recall@K \u00b7 median/p95 latency \u00b7 memory"
+    },
+    {
+      "id": "decision",
+      "group": "system",
+      "label": "Choose against contract",
+      "type": "operations",
+      "bounds": {
+        "x": 1360,
+        "y": 350,
+        "width": 270,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "query_exact",
+      "from": {
+        "node": "query",
+        "port": "exact"
+      },
+      "to": {
+        "node": "exact",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          320,
+          370
+        ],
+        [
+          380,
+          370
+        ],
+        [
+          380,
+          260
+        ],
+        [
+          450,
+          260
+        ]
+      ]
+    },
+    {
+      "id": "query_ann",
+      "from": {
+        "node": "query",
+        "port": "ann"
+      },
+      "to": {
+        "node": "ann",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          320,
+          410
+        ],
+        [
+          380,
+          410
+        ],
+        [
+          380,
+          570
+        ],
+        [
+          450,
+          570
+        ]
+      ]
+    },
+    {
+      "id": "exact_compare",
+      "from": {
+        "node": "exact",
+        "port": "out"
+      },
+      "to": {
+        "node": "compare",
+        "port": "exact"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          720,
+          260
+        ],
+        [
+          810,
+          260
+        ],
+        [
+          810,
+          372
+        ],
+        [
+          900,
+          372
+        ]
+      ],
+      "label": "exact top-K",
+      "label_at": [
+        810,
+        330
+      ]
+    },
+    {
+      "id": "ann_compare",
+      "from": {
+        "node": "ann",
+        "port": "out"
+      },
+      "to": {
+        "node": "compare",
+        "port": "ann"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          720,
+          570
+        ],
+        [
+          810,
+          570
+        ],
+        [
+          810,
+          448
+        ],
+        [
+          900,
+          448
+        ]
+      ],
+      "label": "ANN top-K",
+      "label_at": [
+        810,
+        510
+      ]
+    },
+    {
+      "id": "compare_decision",
+      "from": {
+        "node": "compare",
+        "port": "out"
+      },
+      "to": {
+        "node": "decision",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1200,
+          410
+        ],
+        [
+          1360,
+          410
+        ]
+      ],
+      "label": "measured evidence",
+      "label_at": [
+        1280,
+        395
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

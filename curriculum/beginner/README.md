@@ -10,6 +10,6 @@ After this track, learners should be able to inspect an image pipeline, implemen
 - [04 · Self-Supervised Visual Representation Learning](04-self-supervised-visual-representation-learning/README.md) *(available)*
 - [05 · Object Detection](05-object-detection/README.md) *(available)*
 - [06 · Segmentation & Promptable Segmentation](06-segmentation-promptable-segmentation/README.md) *(available)*
-- 07 · Visual Embeddings, Metric Learning & Retrieval *(planned)*
+- [07 · Visual Embeddings, Metric Learning & Retrieval](07-visual-embeddings-metric-learning-retrieval/README.md) *(available)*
 - 08 · Tracking, Keypoints & Pose *(planned)*
 - 09 · Vision Foundation Models & Open-Vocabulary Vision *(planned)*

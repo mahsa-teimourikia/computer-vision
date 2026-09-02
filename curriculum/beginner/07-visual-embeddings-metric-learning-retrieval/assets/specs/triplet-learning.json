@@ -1,0 +1,360 @@
+{
+  "version": 1,
+  "id": "triplet-learning",
+  "title": "Triplet ordering and margin",
+  "purpose": "Explain anchor-positive-negative ordering without implying a unique geometry.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/triplet-learning.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An anchor branches to a positive and negative; their distances enter a margin objective that requires the positive to be closer."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Visual retrieval system",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1472,
+        "height": 596
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "anchor",
+      "group": "system",
+      "label": "Anchor",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 335,
+        "width": 210,
+        "height": 100
+      },
+      "ports": {
+        "positive": {
+          "side": "right",
+          "offset": 0.3
+        },
+        "negative": {
+          "side": "right",
+          "offset": 0.7
+        }
+      }
+    },
+    {
+      "id": "positive",
+      "group": "system",
+      "label": "Positive",
+      "type": "data",
+      "bounds": {
+        "x": 480,
+        "y": 210,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "same contract label"
+    },
+    {
+      "id": "negative",
+      "group": "system",
+      "label": "Negative",
+      "type": "data",
+      "bounds": {
+        "x": 480,
+        "y": 490,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "different contract label"
+    },
+    {
+      "id": "objective",
+      "group": "system",
+      "label": "Triplet objective",
+      "type": "agent",
+      "bounds": {
+        "x": 850,
+        "y": 315,
+        "width": 280,
+        "height": 160
+      },
+      "ports": {
+        "positive": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "negative": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "max(0, d(a,p) \u2212 d(a,n) + m)"
+    },
+    {
+      "id": "rule",
+      "group": "system",
+      "label": "Required ordering",
+      "type": "action",
+      "bounds": {
+        "x": 1260,
+        "y": 335,
+        "width": 260,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "positive closer by margin m"
+    }
+  ],
+  "edges": [
+    {
+      "id": "anchor_positive",
+      "from": {
+        "node": "anchor",
+        "port": "positive"
+      },
+      "to": {
+        "node": "positive",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          330,
+          365
+        ],
+        [
+          400,
+          365
+        ],
+        [
+          400,
+          260
+        ],
+        [
+          480,
+          260
+        ]
+      ],
+      "label": "pull",
+      "label_at": [
+        400,
+        330
+      ]
+    },
+    {
+      "id": "anchor_negative",
+      "from": {
+        "node": "anchor",
+        "port": "negative"
+      },
+      "to": {
+        "node": "negative",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          330,
+          405
+        ],
+        [
+          400,
+          405
+        ],
+        [
+          400,
+          540
+        ],
+        [
+          480,
+          540
+        ]
+      ],
+      "label": "push",
+      "label_at": [
+        400,
+        470
+      ]
+    },
+    {
+      "id": "positive_objective",
+      "from": {
+        "node": "positive",
+        "port": "out"
+      },
+      "to": {
+        "node": "objective",
+        "port": "positive"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          700,
+          260
+        ],
+        [
+          780,
+          260
+        ],
+        [
+          780,
+          363
+        ],
+        [
+          850,
+          363
+        ]
+      ],
+      "label": "d(a,p)",
+      "label_at": [
+        780,
+        325
+      ]
+    },
+    {
+      "id": "negative_objective",
+      "from": {
+        "node": "negative",
+        "port": "out"
+      },
+      "to": {
+        "node": "objective",
+        "port": "negative"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          700,
+          540
+        ],
+        [
+          780,
+          540
+        ],
+        [
+          780,
+          427
+        ],
+        [
+          850,
+          427
+        ]
+      ],
+      "label": "d(a,n)",
+      "label_at": [
+        780,
+        490
+      ]
+    },
+    {
+      "id": "objective_rule",
+      "from": {
+        "node": "objective",
+        "port": "out"
+      },
+      "to": {
+        "node": "rule",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1130,
+          395
+        ],
+        [
+          1260,
+          395
+        ]
+      ],
+      "label": "margin",
+      "label_at": [
+        1195,
+        380
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

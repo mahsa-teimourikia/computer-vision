@@ -60,6 +60,8 @@ def validate_hub() -> None:
         "Vision Transformers",
         "Self-Supervised Visual Representation Learning",
         "Object Detection",
+        "Segmentation &amp; Promptable Segmentation",
+        "Visual Embeddings, Metric Learning &amp; Retrieval",
         "oneplusi.io",
     ]
     for text in required:

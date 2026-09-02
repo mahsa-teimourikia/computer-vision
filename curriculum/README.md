@@ -25,8 +25,7 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 - [04 · Self-Supervised Visual Representation Learning](beginner/04-self-supervised-visual-representation-learning/README.md) — learn without manual pretraining labels through contrastive, teacher–student, and masked objectives; diagnose collapse; and evaluate label efficiency, retrieval, global features, and patch features.
 - [05 · Object Detection](beginner/05-object-detection/README.md) — move from box contracts, matching, and AP to a tiny dense detector, NMS, Hungarian assignment, YOLO/DETR trade-offs, open-vocabulary extensions, and governed deployment evidence.
 - [06 · Segmentation & Promptable Segmentation](beginner/06-segmentation-promptable-segmentation/README.md) — move from mask contracts, U-Net, overlap, and boundaries to source-sliced evaluation, interactive prompts, detector-box error propagation, SAM 3.1 governance, and human review.
-- Segmentation & Promptable Segmentation *(planned)*
-- Visual Embeddings, Metric Learning & Retrieval *(planned)*
+- [07 · Visual Embeddings, Metric Learning & Retrieval](beginner/07-visual-embeddings-metric-learning-retrieval/README.md) — define similarity, learn normalized spaces, compare full-image and region retrieval, review hard negatives, verify exact search, tune HNSW, and govern embedding versions.
 - Tracking, Keypoints & Pose *(planned)*
 - Vision Foundation Models & Open-Vocabulary Vision *(planned)*
 
