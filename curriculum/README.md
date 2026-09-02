@@ -24,6 +24,7 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 - [03 · Vision Transformers](beginner/03-vision-transformers/README.md) — turn images into tokens, build attention and a minimal ViT, compare CNN/ViT/Swin representations, test resolution shift, and review transformer systems evidence.
 - [04 · Self-Supervised Visual Representation Learning](beginner/04-self-supervised-visual-representation-learning/README.md) — learn without manual pretraining labels through contrastive, teacher–student, and masked objectives; diagnose collapse; and evaluate label efficiency, retrieval, global features, and patch features.
 - [05 · Object Detection](beginner/05-object-detection/README.md) — move from box contracts, matching, and AP to a tiny dense detector, NMS, Hungarian assignment, YOLO/DETR trade-offs, open-vocabulary extensions, and governed deployment evidence.
+- [06 · Segmentation & Promptable Segmentation](beginner/06-segmentation-promptable-segmentation/README.md) — move from mask contracts, U-Net, overlap, and boundaries to source-sliced evaluation, interactive prompts, detector-box error propagation, SAM 3.1 governance, and human review.
 - Segmentation & Promptable Segmentation *(planned)*
 - Visual Embeddings, Metric Learning & Retrieval *(planned)*
 - Tracking, Keypoints & Pose *(planned)*

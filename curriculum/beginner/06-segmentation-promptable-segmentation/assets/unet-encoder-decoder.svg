@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+<title id="title">U-Net preserves semantics and spatial detail</title>
+<desc id="description">Encoder stages reduce resolution into a bottleneck, decoder stages restore it, and two skip connections carry same-scale spatial detail across the U shape.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="900" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">U-Net preserves semantics and spatial detail</text>
+<rect x="64" y="120" width="1472" height="650" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Contracting path → bottleneck → expanding path</text>
+<polyline points="320,334 360,334 360,455 405,455" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="302" y="368" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="360" y="385" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">down</text>
+<polyline points="625,474 660,474 660,600 700,600" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="602" y="508" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="660" y="525" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">down</text>
+<polyline points="920,600 955,600 955,474 995,474" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="897" y="518" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="955" y="535" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">up</text>
+<polyline points="1215,455 1255,455 1255,334 1295,334" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1197" y="378" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1255" y="395" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">up</text>
+<polyline points="215,250 215,190 1400,190 1400,250" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="742" y="173" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="800" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">same-scale skip</text>
+<polyline points="515,390 515,300 1105,300 1105,390" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="752" y="283" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="810" y="300" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">same-scale skip</text>
+<rect x="110" y="250" width="210" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="215.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Encoder H</text>
+<text x="215.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">high resolution</text>
+<rect x="405" y="390" width="220" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="515.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Encoder H/2</text>
+<text x="515.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">more context</text>
+<rect x="700" y="535" width="220" height="130" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="810.0" y="569" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Bottleneck</text>
+<text x="810.0" y="597" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">H/4 semantics</text>
+<rect x="995" y="390" width="220" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1105.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Decoder H/2</text>
+<text x="1105.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">upsample + fuse</text>
+<rect x="1295" y="250" width="210" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1400.0" y="284" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Decoder H</text>
+<text x="1400.0" y="312" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">pixel logits</text>
+</svg>
