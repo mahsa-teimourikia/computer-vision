@@ -253,13 +253,13 @@ If every input maps to one vector, pair agreement can become trivial under a poo
 - effective rank; and
 - downstream probe and retrieval behavior.
 
-For singular values $s_i$, define normalized energy $p_i=s_i/\sum_j s_j$ and entropy-based effective rank
+For singular values $s_i$, define normalized squared energy $p_i=s_i^2/\sum_j s_j^2$ and entropy-based effective rank
 
 $$
 r_{eff}=\exp\left(-\sum_i p_i\log p_i\right).
 $$
 
-No single threshold proves collapse for every feature dimension or batch. The notebook compares a deliberately collapsed matrix, random features, and learned features so the signals are interpretable together.
+The top singular value ratio $p_1$ reports how much centered feature energy is concentrated in one direction. No single threshold proves collapse for every feature dimension or batch. The notebook prints one explicit table with embedding variance, mean cosine similarity, effective rank, top singular value ratio, class separation, and source separation. It compares a healthy isotropic toy, a low-variance near-collapsed rank-one toy, an exactly collapsed toy, random features, and every learned representation.
 
 ## 8. Non-contrastive and teacher–student learning
 
@@ -291,7 +291,7 @@ DINO uses a student and EMA teacher with no human semantic label. The teacher se
 - **EMA teacher** stabilizes targets by changing more slowly than the student.
 - **Stop-gradient** treats the teacher distribution as a target for the current step.
 
-The notebook makes centering, temperature, entropy, and EMA lag numeric with a small deterministic example. It does not pretend to reproduce DINO training.
+The notebook first makes centering, temperature, entropy, and EMA lag numeric with a small deterministic example. It then trains a compact teacher–student objective with the same tiny encoder, unlabeled corpus, view policy, and epoch budget used by the contrastive comparison. This is a controlled teaching analogue, not a reproduction of DINO training.
 
 The original DINO study found strong nearest-neighbour and linear-probe behavior and observed spatial structure in self-supervised ViT attention. An attention map is still a model-internal interaction diagnostic—not a segmentation label, causal explanation, or release artifact.
 
@@ -305,7 +305,7 @@ large curated image corpus → self-supervised pretraining → frozen backbone
                                                      ↘ patch features
 ```
 
-The official DINOv2 model card describes DINO self-distillation, iBOT-style masked-image modeling, and KoLeo regularization in its training objective. The notebook contains an optional official `torch.hub` extension for `dinov2_vits14`; it is disabled by default because source checkout, checkpoint download, memory, network availability, and remote-code trust do not belong in credential-free CI.
+The official DINOv2 model card describes DINO self-distillation, iBOT-style masked-image modeling, and KoLeo regularization in its training objective. The notebook contains an optional official `torch.hub` extension for `dinov2_vits14`; it pins the official repository to commit `7764ea0f912e53c92e82eb78a2a1631e92725fc8` and remains disabled by default because source checkout, checkpoint download, memory, network availability, and remote-code trust do not belong in credential-free CI. Pinning source does not pin checkpoint bytes: a production record must also capture the resolved weight URL, digest, model card, preprocessing, and approval evidence.
 
 ### 2026 radar: DINOv3
 
@@ -335,7 +335,7 @@ $$
 
 The asymmetry matters: masking 75% means the encoder processes only 25% of image tokens, while the inexpensive decoder handles reconstruction. Pixel reconstruction and semantic representation learning are not identical goals. Useful semantics can emerge, but a low pixel MSE can also reward texture or colour details irrelevant to downstream decisions.
 
-The lab implements patchify/unpatchify, deterministic masking, a small visible-token encoder and decoder, masked-only loss, and reconstruction visualization. It is a primitive demonstration, not a full transformer MAE reproduction.
+The lab implements patchify/unpatchify, deterministic masking, a small visible-token encoder and decoder, masked-only loss, and reconstruction visualization. It also trains a masked-reconstruction path around the same tiny CNN encoder used by the contrastive and teacher–student comparison. These are primitive demonstrations, not a full transformer MAE reproduction.
 
 ## 12. Compare paradigms by signal and failure mode
 
@@ -347,7 +347,7 @@ The lab implements patchify/unpatchify, deterministic masking, a small visible-t
 | DINO-style | Centered/sharpened teacher distribution | No | Strong global and spatial features | Stable multi-crop teacher–student training |
 | MAE-style | Masked reconstruction | No | Scalable visible-token encoder | Reconstruction signal may not match semantics |
 
-There is no universal winner. Contrastive objectives are attractive when valid view relationships are clear. Teacher–student objectives avoid explicit negative engineering but add target dynamics. Masked modeling scales well with ViTs and preserves local content, but the pretext target may be misaligned with the downstream task. Hybrid foundation systems combine signals because the trade-offs remain real.
+There is no universal winner. Contrastive objectives are attractive when valid view relationships are clear. Teacher–student objectives avoid explicit negative engineering but add target dynamics. Masked modeling scales well with ViTs and preserves local content, but the pretext target may be misaligned with the downstream task. Hybrid foundation systems combine signals because the trade-offs remain real. The notebook holds one tiny encoder and corpus fixed across the three objective families, then compares their downstream geometry. Their raw losses are intentionally **not** compared numerically because NT-Xent, normalized prediction loss, and pixel MSE have different units and scales.
 
 ## 13. Representation evaluation
 
@@ -373,11 +373,11 @@ Adjusted Rand index, normalized mutual information, silhouette score, covariance
 
 ### Label-efficiency curves
 
-Evaluate at 1%, 5%, 10%, 25%, and 100% labelled data, recording actual per-class counts. Compare representations under the same stratified subset. The important question is:
+Evaluate at 1%, 5%, 10%, 25%, and 100% labelled data, recording actual per-class counts. Compare representations under the same stratified subset. Repeat each sampling budget across several seeds: one unusually easy or hard subset can distort a curve, especially at 1% and 5%. The notebook uses five stratified subset seeds and reports the raw runs plus mean ± standard deviation. This measures subset sensitivity in the bounded experiment; it is not a complete deployment confidence interval. The important question is:
 
 > How much labelled data does each representation require to reach useful performance?
 
-The lab compares a random tiny encoder, official ImageNet-supervised ResNet-18 features, and domain self-supervised features. It also reports weak and domain-invalid augmentation variants. Local results are not claims about the original papers.
+The lab compares a random tiny encoder, official ImageNet-supervised ResNet-18 features, contrastive, teacher–student, and masked-reconstruction features. It also reports weak and domain-invalid augmentation variants. Local results are not claims about the original papers.
 
 ## 14. Global versus patch features
 
@@ -390,7 +390,9 @@ classification · retrieval             correspondence · localization
                                        detection · segmentation · depth
 ```
 
-A global feature aggregates the image and is convenient for instance-level decisions. Patch features retain a spatial grid and enable dense transfer. Pooling patch tokens can recover a global representation; the reverse operation cannot reconstruct discarded location. This distinction bridges directly to Course 05 detection, Course 06 segmentation, and later vision-foundation-model lessons.
+A global feature aggregates the image and is convenient for instance-level decisions. Patch features retain a spatial grid and enable dense transfer. Pooling patch tokens can recover a global representation; the reverse operation cannot reconstruct discarded location.
+
+The notebook evaluates these contracts separately. Global quality uses held-out linear probing and retrieval. Patch quality uses nearest-patch correspondence after a known horizontal flip: a patch at $(r,c)$ should match $(r,W-1-c)$ in the flipped feature grid. Top-1, top-5, and mean reciprocal rank make local matching executable. This is a bounded equivariance test—not a detection, segmentation, or semantic correspondence benchmark—but it demonstrates why a good classification embedding and a good dense feature are not interchangeable. The distinction bridges directly to Course 05 detection, Course 06 segmentation, and later vision-foundation-model lessons.
 
 ## 15. Tooling review
 
@@ -436,6 +438,8 @@ Evaluate:
 
 Domain SSL is justified by measured improvement under a written contract—not merely by owning many images. Start with a strong frozen public encoder. Add a simple probe and retrieval baseline. Only then spend domain compute when the gap, privacy boundary, dense task, or label-efficiency evidence warrants it.
 
+The notebook’s final decision artifact compares four actions: reuse a supervised ImageNet encoder, benchmark/reuse pinned DINOv2, run domain SSL pretraining, or collect more labels. Every option records current evidence, domain gap, label budget, compute cost, privacy/governance, downstream-task diversity, expected reuse horizon, next evidence gate, and status. This makes “train SSL” one economic and governance choice among alternatives—not the automatic conclusion of an SSL course.
+
 ## 17. Practical lab — learning visual representations without labels
 
 Scenario: an industrial organization has more than 100,000 historical inspection images but only a small labelled subset. It wants one governed domain encoder for classification, retrieval, and future dense tasks.
@@ -449,14 +453,16 @@ The notebook uses a bounded procedural proxy and follows this sequence:
 5. visualize the temperature experiment;
 6. train a tiny SimCLR encoder under three augmentation policies;
 7. demonstrate EMA teacher lag, stop-gradient targets, centering, and sharpening;
-8. train a tiny masked-patch autoencoder and inspect masked-only loss;
+8. train contrastive, teacher–student, and masked-reconstruction objectives with one tiny encoder and corpus;
 9. extract random, ImageNet-supervised, and SSL features;
-10. run linear probes, k-NN, retrieval, PCA, class/source separation, and collapse diagnostics;
-11. plot label-efficiency curves;
-12. inspect global and patch-level features;
-13. inject an augmentation failure and evaluate the mitigation;
-14. optionally load official DINOv2 weights when explicitly enabled; and
-15. save a representation evidence bundle and provisional enterprise decision.
+10. show that the lowest comparable NT-Xent loss does not produce the best downstream probe;
+11. print an explicit healthy/near-collapsed/collapsed diagnostic table with semantic and source separation;
+12. run linear probes, k-NN, retrieval, PCA, and source-aware evaluation;
+13. repeat every label budget across five stratified seeds and plot mean ± variability;
+14. compare pooled global quality with executable nearest-patch flip correspondence;
+15. inject an augmentation failure and evaluate the mitigation;
+16. optionally load official DINOv2 weights from pinned source when explicitly enabled; and
+17. save the raw evidence tables, enterprise option matrix, and decision JSON.
 
 Run locally:
 
@@ -465,7 +471,7 @@ python -m pip install -r curriculum/beginner/04-self-supervised-visual-represent
 jupyter lab curriculum/beginner/04-self-supervised-visual-representation-learning/lab.ipynb
 ```
 
-The optional DINOv2 section is enabled with `CV_ENABLE_DINOV2=1`. Review downloaded source and weights before use; it is intentionally skipped by default.
+The optional DINOv2 section is enabled with `CV_ENABLE_DINOV2=1`. Review the pinned source and downloaded weights before use; it is intentionally skipped by default. Successful execution writes CSV artifacts for objective history, pretext-versus-transfer evidence, collapse, class/source separation, label-efficiency runs and summaries, patch correspondence, representation evaluation, and enterprise options, plus `enterprise_representation_decision.json`.
 
 ## 18. Failure modes and mitigations
 
