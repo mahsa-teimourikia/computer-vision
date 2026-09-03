@@ -21,6 +21,7 @@ learner = [
 ]
 contributor = [
     "computer-vision-field-guide[learner]",
+    "faiss-cpu==1.15.0",
     "pytest>=8.0",
     "nbclient>=0.10",
     "nbformat>=5.10",
