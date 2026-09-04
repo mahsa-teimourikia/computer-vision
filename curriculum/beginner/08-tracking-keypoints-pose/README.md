@@ -469,7 +469,7 @@ Review date: **2026-09-02**. “Modern” here means a maintained and operationa
 
 ## 28. Transition to Course 09
 
-Courses 05–08 designed specialized systems for detection, segmentation, retrieval, tracking, and pose. [Course 09](../README.md) asks whether reusable foundation representations can support several of these capabilities through prompting, open vocabularies, adapters, and lightweight heads.
+Courses 05–08 designed specialized systems for detection, segmentation, retrieval, tracking, and pose. [Course 09](../09-vision-foundation-models-open-vocabulary/README.md) asks whether reusable foundation representations can support several of these capabilities through prompting, open vocabularies, adapters, and lightweight heads.
 
 ```text
 frame → detection → association → identity → motion → landmarks → geometry → temporal history

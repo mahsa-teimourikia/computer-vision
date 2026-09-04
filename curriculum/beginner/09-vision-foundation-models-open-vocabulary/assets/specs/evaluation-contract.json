@@ -1,0 +1,31 @@
+{
+  "version": 1, "id": "evaluation-contract", "title": "Capability-specific evaluation contract", "purpose": "Show that one foundation system requires several separate evidence streams.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/evaluation-contract.svg", "medium": "documentation and notebook", "alt_text": "A foundation system fans out to separate representation, language, localization, segmentation, composition, systems, and governance evaluation before a deployment decision."},
+  "canvas": {"width": 2000, "height": 940, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 46, "min_layer_gap": 76, "node_padding": {"x": 22, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "evidence", "label": "No single foundation score", "bounds": {"x": 64, "y": 100, "width": 1872, "height": 770}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "system", "group": "evidence", "label": "Foundation vision system", "subtitle": "versioned model + prompts + composition", "type": "agent", "bounds": {"x": 750, "y": 150, "width": 500, "height": 130}, "ports": {"a": {"side": "bottom", "offset": 0.08}, "b": {"side": "bottom", "offset": 0.22}, "c": {"side": "bottom", "offset": 0.36}, "d": {"side": "bottom", "offset": 0.5}, "e": {"side": "bottom", "offset": 0.64}, "f": {"side": "bottom", "offset": 0.78}, "g": {"side": "bottom", "offset": 0.92}}},
+    {"id": "representation", "group": "evidence", "label": "Representation", "subtitle": "probe · retrieval · dense", "type": "data", "bounds": {"x": 90, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "language", "group": "evidence", "label": "Language", "subtitle": "prompt · vocabulary", "type": "service", "bounds": {"x": 350, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "localization", "group": "evidence", "label": "Localization", "subtitle": "box · phrase", "type": "action", "bounds": {"x": 610, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "segmentation", "group": "evidence", "label": "Segmentation", "subtitle": "region · boundary", "type": "action", "bounds": {"x": 870, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "composition", "group": "evidence", "label": "Composition", "subtitle": "stage propagation", "type": "agent", "bounds": {"x": 1130, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "systems", "group": "evidence", "label": "Systems", "subtitle": "latency · memory", "type": "operations", "bounds": {"x": 1390, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "governance", "group": "evidence", "label": "Governance", "subtitle": "license · provenance", "type": "operations", "bounds": {"x": 1650, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "decision", "group": "evidence", "label": "Bounded deployment decision", "subtitle": "pass · abstain · review · reject", "type": "service", "bounds": {"x": 750, "y": 720, "width": 500, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "system", "port": "a"}, "to": {"node": "representation", "port": "in"}, "kind": "primary", "route": [[790,280],[790,360],[210,360],[210,470]]},
+    {"id": "e2", "from": {"node": "system", "port": "b"}, "to": {"node": "language", "port": "in"}, "kind": "primary", "route": [[860,280],[860,380],[470,380],[470,470]]},
+    {"id": "e3", "from": {"node": "system", "port": "c"}, "to": {"node": "localization", "port": "in"}, "kind": "primary", "route": [[930,280],[930,400],[730,400],[730,470]]},
+    {"id": "e4", "from": {"node": "system", "port": "d"}, "to": {"node": "segmentation", "port": "in"}, "kind": "primary", "route": [[1000,280],[1000,400],[990,400],[990,470]]},
+    {"id": "e5", "from": {"node": "system", "port": "e"}, "to": {"node": "composition", "port": "in"}, "kind": "primary", "route": [[1070,280],[1070,400],[1250,400],[1250,470]]},
+    {"id": "e6", "from": {"node": "system", "port": "f"}, "to": {"node": "systems", "port": "in"}, "kind": "primary", "route": [[1140,280],[1140,380],[1510,380],[1510,470]]},
+    {"id": "e7", "from": {"node": "system", "port": "g"}, "to": {"node": "governance", "port": "in"}, "kind": "primary", "route": [[1210,280],[1210,360],[1770,360],[1770,470]]},
+    {"id": "e8", "from": {"node": "representation", "port": "out"}, "to": {"node": "decision", "port": "in"}, "kind": "secondary", "route": [[210,600],[210,660],[1000,660],[1000,720]]},
+    {"id": "e9", "from": {"node": "governance", "port": "out"}, "to": {"node": "decision", "port": "in"}, "kind": "secondary", "route": [[1770,600],[1770,680],[1000,680],[1000,720]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

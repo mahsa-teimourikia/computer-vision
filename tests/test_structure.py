@@ -516,3 +516,78 @@ def test_course_08_diagrams_are_reusable_and_accessible():
     association_text = json.dumps(association_spec)
     for required in ["Hard gates", "Remaining pairs", "Weighted cost", "Hungarian match", "max_combined_cost"]:
         assert required in association_text
+
+
+def test_course_09_contains_the_declared_foundation_vision_lab():
+    course = Path("curriculum/beginner/09-vision-foundation-models-open-vocabulary")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "clip_symmetric_loss",
+        "l2_normalize",
+        "local_alignment_proxy",
+        "PROMPT_TEMPLATES",
+        "zero_shot_scores",
+        "ensemble_text",
+        "vocabulary_sensitivity",
+        "vocabulary_boundary_example",
+        "select_abstention_policy",
+        "selected_on",
+        "specialist_proxy",
+        "self_supervised_proxy",
+        "image_text_alignment_proxy",
+        "evaluate_retrieval",
+        "patch_features",
+        "patch_correspondence_accuracy",
+        "local_grounding_proxy",
+        "category_detection",
+        "phrase_grounding",
+        "box_prompt_segmenter_proxy",
+        "oracle_box",
+        "perturbed_box",
+        "grounded_wrong_instance",
+        '"foundation_model": False',
+        "adaptation_results",
+        "OPTIONAL_MODEL_MANIFESTS",
+        "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+        "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+        "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+        "a2bb814dd30d776dcf7e30523b00659f4f141c71",
+        "daa63191845a41281374e725f4c9e51c7a824460",
+        "trust_remote_code=False",
+        "course-09-foundation-vision-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "DEMONSTRATION_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "siglip, or a foundation model" in source_lower
+    assert "factory c remains untouched" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_09_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets")
+    expected = {
+        "beginner-track-synthesis.svg",
+        "foundation-capabilities.svg",
+        "dual-encoder-alignment.svg",
+        "global-patch-features.svg",
+        "open-vocabulary-grounding.svg",
+        "detector-segmenter-composition.svg",
+        "adaptation-ladder.svg",
+        "evaluation-contract.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

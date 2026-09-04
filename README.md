@@ -11,7 +11,7 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The first eight complete courses form a connected foundations sequence:
+The nine complete courses form a connected Beginner sequence:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
@@ -21,8 +21,9 @@ The first eight complete courses form a connected foundations sequence:
 6. [Segmentation & Promptable Segmentation](curriculum/beginner/06-segmentation-promptable-segmentation/README.md) moves from mask contracts, U-Net, losses, overlap, and boundaries through source-sliced semantic evaluation, prompt sensitivity, detector-box error propagation, human review, and a governed optional SAM 3.1 adapter.
 7. [Visual Embeddings, Metric Learning & Retrieval](curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/README.md) turns explicit similarity contracts into normalized embeddings, metric-learning objectives, simulated mining adjudication, exact and approximate search, retrieval failure analysis, and versioned enterprise evidence.
 8. [Tracking, Keypoints & Pose](curriculum/beginner/08-tracking-keypoints-pose/README.md) builds timestamp-aware association, lifecycle, motion, appearance, and Byte-style recovery before connecting persistent identity to landmark accuracy, pose geometry, temporal stability, and failure propagation.
+9. [Vision Foundation Models & Open-Vocabulary Vision](curriculum/beginner/09-vision-foundation-models-open-vocabulary/README.md) synthesizes the track through reusable visual features, image–text alignment, prompt and vocabulary evaluation, patch correspondence, language-conditioned localization, detector→segmenter composition, and governed adaptation.
 
-All eight CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Course 08 keeps official TrackEval, ByteTrack, and downloaded pose checkpoints optional.
+All nine CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Course 09 exposes common Hugging Face model/processor adapters behind explicit opt-in flags and immutable revisions.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -95,7 +96,12 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
-│   └── 08-tracking-keypoints-pose/
+│   ├── 08-tracking-keypoints-pose/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 09-vision-foundation-models-open-vocabulary/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt
