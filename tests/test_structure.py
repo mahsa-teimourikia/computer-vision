@@ -439,12 +439,19 @@ def test_course_08_contains_the_declared_tracking_pose_lab():
         "class StructuredTracker",
         "TrackState",
         "lifecycle_events",
-        "kalman_1d",
+        "scalar_recursive_filter_1d",
+        "scalar position-only recursive filter; no velocity state",
         "geometry_only",
         "appearance_only",
         "combined",
         "byte_style",
+        "iou_gate",
+        "center_gate",
+        "appearance_gate",
+        "combined_cost_threshold",
+        "secondary_combined_cost_threshold",
         "occlusion_slices",
+        "slice_fragment_recoveries",
         "identity_consistency_f1_teaching",
         "hota_like_teaching_not_official",
         "export_motchallenge",
@@ -459,7 +466,11 @@ def test_course_08_contains_the_declared_tracking_pose_lab():
         "temporal_lag_frames",
         "track_pose_history",
         "failure_propagation",
+        "natural_container_association_failure",
         "source_shift",
+        "injected_pose_stage_noise_proxy",
+        "pose_image_model_inference",
+        "source_shift_experimental_boundary",
         "CV_ENABLE_BYTETRACK",
         "CV_ENABLE_MMPPOSE",
         "CV_ENABLE_TORCHVISION_KEYPOINT",
@@ -473,6 +484,8 @@ def test_course_08_contains_the_declared_tracking_pose_lab():
 
     assert "the tracker still never sees hidden identity" in source_lower
     assert "not official coco oks" in source_lower
+    assert "gate = 1 - self.iou_threshold" not in source
+    assert '"fragmentation_total": run["metrics"]["fragmentation"]' not in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
 
@@ -498,3 +511,8 @@ def test_course_08_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+    association_spec = json.loads((assets / "specs" / "association-cost.json").read_text(encoding="utf-8"))
+    association_text = json.dumps(association_spec)
+    for required in ["Hard gates", "Remaining pairs", "Weighted cost", "Hungarian match", "max_combined_cost"]:
+        assert required in association_text

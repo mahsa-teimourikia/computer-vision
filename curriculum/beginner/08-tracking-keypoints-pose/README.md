@@ -82,15 +82,29 @@ The ground-truth corpus and detector-like observations must be separate. `ground
 
 ## 5. Data association
 
-For previous tracks $T_i$ and detections $D_j$, build a rectangular cost matrix and solve a one-to-one assignment. A useful cost can combine geometry, predicted motion, appearance, and class compatibility:
+For previous tracks $T_i$ and detections $D_j$, first apply semantically meaningful hard gates, then build a rectangular cost matrix over the plausible pairs and solve a one-to-one assignment:
+
+```text
+class compatible? · center plausible? · minimum IoU if required? · appearance plausible?
+                                  ↓
+                         surviving pairs only
+                                  ↓
+                   weighted geometry + motion + appearance
+                                  ↓
+                         Hungarian assignment
+                                  ↓
+                    independent max combined cost
+```
+
+A useful cost can combine geometry, predicted motion, and appearance:
 
 $$
 C_{ij}=\lambda_g(1-IoU(T_i,D_j))+\lambda_m d_{motion}(T_i,D_j)+\lambda_a(1-\cos(z_i,z_j)).
 $$
 
-Terms must be scaled before combining them. A gate removes implausible pairs before optimization. Hungarian assignment minimizes the total cost; it does not make an invalid cost function meaningful.
+Terms must be scaled before combining them. `iou_gate`, `center_gate`, and `appearance_gate` retain their own meanings; `combined_cost_threshold` controls acceptance after weighted scoring. Deriving a mixed-cost threshold from `1 - iou_gate` would be valid only for a pure IoU cost. Hungarian assignment minimizes the total remaining cost; it does not make invalid gates, scaling, or acceptance policy meaningful.
 
-![Geometry, motion, and appearance become a gated assignment cost.](assets/association-cost.svg)
+![Hard class, displacement, optional IoU, and appearance gates leave plausible pairs for weighted cost, Hungarian matching, and an independent maximum combined-cost check.](assets/association-cost.svg)
 
 ### IoU association
 
@@ -113,7 +127,8 @@ The notebook implements `IoUTracker` and an extended `StructuredTracker` with `p
 | `min_hits` | evidence required before confirmation | fewer false tracks versus slower availability |
 | `max_age` | tolerated unmatched observations | better short-occlusion recovery versus stale matches |
 | confidence thresholds | which detector evidence is considered | precision versus recovery |
-| association gate | which pairings remain plausible | fewer switches versus more fragmentation |
+| hard gates | class, displacement, optional IoU, and appearance plausibility | fewer switches versus more fragmentation |
+| combined-cost threshold | maximum accepted weighted cost after matching | stricter evidence versus more unmatched tracks |
 
 These are operating policies, not architecture trivia. Tune them on development sequences and freeze them before final evaluation.
 
@@ -131,7 +146,7 @@ Prediction moves the expected box before matching. A Kalman filter adds explicit
 previous state → predict + uncertainty → measurement → update → posterior state
 ```
 
-The notebook uses a small one-dimensional filter for intuition and a timestamp-aware constant-velocity predictor inside the tracker. A production Kalman implementation must define state transitions, observation matrices, covariance initialization, process noise, and measurement noise for the camera and motion regime.
+The notebook's filtering example is a scalar, position-only recursive estimator with no velocity state. It teaches the uncertainty-weighted measurement update only; it is not the tracker's timestamp-aware constant-velocity predictor or a production tracking Kalman filter. A production implementation must define state transitions, observation matrices, covariance initialization, process noise, and measurement noise for the camera and motion regime.
 
 Gating rejects pairs outside plausible IoU or center-distance regions. Mahalanobis gating additionally scales displacement by uncertainty. A very tight gate fragments tracks; a very loose gate invites identity switches.
 
@@ -180,7 +195,7 @@ Partial occlusion, short full occlusion, long disappearance, leaving the view, a
 
 An **identity switch** occurs when a ground-truth entity changes its matched predicted identity. **Fragmentation** occurs when one real trajectory is represented by multiple disconnected predicted track segments. Reacquiring the wrong existing track and creating a new track are therefore different errors.
 
-The lab slices short occlusion, medium occlusion, and crossings rather than reporting only an easy aggregate.
+The lab slices short occlusion, medium occlusion, and crossings rather than reporting only an easy aggregate. Each row computes `slice_fragment_recoveries` from miss→match transitions entirely observed inside that slice; it does not repeat the sequence-wide fragmentation total under a slice label.
 
 ## 11. Tracking metrics without name inflation
 
@@ -200,7 +215,7 @@ $$
 HOTA_{like}=\sqrt{DetA\cdot AssA}
 $$
 
-only as a **teaching decomposition**, never as official HOTA. It also exports MOTChallenge-format files for an optional pinned TrackEval run. Official benchmark claims require the reference evaluator, exact dataset rules, ignore/crowd handling, thresholds, and sequence aggregation.
+only as a **teaching decomposition**, never as official HOTA. It also writes a **MOTChallenge-compatible teaching export**—two text tables that still require the expected directory/sequence configuration and benchmark semantics before an optional pinned TrackEval run. Official benchmark claims require the reference evaluator, exact dataset rules, ignore/crowd handling, thresholds, and sequence aggregation.
 
 ## 12. Tracking failure taxonomy
 
@@ -329,7 +344,9 @@ All generated media, tables, and `course-08-tracking-pose-evidence.json` are wri
 
 ## 19. Source shift and error attribution
 
-Camera C changes brightness, appearance, motion blur, and detector noise. Evaluation reports detector recall, association quality, and keypoint PCK separately. “The model failed” is not actionable; a stage-specific table is.
+Camera C changes rendered brightness, appearance, motion blur, and the detector-noise simulation. Detection and tracking use the changed observation stream. The pose comparison does **not** run an image model on Camera C: it injects a larger, stage-specific keypoint-noise proxy and labels every row with `pose_image_model_inference = false`. This controlled proxy demonstrates separate pose-stage degradation without presenting it as downloaded-model evidence. “The model failed” is not actionable; a stage-specific table is.
+
+The failure-propagation phase likewise keeps two kinds of evidence separate: a controlled synthetic track-ID perturbation isolates the causal impact on pose ownership, while a naturally occurring switch from the geometry-only tracker shows an actual association failure in the crossing-container sequence.
 
 | Symptom | Upstream hypothesis | Evidence to inspect |
 | --- | --- | --- |

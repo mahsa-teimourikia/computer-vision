@@ -1,12 +1,12 @@
 {
   "version": 1,
   "id": "association-cost",
-  "title": "Association cost and gated matching",
-  "purpose": "Geometry, predicted motion, appearance, and class compatibility are combined into a gated cost matrix and Hungarian assignment.",
+  "title": "Hard gates and weighted association cost",
+  "purpose": "Separate semantically meaningful pair gates from weighted cost construction, Hungarian assignment, and final combined-cost acceptance.",
   "output": {
     "svg": "curriculum/beginner/08-tracking-keypoints-pose/assets/association-cost.svg",
     "medium": "documentation and notebook",
-    "alt_text": "Geometry, predicted motion, appearance, and class compatibility are combined into a gated cost matrix and Hungarian assignment."
+    "alt_text": "Class, center, optional IoU, and appearance gates remove impossible pairs before weighted geometry, motion, and appearance costs feed Hungarian assignment and an independent maximum combined-cost check."
   },
   "canvas": {
     "width": 1800,
@@ -66,10 +66,10 @@
   ],
   "nodes": [
     {
-      "id": "geometry",
+      "id": "hard_gates",
       "group": "system",
-      "label": "Geometry",
-      "type": "data",
+      "label": "Hard gates",
+      "type": "action",
       "bounds": {
         "x": 100,
         "y": 275,
@@ -86,13 +86,13 @@
           "offset": 0.5
         }
       },
-      "subtitle": "1 \u2212 IoU"
+      "subtitle": "class \u00b7 center \u00b7 optional IoU \u00b7 appearance"
     },
     {
-      "id": "motion",
+      "id": "remaining",
       "group": "system",
-      "label": "Motion + gate",
-      "type": "agent",
+      "label": "Remaining pairs",
+      "type": "data",
       "bounds": {
         "x": 430,
         "y": 275,
@@ -109,13 +109,13 @@
           "offset": 0.5
         }
       },
-      "subtitle": "distance \u00b7 uncertainty"
+      "subtitle": "plausible candidates only"
     },
     {
-      "id": "appearance",
+      "id": "weighted_cost",
       "group": "system",
-      "label": "Appearance",
-      "type": "data",
+      "label": "Weighted cost",
+      "type": "service",
       "bounds": {
         "x": 760,
         "y": 275,
@@ -132,13 +132,13 @@
           "offset": 0.5
         }
       },
-      "subtitle": "1 \u2212 cosine"
+      "subtitle": "geometry + motion + appearance"
     },
     {
-      "id": "matrix",
+      "id": "hungarian",
       "group": "system",
-      "label": "Cost matrix",
-      "type": "service",
+      "label": "Hungarian match",
+      "type": "agent",
       "bounds": {
         "x": 1090,
         "y": 275,
@@ -155,12 +155,12 @@
           "offset": 0.5
         }
       },
-      "subtitle": "scaled weighted terms"
+      "subtitle": "global one-to-one assignment"
     },
     {
-      "id": "matching",
+      "id": "accept",
       "group": "system",
-      "label": "Hungarian match",
+      "label": "Accept / reject",
       "type": "action",
       "bounds": {
         "x": 1420,
@@ -178,18 +178,18 @@
           "offset": 0.5
         }
       },
-      "subtitle": "one-to-one assignment"
+      "subtitle": "max_combined_cost"
     }
   ],
   "edges": [
     {
       "id": "e1",
       "from": {
-        "node": "geometry",
+        "node": "hard_gates",
         "port": "out"
       },
       "to": {
-        "node": "motion",
+        "node": "remaining",
         "port": "in"
       },
       "kind": "primary",
@@ -207,11 +207,11 @@
     {
       "id": "e2",
       "from": {
-        "node": "motion",
+        "node": "remaining",
         "port": "out"
       },
       "to": {
-        "node": "appearance",
+        "node": "weighted_cost",
         "port": "in"
       },
       "kind": "primary",
@@ -229,11 +229,11 @@
     {
       "id": "e3",
       "from": {
-        "node": "appearance",
+        "node": "weighted_cost",
         "port": "out"
       },
       "to": {
-        "node": "matrix",
+        "node": "hungarian",
         "port": "in"
       },
       "kind": "primary",
@@ -251,11 +251,11 @@
     {
       "id": "e4",
       "from": {
-        "node": "matrix",
+        "node": "hungarian",
         "port": "out"
       },
       "to": {
-        "node": "matching",
+        "node": "accept",
         "port": "in"
       },
       "kind": "primary",
