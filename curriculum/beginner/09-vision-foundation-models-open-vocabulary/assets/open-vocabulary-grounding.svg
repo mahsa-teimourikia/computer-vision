@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 820" role="img" aria-labelledby="title description">
+<title id="title">Open-vocabulary detection and phrase grounding</title>
+<desc id="description">An image and text enter a vision-language detector. A category query finds all valves, while a relational phrase grounds the red valve beside the pipe to one region.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1800" height="820" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Open-vocabulary detection and phrase grounding</text>
+<rect x="64" y="100" width="1672" height="650" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Language-conditioned localization</text>
+<polyline points="350,265 450,265 450,385 550,385" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="350,500 450,500 450,439 550,439" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="350,650 470,650 470,488 550,488" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="890,403 1000,403 1000,325 1110,325" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="890,466 1000,466 1000,575 1110,575" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1410,575 1480,575" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="120" y="210" width="230" height="110" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="235.0" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Image</text>
+<rect x="120" y="440" width="230" height="120" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="235.0" y="474" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Category query</text>
+<text x="235.0" y="502" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">“valve”</text>
+<rect x="120" y="590" width="230" height="120" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="235.0" y="624" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Grounding phrase</text>
+<text x="235.0" y="652" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">“red valve beside pipe”</text>
+<rect x="550" y="340" width="340" height="180" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="720.0" y="374" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Vision-language</text>
+<text x="720.0" y="396" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">detector</text>
+<text x="720.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">region ↔ text interaction</text>
+<rect x="1110" y="260" width="300" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1260.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Category boxes</text>
+<text x="1260.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">all matching instances</text>
+<rect x="1110" y="510" width="300" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1260.0" y="544" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Grounded region</text>
+<text x="1260.0" y="572" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">attribute + relation bound</text>
+<rect x="1480" y="510" width="220" height="130" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1590.0" y="544" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Separate evaluation</text>
+<text x="1590.0" y="572" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">IoU · phrase · absent prompt</text>
+</svg>

@@ -27,7 +27,7 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 - [06 · Segmentation & Promptable Segmentation](beginner/06-segmentation-promptable-segmentation/README.md) — move from mask contracts, U-Net, overlap, and boundaries to source-sliced evaluation, interactive prompts, detector-box error propagation, SAM 3.1 governance, and human review.
 - [07 · Visual Embeddings, Metric Learning & Retrieval](beginner/07-visual-embeddings-metric-learning-retrieval/README.md) — define similarity, learn normalized spaces, compare full-image and region retrieval, review hard negatives, verify exact search, tune HNSW, and govern embedding versions.
 - [08 · Tracking, Keypoints & Pose](beginner/08-tracking-keypoints-pose/README.md) — maintain temporal identity through association and lifecycle policies, estimate structured landmarks, measure tracking and pose separately, and attribute failure propagation across the combined system.
-- Vision Foundation Models & Open-Vocabulary Vision *(planned)*
+- [09 · Vision Foundation Models & Open-Vocabulary Vision](beginner/09-vision-foundation-models-open-vocabulary/README.md) — synthesize the Beginner track through reusable global and patch features, image–text alignment, prompt/vocabulary evaluation, grounding, detector→segmenter composition, adaptation, and provenance.
 
 ## Intermediate
 

@@ -1,0 +1,26 @@
+{
+  "version": 1, "id": "foundation-capabilities", "title": "Vision foundation capabilities", "purpose": "Organize foundation vision around reusable capabilities rather than model names.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/foundation-capabilities.svg", "medium": "documentation and notebook", "alt_text": "Broad pretraining creates reusable representations and promptable interfaces that support alignment, retrieval, localization, segmentation, adaptation, and composed systems, each with evaluation."},
+  "canvas": {"width": 1800, "height": 900, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "Reusable system surface", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 730}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "pretrain", "group": "system", "label": "Broad pretraining", "subtitle": "scale · diversity · objective", "type": "data", "bounds": {"x": 690, "y": 150, "width": 420, "height": 120}, "ports": {"out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "foundation", "group": "system", "label": "Foundation representation\nor promptable interface", "type": "agent", "bounds": {"x": 650, "y": 350, "width": 500, "height": 130}, "ports": {"in": {"side": "top", "offset": 0.5}, "a": {"side": "bottom", "offset": 0.12}, "b": {"side": "bottom", "offset": 0.31}, "c": {"side": "bottom", "offset": 0.5}, "d": {"side": "bottom", "offset": 0.69}, "e": {"side": "bottom", "offset": 0.88}}},
+    {"id": "retrieval", "group": "system", "label": "Retrieval", "subtitle": "rank", "type": "data", "bounds": {"x": 120, "y": 620, "width": 250, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "alignment", "group": "system", "label": "Alignment", "subtitle": "image ↔ text", "type": "service", "bounds": {"x": 440, "y": 620, "width": 250, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "localization", "group": "system", "label": "Localization", "subtitle": "ground + box", "type": "action", "bounds": {"x": 760, "y": 620, "width": 250, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "segmentation", "group": "system", "label": "Segmentation", "subtitle": "prompt + mask", "type": "action", "bounds": {"x": 1080, "y": 620, "width": 250, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}},
+    {"id": "adaptation", "group": "system", "label": "Adaptation", "subtitle": "probe · adapter · tune", "type": "operations", "bounds": {"x": 1400, "y": 620, "width": 250, "height": 120}, "ports": {"in": {"side": "top", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e0", "from": {"node": "pretrain", "port": "out"}, "to": {"node": "foundation", "port": "in"}, "kind": "primary", "route": [[900,270],[900,350]]},
+    {"id": "e1", "from": {"node": "foundation", "port": "a"}, "to": {"node": "retrieval", "port": "in"}, "kind": "primary", "route": [[710,480],[710,540],[245,540],[245,620]]},
+    {"id": "e2", "from": {"node": "foundation", "port": "b"}, "to": {"node": "alignment", "port": "in"}, "kind": "primary", "route": [[805,480],[805,560],[565,560],[565,620]]},
+    {"id": "e3", "from": {"node": "foundation", "port": "c"}, "to": {"node": "localization", "port": "in"}, "kind": "primary", "route": [[900,480],[900,560],[885,560],[885,620]]},
+    {"id": "e4", "from": {"node": "foundation", "port": "d"}, "to": {"node": "segmentation", "port": "in"}, "kind": "primary", "route": [[995,480],[995,560],[1205,560],[1205,620]]},
+    {"id": "e5", "from": {"node": "foundation", "port": "e"}, "to": {"node": "adaptation", "port": "in"}, "kind": "primary", "route": [[1090,480],[1090,540],[1525,540],[1525,620]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

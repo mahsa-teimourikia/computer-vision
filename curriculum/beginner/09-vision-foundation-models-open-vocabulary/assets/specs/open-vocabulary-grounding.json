@@ -1,0 +1,26 @@
+{
+  "version": 1, "id": "open-vocabulary-grounding", "title": "Open-vocabulary detection and phrase grounding", "purpose": "Distinguish category queries from attribute-and-relation grounding.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/open-vocabulary-grounding.svg", "medium": "documentation and notebook", "alt_text": "An image and text enter a vision-language detector. A category query finds all valves, while a relational phrase grounds the red valve beside the pipe to one region."},
+  "canvas": {"width": 1800, "height": 820, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 50, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "Language-conditioned localization", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 650}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "image", "group": "system", "label": "Image", "type": "data", "bounds": {"x": 120, "y": 210, "width": 230, "height": 110}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "category_prompt", "group": "system", "label": "Category query", "subtitle": "“valve”", "type": "data", "bounds": {"x": 120, "y": 440, "width": 230, "height": 120}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "phrase_prompt", "group": "system", "label": "Grounding phrase", "subtitle": "“red valve beside pipe”", "type": "data", "bounds": {"x": 120, "y": 590, "width": 230, "height": 120}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "detector", "group": "system", "label": "Vision-language\ndetector", "subtitle": "region ↔ text interaction", "type": "agent", "bounds": {"x": 550, "y": 340, "width": 340, "height": 180}, "ports": {"image": {"side": "left", "offset": 0.25}, "category": {"side": "left", "offset": 0.55}, "phrase": {"side": "left", "offset": 0.82}, "category_out": {"side": "right", "offset": 0.35}, "phrase_out": {"side": "right", "offset": 0.7}}},
+    {"id": "category_boxes", "group": "system", "label": "Category boxes", "subtitle": "all matching instances", "type": "action", "bounds": {"x": 1110, "y": 260, "width": 300, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "grounded_box", "group": "system", "label": "Grounded region", "subtitle": "attribute + relation bound", "type": "action", "bounds": {"x": 1110, "y": 510, "width": 300, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "evaluation", "group": "system", "label": "Separate evaluation", "subtitle": "IoU · phrase · absent prompt", "type": "operations", "bounds": {"x": 1480, "y": 510, "width": 220, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "image", "port": "out"}, "to": {"node": "detector", "port": "image"}, "kind": "primary", "route": [[350,265],[450,265],[450,385],[550,385]]},
+    {"id": "e2", "from": {"node": "category_prompt", "port": "out"}, "to": {"node": "detector", "port": "category"}, "kind": "primary", "route": [[350,500],[450,500],[450,439],[550,439]]},
+    {"id": "e3", "from": {"node": "phrase_prompt", "port": "out"}, "to": {"node": "detector", "port": "phrase"}, "kind": "primary", "route": [[350,650],[470,650],[470,488],[550,488]]},
+    {"id": "e4", "from": {"node": "detector", "port": "category_out"}, "to": {"node": "category_boxes", "port": "in"}, "kind": "primary", "route": [[890,403],[1000,403],[1000,325],[1110,325]]},
+    {"id": "e5", "from": {"node": "detector", "port": "phrase_out"}, "to": {"node": "grounded_box", "port": "in"}, "kind": "primary", "route": [[890,466],[1000,466],[1000,575],[1110,575]]},
+    {"id": "e6", "from": {"node": "grounded_box", "port": "out"}, "to": {"node": "evaluation", "port": "in"}, "kind": "primary", "route": [[1410,575],[1480,575]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

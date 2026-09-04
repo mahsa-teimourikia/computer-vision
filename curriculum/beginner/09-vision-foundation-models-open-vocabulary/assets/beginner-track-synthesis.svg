@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 650" role="img" aria-labelledby="title description">
+<title id="title">Beginner track: from pixels to reusable capabilities</title>
+<desc id="description">Nine connected course stages progress from pixels and encoders through tokens, self-supervision, detection, segmentation, retrieval, temporal state, and reusable foundation capabilities.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="2200" height="650" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Beginner track: from pixels to reusable capabilities</text>
+<rect x="64" y="100" width="2072" height="480" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">One connected Beginner progression</text>
+<polyline points="274,340 324,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="504,340 554,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="734,340 784,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="964,340 1014,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1194,340 1244,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1424,340 1474,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1654,340 1704,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1884,340 1934,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="94" y="270" width="180" height="140" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="184.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">01</text>
+<text x="184.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Pixels</text>
+<text x="184.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">contracts</text>
+<rect x="324" y="270" width="180" height="140" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="414.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">02</text>
+<text x="414.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Encoders</text>
+<text x="414.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">efficiency</text>
+<rect x="554" y="270" width="180" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="644.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">03</text>
+<text x="644.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Tokens</text>
+<text x="644.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">attention</text>
+<rect x="784" y="270" width="180" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="874.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">04</text>
+<text x="874.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SSL</text>
+<text x="874.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">objectives</text>
+<rect x="1014" y="270" width="180" height="140" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1104.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">05</text>
+<text x="1104.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Boxes</text>
+<text x="1104.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">localize</text>
+<rect x="1244" y="270" width="180" height="140" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1334.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">06</text>
+<text x="1334.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Masks</text>
+<text x="1334.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">segment</text>
+<rect x="1474" y="270" width="180" height="140" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1564.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">07</text>
+<text x="1564.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Search</text>
+<text x="1564.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">retrieve</text>
+<rect x="1704" y="270" width="180" height="140" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1794.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">08</text>
+<text x="1794.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">State</text>
+<text x="1794.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">time + pose</text>
+<rect x="1934" y="270" width="180" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="2024.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">09</text>
+<text x="2024.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Foundation</text>
+<text x="2024.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">reuse + prompt</text>
+</svg>
