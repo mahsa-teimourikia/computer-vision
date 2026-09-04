@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "id": "association-cost",
+  "title": "Hard gates and weighted association cost",
+  "purpose": "Separate semantically meaningful pair gates from weighted cost construction, Hungarian assignment, and final combined-cost acceptance.",
+  "output": {
+    "svg": "curriculum/beginner/08-tracking-keypoints-pose/assets/association-cost.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Class, center, optional IoU, and appearance gates remove impossible pairs before weighted geometry, motion, and appearance costs feed Hungarian assignment and an independent maximum combined-cost check."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 720,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Structured visual state",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 550
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "hard_gates",
+      "group": "system",
+      "label": "Hard gates",
+      "type": "action",
+      "bounds": {
+        "x": 100,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "class \u00b7 center \u00b7 optional IoU \u00b7 appearance"
+    },
+    {
+      "id": "remaining",
+      "group": "system",
+      "label": "Remaining pairs",
+      "type": "data",
+      "bounds": {
+        "x": 430,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "plausible candidates only"
+    },
+    {
+      "id": "weighted_cost",
+      "group": "system",
+      "label": "Weighted cost",
+      "type": "service",
+      "bounds": {
+        "x": 760,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "geometry + motion + appearance"
+    },
+    {
+      "id": "hungarian",
+      "group": "system",
+      "label": "Hungarian match",
+      "type": "agent",
+      "bounds": {
+        "x": 1090,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "global one-to-one assignment"
+    },
+    {
+      "id": "accept",
+      "group": "system",
+      "label": "Accept / reject",
+      "type": "action",
+      "bounds": {
+        "x": 1420,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "max_combined_cost"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "hard_gates",
+        "port": "out"
+      },
+      "to": {
+        "node": "remaining",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          360
+        ],
+        [
+          430,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "remaining",
+        "port": "out"
+      },
+      "to": {
+        "node": "weighted_cost",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          680,
+          360
+        ],
+        [
+          760,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "weighted_cost",
+        "port": "out"
+      },
+      "to": {
+        "node": "hungarian",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          360
+        ],
+        [
+          1090,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "hungarian",
+        "port": "out"
+      },
+      "to": {
+        "node": "accept",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1340,
+          360
+        ],
+        [
+          1420,
+          360
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlap": true,
+    "all_text_contained": true,
+    "edge_routes_reviewed": true,
+    "contrast_checked": true,
+    "alt_text_reviewed": true
+  }
+}

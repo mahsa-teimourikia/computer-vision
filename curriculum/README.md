@@ -23,10 +23,10 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 - [02 · Modern CNN Architectures & Efficient Vision](beginner/02-modern-cnn-architectures-efficient-vision/README.md) — understand residual, mobile, efficient, and modernized ConvNet designs; compare five encoders; and select against measured deployment constraints.
 - [03 · Vision Transformers](beginner/03-vision-transformers/README.md) — turn images into tokens, build attention and a minimal ViT, compare CNN/ViT/Swin representations, test resolution shift, and review transformer systems evidence.
 - [04 · Self-Supervised Visual Representation Learning](beginner/04-self-supervised-visual-representation-learning/README.md) — learn without manual pretraining labels through contrastive, teacher–student, and masked objectives; diagnose collapse; and evaluate label efficiency, retrieval, global features, and patch features.
-- Object Detection *(planned)*
-- Segmentation & Promptable Segmentation *(planned)*
-- Visual Embeddings, Metric Learning & Retrieval *(planned)*
-- Tracking, Keypoints & Pose *(planned)*
+- [05 · Object Detection](beginner/05-object-detection/README.md) — move from box contracts, matching, and AP to a tiny dense detector, NMS, Hungarian assignment, YOLO/DETR trade-offs, open-vocabulary extensions, and governed deployment evidence.
+- [06 · Segmentation & Promptable Segmentation](beginner/06-segmentation-promptable-segmentation/README.md) — move from mask contracts, U-Net, overlap, and boundaries to source-sliced evaluation, interactive prompts, detector-box error propagation, SAM 3.1 governance, and human review.
+- [07 · Visual Embeddings, Metric Learning & Retrieval](beginner/07-visual-embeddings-metric-learning-retrieval/README.md) — define similarity, learn normalized spaces, compare full-image and region retrieval, review hard negatives, verify exact search, tune HNSW, and govern embedding versions.
+- [08 · Tracking, Keypoints & Pose](beginner/08-tracking-keypoints-pose/README.md) — maintain temporal identity through association and lifecycle policies, estimate structured landmarks, measure tracking and pose separately, and attribute failure propagation across the combined system.
 - Vision Foundation Models & Open-Vocabulary Vision *(planned)*
 
 ## Intermediate

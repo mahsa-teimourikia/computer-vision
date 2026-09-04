@@ -1,6 +1,6 @@
 # Computer vision tooling review
 
-> Reviewed: 2026-08-31. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
+> Reviewed: 2026-09-02. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
 
 Tools are selected per lesson, not imposed as one universal framework. Every tooling decision should compare maintenance, portability, observability, licensing, reproducibility, hardware fit, exportability, and operational cost.
 
@@ -19,10 +19,16 @@ The course teaches the primitive before the framework. A framework example must 
 
 | Tool | Best fit | Strengths | Constraints to review |
 | --- | --- | --- | --- |
+| [PyTorch + torchvision detection](https://docs.pytorch.org/vision/stable/models.html#object-detection) | Transparent training/evaluation primitives and maintained Faster R-CNN, RetinaNet, FCOS, and SSD baselines | Tensor-level box, IoU, focal-loss, NMS, model, and weights APIs | Beta/evolving detector APIs, preprocessing/weight-enum parity, export support, and target-hardware profiling |
+| [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linear_sum_assignment.html) | Hungarian assignment experiments for set prediction | Trusted rectangular linear-sum assignment primitive | Cost construction, normalization, device transfer, and scaling remain explicit design choices |
 | [OpenMMLab](https://openmmlab.com/) (`MMDetection`, `MMSegmentation`, `MMTracking`, `MMDeploy`) | Reproducible task research and architecture comparison | Large configuration/model ecosystem; consistent task runners | Configuration complexity, cross-package version compatibility, and deployment operator support |
 | [Detectron2](https://detectron2.readthedocs.io/) | Detection and segmentation research | Strong reference implementations and extensible components | Confirm maintenance cadence and platform compatibility for a new production commitment |
-| [Ultralytics](https://docs.ultralytics.com/) | Fast detection, segmentation, pose, and tracking prototypes | Low-friction training/export workflow and broad deployment examples | AGPL/enterprise licensing, abstraction boundaries, and benchmark comparability |
-| [Hugging Face Transformers](https://huggingface.co/docs/transformers/tasks/object_detection) | Vision transformers and multimodal/foundation models | Model cards, processors, checkpoints, and interoperable training APIs | Remote-code trust, checkpoint license, preprocessing parity, and rapidly changing model APIs |
+| [Ultralytics](https://docs.ultralytics.com/) | YOLO26/YOLOE-26 detection, segmentation, pose, tracking, and export prototypes | Low-friction train/predict/export workflow, including documented end-to-end and open-vocabulary paths | AGPL-3.0 or enterprise licensing, abstraction boundaries, checkpoint/export versions, and benchmark comparability |
+| [Hugging Face Transformers](https://huggingface.co/docs/transformers/tasks/object_detection) | DETR/RT-DETR and Grounding DINO-style model/processor workflows | Model cards, processors, checkpoints, and interoperable training APIs | Immutable revisions, remote-code trust, checkpoint license, preprocessing parity, and rapidly changing model APIs |
+| [PyTorch + torchvision segmentation](https://docs.pytorch.org/vision/stable/models.html#semantic-segmentation) | Transparent semantic and instance segmentation baselines | Maintained FCN, DeepLabV3, LRASPP, and Mask R-CNN model/weight contracts plus tensor-level losses | Label interpolation, ignore IDs, output stride, preprocessing/weight parity, beta APIs, and target-hardware profiling |
+| [segmentation-models-pytorch](https://smp.readthedocs.io/) | Rapid task-specific encoder–decoder experiments | Common U-Net-family architectures, broad encoder catalogue, and composable losses | Encoder weight provenance, package compatibility, abstraction depth, export operators, and benchmark parity |
+| [Meta SAM 3 / SAM 3.1](https://github.com/facebookresearch/sam3) | Current promptable concept segmentation and tracking research | Text, exemplar, point, box, and mask prompting with a shared image/video foundation architecture | Gated 848M-parameter checkpoint, custom SAM License, CUDA-oriented stack, immutable revision/checkpoint hashes, prompt provenance, and domain evaluation |
+| [Meta SAM 2.1](https://github.com/facebookresearch/sam2) | Permissively licensed visual-prompt image/video segmentation | Smaller official checkpoints and Apache-2.0 code/weights with interactive image/video APIs | It is not the newest concept-prompted generation; still review compute, checkpoint hash, data, and domain transfer |
 
 Do not compare frameworks using headline metrics copied from model pages. Re-run the same dataset split, preprocessing, resolution, precision, hardware, and metric implementation.
 
@@ -38,6 +44,31 @@ Do not compare frameworks using headline metrics copied from model pages. Re-run
 | FAISS | Large-scale embedding retrieval | Exact and approximate nearest-neighbour indexes with CPU/GPU options | Measure recall loss, filtering, updates, feature-version migration, tenant isolation, and memory |
 
 Teach the primitive first: view generation, similarity matrix, target mapping, stop-gradient, EMA, masking, and downstream evaluation should remain inspectable before adopting a packaged SSL trainer.
+
+## Metric learning and retrieval systems
+
+| Tool | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| PyTorch + torchvision | Siamese, contrastive, triplet, supervised-contrastive, and proxy-learning experiments | Transparent objective, sampler, mining, normalization, and official supervised encoder APIs | Batch composition, false negatives, numerical stability, distributed mining semantics, and evaluation contracts remain explicit responsibilities |
+| [scikit-learn nearest neighbours](https://scikit-learn.org/stable/modules/neighbors.html) | Portable exact-search baselines and small corpora | Familiar API, auditable brute-force behavior, and useful parity checks | Not a large-scale vector-serving layer; confirm metric conventions, normalization, and memory scaling |
+| [FAISS](https://github.com/facebookresearch/faiss) | Local exact and approximate dense-vector indexes | `IndexFlat` ground truth, HNSW, inverted files, product quantization, CPU/GPU options, and index serialization | Tune ANN against exact recall; review native-runtime compatibility, filtering, deletion/update behavior, memory overhead, ID mapping, and embedding migrations |
+| [Qdrant](https://qdrant.tech/documentation/) | Governed vector service with payload filtering | Persistent collections, metadata filters, distributed deployment, and service observability | Adds an operating service; review tenancy, backups, consistency, network boundaries, cost, and client/server version compatibility |
+| [FiftyOne](https://docs.voxel51.com/) | Visual retrieval inspection and review queues | Links embeddings, samples, labels, similarity, duplicates, and human review | Keep metrics and index artifacts portable; review data access, plugin/version governance, and scaling architecture |
+
+The Course 07 default is an exact NumPy/scikit-learn baseline plus FAISS `IndexFlatIP` and HNSW on L2-normalized `float32` vectors. Because FAISS introduces a native runtime, it remains in Course 07's tested requirements and the contributor/CI environment rather than the repository-wide learner extra used for Courses 01–06. A hosted vector database is deliberately optional: production adoption requires metadata filtering, access control, backup/restore, observability, update semantics, and migration evidence—not only a nearest-neighbour demo.
+
+## Tracking, keypoint, and pose systems
+
+| Tool | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| NumPy + [SciPy assignment](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linear_sum_assignment.html) | Transparent tracking-by-detection teaching and small controlled systems | Inspectable IoU, motion, appearance, gates, Hungarian assignment, lifecycle, and failure attribution | The developer owns state estimation, metric semantics, performance, camera-motion handling, and every operating policy |
+| [TrackEval](https://github.com/JonathonLuiten/TrackEval) | Reference HOTA, CLEAR, and identity evaluation | Official HOTA implementation and MOTChallenge evaluation kit | Pin the source revision; preserve exact dataset formatting, ignore/crowd rules, thresholds, and sequence aggregation; dataset licenses are separate from MIT code |
+| [ByteTrack](https://github.com/FoundationVision/ByteTrack) | Detection-based MOT where low-confidence recovery is useful | Clear two-stage association idea and MIT reference code | Detector/checkpoint coupling, source age, dependency compatibility, thresholds, identity evidence, and production packaging |
+| [OC-SORT](https://github.com/noahcao/OC_SORT) / [BoT-SORT](https://github.com/NirAharon/BoT-SORT) | Stronger motion handling or camera-motion/appearance integration | Representative observation-centric and multi-cue trackers | Research-code maintenance, licenses, detector/re-ID checkpoints, camera assumptions, dependency conflicts, and export path |
+| [MMPose](https://github.com/open-mmlab/mmpose) / RTMPose | Broad pose research, model zoo, and deployment comparison | Human, animal, hand, face, whole-body, and real-time model families; multiple export backends | Cross-package versions, config/checkpoint pinning, trained-weight/data license, preprocessing, compiled operators, and domain fit |
+| [torchvision Keypoint R-CNN](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.detection.keypointrcnn_resnet50_fpn.html) | Common-SDK human-keypoint baseline | Familiar weights enum, transforms, tensors, and CPU smoke-test path | Beta detection APIs, COCO-human landmark contract, download size, latency, export behavior, and no applicability to arbitrary industrial landmarks |
+
+Course 08 keeps the first implementation inside the notebook and uses variable timestamps, a separate detector stream, association/lifecycle sweeps, a ByteTrack-inspired teaching comparison, and explicit source-shift attribution. It exports MOTChallenge-style text for an optional pinned TrackEval run but never renames local teaching metrics as official HOTA or IDF1. ByteTrack, MMPose/RTMPose, and torchvision checkpoint execution stay disabled by default, so the CPU learner path has no new native or remote-model dependency.
 
 ## Data, annotation, and evaluation
 

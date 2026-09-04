@@ -1,0 +1,441 @@
+{
+  "version": 1,
+  "id": "embedding-versioning",
+  "title": "Blue/green embedding index migration",
+  "purpose": "Show that encoder versions define separate spaces and require parallel rebuild and validation.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/embedding-versioning.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A governed corpus feeds encoder and index version 1 for current traffic while version 2 is re-embedded, built, validated, switched, and later replaces version 1."
+  },
+  "canvas": {
+    "width": 1850,
+    "height": 820,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Visual retrieval system",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1722,
+        "height": 656
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "corpus",
+      "group": "system",
+      "label": "Governed corpus",
+      "type": "data",
+      "bounds": {
+        "x": 90,
+        "y": 350,
+        "width": 220,
+        "height": 120
+      },
+      "ports": {
+        "v1": {
+          "side": "right",
+          "offset": 0.3
+        },
+        "v2": {
+          "side": "right",
+          "offset": 0.7
+        }
+      }
+    },
+    {
+      "id": "encoder_v1",
+      "group": "system",
+      "label": "Encoder v1",
+      "type": "agent",
+      "bounds": {
+        "x": 420,
+        "y": 190,
+        "width": 230,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "encoder_v2",
+      "group": "system",
+      "label": "Encoder v2",
+      "type": "agent",
+      "bounds": {
+        "x": 420,
+        "y": 520,
+        "width": 230,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "index_v1",
+      "group": "system",
+      "label": "Index v1 \u00b7 active",
+      "type": "service",
+      "bounds": {
+        "x": 770,
+        "y": 190,
+        "width": 250,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "traffic": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "index_v2",
+      "group": "system",
+      "label": "Index v2 \u00b7 green",
+      "type": "service",
+      "bounds": {
+        "x": 770,
+        "y": 520,
+        "width": 250,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "validate",
+      "group": "system",
+      "label": "Shadow validation",
+      "type": "action",
+      "bounds": {
+        "x": 1130,
+        "y": 500,
+        "width": 270,
+        "height": 160
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "task \u00b7 ANN \u00b7 filters \u00b7 drift"
+    },
+    {
+      "id": "switch",
+      "group": "system",
+      "label": "Atomic alias switch",
+      "type": "operations",
+      "bounds": {
+        "x": 1520,
+        "y": 350,
+        "width": 260,
+        "height": 130
+      },
+      "ports": {
+        "old": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "new": {
+          "side": "left",
+          "offset": 0.7
+        }
+      },
+      "subtitle": "monitor \u00b7 rollback \u00b7 retire"
+    }
+  ],
+  "edges": [
+    {
+      "id": "corpus_encoder_v1",
+      "from": {
+        "node": "corpus",
+        "port": "v1"
+      },
+      "to": {
+        "node": "encoder_v1",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          386
+        ],
+        [
+          360,
+          386
+        ],
+        [
+          360,
+          250
+        ],
+        [
+          420,
+          250
+        ]
+      ]
+    },
+    {
+      "id": "corpus_encoder_v2",
+      "from": {
+        "node": "corpus",
+        "port": "v2"
+      },
+      "to": {
+        "node": "encoder_v2",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          434
+        ],
+        [
+          360,
+          434
+        ],
+        [
+          360,
+          580
+        ],
+        [
+          420,
+          580
+        ]
+      ],
+      "label": "re-embed",
+      "label_at": [
+        360,
+        500
+      ]
+    },
+    {
+      "id": "encoder_index_v1",
+      "from": {
+        "node": "encoder_v1",
+        "port": "out"
+      },
+      "to": {
+        "node": "index_v1",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          650,
+          250
+        ],
+        [
+          770,
+          250
+        ]
+      ]
+    },
+    {
+      "id": "encoder_index_v2",
+      "from": {
+        "node": "encoder_v2",
+        "port": "out"
+      },
+      "to": {
+        "node": "index_v2",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          650,
+          580
+        ],
+        [
+          770,
+          580
+        ]
+      ],
+      "label": "build",
+      "label_at": [
+        710,
+        565
+      ]
+    },
+    {
+      "id": "index_v2_validate",
+      "from": {
+        "node": "index_v2",
+        "port": "out"
+      },
+      "to": {
+        "node": "validate",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1020,
+          580
+        ],
+        [
+          1130,
+          580
+        ]
+      ]
+    },
+    {
+      "id": "index_v1_switch",
+      "from": {
+        "node": "index_v1",
+        "port": "traffic"
+      },
+      "to": {
+        "node": "switch",
+        "port": "old"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1020,
+          250
+        ],
+        [
+          1430,
+          250
+        ],
+        [
+          1430,
+          389
+        ],
+        [
+          1520,
+          389
+        ]
+      ],
+      "label": "current",
+      "label_at": [
+        1270,
+        235
+      ]
+    },
+    {
+      "id": "validate_switch",
+      "from": {
+        "node": "validate",
+        "port": "out"
+      },
+      "to": {
+        "node": "switch",
+        "port": "new"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1400,
+          580
+        ],
+        [
+          1460,
+          580
+        ],
+        [
+          1460,
+          441
+        ],
+        [
+          1520,
+          441
+        ]
+      ],
+      "label": "approved",
+      "label_at": [
+        1460,
+        520
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

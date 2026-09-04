@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 720" role="img" aria-labelledby="title description">
+<title id="title">From images to task-defined neighbours</title>
+<desc id="description">A left-to-right flow from industrial images through a visual encoder and embedding vectors to neighbourhoods labeled by component, defect, or duplicate relevance.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="720" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">From images to task-defined neighbours</text>
+<rect x="64" y="100" width="1472" height="556" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Visual retrieval system</text>
+<polyline points="350,355 450,355" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="342" y="323" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="400" y="340" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">encode</text>
+<polyline points="680,355 780,355" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="672" y="323" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="730" y="340" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">vector</text>
+<polyline points="1010,355 1110,355" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1002" y="323" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1060" y="340" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">contract</text>
+<rect x="120" y="290" width="230" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="235.0" y="324" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Images / regions</text>
+<text x="235.0" y="352" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">products · defects · crops</text>
+<rect x="450" y="290" width="230" height="130" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="565.0" y="324" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Visual encoder</text>
+<text x="565.0" y="352" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">fθ(x)</text>
+<rect x="780" y="290" width="230" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="895.0" y="324" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Embedding space</text>
+<text x="895.0" y="352" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">z ∈ ℝᵈ</text>
+<rect x="1110" y="270" width="330" height="170" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1275.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Useful neighbours</text>
+<text x="1275.0" y="332" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">component · defect · duplicate</text>
+</svg>

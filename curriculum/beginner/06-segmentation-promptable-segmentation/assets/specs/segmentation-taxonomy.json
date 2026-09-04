@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "id": "segmentation-taxonomy",
+  "title": "Four segmentation questions",
+  "purpose": "Distinguish semantic, instance, panoptic, and promptable segmentation by their output question.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/segmentation-taxonomy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A left-to-right sequence contrasts semantic pixel classes, instance identities, panoptic things and stuff, and a prompt-selected region."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "course",
+      "label": "Segmentation output contracts",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 1472,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "semantic",
+      "group": "course",
+      "label": "Semantic",
+      "subtitle": "class per pixel",
+      "type": "service",
+      "bounds": {
+        "x": 120,
+        "y": 320,
+        "width": 250,
+        "height": 150
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "instance",
+      "group": "course",
+      "label": "Instance",
+      "subtitle": "class + object ID",
+      "type": "agent",
+      "bounds": {
+        "x": 470,
+        "y": 320,
+        "width": 250,
+        "height": 150
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "panoptic",
+      "group": "course",
+      "label": "Panoptic",
+      "subtitle": "things + stuff",
+      "type": "data",
+      "bounds": {
+        "x": 820,
+        "y": 320,
+        "width": 250,
+        "height": 150
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "promptable",
+      "group": "course",
+      "label": "Promptable",
+      "subtitle": "requested region",
+      "type": "action",
+      "bounds": {
+        "x": 1170,
+        "y": 320,
+        "width": 250,
+        "height": 150
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "semantic_instance",
+      "from": {
+        "node": "semantic",
+        "port": "out"
+      },
+      "to": {
+        "node": "instance",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          370,
+          395
+        ],
+        [
+          470,
+          395
+        ]
+      ],
+      "label": "identity",
+      "label_at": [
+        420,
+        385
+      ]
+    },
+    {
+      "id": "instance_panoptic",
+      "from": {
+        "node": "instance",
+        "port": "out"
+      },
+      "to": {
+        "node": "panoptic",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          720,
+          395
+        ],
+        [
+          820,
+          395
+        ]
+      ],
+      "label": "full scene",
+      "label_at": [
+        770,
+        385
+      ]
+    },
+    {
+      "id": "panoptic_prompt",
+      "from": {
+        "node": "panoptic",
+        "port": "out"
+      },
+      "to": {
+        "node": "promptable",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1070,
+          395
+        ],
+        [
+          1170,
+          395
+        ]
+      ],
+      "label": "target cue",
+      "label_at": [
+        1120,
+        385
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

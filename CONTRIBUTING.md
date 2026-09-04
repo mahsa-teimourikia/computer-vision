@@ -11,6 +11,8 @@ Thank you for helping build the Computer Vision Field Guide.
 5. Add focused tests and update the curriculum index, roadmap, Hub registry, and checkpoint.
 6. Run `make test`, `make notebook-check`, and `make links` before opening a pull request.
 
+Course and implementation plans are development artifacts. Use them while designing substantial lessons, but remove lesson-local `COURSE_PLAN.md` files before merge unless the repository adopts the same retained-plan convention for every completed course.
+
 Use primary papers, standards, official documentation, and maintained implementations. Do not invent benchmark numbers, claims, or citations. Keep datasets small, redistributable, and documented in `data/README.md`.
 
 Every lesson that discusses current models must date its review, separate established practice from emerging practice and research prototypes, cite primary/official sources close to the claims, and compare at least two relevant tools using the criteria in [TOOLING.md](TOOLING.md). Never promote a benchmark result without documenting the task, dataset, metric, split, resolution, hardware, and evaluation limitations.

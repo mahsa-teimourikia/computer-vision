@@ -524,7 +524,7 @@ The optional DINOv2 section is enabled with `CV_ENABLE_DINOV2=1`. Review the pin
 
 ## Next course
 
-[Course 05 — Object Detection](../README.md) uses learned global and spatial representations to localize multiple objects. The bridge is now explicit: SSL determines what structure the encoder learns; detection adds spatial prediction, matching, box geometry, and task-specific evaluation.
+[Course 05 — Object Detection](../05-object-detection/README.md) uses learned global and spatial representations to localize multiple objects. The bridge is now explicit: SSL determines what structure the encoder learns; detection adds spatial prediction, matching, box geometry, and task-specific evaluation.
 
 ## Primary references
 

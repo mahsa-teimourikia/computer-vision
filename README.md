@@ -11,14 +11,18 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The first four complete courses form a connected foundations sequence:
+The first eight complete courses form a connected foundations sequence:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
 3. [Vision Transformers](curriculum/beginner/03-vision-transformers/README.md) moves from patches, positions, and manual attention to a minimal ViT, a controlled CNN/ViT/Swin benchmark, resolution interpolation, attention-distance diagnostics, and architecture selection.
 4. [Self-Supervised Visual Representation Learning](curriculum/beginner/04-self-supervised-visual-representation-learning/README.md) moves from manual NT-Xent and augmentation contracts through matched contrastive/teacher–student/reconstruction experiments, explicit collapse diagnostics, repeated label-efficiency evaluation, global-versus-patch testing, and governed foundation-feature decisions.
+5. [Object Detection](curriculum/beginner/05-object-detection/README.md) moves from box contracts, IoU, matching, AP, anchors, and feature pyramids through a trained dense detector, NMS, Hungarian assignment, YOLO/DETR design choices, open-vocabulary extensions, and source-aware deployment evidence.
+6. [Segmentation & Promptable Segmentation](curriculum/beginner/06-segmentation-promptable-segmentation/README.md) moves from mask contracts, U-Net, losses, overlap, and boundaries through source-sliced semantic evaluation, prompt sensitivity, detector-box error propagation, human review, and a governed optional SAM 3.1 adapter.
+7. [Visual Embeddings, Metric Learning & Retrieval](curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/README.md) turns explicit similarity contracts into normalized embeddings, metric-learning objectives, simulated mining adjudication, exact and approximate search, retrieval failure analysis, and versioned enterprise evidence.
+8. [Tracking, Keypoints & Pose](curriculum/beginner/08-tracking-keypoints-pose/README.md) builds timestamp-aware association, lifecycle, motion, appearance, and Byte-style recovery before connecting persistent identity to landmark accuracy, pose geometry, temporal stability, and failure propagation.
 
-All four CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, and scikit-learn APIs and keep all teaching code inside the notebook.
+All eight CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Course 08 keeps official TrackEval, ByteTrack, and downloaded pose checkpoints optional.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -71,7 +75,27 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
-│   └── 04-self-supervised-visual-representation-learning/
+│   ├── 04-self-supervised-visual-representation-learning/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 05-object-detection/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 06-segmentation-promptable-segmentation/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 07-visual-embeddings-metric-learning-retrieval/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 08-tracking-keypoints-pose/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt

@@ -1,0 +1,431 @@
+{
+  "version": 1,
+  "id": "feature-pyramid",
+  "title": "Feature pyramids combine detail with semantics",
+  "purpose": "Explain top-down and lateral multi-scale fusion for detection.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/feature-pyramid.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Four backbone stages become progressively lower resolution and more semantic, while lateral connections and top-down fusion create pyramid outputs P2 through P5."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "backbone",
+      "label": "Backbone features",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 650,
+        "height": 680
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "pyramid",
+      "label": "Fused pyramid",
+      "bounds": {
+        "x": 886,
+        "y": 120,
+        "width": 650,
+        "height": 680
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "c2",
+      "group": "backbone",
+      "label": "C2",
+      "subtitle": "high resolution\nlower semantics",
+      "type": "data",
+      "bounds": {
+        "x": 130,
+        "y": 210,
+        "width": 220,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "c3",
+      "group": "backbone",
+      "label": "C3",
+      "subtitle": "1/8 scale",
+      "type": "data",
+      "bounds": {
+        "x": 130,
+        "y": 350,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "c4",
+      "group": "backbone",
+      "label": "C4",
+      "subtitle": "1/16 scale",
+      "type": "data",
+      "bounds": {
+        "x": 130,
+        "y": 480,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "c5",
+      "group": "backbone",
+      "label": "C5",
+      "subtitle": "low resolution\nhigh semantics",
+      "type": "agent",
+      "bounds": {
+        "x": 130,
+        "y": 610,
+        "width": 220,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "p2",
+      "group": "pyramid",
+      "label": "P2",
+      "subtitle": "small objects",
+      "type": "service",
+      "bounds": {
+        "x": 1240,
+        "y": 210,
+        "width": 220,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "down": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "p3",
+      "group": "pyramid",
+      "label": "P3",
+      "subtitle": "fine scale",
+      "type": "service",
+      "bounds": {
+        "x": 1240,
+        "y": 350,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "up": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "down": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "p4",
+      "group": "pyramid",
+      "label": "P4",
+      "subtitle": "medium scale",
+      "type": "service",
+      "bounds": {
+        "x": 1240,
+        "y": 480,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "up": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "down": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "p5",
+      "group": "pyramid",
+      "label": "P5",
+      "subtitle": "large objects",
+      "type": "agent",
+      "bounds": {
+        "x": 1240,
+        "y": 610,
+        "width": 220,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "up": {
+          "side": "top",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "lat2",
+      "from": {
+        "node": "c2",
+        "port": "out"
+      },
+      "to": {
+        "node": "p2",
+        "port": "in"
+      },
+      "label": "lateral",
+      "label_at": [
+        800,
+        250
+      ],
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          265
+        ],
+        [
+          1240,
+          265
+        ]
+      ]
+    },
+    {
+      "id": "lat3",
+      "from": {
+        "node": "c3",
+        "port": "out"
+      },
+      "to": {
+        "node": "p3",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          400
+        ],
+        [
+          1240,
+          400
+        ]
+      ]
+    },
+    {
+      "id": "lat4",
+      "from": {
+        "node": "c4",
+        "port": "out"
+      },
+      "to": {
+        "node": "p4",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          530
+        ],
+        [
+          1240,
+          530
+        ]
+      ]
+    },
+    {
+      "id": "lat5",
+      "from": {
+        "node": "c5",
+        "port": "out"
+      },
+      "to": {
+        "node": "p5",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          665
+        ],
+        [
+          1240,
+          665
+        ]
+      ]
+    },
+    {
+      "id": "top5",
+      "from": {
+        "node": "p5",
+        "port": "up"
+      },
+      "to": {
+        "node": "p4",
+        "port": "down"
+      },
+      "label": "top-down",
+      "label_at": [
+        1435,
+        595
+      ],
+      "kind": "secondary",
+      "route": [
+        [
+          1350,
+          610
+        ],
+        [
+          1350,
+          580
+        ]
+      ]
+    },
+    {
+      "id": "top4",
+      "from": {
+        "node": "p4",
+        "port": "up"
+      },
+      "to": {
+        "node": "p3",
+        "port": "down"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1350,
+          480
+        ],
+        [
+          1350,
+          450
+        ]
+      ]
+    },
+    {
+      "id": "top3",
+      "from": {
+        "node": "p3",
+        "port": "up"
+      },
+      "to": {
+        "node": "p2",
+        "port": "down"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1350,
+          350
+        ],
+        [
+          1350,
+          320
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

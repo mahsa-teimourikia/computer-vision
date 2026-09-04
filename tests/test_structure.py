@@ -1,4 +1,5 @@
 import json
+import tomllib
 from pathlib import Path
 
 
@@ -188,3 +189,330 @@ def test_course_04_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_course_05_contains_the_declared_detection_lab():
+    course = Path("curriculum/beginner/05-object-detection")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "xyxy_to_xywh",
+        "box_iou",
+        "detection_events",
+        "precision_recall_ap",
+        "generate_anchors",
+        "TinyAnchorFreeDetector",
+        "sigmoid_focal_loss",
+        "local_xywh_to_global",
+        "manual_nms",
+        "torchvision_nms",
+        "threshold_sweep",
+        "source_size_evaluation",
+        "ap50_ap75_example",
+        "nms_crowding_example",
+        "mitigation_comparison",
+        "detection_error_events",
+        "error_taxonomy_summary",
+        "failure_slices",
+        "linear_sum_assignment",
+        "hungarian_cost",
+        "hungarian_cost_decomposition",
+        "classification_cost",
+        "L1_box_cost",
+        "GIoU_cost",
+        "ULTRALYTICS_TESTED_VERSION",
+        "CV_ENABLE_GROUNDING_DINO",
+        "detector_decision.json",
+        "DEMONSTRATION_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "factory c is never used for gradient updates or threshold selection" in source_lower
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_05_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/05-object-detection/assets")
+    expected = {
+        "detection-output-contract.svg",
+        "anchor-vs-anchor-free.svg",
+        "feature-pyramid.svg",
+        "nms-duplicate-removal.svg",
+        "dense-vs-set-prediction.svg",
+        "detr-matching.svg",
+        "detection-error-taxonomy.svg",
+        "closed-vs-open-vocabulary.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+
+
+def test_course_06_contains_the_declared_segmentation_lab():
+    course = Path("curriculum/beginner/06-segmentation-promptable-segmentation")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "mask_quality_report",
+        "bilinear: corrupted",
+        "binary_iou",
+        "dice_score",
+        "pixel_accuracy",
+        "per_class_iou",
+        "mean_iou",
+        "boundary_f1",
+        "empty_policy_examples",
+        "topology_signature",
+        "TinyUNet",
+        "ConvBlock",
+        "DownBlock",
+        "UpBlock",
+        "multiclass_dice_loss",
+        '"CE+Dice"',
+        "slice_table",
+        "point_prompt_proxy",
+        "box_prompt_proxy",
+        "prompt_sensitivity",
+        "box_error_propagation",
+        "LOCAL_PROMPT_ENGINE",
+        '"foundation_model": False',
+        "quality_rank_correlations",
+        "quality_calibration_buckets",
+        "correction_effort",
+        "TARGET_REVIEW_IOU",
+        "information_budget",
+        "SAM31_REPO_REVISION",
+        "SAM31_MODEL_REVISION",
+        "daa63191845a41281374e725f4c9e51c7a824460",
+        "record_sam31_quality_observation",
+        "RUN_SAM31",
+        "load_from_HF=False",
+        "course-06-segmentation-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "human_review_policy",
+        "operating_contract_comparison_not_a_ranking",
+    ]:
+        assert required in source
+
+    assert "local prompt proxy" in source_lower and "not a foundation model" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_06_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/06-segmentation-promptable-segmentation/assets")
+    expected = {
+        "segmentation-taxonomy.svg",
+        "unet-encoder-decoder.svg",
+        "semantic-vs-instance.svg",
+        "mask-metrics.svg",
+        "mask-rcnn.svg",
+        "query-mask-classification.svg",
+        "promptable-segmentation.svg",
+        "detector-segmenter-pipeline.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+
+
+def test_course_07_contains_the_declared_retrieval_lab():
+    course = Path("curriculum/beginner/07-visual-embeddings-metric-learning-retrieval")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "contrastive_pair_loss",
+        "triplet_loss_with_diagnostics",
+        "make_pk_batch",
+        "mine_online_triplets",
+        "semi-hard",
+        "batch-hard",
+        "sampling_signal_table",
+        "easy (farthest)",
+        "mine_offline_triplets",
+        "false_negative",
+        "precision_at_k",
+        "recall_at_k",
+        "average_precision",
+        "evaluate_retrieval",
+        "ResNet18_Weights.DEFAULT",
+        "TinyMetricEncoder",
+        "region_image",
+        "difference_hash",
+        "duplicate_group_split",
+        "split_group_overlap",
+        "cross_split_group_overlap",
+        "hard_negative_review",
+        "ambiguous taxonomy / representation mismatch",
+        "simulated_reviewer_decision",
+        "simulated hidden-label oracle",
+        "IndexFlatIP",
+        "IndexHNSWFlat",
+        "FAISS_WORKER_SOURCE",
+        "ann_recall_at_k",
+        "ANN_Recall@10",
+        "median_individual_query_ms",
+        "p95_individual_query_ms",
+        "individual_timing_samples",
+        "filtered_retrieval",
+        "post-filter after top-5",
+        "shallow_post_ms",
+        "mitigated_post_ms",
+        "encoder_manifests",
+        "cross_version_status",
+        "neighbor_retention",
+        "DINOV2_REPO_REVISION",
+        "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+        "course-07-retrieval-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "DEMONSTRATION_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "factory c never supplies training gradients" in source_lower
+    assert "p95_ms_per_query" not in source
+    assert 'duplicate_pairs["split"] = [' not in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+    assert "faiss-cpu==1.15.0" not in project["project"]["optional-dependencies"]["learner"]
+    assert "faiss-cpu==1.15.0" in project["project"]["optional-dependencies"]["contributor"]
+
+
+def test_course_07_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets")
+    expected = {
+        "embedding-space.svg",
+        "siamese-network.svg",
+        "triplet-learning.svg",
+        "hard-negative-mining.svg",
+        "retrieval-pipeline.svg",
+        "exact-vs-ann.svg",
+        "embedding-versioning.svg",
+        "retrieval-failure-taxonomy.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+
+
+def test_course_08_contains_the_declared_tracking_pose_lab():
+    course = Path("curriculum/beginner/08-tracking-keypoints-pose")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "make_timestamps",
+        "ground_truth_id",
+        "simulate_detections",
+        "box_iou",
+        "linear_sum_assignment",
+        "hungarian_assignment",
+        "class IoUTracker",
+        "class StructuredTracker",
+        "TrackState",
+        "lifecycle_events",
+        "scalar_recursive_filter_1d",
+        "scalar position-only recursive filter; no velocity state",
+        "geometry_only",
+        "appearance_only",
+        "combined",
+        "byte_style",
+        "iou_gate",
+        "center_gate",
+        "appearance_gate",
+        "combined_cost_threshold",
+        "secondary_combined_cost_threshold",
+        "occlusion_slices",
+        "slice_fragment_recoveries",
+        "identity_consistency_f1_teaching",
+        "hota_like_teaching_not_official",
+        "export_motchallenge",
+        "TRACKEVAL_REPO_REVISION",
+        "12c8791b303e0a0b50f753af204249e622d0281a",
+        "gaussian_heatmap",
+        "decode_heatmap_argmax",
+        "heatmap_resolution_comparison",
+        "oks_like_teaching",
+        "pose_geometry",
+        "timestamp_velocity",
+        "temporal_lag_frames",
+        "track_pose_history",
+        "failure_propagation",
+        "natural_container_association_failure",
+        "source_shift",
+        "injected_pose_stage_noise_proxy",
+        "pose_image_model_inference",
+        "source_shift_experimental_boundary",
+        "CV_ENABLE_BYTETRACK",
+        "CV_ENABLE_MMPPOSE",
+        "CV_ENABLE_TORCHVISION_KEYPOINT",
+        "course-08-tracking-pose-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "DEMONSTRATION_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "the tracker still never sees hidden identity" in source_lower
+    assert "not official coco oks" in source_lower
+    assert "gate = 1 - self.iou_threshold" not in source
+    assert '"fragmentation_total": run["metrics"]["fragmentation"]' not in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_08_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/08-tracking-keypoints-pose/assets")
+    expected = {
+        "tracking-by-detection.svg",
+        "track-lifecycle.svg",
+        "association-cost.svg",
+        "identity-switch.svg",
+        "bytetrack-association.svg",
+        "keypoint-heatmap.svg",
+        "top-down-vs-bottom-up-pose.svg",
+        "track-pose-state.svg",
+        "tracking-failure-taxonomy.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+
+    association_spec = json.loads((assets / "specs" / "association-cost.json").read_text(encoding="utf-8"))
+    association_text = json.dumps(association_spec)
+    for required in ["Hard gates", "Remaining pairs", "Weighted cost", "Hungarian match", "max_combined_cost"]:
+        assert required in association_text

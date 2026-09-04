@@ -1,0 +1,358 @@
+{
+  "version": 1,
+  "id": "closed-vs-open-vocabulary",
+  "title": "From fixed labels to text-conditioned detection",
+  "purpose": "Preview the shift from closed-set detection to open-vocabulary grounding.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/closed-vs-open-vocabulary.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Closed-set detection maps image features to a fixed trained label head, while open-vocabulary detection aligns image regions with text prompts and requires prompt, calibration, and unknown-category evaluation."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "closed",
+      "label": "Closed-set detector",
+      "bounds": {
+        "x": 64,
+        "y": 130,
+        "width": 700,
+        "height": 620
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "open",
+      "label": "Open-vocabulary detector",
+      "bounds": {
+        "x": 836,
+        "y": 130,
+        "width": 700,
+        "height": 620
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "closed_image",
+      "group": "closed",
+      "label": "Image features",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 320,
+        "width": 190,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "closed_head",
+      "group": "closed",
+      "label": "Fixed class head",
+      "subtitle": "trained categories only",
+      "type": "agent",
+      "bounds": {
+        "x": 375,
+        "y": 300,
+        "width": 210,
+        "height": 150
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "closed_output",
+      "group": "closed",
+      "label": "Known labels",
+      "type": "service",
+      "bounds": {
+        "x": 610,
+        "y": 320,
+        "width": 120,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "open_image",
+      "group": "open",
+      "label": "Image regions",
+      "type": "data",
+      "bounds": {
+        "x": 900,
+        "y": 255,
+        "width": 190,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "prompt",
+      "group": "open",
+      "label": "Text prompts",
+      "subtitle": "names or phrases",
+      "type": "operations",
+      "bounds": {
+        "x": 900,
+        "y": 475,
+        "width": 190,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "alignment",
+      "group": "open",
+      "label": "Region\u2013text alignment",
+      "subtitle": "grounded score + box",
+      "type": "agent",
+      "bounds": {
+        "x": 1140,
+        "y": 340,
+        "width": 210,
+        "height": 150
+      },
+      "ports": {
+        "image": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "text": {
+          "side": "left",
+          "offset": 0.75
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "grounded",
+      "group": "open",
+      "label": "Prompted\nobjects",
+      "type": "action",
+      "bounds": {
+        "x": 1390,
+        "y": 360,
+        "width": 110,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c1",
+      "from": {
+        "node": "closed_image",
+        "port": "out"
+      },
+      "to": {
+        "node": "closed_head",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          375
+        ],
+        [
+          375,
+          375
+        ]
+      ]
+    },
+    {
+      "id": "c2",
+      "from": {
+        "node": "closed_head",
+        "port": "out"
+      },
+      "to": {
+        "node": "closed_output",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          585,
+          375
+        ],
+        [
+          610,
+          375
+        ]
+      ]
+    },
+    {
+      "id": "o1",
+      "from": {
+        "node": "open_image",
+        "port": "out"
+      },
+      "to": {
+        "node": "alignment",
+        "port": "image"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          310
+        ],
+        [
+          1115,
+          310
+        ],
+        [
+          1115,
+          385
+        ],
+        [
+          1140,
+          385
+        ]
+      ]
+    },
+    {
+      "id": "o2",
+      "from": {
+        "node": "prompt",
+        "port": "out"
+      },
+      "to": {
+        "node": "alignment",
+        "port": "text"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          530
+        ],
+        [
+          1115,
+          530
+        ],
+        [
+          1115,
+          452
+        ],
+        [
+          1140,
+          452
+        ]
+      ]
+    },
+    {
+      "id": "o3",
+      "from": {
+        "node": "alignment",
+        "port": "out"
+      },
+      "to": {
+        "node": "grounded",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1350,
+          415
+        ],
+        [
+          1390,
+          415
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

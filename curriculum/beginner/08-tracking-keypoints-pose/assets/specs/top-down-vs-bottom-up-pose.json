@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "id": "top-down-vs-bottom-up-pose",
+  "title": "Top-down and bottom-up pose",
+  "purpose": "Top-down systems detect and crop instances before pose; bottom-up systems detect landmarks before grouping them into instances.",
+  "output": {
+    "svg": "curriculum/beginner/08-tracking-keypoints-pose/assets/top-down-vs-bottom-up-pose.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Top-down systems detect and crop instances before pose; bottom-up systems detect landmarks before grouping them into instances."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 720,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Structured visual state",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 550
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "image",
+      "group": "system",
+      "label": "Image",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "many instances"
+    },
+    {
+      "id": "choice",
+      "group": "system",
+      "label": "Pose strategy",
+      "type": "agent",
+      "bounds": {
+        "x": 430,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "operating contract"
+    },
+    {
+      "id": "topdown",
+      "group": "system",
+      "label": "Top-down",
+      "type": "service",
+      "bounds": {
+        "x": 760,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "detect \u2192 crop \u2192 pose"
+    },
+    {
+      "id": "bottomup",
+      "group": "system",
+      "label": "Bottom-up",
+      "type": "service",
+      "bounds": {
+        "x": 1090,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "landmarks \u2192 group"
+    },
+    {
+      "id": "evaluate",
+      "group": "system",
+      "label": "Evaluate failures",
+      "type": "action",
+      "bounds": {
+        "x": 1420,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "crop errors vs grouping errors"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "image",
+        "port": "out"
+      },
+      "to": {
+        "node": "choice",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          360
+        ],
+        [
+          430,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "choice",
+        "port": "out"
+      },
+      "to": {
+        "node": "topdown",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          680,
+          360
+        ],
+        [
+          760,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "topdown",
+        "port": "out"
+      },
+      "to": {
+        "node": "bottomup",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          360
+        ],
+        [
+          1090,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "bottomup",
+        "port": "out"
+      },
+      "to": {
+        "node": "evaluate",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1340,
+          360
+        ],
+        [
+          1420,
+          360
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlap": true,
+    "all_text_contained": true,
+    "edge_routes_reviewed": true,
+    "contrast_checked": true,
+    "alt_text_reviewed": true
+  }
+}
