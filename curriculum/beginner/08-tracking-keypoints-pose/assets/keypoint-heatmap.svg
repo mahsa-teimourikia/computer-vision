@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 720" role="img" aria-labelledby="title description">
+<title id="title">Keypoint heatmap decoding</title>
+<desc id="description">An object crop becomes spatial features and one Gaussian-like heatmap per landmark before coordinate decoding.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1800" height="720" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Keypoint heatmap decoding</text>
+<rect x="64" y="100" width="1672" height="550" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Structured visual state</text>
+<polyline points="350,360 430,360" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="680,360 760,360" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1010,360 1090,360" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1340,360 1420,360" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="100" y="275" width="250" height="170" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="225.0" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Object crop</text>
+<text x="225.0" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">box + pixels</text>
+<rect x="430" y="275" width="250" height="170" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="555.0" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Spatial features</text>
+<text x="555.0" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">resolution preserved</text>
+<rect x="760" y="275" width="250" height="170" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="885.0" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Keypoint heatmaps</text>
+<text x="885.0" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">one map per landmark</text>
+<rect x="1090" y="275" width="250" height="170" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1215.0" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Coordinate decoder</text>
+<text x="1215.0" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">argmax / soft coordinate</text>
+<rect x="1420" y="275" width="250" height="170" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1545.0" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Landmarks</text>
+<text x="1545.0" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">x · y · visibility</text>
+</svg>

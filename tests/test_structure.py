@@ -420,3 +420,99 @@ def test_course_07_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_course_08_contains_the_declared_tracking_pose_lab():
+    course = Path("curriculum/beginner/08-tracking-keypoints-pose")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "make_timestamps",
+        "ground_truth_id",
+        "simulate_detections",
+        "box_iou",
+        "linear_sum_assignment",
+        "hungarian_assignment",
+        "class IoUTracker",
+        "class StructuredTracker",
+        "TrackState",
+        "lifecycle_events",
+        "scalar_recursive_filter_1d",
+        "scalar position-only recursive filter; no velocity state",
+        "geometry_only",
+        "appearance_only",
+        "combined",
+        "byte_style",
+        "iou_gate",
+        "center_gate",
+        "appearance_gate",
+        "combined_cost_threshold",
+        "secondary_combined_cost_threshold",
+        "occlusion_slices",
+        "slice_fragment_recoveries",
+        "identity_consistency_f1_teaching",
+        "hota_like_teaching_not_official",
+        "export_motchallenge",
+        "TRACKEVAL_REPO_REVISION",
+        "12c8791b303e0a0b50f753af204249e622d0281a",
+        "gaussian_heatmap",
+        "decode_heatmap_argmax",
+        "heatmap_resolution_comparison",
+        "oks_like_teaching",
+        "pose_geometry",
+        "timestamp_velocity",
+        "temporal_lag_frames",
+        "track_pose_history",
+        "failure_propagation",
+        "natural_container_association_failure",
+        "source_shift",
+        "injected_pose_stage_noise_proxy",
+        "pose_image_model_inference",
+        "source_shift_experimental_boundary",
+        "CV_ENABLE_BYTETRACK",
+        "CV_ENABLE_MMPPOSE",
+        "CV_ENABLE_TORCHVISION_KEYPOINT",
+        "course-08-tracking-pose-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "DEMONSTRATION_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "the tracker still never sees hidden identity" in source_lower
+    assert "not official coco oks" in source_lower
+    assert "gate = 1 - self.iou_threshold" not in source
+    assert '"fragmentation_total": run["metrics"]["fragmentation"]' not in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_course_08_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/beginner/08-tracking-keypoints-pose/assets")
+    expected = {
+        "tracking-by-detection.svg",
+        "track-lifecycle.svg",
+        "association-cost.svg",
+        "identity-switch.svg",
+        "bytetrack-association.svg",
+        "keypoint-heatmap.svg",
+        "top-down-vs-bottom-up-pose.svg",
+        "track-pose-state.svg",
+        "tracking-failure-taxonomy.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+
+    association_spec = json.loads((assets / "specs" / "association-cost.json").read_text(encoding="utf-8"))
+    association_text = json.dumps(association_spec)
+    for required in ["Hard gates", "Remaining pairs", "Weighted cost", "Hungarian match", "max_combined_cost"]:
+        assert required in association_text

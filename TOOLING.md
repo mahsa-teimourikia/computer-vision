@@ -57,6 +57,19 @@ Teach the primitive first: view generation, similarity matrix, target mapping, s
 
 The Course 07 default is an exact NumPy/scikit-learn baseline plus FAISS `IndexFlatIP` and HNSW on L2-normalized `float32` vectors. Because FAISS introduces a native runtime, it remains in Course 07's tested requirements and the contributor/CI environment rather than the repository-wide learner extra used for Courses 01–06. A hosted vector database is deliberately optional: production adoption requires metadata filtering, access control, backup/restore, observability, update semantics, and migration evidence—not only a nearest-neighbour demo.
 
+## Tracking, keypoint, and pose systems
+
+| Tool | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| NumPy + [SciPy assignment](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linear_sum_assignment.html) | Transparent tracking-by-detection teaching and small controlled systems | Inspectable IoU, motion, appearance, gates, Hungarian assignment, lifecycle, and failure attribution | The developer owns state estimation, metric semantics, performance, camera-motion handling, and every operating policy |
+| [TrackEval](https://github.com/JonathonLuiten/TrackEval) | Reference HOTA, CLEAR, and identity evaluation | Official HOTA implementation and MOTChallenge evaluation kit | Pin the source revision; preserve exact dataset formatting, ignore/crowd rules, thresholds, and sequence aggregation; dataset licenses are separate from MIT code |
+| [ByteTrack](https://github.com/FoundationVision/ByteTrack) | Detection-based MOT where low-confidence recovery is useful | Clear two-stage association idea and MIT reference code | Detector/checkpoint coupling, source age, dependency compatibility, thresholds, identity evidence, and production packaging |
+| [OC-SORT](https://github.com/noahcao/OC_SORT) / [BoT-SORT](https://github.com/NirAharon/BoT-SORT) | Stronger motion handling or camera-motion/appearance integration | Representative observation-centric and multi-cue trackers | Research-code maintenance, licenses, detector/re-ID checkpoints, camera assumptions, dependency conflicts, and export path |
+| [MMPose](https://github.com/open-mmlab/mmpose) / RTMPose | Broad pose research, model zoo, and deployment comparison | Human, animal, hand, face, whole-body, and real-time model families; multiple export backends | Cross-package versions, config/checkpoint pinning, trained-weight/data license, preprocessing, compiled operators, and domain fit |
+| [torchvision Keypoint R-CNN](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.detection.keypointrcnn_resnet50_fpn.html) | Common-SDK human-keypoint baseline | Familiar weights enum, transforms, tensors, and CPU smoke-test path | Beta detection APIs, COCO-human landmark contract, download size, latency, export behavior, and no applicability to arbitrary industrial landmarks |
+
+Course 08 keeps the first implementation inside the notebook and uses variable timestamps, a separate detector stream, association/lifecycle sweeps, a ByteTrack-inspired teaching comparison, and explicit source-shift attribution. It exports MOTChallenge-style text for an optional pinned TrackEval run but never renames local teaching metrics as official HOTA or IDF1. ByteTrack, MMPose/RTMPose, and torchvision checkpoint execution stay disabled by default, so the CPU learner path has no new native or remote-model dependency.
+
 ## Data, annotation, and evaluation
 
 | Tool | Role | Review notes |

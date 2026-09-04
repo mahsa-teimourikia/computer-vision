@@ -624,7 +624,7 @@ Embeddings are derived data, not automatically anonymous data. They can expose i
 
 Course 07 asks: “Which visual item is most similar to this one?”
 
-[Course 08 — Tracking, Keypoints & Pose](../README.md) will ask: “Is this the same object over time, and where are its important spatial points?” Retrieval geometry becomes an identity-association primitive, while tracking adds temporal state, motion, occlusion, lifecycle, and identity-switch evaluation.
+[Course 08 — Tracking, Keypoints & Pose](../08-tracking-keypoints-pose/README.md) asks: “Is this the same object over time, and where are its important spatial points?” Retrieval geometry becomes an identity-association primitive, while tracking adds temporal state, motion, occlusion, lifecycle, and identity-switch evaluation.
 
 ## 46. Primary research and official documentation
 

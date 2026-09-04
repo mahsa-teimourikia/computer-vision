@@ -62,6 +62,7 @@ def validate_hub() -> None:
         "Object Detection",
         "Segmentation &amp; Promptable Segmentation",
         "Visual Embeddings, Metric Learning &amp; Retrieval",
+        "Tracking, Keypoints &amp; Pose",
         "oneplusi.io",
     ]
     for text in required:
