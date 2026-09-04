@@ -202,6 +202,8 @@ Evaluate:
 - source slices; and
 - template provenance.
 
+When a prompt suite is evaluated on a locked test source, those rows are reporting only. Do not select, rewrite, or drop templates from test results. Operational template selection belongs on development data, followed by one frozen evaluation on the held-out source.
+
 ## 11. Candidate-vocabulary sensitivity
 
 Zero-shot classification is relative. Adding `corrosion` to `[scratch, dent, normal]` changes the normalization and can change every posterior-like score, even when image–text similarities are unchanged.
@@ -247,13 +249,18 @@ Correspondence can fail under repeated texture, large viewpoint change, occlusio
 
 ## 15. Foundation features for retrieval
 
-Reuse Course 07's contract and compare representations on the same query/gallery split:
+Reuse Course 07's contract and compare representations under two complementary protocols:
+
+1. **Cross-source generalization:** Factory C queries search a Factory A/B gallery. This measures semantic retrieval on an unseen source, but cannot measure same-source preference because Factory C is absent from the gallery.
+2. **Source-bias diagnostic:** mixed Factory A/B/C queries search a mixed gallery with the query itself excluded. Report same-label@K, same-source@K, the eligible-gallery same-source baseline, and excess same-source rate above that baseline.
+
+Compare each protocol for:
 
 - specialist supervised feature;
 - self-supervised-style visual feature;
 - image–text aligned feature.
 
-Report P@K, Recall@K, mAP, class/source separation, and failure examples. Different objectives can win for semantic retrieval, instance retrieval, source invariance, and text-to-image search. There is no context-free “best embedding.”
+Report P@K, Recall@K, mAP, class/source separation, and failure examples. A useful defect-retrieval representation should preserve semantic neighbors without unnecessary factory clustering; raw same-source@K is interpreted relative to the gallery composition rather than treated as intrinsically good or bad. Different objectives can win for semantic retrieval, instance retrieval, source invariance, and text-to-image search. There is no context-free “best embedding.”
 
 ## 16. Open-vocabulary detection
 
@@ -276,6 +283,8 @@ This creates new failure axes: text tokenization, synonyms, prompt order, absent
 **Phrase grounding** asks for the region corresponding to `the red extinguisher beside the exit`.
 
 Both use language-conditioned localization, but phrase grounding must bind attributes and relations to the correct referent. Category AP alone does not test that contract.
+
+An honest relational grounding experiment must represent both entities and their spatial relationship. The notebook builds candidate-region descriptors, identifies a relation target such as `pipe`, constructs pairwise features such as `left_of`, `right_of`, distance, and vertical overlap, and combines referent evidence with the requested relation. Treating `beside` as an absolute left-position token would test location bias, not a relation.
 
 ## 18. Grounding DINO-style architecture
 
@@ -473,7 +482,7 @@ The default notebook uses the first row and scikit-learn. Optional Hugging Face 
 
 ## 31. Optional-model governance
 
-Every downloaded model run must record:
+A production-eligible downloaded-model run must record:
 
 ```json
 {
@@ -492,6 +501,8 @@ Every downloaded model run must record:
 ```
 
 Pinning Python packages is insufficient. Pinning source code does not pin checkpoint bytes. A model-card license field is not legal approval, and a code license does not necessarily govern training data or weights.
+
+The guarded teaching adapters may be used as smoke tests before all artifacts are hashed, but they must then emit `artifact_hash_status: not_collected` and `production_provenance_complete: false`. Such observations cannot enter model comparisons or release decisions until the missing processor and checkpoint hashes are resolved.
 
 ## 32. Current model ecosystem reviewed in 2026
 

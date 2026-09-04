@@ -539,10 +539,22 @@ def test_course_09_contains_the_declared_foundation_vision_lab():
         "self_supervised_proxy",
         "image_text_alignment_proxy",
         "evaluate_retrieval",
+        "evaluate_source_bias",
+        "retrieval_cross_source_results",
+        "retrieval_source_bias_results",
+        "same_label@5",
+        "same_source@5",
+        "source_bias_excess",
         "patch_features",
         "patch_correspondence_accuracy",
         "local_grounding_proxy",
+        "parse_grounding_prompt",
+        "relationship_features",
+        "build_relation_graph",
+        "red valve right of pipe",
         "category_detection",
+        "attribute_grounding",
+        "relational_phrase_grounding",
         "phrase_grounding",
         "box_prompt_segmenter_proxy",
         "oracle_box",
@@ -551,6 +563,9 @@ def test_course_09_contains_the_declared_foundation_vision_lab():
         '"foundation_model": False',
         "adaptation_results",
         "OPTIONAL_MODEL_MANIFESTS",
+        "artifact_hash_status",
+        "production_provenance_complete",
+        "comparison_eligible",
         "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
         "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
         "ed25f3a31f01632728cabb09d1542f84ab7b0056",
@@ -567,6 +582,7 @@ def test_course_09_contains_the_declared_foundation_vision_lab():
 
     assert "siglip, or a foundation model" in source_lower
     assert "factory c remains untouched" in source_lower
+    assert "factory c reporting only; no template selection or changes" in source_lower
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
 
