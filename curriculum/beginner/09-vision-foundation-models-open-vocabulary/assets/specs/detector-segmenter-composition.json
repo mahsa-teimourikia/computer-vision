@@ -1,0 +1,27 @@
+{
+  "version": 1, "id": "detector-segmenter-composition", "title": "Open-vocabulary detector to promptable segmenter", "purpose": "Show the composed text-to-mask pipeline and its error propagation.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/detector-segmenter-composition.svg", "medium": "documentation and notebook", "alt_text": "A text prompt and image enter an open-vocabulary detector, candidate boxes prompt a segmenter, and masks feed a bounded decision; evaluation observes each boundary."},
+  "canvas": {"width": 1900, "height": 800, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "pipeline", "label": "Composed inference path", "bounds": {"x": 64, "y": 100, "width": 1772, "height": 620}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "inputs", "group": "pipeline", "label": "Image + text", "subtitle": "approved prompt", "type": "data", "bounds": {"x": 110, "y": 290, "width": 230, "height": 140}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "detector", "group": "pipeline", "label": "Open-vocabulary\ndetector", "type": "agent", "bounds": {"x": 430, "y": 280, "width": 270, "height": 160}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}, "observe": {"side": "bottom", "offset": 0.5}}},
+    {"id": "boxes", "group": "pipeline", "label": "Candidate boxes", "subtitle": "phrase + score", "type": "service", "bounds": {"x": 790, "y": 290, "width": 240, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}, "observe": {"side": "bottom", "offset": 0.5}}},
+    {"id": "segmenter", "group": "pipeline", "label": "Promptable\nsegmenter", "type": "agent", "bounds": {"x": 1120, "y": 280, "width": 270, "height": 160}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}, "observe": {"side": "bottom", "offset": 0.5}}},
+    {"id": "masks", "group": "pipeline", "label": "Masks", "subtitle": "quality + provenance", "type": "action", "bounds": {"x": 1480, "y": 290, "width": 240, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "observe": {"side": "bottom", "offset": 0.5}}},
+    {"id": "evaluation", "group": "pipeline", "label": "Stage-conditioned evaluation", "subtitle": "oracle · perturbed · predicted", "type": "operations", "bounds": {"x": 760, "y": 560, "width": 430, "height": 120}, "ports": {"detector": {"side": "top", "offset": 0.15}, "boxes": {"side": "top", "offset": 0.4}, "segmenter": {"side": "top", "offset": 0.7}, "masks": {"side": "right", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "inputs", "port": "out"}, "to": {"node": "detector", "port": "in"}, "kind": "primary", "route": [[340,360],[430,360]]},
+    {"id": "e2", "from": {"node": "detector", "port": "out"}, "to": {"node": "boxes", "port": "in"}, "kind": "primary", "route": [[700,360],[790,360]]},
+    {"id": "e3", "from": {"node": "boxes", "port": "out"}, "to": {"node": "segmenter", "port": "in"}, "kind": "primary", "route": [[1030,360],[1120,360]]},
+    {"id": "e4", "from": {"node": "segmenter", "port": "out"}, "to": {"node": "masks", "port": "in"}, "kind": "primary", "route": [[1390,360],[1480,360]]},
+    {"id": "e5", "from": {"node": "detector", "port": "observe"}, "to": {"node": "evaluation", "port": "detector"}, "kind": "secondary", "route": [[565,440],[565,520],[824,520],[824,560]]},
+    {"id": "e6", "from": {"node": "boxes", "port": "observe"}, "to": {"node": "evaluation", "port": "boxes"}, "kind": "secondary", "route": [[910,430],[910,560],[932,560]]},
+    {"id": "e7", "from": {"node": "segmenter", "port": "observe"}, "to": {"node": "evaluation", "port": "segmenter"}, "kind": "secondary", "route": [[1255,440],[1255,520],[1061,520],[1061,560]]},
+    {"id": "e8", "from": {"node": "masks", "port": "observe"}, "to": {"node": "evaluation", "port": "masks"}, "kind": "secondary", "route": [[1600,430],[1600,620],[1190,620]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

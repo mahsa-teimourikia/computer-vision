@@ -115,7 +115,7 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 6. **Segmentation & Promptable Segmentation** — semantic, instance, and panoptic outputs; mask contracts, boundaries, prompt sensitivity, detector-to-mask error propagation, human review, and governed foundation-model comparison. *(available)*
 7. **Visual Embeddings, Metric Learning & Retrieval** — Siamese models, contrastive/triplet objectives, FAISS-style similarity search, re-identification, hard-example discovery, and retrieval evaluation. *(available)*
 8. [**Tracking, Keypoints & Pose**](curriculum/beginner/08-tracking-keypoints-pose/README.md) — temporal identity, occlusion, association, landmarks, pose estimation, and video evaluation. *(available)*
-9. **Vision Foundation Models & Open-Vocabulary Vision** — promptable and open-vocabulary perception, concept segmentation, reusable embeddings, and governed adaptation.
+9. [**Vision Foundation Models & Open-Vocabulary Vision**](curriculum/beginner/09-vision-foundation-models-open-vocabulary/README.md) — reusable representations, image–text alignment, prompt and vocabulary robustness, dense features, grounding, promptable segmentation, composition error propagation, adaptation, and governed evidence. *(available)*
 
 ## Intermediate
 

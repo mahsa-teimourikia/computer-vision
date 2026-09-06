@@ -1,6 +1,6 @@
 # Computer vision tooling review
 
-> Reviewed: 2026-09-02. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
+> Reviewed: 2026-09-03. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
 
 Tools are selected per lesson, not imposed as one universal framework. Every tooling decision should compare maintenance, portability, observability, licensing, reproducibility, hardware fit, exportability, and operational cost.
 
@@ -14,6 +14,20 @@ Tools are selected per lesson, not imposed as one universal framework. Every too
 | Experiment records | Local JSON/CSV fixtures first | Credential-free and inspectable in course notebooks | Add MLflow or Weights & Biases when distributed runs, artifact lineage, and team workflows justify a service |
 
 The course teaches the primitive before the framework. A framework example must expose preprocessing, tensor shapes, device placement, loss, metrics, and failure behavior instead of hiding them behind a one-call demo.
+
+## Vision foundation and open-vocabulary systems
+
+| Tool | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| [Hugging Face Transformers](https://huggingface.co/docs/transformers/index) | Common processor/model interfaces for CLIP, SigLIP2, DINOv2, and Grounding DINO | Immutable model revisions, model cards, cached artifacts, familiar PyTorch inference | Processor drift, cache/network behavior, checkpoint licenses, remote-code trust, and rapidly changing APIs |
+| [OpenAI CLIP](https://github.com/openai/CLIP) / [OpenCLIP](https://github.com/mlfoundations/open_clip) | Dual-encoder reproduction and broad image–text checkpoint comparison | Transparent normalized similarity and widely adopted zero-shot workflow | Training-data provenance, prompt/vocabulary sensitivity, calibration, and checkpoint-specific terms |
+| [Big Vision](https://github.com/google-research/big_vision) / SigLIP2 | Author reference for sigmoid image–text alignment and current multilingual/dense variants | Research configurations and official checkpoints | JAX stack, preprocessing, artifact storage, license, and benchmark parity with PyTorch paths |
+| [DINOv2](https://github.com/facebookresearch/dinov2) / [DINOv3](https://github.com/facebookresearch/dinov3) | Global and patch-level self-supervised foundation features | Strong reusable dense representations and author implementations | Pin code and weights separately; DINOv3 uses gated weights and a custom license |
+| [Grounding DINO](https://github.com/IDEA-Research/GroundingDINO) | Language-conditioned boxes and phrase grounding | Influential open-vocabulary DETR-style reference with Apache-2.0 code | Token/phrase semantics, native dependencies, thresholds, source age, checkpoint/data provenance |
+| [Meta SAM 3 / SAM 3.1](https://github.com/facebookresearch/sam3) | Concept-, exemplar-, and visual-prompt detection, segmentation, and tracking | Unified current promptable interface across images and video | Gated 848M-parameter weights, custom SAM License, CUDA-oriented stack, and prompt/domain evaluation |
+| [PEFT](https://huggingface.co/docs/peft/index) | Adapters and LoRA where a vision architecture is supported | Small trainable artifacts and common configuration patterns | Target-module selection, base/adapter compatibility, export, drift, and security review |
+
+Course 09 uses transparent local proxies for its credential-free default experiments and marks them `foundation_model=false`. Optional official observations are isolated, revision-pinned, disabled by default, and stored separately from local evidence. No local proxy result is a claim about CLIP, SigLIP2, DINO, Grounding DINO, or SAM.
 
 ## Task frameworks
 
