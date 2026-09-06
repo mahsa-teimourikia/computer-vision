@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 980" role="img" aria-labelledby="title description">
+<title id="title">A VLM release needs multiple evidence contracts</title>
+<desc id="description">A versioned VLM candidate fans out to separate answer quality, evidence grounding, visual robustness, systems, safety, and governance evaluations. All feed a bounded release or review gate.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1800" height="980" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">A VLM release needs multiple evidence contracts</text>
+<rect x="64" y="100" width="1672" height="780" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">No single overall score</text>
+<polyline points="682,270 682,320 210,320 210,390" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="770,270 770,335 490,335 490,390" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="858,270 858,390 770,390" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="942,270 942,340 1050,340 1050,390" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1030,270 1030,325 1330,325 1330,390" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1118,270 1118,310 1610,310 1610,390" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="210,500 210,620 690,620 690,700" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="490,500 490,635 775,635 775,700" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="770,500 770,650 860,650 860,700" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1050,500 1050,650 940,650 940,700" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1330,500 1330,635 1025,635 1025,700" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1610,500 1610,620 1110,620 1110,700" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="640" y="150" width="520" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="900.0" y="184" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Versioned VLM bundle</text>
+<text x="900.0" y="212" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">model · processor · prompt · decoder</text>
+<rect x="90" y="390" width="240" height="110" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="210.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Answer quality</text>
+<text x="210.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">task metrics</text>
+<rect x="370" y="390" width="240" height="110" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="490.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Grounding</text>
+<text x="490.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">region + consistency</text>
+<rect x="650" y="390" width="240" height="110" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="770.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Robustness</text>
+<text x="770.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">ablation + counterfactual</text>
+<rect x="930" y="390" width="240" height="110" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1050.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Systems</text>
+<text x="1050.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">tokens · latency · memory</text>
+<rect x="1210" y="390" width="240" height="110" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1330.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Safety</text>
+<text x="1330.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">privacy · injection · misuse</text>
+<rect x="1490" y="390" width="240" height="110" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1610.0" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Governance</text>
+<text x="1610.0" y="452" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">lineage · license · rollback</text>
+<rect x="650" y="700" width="500" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="900.0" y="734" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Deterministic release gate</text>
+<text x="900.0" y="762" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">release · review · reject</text>
+</svg>

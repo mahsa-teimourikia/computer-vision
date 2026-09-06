@@ -1,0 +1,22 @@
+{
+  "version": 1, "id": "multimodal-training-stages", "title": "VLM training stages change different parts of the system", "purpose": "Distinguish initialization, connector alignment, multimodal pretraining, instruction tuning, and governed adaptation.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/multimodal-training-stages.svg", "medium": "documentation and notebook", "alt_text": "Five stages progress from pretrained vision and language components through connector alignment, multimodal pretraining, instruction tuning, and bounded domain adaptation, with an evaluation gate after each stage."},
+  "canvas": {"width": 1800, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "Recipes vary · each boundary needs capability regression", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 560}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "init", "group": "system", "label": "Initialize", "subtitle": "vision + LLM", "type": "data", "bounds": {"x": 110, "y": 270, "width": 250, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "align", "group": "system", "label": "Align connector", "subtitle": "vision → language", "type": "service", "bounds": {"x": 430, "y": 270, "width": 250, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "pretrain", "group": "system", "label": "Multimodal pretrain", "subtitle": "captions · interleaving", "type": "agent", "bounds": {"x": 750, "y": 270, "width": 280, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "instruct", "group": "system", "label": "Instruction tune", "subtitle": "image + task + response", "type": "action", "bounds": {"x": 1100, "y": 270, "width": 270, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "adapt", "group": "system", "label": "Adapt + govern", "subtitle": "LoRA · evaluate · rollback", "type": "operations", "bounds": {"x": 1440, "y": 270, "width": 250, "height": 120}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "init", "port": "out"}, "to": {"node": "align", "port": "in"}, "kind": "primary", "route": [[360,330],[430,330]]},
+    {"id": "e2", "from": {"node": "align", "port": "out"}, "to": {"node": "pretrain", "port": "in"}, "kind": "primary", "route": [[680,330],[750,330]]},
+    {"id": "e3", "from": {"node": "pretrain", "port": "out"}, "to": {"node": "instruct", "port": "in"}, "kind": "primary", "route": [[1030,330],[1100,330]]},
+    {"id": "e4", "from": {"node": "instruct", "port": "out"}, "to": {"node": "adapt", "port": "in"}, "kind": "primary", "route": [[1370,330],[1440,330]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

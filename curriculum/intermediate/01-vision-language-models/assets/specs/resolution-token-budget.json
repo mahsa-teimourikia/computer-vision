@@ -1,0 +1,24 @@
+{
+  "version": 1, "id": "resolution-token-budget", "title": "Resolution changes evidence and systems cost together", "purpose": "Show the causal path from image detail through tiles and visual tokens to prefill cost and failure modes.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/resolution-token-budget.svg", "medium": "documentation and notebook", "alt_text": "Higher image resolution preserves small details, then may create more tiles and visual tokens, increasing prefill memory and latency while introducing crop, duplicate, ordering, and boundary risks."},
+  "canvas": {"width": 1800, "height": 820, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "Processor policy is part of the model contract", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 620}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "resolution", "group": "system", "label": "Higher resolution", "subtitle": "small evidence retained", "type": "data", "bounds": {"x": 110, "y": 265, "width": 270, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "tiling", "group": "system", "label": "Resize / tile", "subtitle": "crop · overlap · order", "type": "service", "bounds": {"x": 470, "y": 265, "width": 270, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}, "risk": {"side": "bottom"}}},
+    {"id": "tokens", "group": "system", "label": "Visual tokens", "subtitle": "N or tiles × N", "type": "agent", "bounds": {"x": 830, "y": 265, "width": 270, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "prefill", "group": "system", "label": "LLM prefill", "subtitle": "memory · latency", "type": "action", "bounds": {"x": 1190, "y": 265, "width": 270, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "answer", "group": "system", "label": "Generated answer", "subtitle": "detail may still be ignored", "type": "operations", "bounds": {"x": 1530, "y": 265, "width": 180, "height": 120}, "ports": {"in": {"side": "left"}}},
+    {"id": "risks", "group": "system", "label": "Tiling failures", "subtitle": "cut · duplicate · lose global context", "type": "action", "bounds": {"x": 440, "y": 500, "width": 330, "height": 110}, "ports": {"in": {"side": "top"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "resolution", "port": "out"}, "to": {"node": "tiling", "port": "in"}, "kind": "primary", "route": [[380,325],[470,325]]},
+    {"id": "e2", "from": {"node": "tiling", "port": "out"}, "to": {"node": "tokens", "port": "in"}, "kind": "primary", "route": [[740,325],[830,325]]},
+    {"id": "e3", "from": {"node": "tokens", "port": "out"}, "to": {"node": "prefill", "port": "in"}, "kind": "primary", "route": [[1100,325],[1190,325]]},
+    {"id": "e4", "from": {"node": "prefill", "port": "out"}, "to": {"node": "answer", "port": "in"}, "kind": "primary", "route": [[1460,325],[1530,325]]},
+    {"id": "e5", "from": {"node": "tiling", "port": "risk"}, "to": {"node": "risks", "port": "in"}, "kind": "secondary", "route": [[605,385],[605,500]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

@@ -607,3 +607,92 @@ def test_course_09_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_intermediate_01_contains_the_declared_vlm_lab():
+    course = Path("curriculum/intermediate/01-vision-language-models")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "patch_features",
+        "spatial_pool",
+        "token_budget",
+        "attention_and_kv_components",
+        "LinearProjector",
+        "MLPProjector",
+        "QueryResampler",
+        "CrossAttentionFusion",
+        "TinyGenerativeVLM",
+        "autoregressive",
+        "Language-prior baseline",
+        "Visual Evidence Ablation",
+        "run_visual_evidence_suite",
+        "expected_cf_flip_rate",
+        "observed_cf_flip_rate",
+        "counterfactual_pair_accuracy",
+        "counterfactual_evidence_change_rate",
+        "FROZEN_ABLATION_PROTOCOL",
+        "counterfactual_diagnostic",
+        "evidence_hit_rate",
+        "SINGLE_PATCH_CAPABILITIES",
+        "region_set",
+        "relation_pair",
+        "unsupported_by_single_patch_head",
+        "P(evidence correct | answer correct)",
+        "unanswerable_confidences",
+        "selected_abstention_threshold",
+        "FROZEN_ABSTENTION_POLICY",
+        "selective_accuracy",
+        "unanswerable_rejection_rate",
+        "false_abstention_rate",
+        "before_after_change_proxy",
+        "validate_contract",
+        "patch/box consistency",
+        "mismatched patch and box",
+        "schema-valid wrong evidence",
+        "AutoProcessor",
+        "AutoModelForImageTextToText",
+        "apply_chat_template",
+        "trust_remote_code=False",
+        "7e3e67edbbed1bf9888184d9df282b700a323964",
+        "89644892e4d85e24eaac8bacfd4f463576704203",
+        "artifact_hash_status",
+        "production_provenance_complete",
+        "comparison_eligible",
+        "intermediate-01-vlm-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "demonstration_thresholds_for_this_notebook_runtime_only",
+    ]:
+        assert required in source
+
+    assert "local teaching vlm" in source_lower
+    assert "factory c is test-only" in source_lower
+    assert "not a foundation model" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_intermediate_01_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/intermediate/01-vision-language-models/assets")
+    expected = {
+        "dual-encoder-vs-generative-vlm.svg",
+        "visual-token-interfaces.svg",
+        "connector-patterns.svg",
+        "fusion-taxonomy.svg",
+        "multimodal-training-stages.svg",
+        "resolution-token-budget.svg",
+        "visual-evidence-ablation.svg",
+        "vlm-evaluation-contract.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
