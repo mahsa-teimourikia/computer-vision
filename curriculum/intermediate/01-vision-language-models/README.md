@@ -371,13 +371,15 @@ Run the same question with:
 3. a wrong/mismatched image; and
 4. a counterfactual image differing in exactly one relevant fact.
 
-Measure answer changes, probability/logit changes, evidence-region changes, and whether the expected counterfactual answer flips. Identical outputs are not proof of failure—the question might be answerable from text—but for an image-dependent question they are a strong warning.
+Measure answer changes, probability/logit changes, evidence-region changes, and whether the expected counterfactual answer flips. Repeat the protocol across capabilities and samples; one anecdotal image is useful for explanation but not an evaluation suite. Develop the sample count, prompt, decoding, and summaries on a development source, freeze them, and report the held-out source once. Identical outputs are not proof of failure—the question might be answerable from text—but for an image-dependent question they are a strong warning.
+
+The notebook applies one-fact counterfactuals to recognition (color), counting (bolt count), spatial reasoning (left/right), and defect state (scratch/no scratch). Its table reports correct-image accuracy, ordinary answers under blank images, wrong-image responsiveness, expected and observed counterfactual flip rates, counterfactual accuracy, and confidence change by capability.
 
 Visual Evidence Ablation is a recurring diagnostic, not a leaderboard metric.
 
 ## 26. Grounding requirements
 
-Where the workflow needs traceable evidence, require a structured referent:
+Where the workflow needs traceable evidence, require a capability-specific structured referent:
 
 ```json
 {
@@ -390,7 +392,18 @@ Where the workflow needs traceable evidence, require a structured referent:
 }
 ```
 
-Evaluate answer correctness, image/object identity, box overlap, and answer–evidence consistency independently. A fabricated box can look precise. Attention maps are internal interaction diagnostics, not causal proof that the cited evidence produced the answer.
+The evidence cardinality and roles depend on the claim:
+
+| Capability | Minimum evidence contract |
+| --- | --- |
+| recognition | target object region |
+| local defect attribute | defect/object region |
+| counting | set of all counted instance regions |
+| spatial relation | subject region + reference region |
+
+One bolt patch does not support a claim that four bolts are visible, and a valve-only patch does not establish its relation to a pipe. The notebook's tiny evidence head can emit only one patch, so it trains and evaluates that head for recognition and defect questions only. Counting retains a region-set contract and spatial reasoning retains a subject/reference pair, both explicitly marked unsupported by the single-patch model interface.
+
+Evaluate answer correctness, image/object identity, box overlap, evidence completeness, role binding, and answer–evidence consistency independently. Report evidence accuracy conditional on a correct answer where useful. A fabricated box can look precise. Attention maps are internal interaction diagnostics, not causal proof that the cited evidence produced the answer.
 
 ## 27. Structured output is an interface, not a truth guarantee
 
@@ -439,7 +452,7 @@ answerable · insufficient_visual_evidence · ambiguous_reference
 unsupported_task · policy_blocked · invalid_input · review_required
 ```
 
-Confidence can be miscalibrated and is not comparable across vocabulary, prompt, decoding, or model revisions without evidence.
+Confidence can be miscalibrated and is not comparable across vocabulary, prompt, decoding, or model revisions without evidence. The notebook constructs blank and irrelevant-image questions, selects a deterministic confidence threshold on Factory B only, freezes it, and reports Factory C coverage, selective accuracy, unanswerable rejection rate, and false abstention rate. The result deliberately exposes the cost of a weak confidence-only abstention policy rather than presenting thresholding as a solved problem.
 
 ## 31. Adaptation choices
 
@@ -550,13 +563,15 @@ The self-contained [lab notebook](lab.ipynb) implements one controlled inspectio
 5. train a tiny causal multimodal generator with a visual-token prefix;
 6. compare it with a language-prior baseline;
 7. score recognition, counting, spatial, and defect questions separately;
-8. predict and evaluate evidence patches independently from answers;
-9. run blank-image, wrong-image, and counterfactual-image ablations;
-10. evaluate a deterministic before/after comparison proxy;
-11. validate structured output and inject schema/evidence failures;
-12. profile connector token/latency trade-offs;
-13. expose disabled, pinned optional VLM adapters; and
-14. write `artifacts/intermediate-01-vlm-evidence.json`.
+8. apply capability-specific evidence contracts and evaluate the single-patch head only for recognition/defect;
+9. run multi-sample, four-capability blank/wrong/counterfactual ablation suites on development and held-out sources;
+10. select an abstention threshold on Factory B and report coverage, selective accuracy, rejection, and false abstention on Factory C;
+11. report evidence accuracy conditional on answer correctness;
+12. evaluate a deterministic before/after comparison proxy;
+13. validate structured output, including patch-to-box consistency, and inject schema/evidence failures;
+14. profile connector token/latency trade-offs;
+15. expose disabled, pinned optional VLM adapters; and
+16. write `artifacts/intermediate-01-vlm-evidence.json`.
 
 All instructional code remains in the notebook. There is no `lab.py` or hidden local model package.
 

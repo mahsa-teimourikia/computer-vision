@@ -327,7 +327,7 @@ evidence = separate(local_measurements, optional_models, assumptions)</code></pr
           <aside class="signal-panel"><p class="eyebrow">WATCH FOR</p><ul><li>Fluency mistaken for visual grounding</li><li>Compression that drops small evidence</li><li>Language-prior and wrong-image invariance</li><li>Correct answers with wrong evidence</li><li>Valid JSON mistaken for factual validity</li><li>Model names without processor and artifact provenance</li></ul></aside>
         </div>
         <div class="view" id="vlm-lab" role="tabpanel" hidden>
-          <div><p class="eyebrow">PRACTICAL LAB</p><p class="outcome">Build a tiny causal VLM, compare connector interfaces, measure capability and evidence quality, run visual ablations and counterfactuals, validate structured outputs, and preserve an enterprise decision record.</p><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/intermediate/01-vision-language-models/lab.ipynb">Run the guided notebook ↗</a></div>
+          <div><p class="eyebrow">PRACTICAL LAB</p><p class="outcome">Build a tiny causal VLM, compare connector interfaces, run four-capability evidence ablations, evaluate capability-specific grounding and abstention, validate structured outputs, and preserve an enterprise decision record.</p><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/intermediate/01-vision-language-models/lab.ipynb">Run the guided notebook ↗</a></div>
           <pre aria-label="Example Python"><code>visual_tokens = projector(patch_features)
 answer, eos, evidence, probabilities = model.generate(visual_tokens, question, separator)
 ablation = compare(correct_image, blank_image, wrong_image, counterfactual_image)
