@@ -120,7 +120,7 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 ## Intermediate
 
 1. [**Vision-Language Models: From Visual Features to Multimodal Reasoning**](curriculum/intermediate/01-vision-language-models/README.md) — visual tokens, projection and resampling, multimodal fusion, autoregressive generation, instruction tuning, resolution/token budgets, grounding, hallucination diagnostics, and evidence contracts. *(available)*
-2. **Multimodal Reasoning** — decomposition, verification, tool use, and claim-level evidence without treating hidden chain-of-thought as an audit trail.
+2. [**Multimodal Reasoning & Verification: From Visual Evidence to Checked Conclusions**](curriculum/intermediate/02-multimodal-reasoning-verification/README.md) — task DAGs, observed and derived facts, source-bound evidence, deterministic tools, claim verification, counterfactual sensitivity, contradiction detection, four-valued fact states, and governed advisory decisions without treating hidden chain-of-thought as an audit trail. *(available)*
 3. **Document Intelligence** — OCR, layout, tables, charts, forms, long documents, extraction contracts, and provenance.
 4. **Multimodal Retrieval / RAG** — image/document chunking, indexes, retrieval, evidence assembly, citations, evaluation, and access control.
 5. **Video-Language Understanding** — temporal sampling, event grounding, long-video context, streaming behavior, and evaluation.

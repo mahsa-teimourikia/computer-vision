@@ -1,0 +1,487 @@
+{
+  "version": 1,
+  "id": "reasoning-failure-taxonomy",
+  "title": "Reasoning failure taxonomy",
+  "purpose": "Map answer errors to perception, binding, tooling, logic, or decision boundaries.",
+  "output": {
+    "svg": "curriculum/intermediate/02-multimodal-reasoning-verification/assets/reasoning-failure-taxonomy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Five stages\u2014perception, binding, tooling, logic, and decision\u2014each connect to an independent check that supports earliest-boundary failure attribution."
+  },
+  "canvas": {
+    "width": 2000,
+    "height": 1020,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Attribute the earliest observable failure",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1872,
+        "height": 820
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "perception",
+      "group": "system",
+      "label": "Perception",
+      "subtitle": "wrong fact \u00b7 missing fact",
+      "type": "action",
+      "bounds": {
+        "x": 110,
+        "y": 260,
+        "width": 300,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        },
+        "check": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "binding",
+      "group": "system",
+      "label": "Binding",
+      "subtitle": "wrong object \u00b7 region \u00b7 image",
+      "type": "operations",
+      "bounds": {
+        "x": 480,
+        "y": 260,
+        "width": 300,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        },
+        "check": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "tooling",
+      "group": "system",
+      "label": "Tooling",
+      "subtitle": "selection \u00b7 input \u00b7 execution",
+      "type": "operations",
+      "bounds": {
+        "x": 850,
+        "y": 260,
+        "width": 300,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        },
+        "check": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "logic",
+      "group": "system",
+      "label": "Logic",
+      "subtitle": "arithmetic \u00b7 rule \u00b7 contradiction",
+      "type": "operations",
+      "bounds": {
+        "x": 1220,
+        "y": 260,
+        "width": 300,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        },
+        "check": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "decision",
+      "group": "system",
+      "label": "Decision",
+      "subtitle": "unsupported commit \u00b7 false abstain",
+      "type": "action",
+      "bounds": {
+        "x": 1590,
+        "y": 260,
+        "width": 300,
+        "height": 125
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        },
+        "check": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "truth",
+      "group": "system",
+      "label": "approved truth",
+      "subtitle": "automatic where ground truth permits",
+      "type": "data",
+      "bounds": {
+        "x": 110,
+        "y": 590,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "top"
+        }
+      }
+    },
+    {
+      "id": "identity",
+      "group": "system",
+      "label": "identity check",
+      "subtitle": "automatic where ground truth permits",
+      "type": "data",
+      "bounds": {
+        "x": 480,
+        "y": 590,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "top"
+        }
+      }
+    },
+    {
+      "id": "replay",
+      "group": "system",
+      "label": "tool replay",
+      "subtitle": "automatic where ground truth permits",
+      "type": "data",
+      "bounds": {
+        "x": 850,
+        "y": 590,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "top"
+        }
+      }
+    },
+    {
+      "id": "constraints",
+      "group": "system",
+      "label": "constraints",
+      "subtitle": "automatic where ground truth permits",
+      "type": "data",
+      "bounds": {
+        "x": 1220,
+        "y": 590,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "top"
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "system",
+      "label": "review policy",
+      "subtitle": "automatic where ground truth permits",
+      "type": "data",
+      "bounds": {
+        "x": 1590,
+        "y": 590,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "top"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "perception",
+        "port": "out"
+      },
+      "to": {
+        "node": "binding",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          410,
+          322
+        ],
+        [
+          480,
+          322
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "binding",
+        "port": "out"
+      },
+      "to": {
+        "node": "tooling",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          780,
+          322
+        ],
+        [
+          850,
+          322
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "tooling",
+        "port": "out"
+      },
+      "to": {
+        "node": "logic",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1150,
+          322
+        ],
+        [
+          1220,
+          322
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "logic",
+        "port": "out"
+      },
+      "to": {
+        "node": "decision",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1520,
+          322
+        ],
+        [
+          1590,
+          322
+        ]
+      ]
+    },
+    {
+      "id": "c0",
+      "from": {
+        "node": "truth",
+        "port": "out"
+      },
+      "to": {
+        "node": "perception",
+        "port": "check"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          260,
+          590
+        ],
+        [
+          260,
+          385
+        ]
+      ]
+    },
+    {
+      "id": "c1",
+      "from": {
+        "node": "identity",
+        "port": "out"
+      },
+      "to": {
+        "node": "binding",
+        "port": "check"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          630,
+          590
+        ],
+        [
+          630,
+          385
+        ]
+      ]
+    },
+    {
+      "id": "c2",
+      "from": {
+        "node": "replay",
+        "port": "out"
+      },
+      "to": {
+        "node": "tooling",
+        "port": "check"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1000,
+          590
+        ],
+        [
+          1000,
+          385
+        ]
+      ]
+    },
+    {
+      "id": "c3",
+      "from": {
+        "node": "constraints",
+        "port": "out"
+      },
+      "to": {
+        "node": "logic",
+        "port": "check"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1370,
+          590
+        ],
+        [
+          1370,
+          385
+        ]
+      ]
+    },
+    {
+      "id": "c4",
+      "from": {
+        "node": "policy",
+        "port": "out"
+      },
+      "to": {
+        "node": "decision",
+        "port": "check"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1740,
+          590
+        ],
+        [
+          1740,
+          385
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

@@ -43,6 +43,8 @@ Course 09 uses transparent local proxies for its credential-free default experim
 
 Intermediate 01 implements projection, resampling, cross-attention, causal generation, and evidence scoring directly in PyTorch before showing a disabled Transformers adapter using `AutoProcessor`, the model's multimodal chat template, `AutoModelForImageTextToText`, and `generate`. Optional observations are revision-pinned and explicitly ineligible for model comparison until artifact hashes, licenses, processor files, runtime, and approvals are complete. Capability metrics, visual-evidence ablations, structured-output validation, and target-hardware profiling remain required regardless of serving framework.
 
+Intermediate 02 keeps the reasoning executor framework-free so learners can inspect topological ordering, four-valued fact propagation, allow-listed tool contracts, evidence binding, deterministic replay, contradiction checks, counterfactuals, and review policy directly. NumPy supplies exact local geometry and arithmetic, pandas supplies event/slice analysis, and Pillow/Matplotlib render evidence. Pydantic or JSON Schema, NetworkX, OpenTelemetry, and a pinned Transformers model verifier are reviewed as production extensions, but schema validity, graph libraries, traces, and model agreement are never treated as factual verification or action authority.
+
 ## Task frameworks
 
 | Tool | Best fit | Strengths | Constraints to review |

@@ -65,6 +65,7 @@ def validate_hub() -> None:
         "Tracking, Keypoints &amp; Pose",
         "Vision Foundation Models &amp; Open-Vocabulary Vision",
         "Vision-Language Models",
+        "Multimodal Reasoning &amp; Verification",
         "oneplusi.io",
     ]
     for text in required:

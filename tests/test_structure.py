@@ -696,3 +696,82 @@ def test_intermediate_01_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_intermediate_02_contains_the_declared_reasoning_lab():
+    course = Path("curriculum/intermediate/02-multimodal-reasoning-verification")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "Evidence",
+        "Claim",
+        "ToolContract",
+        "ToolEvent",
+        "ReasoningNode",
+        "topological_order",
+        "execute_reasoning_graph",
+        "verified_true",
+        "verified_false",
+        "uncertain",
+        "unknown",
+        "review_required",
+        "spatial_relation",
+        "count_objects",
+        "less_than",
+        "TOOL_CONTRACTS",
+        "evidence_checks",
+        "FROZEN_REVIEW_POLICY",
+        "Factory B development only",
+        "Factory C reporting only; no threshold or rule changes",
+        "opaque_answer_proxy",
+        "counterfactual_sensitivity_matrix",
+        "relevant_sensitivity",
+        "irrelevant_invariance",
+        "contradiction_check",
+        "inverse_consistency",
+        "attribute_failure",
+        "failure_taxonomy_summary",
+        "tool_input_correct",
+        "tool_execution_correct",
+        "multi_image_result",
+        "image_swap_detected",
+        "OPTIONAL_MODEL_VERIFIER",
+        "intermediate-02-multimodal-reasoning-evidence.json",
+        "locally_measured_evidence",
+        "optional_downloaded_model_observations",
+        "unresolved_production_assumptions",
+        "demonstration_thresholds_for_this_notebook_runtime_only",
+        '"authorization": "none"',
+        '"foundation_model": False',
+    ]:
+        assert required in source
+
+    assert "local_structured_perception_proxy" in source
+    assert "not a vlm, foundation model, or production perception benchmark" in source_lower
+    assert "does not request, imitate, or store hidden chain-of-thought" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_intermediate_02_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/intermediate/02-multimodal-reasoning-verification/assets")
+    expected = {
+        "checked-reasoning-pipeline.svg",
+        "reasoning-dependency-dag.svg",
+        "evidence-contracts.svg",
+        "deterministic-tool-boundary.svg",
+        "counterfactual-verification.svg",
+        "multi-image-binding.svg",
+        "reasoning-failure-taxonomy.svg",
+        "enterprise-reasoning-architecture.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

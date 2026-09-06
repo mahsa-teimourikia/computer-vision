@@ -11,7 +11,7 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The nine complete Beginner courses now lead into the first Intermediate course:
+The nine complete Beginner courses now lead into two Intermediate courses:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
@@ -23,8 +23,9 @@ The nine complete Beginner courses now lead into the first Intermediate course:
 8. [Tracking, Keypoints & Pose](curriculum/beginner/08-tracking-keypoints-pose/README.md) builds timestamp-aware association, lifecycle, motion, appearance, and Byte-style recovery before connecting persistent identity to landmark accuracy, pose geometry, temporal stability, and failure propagation.
 9. [Vision Foundation Models & Open-Vocabulary Vision](curriculum/beginner/09-vision-foundation-models-open-vocabulary/README.md) synthesizes the track through reusable visual features, image–text alignment, prompt and vocabulary evaluation, patch correspondence, language-conditioned localization, detector→segmenter composition, and governed adaptation.
 10. [Vision-Language Models: From Visual Features to Multimodal Reasoning](curriculum/intermediate/01-vision-language-models/README.md) turns visual features into language-model context through projection, resampling, fusion, and causal generation, then tests grounding, hallucination, evidence, structured output, and systems contracts.
+11. [Multimodal Reasoning & Verification: From Visual Evidence to Checked Conclusions](curriculum/intermediate/02-multimodal-reasoning-verification/README.md) decomposes bounded questions into evidence-bound facts, deterministic tool calls, checked claims, counterfactual and contradiction tests, uncertainty-aware decisions, and governed evidence artifacts.
 
-All ten CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate 01 exposes the common Hugging Face multimodal processor/chat-template/generation path behind an explicit opt-in flag and immutable model revisions.
+All eleven CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate 01 exposes the common Hugging Face multimodal processor/chat-template/generation path behind an explicit opt-in flag and immutable model revisions. Intermediate 02 uses standard Python, NumPy, pandas, Pillow, and Matplotlib to keep its DAG, tool, verification, and evidence contracts fully observable without an agent framework.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -108,7 +109,12 @@ curriculum/
 │       ├── requirements.txt
 │       └── assets/            # deterministic SVGs + coordinate specs
 ├── intermediate/
-│   └── 01-vision-language-models/
+│   ├── 01-vision-language-models/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 02-multimodal-reasoning-verification/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt

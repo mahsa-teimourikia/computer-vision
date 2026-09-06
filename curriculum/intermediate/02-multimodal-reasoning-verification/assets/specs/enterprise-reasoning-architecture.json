@@ -1,0 +1,477 @@
+{
+  "version": 1,
+  "id": "enterprise-reasoning-architecture",
+  "title": "Governed multimodal reasoning architecture",
+  "purpose": "Separate tenant-scoped inference and verification from human review and action authorization.",
+  "output": {
+    "svg": "curriculum/intermediate/02-multimodal-reasoning-verification/assets/enterprise-reasoning-architecture.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An authenticated tenant-scoped request passes through perception, a bounded planner, deterministic tools, claim verification, and decision policy; a control plane supplies versions, review, and a separately authorized action service."
+  },
+  "canvas": {
+    "width": 2200,
+    "height": 980,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "tenant",
+      "label": "Tenant-scoped inference plane",
+      "bounds": {
+        "x": 64,
+        "y": 110,
+        "width": 1420,
+        "height": 760
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "control",
+      "label": "Control and authorization plane",
+      "bounds": {
+        "x": 1530,
+        "y": 110,
+        "width": 600,
+        "height": 760
+      },
+      "fill": "#FFF1DF",
+      "stroke": "#F59E42"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "gateway",
+      "group": "tenant",
+      "label": "Authenticated request",
+      "subtitle": "size \u00b7 type \u00b7 tenant policy",
+      "type": "service",
+      "bounds": {
+        "x": 120,
+        "y": 220,
+        "width": 330,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "perception",
+      "group": "tenant",
+      "label": "Perception adapter",
+      "subtitle": "pinned model \u00b7 processor",
+      "type": "agent",
+      "bounds": {
+        "x": 560,
+        "y": 220,
+        "width": 330,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "planner",
+      "group": "tenant",
+      "label": "Bounded planner",
+      "subtitle": "DAG \u00b7 budgets \u00b7 allow-list",
+      "type": "agent",
+      "bounds": {
+        "x": 1000,
+        "y": 220,
+        "width": 330,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "tools": {
+          "side": "bottom"
+        },
+        "registry": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "tools",
+      "group": "tenant",
+      "label": "Deterministic tools",
+      "subtitle": "geometry \u00b7 count \u00b7 arithmetic",
+      "type": "operations",
+      "bounds": {
+        "x": 1000,
+        "y": 460,
+        "width": 330,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "top"
+        },
+        "out": {
+          "side": "left"
+        }
+      }
+    },
+    {
+      "id": "verifier",
+      "group": "tenant",
+      "label": "Claim/evidence verifier",
+      "subtitle": "binding \u00b7 sufficiency \u00b7 conflict",
+      "type": "action",
+      "bounds": {
+        "x": 560,
+        "y": 610,
+        "width": 330,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "right"
+        },
+        "out": {
+          "side": "left"
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "tenant",
+      "label": "Decision policy",
+      "subtitle": "answer \u00b7 review \u00b7 reject",
+      "type": "action",
+      "bounds": {
+        "x": 120,
+        "y": 610,
+        "width": 330,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "right"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "registry",
+      "group": "control",
+      "label": "Version registry",
+      "subtitle": "model \u00b7 prompt \u00b7 tool \u00b7 rule",
+      "type": "data",
+      "bounds": {
+        "x": 1660,
+        "y": 210,
+        "width": 340,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "left"
+        }
+      }
+    },
+    {
+      "id": "review",
+      "group": "control",
+      "label": "Human review queue",
+      "subtitle": "bounded context \u00b7 adjudication",
+      "type": "service",
+      "bounds": {
+        "x": 1660,
+        "y": 430,
+        "width": 340,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "bottom"
+        }
+      }
+    },
+    {
+      "id": "authorize",
+      "group": "control",
+      "label": "Separate action service",
+      "subtitle": "identity \u00b7 approval \u00b7 audit",
+      "type": "action",
+      "bounds": {
+        "x": 1660,
+        "y": 650,
+        "width": 340,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "top"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "gateway",
+        "port": "out"
+      },
+      "to": {
+        "node": "perception",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          450,
+          275
+        ],
+        [
+          560,
+          275
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "perception",
+        "port": "out"
+      },
+      "to": {
+        "node": "planner",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          890,
+          275
+        ],
+        [
+          1000,
+          275
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "planner",
+        "port": "tools"
+      },
+      "to": {
+        "node": "tools",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1165,
+          330
+        ],
+        [
+          1165,
+          460
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "tools",
+        "port": "out"
+      },
+      "to": {
+        "node": "verifier",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1000,
+          515
+        ],
+        [
+          945,
+          515
+        ],
+        [
+          945,
+          665
+        ],
+        [
+          890,
+          665
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "verifier",
+        "port": "out"
+      },
+      "to": {
+        "node": "policy",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          560,
+          665
+        ],
+        [
+          450,
+          665
+        ]
+      ]
+    },
+    {
+      "id": "reg",
+      "from": {
+        "node": "registry",
+        "port": "out"
+      },
+      "to": {
+        "node": "planner",
+        "port": "registry"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1660,
+          265
+        ],
+        [
+          1450,
+          265
+        ],
+        [
+          1450,
+          275
+        ],
+        [
+          1330,
+          275
+        ]
+      ]
+    },
+    {
+      "id": "rev",
+      "from": {
+        "node": "policy",
+        "port": "out"
+      },
+      "to": {
+        "node": "review",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          450,
+          665
+        ],
+        [
+          1480,
+          665
+        ],
+        [
+          1480,
+          485
+        ],
+        [
+          1660,
+          485
+        ]
+      ]
+    },
+    {
+      "id": "auth",
+      "from": {
+        "node": "review",
+        "port": "out"
+      },
+      "to": {
+        "node": "authorize",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1830,
+          540
+        ],
+        [
+          1830,
+          650
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}
