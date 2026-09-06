@@ -1,6 +1,6 @@
 # Computer vision tooling review
 
-> Reviewed: 2026-09-03. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
+> Reviewed: 2026-09-06. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
 
 Tools are selected per lesson, not imposed as one universal framework. Every tooling decision should compare maintenance, portability, observability, licensing, reproducibility, hardware fit, exportability, and operational cost.
 
@@ -28,6 +28,20 @@ The course teaches the primitive before the framework. A framework example must 
 | [PEFT](https://huggingface.co/docs/peft/index) | Adapters and LoRA where a vision architecture is supported | Small trainable artifacts and common configuration patterns | Target-module selection, base/adapter compatibility, export, drift, and security review |
 
 Course 09 uses transparent local proxies for its credential-free default experiments and marks them `foundation_model=false`. Optional official observations are isolated, revision-pinned, disabled by default, and stored separately from local evidence. No local proxy result is a claim about CLIP, SigLIP2, DINO, Grounding DINO, or SAM.
+
+## Vision-language model systems
+
+| Tool | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| [Hugging Face Transformers](https://huggingface.co/docs/transformers/index) | Common processors, multimodal chat templates, generation, and adaptation | Broad model-family support through familiar PyTorch interfaces | Processor/chat-template semantics, immutable revisions, remote code, artifact hashes, checkpoint licenses, and model-specific input limits |
+| [PEFT](https://huggingface.co/docs/peft/index) / [TRL](https://huggingface.co/docs/trl/index) | LoRA/adapters and multimodal post-training | Standardized trainable-module and trainer components | Vision versus language targets, packing, base–adapter compatibility, regression risk, export, and data governance |
+| [vLLM](https://docs.vllm.ai/) | High-throughput serving for supported multimodal models | Continuous batching, paged caches, and common API surfaces | Supported modality/model matrix, image limits, processor parity, cache isolation, scheduling, and release-specific behavior |
+| [SGLang](https://docs.sglang.ai/) | Structured generation and high-performance multimodal serving | Constrained outputs, prefix reuse, and serving-oriented programs | Backend/model maturity, constraint semantics, deployment complexity, and observability |
+| [llama.cpp multimodal](https://github.com/ggml-org/llama.cpp/tree/master/docs/multimodal) / MLX-VLM | Local, quantized, and edge experiments | Device-oriented runtimes and offline inference paths | Conversion provenance, projector/processor compatibility, unsupported operators, quantization drift, and quality parity |
+| [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval) / [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) | Broad multimodal evaluation harnesses | Task adapters, repeatable prompts, and model integrations | Benchmark contamination, dataset terms, judge dependence, prompt/version drift, and whether aggregate scores match the deployment task |
+| [FiftyOne](https://docs.voxel51.com/) / [CVAT](https://docs.cvat.ai/docs/) / [Label Studio](https://labelstud.io/guide/) | Visual failure review and evidence adjudication | Slice inspection, region review, correction, and team workflows | Access control, retention, ontology/version identity, annotator agreement, and export validation |
+
+Intermediate 01 implements projection, resampling, cross-attention, causal generation, and evidence scoring directly in PyTorch before showing a disabled Transformers adapter using `AutoProcessor`, the model's multimodal chat template, `AutoModelForImageTextToText`, and `generate`. Optional observations are revision-pinned and explicitly ineligible for model comparison until artifact hashes, licenses, processor files, runtime, and approvals are complete. Capability metrics, visual-evidence ablations, structured-output validation, and target-hardware profiling remain required regardless of serving framework.
 
 ## Task frameworks
 

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+<title id="title">Alignment is not generative vision-language modeling</title>
+<desc id="description">The upper dual-encoder path maps an image and text to separate embeddings and a similarity score. The lower generative VLM path maps image patches through a connector into an LLM context that produces answer tokens.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="900" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Alignment is not generative vision-language modeling</text>
+<rect x="64" y="100" width="1472" height="300" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Dual encoder · compatibility</text>
+<rect x="64" y="440" width="1472" height="350" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="474" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Generative VLM · conditional next token</text>
+<polyline points="430,255 930,255 930,238 1040,238" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="810,255 930,255 930,279 1040,279" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="350,630 440,630" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="670,630 710,630 710,612 760,612" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="890,545 890,570" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1020,630 1130,630" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="180" y="200" width="250" height="110" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="305.0" y="234" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Image encoder</text>
+<text x="305.0" y="262" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">z_image</text>
+<rect x="560" y="200" width="250" height="110" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="685.0" y="234" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Text encoder</text>
+<text x="685.0" y="262" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">z_text</text>
+<rect x="1040" y="200" width="330" height="110" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1205.0" y="234" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Compatibility score</text>
+<text x="1205.0" y="262" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">rank · classify · retrieve</text>
+<rect x="120" y="570" width="230" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="235.0" y="604" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Vision encoder</text>
+<text x="235.0" y="632" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">patch features</text>
+<rect x="440" y="570" width="230" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="555.0" y="604" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Connector</text>
+<text x="555.0" y="632" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">project · resample</text>
+<rect x="760" y="570" width="260" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="890.0" y="604" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Language model</text>
+<text x="890.0" y="632" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">visual + text context</text>
+<rect x="770" y="475" width="240" height="70" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="890.0" y="509" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Prompt tokens</text>
+<rect x="1130" y="570" width="270" height="120" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1265.0" y="604" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Generated answer</text>
+<text x="1265.0" y="632" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">y1 · y2 · …</text>
+</svg>

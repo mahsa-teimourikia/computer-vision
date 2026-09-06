@@ -688,6 +688,8 @@ multimodal architecture + reasoning + retrieval + agents
 
 The boundary remains important: a grounded visual output is evidence for reasoning, not permission to act.
 
+Continue with [Intermediate 01 — Vision-Language Models: From Visual Features to Multimodal Reasoning](../../intermediate/01-vision-language-models/README.md), where visual tokens enter a language generator and answer, evidence, hallucination, and systems behavior receive separate evaluation contracts.
+
 ## 40. Primary research and official sources
 
 ### Foundations and alignment

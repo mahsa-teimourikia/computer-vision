@@ -31,7 +31,9 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 
 ## Intermediate
 
-The [intermediate track](intermediate/README.md) will cover convolutional networks, detection, segmentation, data quality, transfer learning, and evaluation.
+- [01 · Vision-Language Models: From Visual Features to Multimodal Reasoning](intermediate/01-vision-language-models/README.md) — move from image–text alignment to visual tokens, connectors, multimodal fusion, grounded generation, evidence ablation, capability-specific evaluation, and governed VLM inference.
+
+The [intermediate track](intermediate/README.md) continues through multimodal reasoning, document intelligence, multimodal retrieval/RAG, video-language understanding, and visual agents.
 
 ## Advanced
 
