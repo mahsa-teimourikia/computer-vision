@@ -26,7 +26,7 @@
 <text x="630.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">wrong object · region · image</text>
 <rect x="850" y="260" width="300" height="125" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
 <text x="1000.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Tooling</text>
-<text x="1000.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">selection · input · execution</text>
+<text x="1000.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">selection · input · runtime/output</text>
 <rect x="1220" y="260" width="300" height="125" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
 <text x="1370.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Logic</text>
 <text x="1370.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">arithmetic · rule · contradiction</text>

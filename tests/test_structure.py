@@ -708,6 +708,7 @@ def test_intermediate_02_contains_the_declared_reasoning_lab():
         "Evidence",
         "Claim",
         "ToolContract",
+        "VerifierContract",
         "ToolEvent",
         "ReasoningNode",
         "topological_order",
@@ -721,18 +722,29 @@ def test_intermediate_02_contains_the_declared_reasoning_lab():
         "count_objects",
         "less_than",
         "TOOL_CONTRACTS",
+        "VERIFIER_CONTRACTS",
+        "dependency_availability",
+        "state_after_tool",
         "evidence_checks",
         "FROZEN_REVIEW_POLICY",
         "Factory B development only",
         "Factory C reporting only; no threshold or rule changes",
         "opaque_answer_proxy",
         "counterfactual_sensitivity_matrix",
-        "relevant_sensitivity",
+        "unit_counterfactual_matrix",
+        "unit_counterfactual_metrics",
+        "development_counterfactual_summary",
+        "held_out_counterfactual_summary",
+        "relevant_expected_effect_accuracy",
+        "relevant_no_flip_cases",
+        "expected_effect_accuracy",
         "irrelevant_invariance",
         "contradiction_check",
         "inverse_consistency",
         "attribute_failure",
         "failure_taxonomy_summary",
+        "tool_runtime_error",
+        "runtime_failure_propagation",
         "tool_input_correct",
         "tool_execution_correct",
         "multi_image_result",
@@ -751,6 +763,10 @@ def test_intermediate_02_contains_the_declared_reasoning_lab():
     assert "local_structured_perception_proxy" in source
     assert "not a vlm, foundation model, or production perception benchmark" in source_lower
     assert "does not request, imitate, or store hidden chain-of-thought" in source_lower
+    assert 'set(TOOL_CONTRACTS) == {"spatial_relation", "count_objects", "less_than"}' in source
+    assert 'set(VERIFIER_CONTRACTS) == {"contradiction_check"}' in source
+    assert 'runtime_failure_propagation["derived_claim_state"] == "unknown"' in source
+    assert 'runtime_failure_propagation["terminal_decision"] == "review_required"' in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
 

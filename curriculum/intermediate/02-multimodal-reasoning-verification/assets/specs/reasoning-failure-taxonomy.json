@@ -117,7 +117,7 @@
       "id": "tooling",
       "group": "system",
       "label": "Tooling",
-      "subtitle": "selection \u00b7 input \u00b7 execution",
+      "subtitle": "selection \u00b7 input \u00b7 runtime/output",
       "type": "operations",
       "bounds": {
         "x": 850,

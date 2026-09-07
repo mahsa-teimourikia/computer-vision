@@ -30,7 +30,7 @@ By the end, you should be able to:
 5. bind each claim to the correct image, region, object, and tool record;
 6. define evidence requirements for attributes, spatial relations, counting, comparison, and multi-image change;
 7. measure evidence relevance, correctness, sufficiency, and task-specific coverage independently;
-8. implement typed geometry, counting, arithmetic, and contradiction tools;
+8. implement typed geometry, counting, and arithmetic tools plus independent contradiction verifiers;
 9. distinguish tool selection/input correctness from tool execution correctness;
 10. propagate `verified_true`, `verified_false`, `uncertain`, and `unknown` states through a rule;
 11. produce `decision_true`, `decision_false`, or `review_required` without inventing a missing fact;
@@ -56,7 +56,7 @@ By the end, you should be able to:
 
 **Scenario:** a reliability assistant examines industrial panels. It must decide whether a component needs maintenance from a scratch observation, a left/right relation, and a bolt count; compare before/after images; and return evidence that a reviewer can reconstruct.
 
-**Success criteria:** the credential-free CPU notebook executes top to bottom; all teaching code remains inside it; development and held-out test sources remain separate; every required fact has an explicit evidence requirement; deterministic tools have versioned contracts; counterfactuals alter one declared fact; failure injection is attributed automatically; uncertain or missing decision facts cause review; and the final JSON separates local measurements from optional model observations and production unknowns.
+**Success criteria:** the credential-free CPU notebook executes top to bottom; all teaching code remains inside it; development and held-out test sources remain separate; every required fact has an explicit evidence requirement; deterministic tools have versioned contracts; tool runtime errors become unknown derived facts and force review; reasoning-tool and verifier registries match their runtimes; counterfactuals alter one declared fact and are evaluated across multiple starting states; failure injection is attributed automatically; uncertain or missing decision facts cause review; and the final JSON separates local measurements from optional model observations and production unknowns.
 
 **Non-goals:** revealing hidden model reasoning, training a competitive reasoning VLM, reproducing a public leaderboard, accepting arbitrary uploads, running generated code, building a general agent framework, or authorizing maintenance.
 
@@ -251,6 +251,29 @@ The arithmetic result is exact relative to its inputs, but it inherits any input
 
 Versions, schemas, inputs, outputs, latency, and errors make execution replayable. Do not log unrestricted images, secrets, or personal data merely because tracing is useful.
 
+The notebook maintains two disjoint registries:
+
+```text
+TOOL_CONTRACTS
+→ spatial relation · count · arithmetic
+→ create derived facts
+
+VERIFIER_CONTRACTS
+→ contradiction check
+→ independently inspect produced facts
+```
+
+A declared operation must have a matching runtime implementation. Contradiction checking is intentionally a verifier rather than a selectable reasoning tool.
+
+Tool status also participates in state propagation:
+
+```text
+verified inputs + successful tool → checked derived claim
+verified inputs + tool error      → unknown derived claim → review_required
+```
+
+An empty output cannot remain `verified_true` merely because its inputs were available.
+
 ## 15. Four-valued fact states
 
 Binary truth is insufficient at a perception boundary:
@@ -261,6 +284,8 @@ Binary truth is insufficient at a perception boundary:
 | `verified_false` | checked evidence refutes the fact | usable as false |
 | `uncertain` | evidence exists but does not meet the reliability policy | propagate review if decision-relevant |
 | `unknown` | required evidence is missing/unavailable | propagate review if decision-relevant |
+
+For a Boolean proposition, `verified_true` and `verified_false` encode its checked truth value. For a value claim such as `bolt_count = 2`, `verified_true` means that equality claim was verified; it does not mean the integer is Boolean true. The executor separately computes dependency availability (`verified`, `uncertain`, or `unknown`) before running a tool, so a verified-false predicate remains available while a missing value does not.
 
 The terminal rule returns `decision_true`, `decision_false`, or `review_required`. Naively multiplying model confidences is not a generally valid uncertainty model.
 
@@ -290,28 +315,30 @@ inside(a, b)  ↔ contains(b, a)
 
 Claims that assert both `left_of(a,b)` and `right_of(a,b)` are contradictory under that contract. Equivalent and inverse questions should also be tested; repeated consistency can still be consistently wrong.
 
-## 18. Counterfactual sensitivity
+## 18. Counterfactual expected effects
 
-Counterfactual tests change one declared fact while holding the rest fixed.
+Counterfactual tests change one declared fact while holding the rest fixed. Start with a known-answer unit case, then evaluate many starting states. A causal variable does **not** have to flip every decision: in an AND rule, changing `side` has no terminal effect when `scratch` is already false.
 
-| Changed fact | Rule relevant? | Expected decision change |
-| --- | ---: | ---: |
-| scratch: present → absent | yes | yes |
-| bolt count: 2 → 4 | yes | yes |
-| side: left → right | yes | yes |
-| valve color: red → blue | no | no |
+| Starting predicates `(scratch, left, count<3)` | Changed fact | Rule relevant? | Expected decision change |
+| --- | --- | ---: | ---: |
+| `(T, T, T)` | scratch: present → absent | yes | yes |
+| `(F, T, T)` | side: left → right | yes | no |
+| `(T, F, T)` | bolt count: 2 → 4 | yes | no |
+| `(T, T, T)` | valve color: red → blue | no | no |
 
-A robust system should be sensitive to relevant changes and invariant to irrelevant ones. Report these separately:
+A robust system should match the rule's expected effect and remain invariant to irrelevant changes. Report effect correctness, evaluable/review pair rates, and irrelevant invariance separately:
 
 $$
-\text{relevant sensitivity}=\frac{\text{required flips observed}}{\text{required flips}},
+\text{expected-effect accuracy}=\frac{\text{pairs with observed effect = rule-expected effect}}{\text{evaluable pairs}},
 $$
 
 $$
 \text{irrelevant invariance}=\frac{\text{required non-flips observed}}{\text{required non-flips}}.
 $$
 
-![Relevant perturbations should flip the rule exactly when specified; distractors should not.](assets/counterfactual-verification.svg)
+The notebook selects its review policy on Factory B, evaluates Factory B counterfactuals diagnostically, freezes all logic, and then reports Factory C once. Related baseline/variant scenes retain the same source, split, and group. Pairs containing `review_required` are reported as review pairs rather than silently counted as flips or non-flips.
+
+![Relevant perturbations should have exactly the effect specified by the rule; distractors should not.](assets/counterfactual-verification.svg)
 
 ## 19. Multi-image reasoning
 
@@ -339,6 +366,7 @@ The system must test image attribution, not only fact content. Swapping image la
 | tool selection | wrong tool for required fact | task-to-tool policy |
 | tool input | valid tool receives wrong object/set | input lineage check |
 | tool execution | output differs from reference execution | replay/test |
+| tool runtime | tool returns an error/empty output | propagate derived state to `unknown`; require review |
 | arithmetic | wrong operation or operands | structured recomputation |
 | rule application | facts right, policy result wrong | versioned policy replay |
 | contradiction | incompatible checked claims | constraint checker |
@@ -355,9 +383,9 @@ Report at least:
 - final decision accuracy and review rate;
 - fact/node accuracy by capability;
 - evidence relevance, correctness, sufficiency, and coverage;
-- tool selection, input, and execution correctness;
+- tool selection, input, execution, and runtime-error propagation correctness;
 - contradiction and inverse-consistency rates;
-- relevant counterfactual sensitivity and irrelevant invariance;
+- counterfactual expected-effect accuracy, review-pair rate, and irrelevant invariance across starting states;
 - image-attribution accuracy;
 - unsupported-commit and false-abstention rates;
 - failure-attribution accuracy; and
@@ -375,7 +403,7 @@ Factory B → development policy checks
 Factory C → held-out test reporting only
 ```
 
-No threshold, counterfactual expectation, tool tolerance, or rule changes after observing Factory C. Split by source/group before creating related examples so a base scene and its counterfactual cannot cross the boundary.
+No threshold, counterfactual expectation, tool tolerance, or rule changes after observing Factory C. Split by source/group before creating related examples so a base scene and its counterfactual cannot cross the boundary. Use Factory B for dataset-level diagnostics and report Factory C once with the frozen policy; preserve relevant no-flip cases rather than selecting only all-true starting states.
 
 ## 23. A model judge is not ground truth
 
@@ -470,12 +498,12 @@ The single [lab notebook](lab.ipynb) is the executable course:
 
 1. create source-separated industrial scenes and trusted scene records;
 2. render evidence and define observable claim/fact contracts;
-3. implement and test geometry, counting, arithmetic, and contradiction tools;
-4. execute a dependency DAG with four-valued state propagation;
+3. implement and test geometry, counting, and arithmetic tools plus a separate contradiction verifier;
+4. execute a dependency DAG with four-valued state and tool-error propagation;
 5. compare an opaque answer-only proxy with a checked pipeline;
 6. score node, evidence, tool, and final-decision behavior;
 7. inject and automatically attribute reasoning failures;
-8. run relevant and irrelevant counterfactuals;
+8. run a known-answer counterfactual unit case, then evaluate expected effects across Factory B and Factory C starting states;
 9. test inverse consistency and contradictions;
 10. compare before/after panels with explicit image binding;
 11. demonstrate uncertainty, missing facts, and abstention;
@@ -489,7 +517,7 @@ The notebook's `local_structured_perception_proxy` consumes synthetic scene reco
 2. Add an occluded bolt state. Define whether it is countable, uncertain, or ignored before changing the code.
 3. Inject a duplicate object ID and prove the count tool deduplicates it while the evidence checker flags duplicate evidence.
 4. Add `inside ↔ contains` to the contradiction checker with explicit boundary behavior.
-5. Design a counterfactual where two facts change accidentally. Add a validator that rejects it.
+5. Design a counterfactual where two facts change accidentally. Add a validator that rejects it. Then add a relevant-variable case whose decision should correctly remain unchanged.
 6. Add a reviewer outcome and measure override/disagreement rates without treating the reviewer as infallible.
 7. Draft a JSON Schema for the final evidence artifact and identify which fields contain sensitive data.
 8. Propose a source-aware production evaluation with factory, device, lighting, operator, and time splits.
