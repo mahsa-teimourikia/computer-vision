@@ -1,0 +1,409 @@
+{
+  "version": 1,
+  "id": "enterprise-document-architecture",
+  "title": "Enterprise document intelligence boundary",
+  "purpose": "Separate hostile intake, processing, verification, review, and action authority.",
+  "output": {
+    "svg": "curriculum/intermediate/03-document-intelligence/assets/enterprise-document-architecture.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An enterprise flow from document intake and malware validation through type routing, parsing, structured document creation, provenance verification, human review, and a separately bounded downstream system."
+  },
+  "canvas": {
+    "width": 2308,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Enterprise document intelligence boundary",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 2180,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "intake",
+      "group": "system",
+      "label": "Document intake",
+      "type": "operations",
+      "bounds": {
+        "x": 100,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "scan",
+      "group": "system",
+      "label": "Validate + scan",
+      "type": "action",
+      "bounds": {
+        "x": 360,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "route",
+      "group": "system",
+      "label": "Type routing",
+      "type": "service",
+      "bounds": {
+        "x": 620,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "parse",
+      "group": "system",
+      "label": "OCR / layout / tables",
+      "type": "agent",
+      "bounds": {
+        "x": 880,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "model",
+      "group": "system",
+      "label": "Structured document",
+      "type": "data",
+      "bounds": {
+        "x": 1140,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "verify",
+      "group": "system",
+      "label": "Provenance verify",
+      "type": "action",
+      "bounds": {
+        "x": 1400,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "review",
+      "group": "system",
+      "label": "Human review",
+      "type": "operations",
+      "bounds": {
+        "x": 1660,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "downstream",
+      "group": "system",
+      "label": "Bounded downstream",
+      "type": "service",
+      "bounds": {
+        "x": 1920,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "intake",
+        "port": "out"
+      },
+      "to": {
+        "node": "scan",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          325
+        ],
+        [
+          360,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "scan",
+        "port": "out"
+      },
+      "to": {
+        "node": "route",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          570,
+          325
+        ],
+        [
+          620,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "route",
+        "port": "out"
+      },
+      "to": {
+        "node": "parse",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          830,
+          325
+        ],
+        [
+          880,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "parse",
+        "port": "out"
+      },
+      "to": {
+        "node": "model",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          325
+        ],
+        [
+          1140,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "model",
+        "port": "out"
+      },
+      "to": {
+        "node": "verify",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1350,
+          325
+        ],
+        [
+          1400,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e6",
+      "from": {
+        "node": "verify",
+        "port": "out"
+      },
+      "to": {
+        "node": "review",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1610,
+          325
+        ],
+        [
+          1660,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e7",
+      "from": {
+        "node": "review",
+        "port": "out"
+      },
+      "to": {
+        "node": "downstream",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1870,
+          325
+        ],
+        [
+          1920,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

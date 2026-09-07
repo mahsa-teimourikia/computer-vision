@@ -791,3 +791,103 @@ def test_intermediate_02_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_intermediate_03_contains_the_declared_document_intelligence_lab():
+    course = Path("curriculum/intermediate/03-document-intelligence")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "PageContract",
+        "RegionRecord",
+        "pixel_to_normalized_box",
+        "normalized_to_pixel_box",
+        "pdf_points_to_pixels",
+        "route_document_input",
+        "local_ocr_proxy",
+        "not an OCR benchmark",
+        "character_error_rate",
+        "word_error_rate",
+        "confidence_reliability",
+        "local_layout_proxy",
+        "naive_yx_order",
+        "column_aware_order",
+        "pairwise_order_accuracy",
+        "validate_table_schema",
+        "merged_cell_correctness",
+        "proximity_bind",
+        "semantic_geometry_bind",
+        "proximity_failure",
+        "TransformationRecord",
+        "normalize_currency",
+        "normalize_percentage",
+        "normalize_date",
+        "ambiguous_date_policy",
+        "checkbox_proxy",
+        "signature_authenticity",
+        "detect_table_continuation",
+        "detect_repeated_boilerplate",
+        "bind_figures_to_captions",
+        "resolve_field_candidates",
+        "conflicting",
+        "build_structured_document",
+        "document_sha256",
+        "page_render_sha256",
+        "verify_field",
+        "replay_transformation",
+        "wrong_page",
+        "wrong_box",
+        "wrong_cell",
+        "unsupported_value",
+        "bad_normalization",
+        "provenance_failure_attribution",
+        "Template B development only",
+        "Template C reporting only; no threshold, parser, key alias, locale, or schema changes",
+        "perturbation_summary",
+        "review_required",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "CV_ENABLE_TESSERACT",
+        "CV_ENABLE_TABLE_TRANSFORMER",
+        "CV_ENABLE_PADDLEOCR_VL",
+        "6951ffe10ce031374bcd04fe400811da1e7e04ad",
+        "2357cbe2b5a5d1c03e54f32764f06058933b65ab",
+        "7587a7ef111d9dcbf8ac695f1376ab7014340a0c",
+        "c5630abae1d940eafe0697512a0325494b02ab42",
+        "trust_remote_code=False",
+        "intermediate-03-document-intelligence-evidence.json",
+        "locally_measured_evidence",
+        "optional_model_observations",
+        "unresolved_production_assumptions",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "document text is untrusted data" in source_lower
+    assert "template c" in source_lower and "reporting only" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_intermediate_03_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/intermediate/03-document-intelligence/assets")
+    expected = {
+        "document-intelligence-pipeline.svg",
+        "document-types.svg",
+        "ocr-pipeline.svg",
+        "reading-order.svg",
+        "layout-taxonomy.svg",
+        "table-structure.svg",
+        "document-evidence-graph.svg",
+        "enterprise-document-architecture.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
