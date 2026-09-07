@@ -2,11 +2,11 @@
   "version": 1,
   "id": "document-evidence-graph",
   "title": "Document evidence graph",
-  "purpose": "Trace a normalized field back to the original document.",
+  "purpose": "Trace a normalized field back to the synthetic logical document.",
   "output": {
     "svg": "curriculum/intermediate/03-document-intelligence/assets/document-evidence-graph.svg",
     "medium": "documentation and notebook",
-    "alt_text": "A normalized field traces through its transformation, source span or table cell, layout region, page render hash, and original document hash."
+    "alt_text": "A normalized field traces through its transformation, source span or table cell, layout region, page render hash, and the synthetic logical-document hash."
   },
   "canvas": {
     "width": 1788,
@@ -178,7 +178,7 @@
     {
       "id": "document",
       "group": "system",
-      "label": "Document SHA-256",
+      "label": "Logical document\nSHA-256",
       "type": "operations",
       "bounds": {
         "x": 1400,

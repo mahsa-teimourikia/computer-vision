@@ -233,7 +233,7 @@ Evaluate table detection IoU/precision/recall, cell detection, row/column assign
 
 ## 9. Forms bind keys to values
 
-OCR can correctly read both `Invoice Number` and `Purchase Order Number` yet bind a nearby value to the wrong key. Candidate relationships include nearest-right, nearest-below, same-row, semantic-key compatibility, and learned relations. A reliable baseline combines a controlled key vocabulary with geometry and rejects ambiguous candidates.
+OCR can correctly read both `Invoice Number` and `Purchase Order Number` yet bind a nearby value to the wrong key. A normal OCR result supplies text, geometry, confidence, page, and an observation ID—not an oracle `key` or `value` role. The notebook therefore keeps synthetic roles in hidden evaluation truth, discovers candidate keys from an approved alias vocabulary, treats the remaining page spans as candidate values, and then scores value shape plus geometry. Candidate relationships include nearest-right, nearest-below, same-row, semantic-key compatibility, and learned relations.
 
 Represent both sides:
 
@@ -244,7 +244,7 @@ Represent both sides:
   "key_box": [90, 210, 250, 238],
   "value_box": [270, 210, 390, 238],
   "page": 1,
-  "binding_method": "semantic_key_plus_geometry_v1"
+  "binding_method": "role_free_semantic_key_plus_geometry_v2"
 }
 ```
 
@@ -296,30 +296,32 @@ Normalization is a transformation, not cleanup. Store input, output, version, an
 
 ## 13. The document evidence graph
 
-![Every field remains connected to the span or cell, region, page, and original document.](assets/document-evidence-graph.svg)
+![Every field remains connected to the span or cell, region, page, and synthetic logical document.](assets/document-evidence-graph.svg)
 
 ```text
 normalized field → extraction relation → OCR span or table cell
-                 → layout region → page render → original document hash
+                 → layout region → page render → logical-document hash
 ```
 
 For each node and edge, keep stable IDs and versions. A minimum provenance object includes:
 
-- document SHA-256 and optional page-render hash;
+- logical-document SHA-256 and page-render SHA-256;
 - document, page, region, span/cell, and box identity;
 - raw text and normalized value;
 - transformation and engine/model version;
 - timestamp or run ID; and
 - verification results and review state.
 
-The same filename is not the same document. Content hashes make lineage and replay checks possible, but are not access-control decisions.
+The lab's `logical_document_sha256` hashes the canonical synthetic source representation because no original PDF bytes exist. It is deliberately separate from `page_render_sha256`. In production, `source_document_sha256` should normally hash the actual uploaded PDF or image bytes; a logical-record hash is not a substitute. The same filename is not the same document. Content hashes make lineage and replay checks possible, but are not access-control decisions.
 
 ## 14. Verification and field states
 
 Deterministic checks should answer:
 
 ```text
-schema valid? → page exists? → box valid? → region/span/cell exists?
+logical hash valid and cited? → page exists? → page-render hash matches?
+              → region exists? → exact word/cell identity and page match?
+              → cited box matches source geometry and lies in the region?
               → raw evidence matches? → transformation replays?
               → business rule satisfied?
 ```
@@ -334,7 +336,7 @@ Do not ask an LLM judge to verify checks that code can reproduce exactly. Use fi
 | `conflicting` | multiple supported values disagree | apply explicit policy or review |
 | `unsupported` | output cannot be bound or derived from evidence | reject/review |
 
-A correct value with the wrong page, box, or cell is a provenance failure. A plausible value absent from all evidence is unsupported. If page 1 and page 3 disagree, preserve both candidates and apply a documented policy; do not silently choose the value that “looks final.”
+A correct value with the wrong page, render hash, box, region, word, or cell is a provenance failure. Bounds checking alone is insufficient: a valid box elsewhere on the page must fail source-geometry binding. A plausible value absent from all evidence is unsupported. If page 1 and page 3 disagree, preserve both candidates and apply a documented policy; do not silently choose the value that “looks final.”
 
 ## 15. Evaluation is a vector, not one score
 
@@ -350,7 +352,7 @@ Report at least:
 - unsupported extraction rate; and
 - review rate and correction effort.
 
-Slice by template/vendor, document type, page region, font size, language, and perturbation. A field can be correct while provenance is wrong; a structurally correct table can contain wrong cell text. Never collapse these into a score that hides the failing boundary.
+Slice by template/vendor, document type, page region, font size, language, and perturbation. A field can be correct while provenance is wrong; conversely, an incorrect OCR value can have perfectly coherent provenance to the observation that produced it. A structurally correct table can contain wrong cell text. Keep extraction state, provenance verification, and review policy separate rather than collapsing them into a score that hides the failing boundary.
 
 ### Source separation and template shift
 
@@ -403,7 +405,7 @@ The credential-free notebook uses NumPy, pandas, Pillow, and Matplotlib. It does
 - Microsoft Table Transformer detection (`2357cbe2b5a5d1c03e54f32764f06058933b65ab`) and structure v1.1-all (`7587a7ef111d9dcbf8ac695f1376ab7014340a0c`), MIT model cards, through `AutoImageProcessor` and `AutoModelForObjectDetection`; and
 - PaddleOCR‑VL‑1.6 (`c5630abae1d940eafe0697512a0325494b02ab42`, Apache-2.0 model card), an **emerging** 2026 document parser, through the official `PaddleOCRVL` SDK.
 
-Optional observations remain ineligible for comparison until code/model revisions, processor files, artifact hashes, license review, input policy, runtime, and evaluation data are recorded. Author-reported leaderboard results are not local evidence.
+Optional observations remain ineligible for comparison until code/model revisions, processor or interface configuration, artifact hashes, approved target-deployment license review, input policy, target runtime, and evaluation data are recorded. The notebook's machine-readable readiness check enforces every item rather than inferring readiness from a model name and checksum alone. Author-reported leaderboard results are not local evidence.
 
 ### State of the art: maturity matters
 
@@ -458,14 +460,14 @@ The self-contained [notebook](lab.ipynb) implements:
 
 1. document/page contracts, hashes, coordinate round trips, and DPI cost;
 2. a deterministic mixed-document generator with three isolated templates;
-3. `local_ocr_proxy`, CER/WER, confidence reliability, and OCR perturbations;
+3. a role-free `local_ocr_proxy` boundary, hidden ground truth for evaluation only, CER/WER, confidence reliability, and OCR perturbations;
 4. layout records and naive versus column-aware reading order;
 5. table/cell/span schemas, flattening loss, and structure metrics;
-6. proximity failure and semantic-plus-geometry key/value binding;
-7. versioned normalization, ambiguous-date review, and checkbox state;
+6. role-free key discovery plus proximity and semantic-plus-geometry value binding;
+7. versioned normalization, two- and four-digit locale-aware date assertions, ambiguous-date review, and checkbox state;
 8. cross-page table continuation with cell-level page provenance;
 9. a structured document plus evidence graph;
-10. wrong-page, wrong-box, wrong-cell, unsupported-value, and bad-normalization injections;
+10. wrong logical-document hash, logical-content tampering, wrong-page, unrelated-valid-box, wrong-render-hash, cross-page-cell, wrong-region, wrong-cell, unsupported-value, and bad-normalization injections;
 11. Template B development versus untouched Template C reporting;
 12. rotation, blur, compression, and low-contrast stage degradation;
 13. governed optional adapters and an enterprise evidence artifact.
