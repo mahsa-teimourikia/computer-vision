@@ -45,6 +45,8 @@ Intermediate 01 implements projection, resampling, cross-attention, causal gener
 
 Intermediate 02 keeps the reasoning executor framework-free so learners can inspect topological ordering, four-valued fact propagation, allow-listed tool contracts, evidence binding, deterministic replay, contradiction checks, counterfactuals, and review policy directly. NumPy supplies exact local geometry and arithmetic, pandas supplies event/slice analysis, and Pillow/Matplotlib render evidence. Pydantic or JSON Schema, NetworkX, OpenTelemetry, and a pinned Transformers model verifier are reviewed as production extensions, but schema validity, graph libraries, traces, and model agreement are never treated as factual verification or action authority.
 
+Intermediate 03 uses Pillow, NumPy, pandas, and Matplotlib for a fully observable synthetic document pipeline: page rendering, coordinate transforms, OCR error injection, reading-order graphs, span-aware tables, field binding, versioned normalization, provenance replay, template shift, and perturbation slices. Tesseract 5.5.3 is the optional local OCR baseline; Microsoft Table Transformer detection/structure checkpoints and PaddleOCR-VL-1.6 are immutable-revision, disabled-by-default comparisons. PyMuPDF is reviewed but not imposed because its AGPL/commercial licensing needs deployment-specific approval. Optional results remain separate from local proxy evidence until model, processor, license, artifact hashes, source data, and target runtime are recorded.
+
 ## Task frameworks
 
 | Tool | Best fit | Strengths | Constraints to review |

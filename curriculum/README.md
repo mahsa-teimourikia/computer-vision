@@ -33,8 +33,9 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 
 - [01 · Vision-Language Models: From Visual Features to Multimodal Reasoning](intermediate/01-vision-language-models/README.md) — move from image–text alignment to visual tokens, connectors, multimodal fusion, grounded generation, evidence ablation, capability-specific evaluation, and governed VLM inference.
 - [02 · Multimodal Reasoning & Verification: From Visual Evidence to Checked Conclusions](intermediate/02-multimodal-reasoning-verification/README.md) — decompose bounded visual questions into source-bound evidence, deterministic tools, checked claims, counterfactuals, contradiction tests, uncertainty-aware decisions, and governed artifacts.
+- [03 · Document Intelligence: From Pixels and Layout to Structured Evidence](intermediate/03-document-intelligence/README.md) — preserve page, region, reading-order, table-cell, normalization, and document lineage while extracting and verifying mixed enterprise documents.
 
-The [intermediate track](intermediate/README.md) continues through document intelligence, multimodal retrieval/RAG, video-language understanding, and visual agents.
+The [intermediate track](intermediate/README.md) continues through multimodal retrieval/RAG, video-language understanding, and visual agents.
 
 ## Advanced
 
