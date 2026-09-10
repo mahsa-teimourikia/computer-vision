@@ -67,6 +67,7 @@ def validate_hub() -> None:
         "Vision-Language Models",
         "Multimodal Reasoning &amp; Verification",
         "Document Intelligence",
+        "Multimodal Retrieval &amp; RAG",
         "oneplusi.io",
     ]
     for text in required:

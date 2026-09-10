@@ -515,7 +515,7 @@ Design a retention policy for raw documents, page renders, cropped evidence, str
 
 ## 23. Transition to Intermediate 04
 
-This course turns one document into structured, traceable evidence. **Intermediate 04 — Multimodal Retrieval & RAG** will ask how to index and retrieve the correct page, region, table cell, figure, or field across many documents while preserving access control and citations.
+This course turns one document into structured, traceable evidence. [**Intermediate 04 — Multimodal Retrieval & RAG**](../04-multimodal-retrieval-rag/README.md) asks how to index and retrieve the correct page, region, table cell, figure, or field across many documents while preserving access control and citations.
 
 ## References
 

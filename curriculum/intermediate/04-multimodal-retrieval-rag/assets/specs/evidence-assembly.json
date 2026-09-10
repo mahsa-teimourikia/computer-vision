@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "id": "evidence-assembly",
+  "title": "Assemble the minimum sufficient evidence",
+  "purpose": "Ranked authorized candidates are canonically deduplicated, checked for freshness, expanded through hierarchy, ordered, budgeted, and tested for sufficiency.",
+  "output": {
+    "svg": "curriculum/intermediate/04-multimodal-retrieval-rag/assets/evidence-assembly.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Ranked authorized candidates are canonically deduplicated, checked for freshness, expanded through hierarchy, ordered, budgeted, and tested for sufficiency."
+  },
+  "canvas": {
+    "width": 2048,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 36,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Assemble the minimum sufficient evidence",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1920,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "ranked",
+      "group": "system",
+      "label": "Ranked\ncandidates",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "dedupe",
+      "group": "system",
+      "label": "Canonical\ndeduplication",
+      "type": "service",
+      "bounds": {
+        "x": 360,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "fresh",
+      "group": "system",
+      "label": "Freshness +\naccess checks",
+      "type": "operations",
+      "bounds": {
+        "x": 620,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "parents",
+      "group": "system",
+      "label": "Restore parent\ncontext",
+      "type": "agent",
+      "bounds": {
+        "x": 880,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "order",
+      "group": "system",
+      "label": "Order related\nevidence",
+      "type": "service",
+      "bounds": {
+        "x": 1140,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "budget",
+      "group": "system",
+      "label": "Context + privacy\nbudget",
+      "type": "action",
+      "bounds": {
+        "x": 1400,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "sufficient",
+      "group": "system",
+      "label": "Sufficient\nbundle",
+      "type": "data",
+      "bounds": {
+        "x": 1660,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "ranked",
+        "port": "out"
+      },
+      "to": {
+        "node": "dedupe",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          325
+        ],
+        [
+          360,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "dedupe",
+        "port": "out"
+      },
+      "to": {
+        "node": "fresh",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          570,
+          325
+        ],
+        [
+          620,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "fresh",
+        "port": "out"
+      },
+      "to": {
+        "node": "parents",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          830,
+          325
+        ],
+        [
+          880,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "parents",
+        "port": "out"
+      },
+      "to": {
+        "node": "order",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          325
+        ],
+        [
+          1140,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "order",
+        "port": "out"
+      },
+      "to": {
+        "node": "budget",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1350,
+          325
+        ],
+        [
+          1400,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e6",
+      "from": {
+        "node": "budget",
+        "port": "out"
+      },
+      "to": {
+        "node": "sufficient",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1610,
+          325
+        ],
+        [
+          1660,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}
