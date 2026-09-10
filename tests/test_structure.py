@@ -915,3 +915,163 @@ def test_intermediate_03_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
+    course = Path("curriculum/intermediate/04-multimodal-retrieval-rag")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "Principal",
+        "EvidenceUnit",
+        "RetrievalQuery",
+        "RetrievalHit",
+        "EvidenceBundle",
+        "Claim",
+        "canonical_source_id",
+        "source_version",
+        "indexed_source_version",
+        "embedding_model_version",
+        "chunker_version",
+        "index_version",
+        "reranker_version",
+        "indexed_at",
+        "Vendor A",
+        "Vendor B",
+        "Vendor C",
+        "development_only",
+        "reporting_only_no_changes",
+        "authorized_units",
+        "ALLOWED_FILTERS",
+        "before scoring",
+        "bm25_scores",
+        "semantic_vector",
+        "visual_scores",
+        "structured_scores",
+        "late_interaction_score",
+        "multi_vector_scores",
+        "route_query",
+        "decompose_query",
+        "phase_visible_units",
+        "generate_candidates",
+        "reciprocal_rank_fusion",
+        "deterministic_rerank",
+        "retrieval_metrics",
+        "recall_at_k",
+        "precision_at_k",
+        "mrr",
+        "ndcg_at_k",
+        "complete_set",
+        "representation_comparison",
+        "image_to_corpus_retrieval",
+        "source_shortcut_rate",
+        "expand_hierarchy",
+        "assemble_evidence",
+        "freshness_check",
+        "top_k_sweep",
+        "distractor_count",
+        "deterministic_maximum",
+        "local_generation_proxy",
+        "not an LLM, VLM, foundation model, or generation-quality benchmark",
+        "verify_claim_citations",
+        "citation_metrics",
+        "citation_failure_cases",
+        "wrong_support",
+        "outside_bundle",
+        "unauthorized_citation",
+        "wrong_value",
+        "unsupported_claim",
+        "oracle_bundle",
+        "attribute_rag_failure",
+        "retrieval_or_assembly",
+        "generation_or_answer_policy",
+        "unauthorized_retrieval_rate",
+        "acl_principal_comparison",
+        "policy-injection",
+        "distractor_result",
+        "counterfactual_update",
+        "stale_excluded",
+        "FROZEN_RETRIEVAL_POLICY",
+        "Vendor B development only",
+        "Vendor C reporting only; no route, weight, threshold, candidate depth, top-k, context budget, or rule changes",
+        "safe_retrieval_log",
+        "source_degradation",
+        "evaluation_matrix",
+        "classify_pipeline_failure",
+        "routing_failure",
+        "lexical_retrieval_failure",
+        "dense_retrieval_failure",
+        "fusion_failure",
+        "reranking_failure",
+        "missing_evidence",
+        "distractor_contamination",
+        "citation_failure",
+        "generation_failure",
+        "acl_failure",
+        "stale_index_failure",
+        "OPTIONAL_MODEL_MANIFESTS",
+        "CV_ENABLE_FAISS",
+        "CV_ENABLE_BGE_M3",
+        "CV_ENABLE_SIGLIP2",
+        "CV_ENABLE_RERANKER",
+        "CV_ENABLE_COLQWEN",
+        "CV_ENABLE_MULTIMODAL_RERANKER",
+        "5617a9f61b028005a4858fdac845db406aefb181",
+        "75de2d55ec2d0b4efc50b3e9ad70dba96a7b2fa2",
+        "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+        "92908120384b7a2110c5beda3ab29cbdb2c08e49",
+        "0c630e356bbbf292ae0d8f050f54b8640f05919a",
+        "89644892e4d85e24eaac8bacfd4f463576704203",
+        "trust_remote_code=False",
+        "comparison_eligible",
+        "intermediate-04-multimodal-rag-evidence.json",
+        '"corpus_contract"',
+        '"retrieval_units"',
+        '"routing_metrics"',
+        '"retrieval_metrics"',
+        '"complete_evidence_recall"',
+        '"fusion_metrics"',
+        '"citation_metrics"',
+        '"answer_metrics"',
+        '"distractor_tests"',
+        '"acl_tests"',
+        '"freshness_tests"',
+        '"failure_attribution"',
+        "locally_measured_evidence",
+        "optional_model_observations",
+        "unresolved_production_assumptions",
+        '"authorization": "none"',
+        "DEMONSTRATION_THRESHOLD_NOTICE",
+    ]:
+        assert required in source
+
+    assert "retrieved content is untrusted data" in source_lower
+    assert "query text and retrieved content can never grant access" in source_lower
+    assert "production embedding" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_intermediate_04_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/intermediate/04-multimodal-retrieval-rag/assets")
+    expected = {
+        "multimodal-rag-pipeline.svg",
+        "retrieval-units.svg",
+        "multi-index-retrieval.svg",
+        "hybrid-retrieval.svg",
+        "evidence-assembly.svg",
+        "citation-contract.svg",
+        "acl-aware-retrieval.svg",
+        "rag-failure-taxonomy.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source

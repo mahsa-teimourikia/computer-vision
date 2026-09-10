@@ -11,7 +11,7 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The nine complete Beginner courses now lead into three Intermediate courses:
+The nine complete Beginner courses now lead into four Intermediate courses:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
@@ -25,8 +25,9 @@ The nine complete Beginner courses now lead into three Intermediate courses:
 10. [Vision-Language Models: From Visual Features to Multimodal Reasoning](curriculum/intermediate/01-vision-language-models/README.md) turns visual features into language-model context through projection, resampling, fusion, and causal generation, then tests grounding, hallucination, evidence, structured output, and systems contracts.
 11. [Multimodal Reasoning & Verification: From Visual Evidence to Checked Conclusions](curriculum/intermediate/02-multimodal-reasoning-verification/README.md) decomposes bounded questions into evidence-bound facts, deterministic tool calls, checked claims, counterfactual and contradiction tests, uncertainty-aware decisions, and governed evidence artifacts.
 12. [Document Intelligence: From Pixels and Layout to Structured Evidence](curriculum/intermediate/03-document-intelligence/README.md) routes mixed documents through page, OCR, layout, reading-order, table, form, normalization, provenance, verification, source-shift, and review contracts without flattening away evidence.
+13. [Multimodal Retrieval & RAG: From Evidence Indexing to Grounded Multimodal Answers](curriculum/intermediate/04-multimodal-retrieval-rag/README.md) turns pages, cells, figures, images, and regions into authorized multimodal indexes, then measures hybrid retrieval, evidence sufficiency, claim-level citations, freshness, and retrieval-versus-generation failures.
 
-All twelve CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate 01 exposes the common Hugging Face multimodal processor/chat-template/generation path behind an explicit opt-in flag and immutable model revisions. Intermediate 02 uses standard Python, NumPy, pandas, Pillow, and Matplotlib to keep its DAG, tool, verification, and evidence contracts fully observable without an agent framework. Intermediate 03 keeps its synthetic OCR/layout pipeline transparent and places Tesseract, Table Transformer, and PaddleOCR-VL behind revision-pinned, disabled-by-default adapters.
+All thirteen CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate 01 exposes the common Hugging Face multimodal processor/chat-template/generation path behind an explicit opt-in flag and immutable model revisions. Intermediate 02 uses standard Python, NumPy, pandas, Pillow, and Matplotlib to keep its DAG, tool, verification, and evidence contracts fully observable without an agent framework. Intermediate 03 keeps its synthetic OCR/layout pipeline transparent and places Tesseract, Table Transformer, and PaddleOCR-VL behind revision-pinned, disabled-by-default adapters. Intermediate 04 implements BM25, semantic/visual/multi-vector proxies, RRF, reranking, evidence assembly, ACL checks, and citation verification directly; FAISS, BGE-M3, SigLIP 2, BGE reranking, and ColQwen remain course-local, pinned, and disabled by default.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -120,7 +121,12 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
-│   └── 03-document-intelligence/
+│   ├── 03-document-intelligence/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 04-multimodal-retrieval-rag/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt

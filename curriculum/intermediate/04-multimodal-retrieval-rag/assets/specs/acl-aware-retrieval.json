@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "id": "acl-aware-retrieval",
+  "title": "Authorization creates the retrievable universe",
+  "purpose": "Identity and tenant policy determine eligible source identifiers before lexical, dense, visual, and structured scorers can observe or rank any evidence.",
+  "output": {
+    "svg": "curriculum/intermediate/04-multimodal-retrieval-rag/assets/acl-aware-retrieval.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Identity and tenant policy determine eligible source identifiers before lexical, dense, visual, and structured scorers can observe or rank any evidence."
+  },
+  "canvas": {
+    "width": 2048,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 36,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Authorization creates the retrievable universe",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1920,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "identity",
+      "group": "system",
+      "label": "Authenticated\nidentity",
+      "type": "operations",
+      "bounds": {
+        "x": 100,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "system",
+      "label": "Tenant + group\npolicy",
+      "type": "operations",
+      "bounds": {
+        "x": 360,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "eligible",
+      "group": "system",
+      "label": "Eligible source\nIDs",
+      "type": "data",
+      "bounds": {
+        "x": 620,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "indexes",
+      "group": "system",
+      "label": "Partitioned\nindexes",
+      "type": "service",
+      "bounds": {
+        "x": 880,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "score",
+      "group": "system",
+      "label": "Score authorized\nitems only",
+      "type": "agent",
+      "bounds": {
+        "x": 1140,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "bundle",
+      "group": "system",
+      "label": "Verified\nevidence bundle",
+      "type": "data",
+      "bounds": {
+        "x": 1400,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "audit",
+      "group": "system",
+      "label": "Policy + ID\naudit",
+      "type": "operations",
+      "bounds": {
+        "x": 1660,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "identity",
+        "port": "out"
+      },
+      "to": {
+        "node": "policy",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          325
+        ],
+        [
+          360,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "policy",
+        "port": "out"
+      },
+      "to": {
+        "node": "eligible",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          570,
+          325
+        ],
+        [
+          620,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "eligible",
+        "port": "out"
+      },
+      "to": {
+        "node": "indexes",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          830,
+          325
+        ],
+        [
+          880,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "indexes",
+        "port": "out"
+      },
+      "to": {
+        "node": "score",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          325
+        ],
+        [
+          1140,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "score",
+        "port": "out"
+      },
+      "to": {
+        "node": "bundle",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1350,
+          325
+        ],
+        [
+          1400,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e6",
+      "from": {
+        "node": "bundle",
+        "port": "out"
+      },
+      "to": {
+        "node": "audit",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1610,
+          325
+        ],
+        [
+          1660,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}
