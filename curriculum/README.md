@@ -35,8 +35,9 @@ The [2026 state-of-the-art radar](../ROADMAP.md#2026-state-of-the-art-radar) dis
 - [02 · Multimodal Reasoning & Verification: From Visual Evidence to Checked Conclusions](intermediate/02-multimodal-reasoning-verification/README.md) — decompose bounded visual questions into source-bound evidence, deterministic tools, checked claims, counterfactuals, contradiction tests, uncertainty-aware decisions, and governed artifacts.
 - [03 · Document Intelligence: From Pixels and Layout to Structured Evidence](intermediate/03-document-intelligence/README.md) — preserve page, region, reading-order, table-cell, normalization, and document lineage while extracting and verifying mixed enterprise documents.
 - [04 · Multimodal Retrieval & RAG: From Evidence Indexing to Grounded Multimodal Answers](intermediate/04-multimodal-retrieval-rag/README.md) — index authorized pages, cells, figures, images, and regions; combine lexical, semantic, visual, structured, and multi-vector retrieval; assemble sufficient evidence; and verify claim-level citations.
+- [05 · Video-Language Understanding: From Temporal Evidence to Grounded Video Reasoning](intermediate/05-video-language-understanding/README.md) — preserve frame and timestamp identity, compare sampling and representation policies, retrieve and ground events, verify multi-event claims, and evaluate long-video and streaming behavior.
 
-The [intermediate track](intermediate/README.md) continues through video-language understanding and visual agents.
+The [intermediate track](intermediate/README.md) continues through visual agents.
 
 ## Advanced
 

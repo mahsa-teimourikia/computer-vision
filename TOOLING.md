@@ -49,6 +49,19 @@ Intermediate 03 uses Pillow, NumPy, pandas, and Matplotlib for a fully observabl
 
 Intermediate 04 implements BM25, semantic and visual feature proxies, structured retrieval, late interaction, reciprocal-rank fusion, deterministic reranking, canonical evidence assembly, retrieval metrics, ACL/freshness enforcement, bounded generation, and claim-level citation verification directly with standard Python, NumPy, pandas, Pillow, and Matplotlib. FAISS 1.15.0 remains course-local and optional; BGE-M3, SigLIP 2, BGE reranker v2 M3, ColQwen2.5/ColPali, and a non-authoritative Qwen3-VL relevance scorer are immutable-revision, disabled-by-default comparisons. A vector store or model is not considered ready until filter semantics, tenant isolation, updates/deletion, code/model/processor versions, artifact hashes, license, target runtime, and source-held-out evaluation are recorded.
 
+## Video-language systems
+
+| Tool or model | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| [TorchCodec](https://docs.pytorch.org/torchcodec/stable/) | Timestamp-aware audio/video decoding into PyTorch tensors | Official PyTorch-domain decoder with frame, clip, metadata, and presentation-time interfaces | FFmpeg compatibility, seek accuracy, variable-frame-rate behavior, corrupted media, memory, and target-platform packaging |
+| [VideoMAE](https://huggingface.co/docs/transformers/model_doc/videomae) | Masked video representation and action-classification study | Established video self-supervision design with a common Transformers processor/model path | Clip sampling and label taxonomy dominate validity; the referenced Kinetics checkpoint is non-commercial and must not become a production default |
+| [PE-AV](https://huggingface.co/facebook/pe-av-large) | Joint audio–video–text retrieval and representation | One shared embedding space with an official Transformers interface and Apache-2.0 model-card license | Two-billion-parameter operations, media preprocessing, audio/video synchronization, artifact identity, and source-domain evaluation |
+| [Qwen3-VL](https://arxiv.org/abs/2511.21631) | Current video-conditioned multimodal generation experiments | Strong long-context and temporal modeling research direction with common processor/generation interfaces | Token cost, sampling sensitivity, generated-claim verification, model-card terms, serving support, and rapidly changing releases |
+| [InternVideo2.5](https://arxiv.org/abs/2501.12386) | Long-video multimodal research comparison | Hierarchical memory framing for long contexts and detailed temporal understanding | Research implementation maturity, checkpoint/runtime requirements, reproducibility, and deployment license |
+| [Video-MME](https://arxiv.org/abs/2405.21075), [LongVideoBench](https://arxiv.org/abs/2407.15754), [EgoSchema](https://arxiv.org/abs/2308.09126) | External video-understanding evaluation context | Complementary duration, long-context, and temporal-reasoning task designs | Contamination, judge dependence, subtitle/audio conditions, answer format, licensing, and mismatch with the target workflow |
+
+Intermediate 05 keeps decoding and learned inference out of its credential-free default so timing, sampling, interval, retrieval, citation, counterfactual, and streaming contracts remain inspectable. Its `local_temporal_representation_proxy` and `local_video_language_proxy` are explicitly not foundation models or quality benchmarks. Optional PE-AV, VideoMAE, and Qwen3-VL adapters are revision-pinned and disabled; production upgrades should use an approved decoder, preserve presentation timestamps and clock uncertainty, authorize before retrieval, and separately benchmark decode, sampling, encoding, indexing, localization, generation, and verification on target hardware.
+
 ## Task frameworks
 
 | Tool | Best fit | Strengths | Constraints to review |

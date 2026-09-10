@@ -490,7 +490,7 @@ Design a tenant deletion and access-revocation workflow across source objects, l
 
 ## 39. Transition to Intermediate 05
 
-This course retrieves bounded evidence from mostly static documents and images. **Intermediate 05 — Video-Language Understanding** will add time: frame sampling, event boundaries, temporal ordering, streaming context, long-video retrieval, and citations that must identify when—not only where—evidence occurs.
+This course retrieves bounded evidence from mostly static documents and images. Continue to [**Intermediate 05 — Video-Language Understanding: From Temporal Evidence to Grounded Video Reasoning**](../05-video-language-understanding/README.md) to add time: frame sampling, event boundaries, temporal ordering, streaming context, long-video retrieval, and citations that must identify when—not only where—evidence occurs.
 
 ## References
 
