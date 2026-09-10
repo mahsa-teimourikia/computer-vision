@@ -99,6 +99,8 @@ Spatial resolution determines visible detail; temporal resolution determines vis
 
 Sampling is part of the model and evaluation contract. Record target times, selected presentation timestamps, tolerance/tie rules, missing-frame handling, and the number of decoded and encoded frames.
 
+The notebook mechanically enforces the deployable boundary: `event_aware_sample` and `observable_change_segments` accept public `FrameObservation` records and declared thresholds only. Their signatures cannot accept event types, ground-truth IDs, annotation boundaries, or evaluation records; a negative test passes `EventAnnotation` records and requires a type failure. `oracle_event_segmentation_ceiling` remains outside the deployable component registry.
+
 ## 5. Frames, clips, and motion
 
 The simplest representation encodes every frame independently:
@@ -255,6 +257,8 @@ For “The leak begins before the alarm activates,” verification checks that b
 
 The answer generator cannot retrieve new video, inspect evaluation annotations, change sampling, or authorize an action. It receives only the bounded evidence bundle and deterministic tool outputs.
 
+The executable stage-wise waterfall reports event recall and complete multi-event recall after public observation, sampling, candidate retrieval, boundary refinement, deduplication, and final bundle validation. Evaluation truth scores each stage after the fact; it is never passed into pipeline functions. The first incomplete stage distinguishes “never sampled” from retrieval, localization, or assembly loss.
+
 ## 20. Temporal hallucination taxonomy
 
 | Failure | Example | Measurement |
@@ -301,9 +305,11 @@ If a leak begins at 20s and is detected at 21.4s, detection delay is 1.4s. Repor
 
 When a 30 FPS camera feeds an 18 FPS pipeline, queue-all behavior causes latency to grow without bound. Alternatives—drop-oldest/latest, adaptive sampling, resolution reduction, batching, and event-triggered inference—trade latency against event recall. Timestamps, not processed frame counts, determine event timing.
 
+The lab repeats queue-all, keep-latest, and event-aware drop policies under five deterministic processing-jitter seeds. It reports mean, standard deviation, and range for event recall plus delay and processed-frame variability rather than presenting one scheduling trace as representative.
+
 ## 25. Frame drops and synchronization
 
-The lab removes observations to simulate 30→24 FPS delivery and measures event misses and localization error. In multi-camera systems, clock drift, differing frame rates, encode delay, and network latency mean Camera A timestamps cannot be compared with Camera B without a synchronization guarantee. Preserve source clock, offset estimate, uncertainty, and correction version.
+The lab repeats random delivery at 100%, 50%, and 20% across five deterministic seeds. It reports mean, standard deviation, and range for event recall, separates short- from long-event recall, and records tIoU-qualified localization recall and observed-boundary error. Equal delivered FPS is therefore not treated as equal evidence. Because thinning can also create a larger apparent signal delta and trigger a heuristic that stayed quiet on dense input, non-monotonic proxy behavior is a diagnostic—not evidence that dropped frames improve the underlying video. In multi-camera systems, clock drift, differing frame rates, encode delay, and network latency mean Camera A timestamps cannot be compared with Camera B without a synchronization guarantee. Preserve source clock, offset estimate, uncertainty, and correction version.
 
 ## 26. Audio-visual evidence
 
@@ -430,11 +436,11 @@ The self-contained [notebook](lab.ipynb) implements:
 6. bag-of-frame versus order-aware representations, reversal, shuffle, and `temporal_dependence_teaching`;
 7. fixed windows, observable change-point segments, and an explicit oracle segmentation ceiling;
 8. text-to-clip retrieval with Recall@K, MRR, tIoU, boundary errors, and source bias;
-9. temporal grounding, interval relations, durations, event deduplication, and track binding;
-10. complete temporal evidence recall and deterministic multi-event reasoning;
-11. timestamped claim/citation verification and automated temporal-hallucination taxonomy;
+9. temporal grounding, an explicit non-causal interval vocabulary, durations, event graphs, deduplication, and track binding;
+10. complete temporal evidence recall, a stage-wise recall waterfall, and deterministic multi-event reasoning;
+11. timestamped claim/citation verification, automated temporal-hallucination taxonomy, and an assertion-backed causal-overreach rejection;
 12. full/pre/post/unrelated evidence ablation plus relevant and irrelevant counterfactuals;
-13. offline versus causal streaming, dropped-frame, delay, false-alarm, and backpressure experiments;
+13. offline versus causal streaming plus multi-seed dropped-frame, delay, false-alarm, and backpressure experiments;
 14. frozen Camera B policy and Camera C reporting-only evaluation;
 15. disabled revision-pinned TorchCodec, VideoMAE, PE-AV, and Qwen3-VL adapters; and
 16. a governed JSON evidence artifact under `.artifacts/`.
