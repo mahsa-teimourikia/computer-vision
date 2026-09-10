@@ -1111,3 +1111,152 @@ def test_intermediate_04_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_intermediate_05_contains_the_declared_video_language_lab():
+    course = Path("curriculum/intermediate/05-video-language-understanding")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "VideoContract",
+        "FrameObservation",
+        "EventAnnotation",
+        "ClipUnit",
+        "VideoRequest",
+        "VideoQuery",
+        "TemporalEvidence",
+        "TemporalClaim",
+        "StreamingState",
+        "presentation_timestamp",
+        "variable_frame_rate",
+        "Camera A",
+        "Camera B",
+        "Camera C",
+        "development_only",
+        "reporting_only_no_changes",
+        "public_request",
+        "EVALUATION_ONLY_FIELDS",
+        "assert_proxy_gold_separation",
+        "assert_public_frame_observations",
+        "assert_deployable_temporal_boundary",
+        "DEPLOYABLE_TEMPORAL_BOUNDARY",
+        "uniform_sample",
+        "random_sample",
+        "event_aware_sample",
+        "hierarchical_sample",
+        "event_observation_recall",
+        "Temporal aliasing",
+        "bag_of_frames_representation",
+        "order_aware_representation",
+        "reverse_video_test",
+        "temporal_dependence_teaching",
+        "clip_features",
+        "fixed_windows",
+        "observable_change_segments",
+        "oracle_event_segmentation_ceiling",
+        "retrieve_clips",
+        "authorized_clips",
+        "candidate_retrieval_metrics",
+        "event_recall_at_k",
+        "complete_temporal_evidence_recall",
+        "temporal_iou",
+        "start_error_seconds",
+        "end_error_seconds",
+        "duration_error_seconds",
+        "localize_from_observations",
+        "interval_relation",
+        "interval_duration",
+        "build_temporal_event_graph",
+        "ALLOWED_TEMPORAL_RELATIONS",
+        "FORBIDDEN_CAUSAL_RELATIONS",
+        "evidence_from_interval",
+        "deduplicate_evidence",
+        "complete temporal evidence",
+        "answer_temporal_query",
+        "stage_recall_report",
+        "stagewise_temporal_recall",
+        "TEMPORAL_STAGE_ORDER",
+        "raw_public_observations",
+        "observable_after_sampling",
+        "localized_intervals",
+        "after_deduplication",
+        "final_evidence_bundle",
+        "temporal_failure_attribution",
+        "verify_temporal_claim",
+        "citation_not_in_bundle",
+        "citation_not_authorized",
+        "track_binding_missing",
+        "unsupported_temporal_relation",
+        "causal_relation_requires_separate_contract",
+        "causal_overreach",
+        "hallucination_fixtures",
+        "Evidence ablation",
+        "relevant_counterfactual",
+        "irrelevant_counterfactual",
+        "hierarchy_cost",
+        "multi_scale_retrieve",
+        "temporal_index_record",
+        "evidence_bound_summary",
+        "language_prior_claim",
+        "stream_event_state",
+        "possible_onset",
+        "completion_delay_seconds",
+        "simulate_backpressure",
+        "BACKPRESSURE_SEEDS",
+        "backpressure_trials",
+        "event_aware_drop",
+        "frame_drop_report",
+        "FRAME_DROP_SEEDS",
+        "random_delivery",
+        "frame_drop_trials",
+        "short_event_recall",
+        "long_event_recall",
+        "audio_visual_alarm_check",
+        "conflict_abstain",
+        "FROZEN_POLICY",
+        "POLICY_HASH",
+        "source_report",
+        "OPTIONAL_ADAPTERS",
+        "0d24878d4107d64bef49e53602fc34ce6f94f6d8",
+        "488eb9a0565f257b32866000305c8178965eb9f6",
+        "89644892e4d85e24eaac8bacfd4f463576704203",
+        "trust_remote_code",
+        "safe_observability_record",
+        "local_temporal_representation_proxy",
+        "local_video_language_proxy",
+        '"foundation_model": False',
+        '"authorization": "none"',
+        "intermediate-05-video-language-evidence.json",
+        "Demonstration thresholds for this notebook runtime only.",
+    ]:
+        assert required in source
+
+    assert "not production video encoders" in source_lower
+    assert "camera c / reporting only" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_intermediate_05_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/intermediate/05-video-language-understanding/assets")
+    expected = {
+        "video-language-pipeline.svg",
+        "frame-index-vs-timestamp.svg",
+        "temporal-sampling-aliasing.svg",
+        "space-time-representations.svg",
+        "temporal-retrieval-hierarchy.svg",
+        "temporal-event-graph.svg",
+        "temporal-citation-contract.svg",
+        "offline-vs-streaming.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
