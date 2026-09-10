@@ -16,7 +16,7 @@ After this course, you should be able to:
 - preserve canonical source, page, region, cell, image, version, and authorization lineage through indexing;
 - explain lexical, dense, shared image–text, structured, and multi-vector representations;
 - implement BM25-style lexical retrieval, deterministic dense and visual proxies, reciprocal-rank fusion, routing, reranking, and evidence assembly;
-- place tenant, access-group, metadata, and freshness checks before generation—and access filtering before scoring;
+- place tenant, access-group, metadata, and typed version-policy checks before generation—and enforce both access and version eligibility before scoring;
 - measure Recall@K, Precision@K, MRR, nDCG, complete-evidence-set recall, citation support, faithfulness, leakage, and staleness separately;
 - compare retrieval-only, oracle-evidence generation, and retrieved-evidence generation;
 - diagnose missing evidence, distractor capture, bad granularity, stale indexes, unsupported claims, and citation drift;
@@ -129,6 +129,8 @@ $$
 
 Dense retrieval improves semantic matching but does not guarantee factual support, authorization, freshness, or good region localization. The default notebook uses a declared semantic-feature proxy so no downloaded model is confused with locally measured foundation-model evidence.
 
+The synthetic proxy has an explicit information boundary. Corpus features are built only from observable retrieval records; query features are built only from an observable `RetrievalRequest`. Required evidence IDs, relevance labels, gold answers, and evaluation-only semantic classes remain in the evaluation record and are never passed to routing, feature construction, candidate generation, or reranking. The notebook inspects those function signatures and serialized public views to assert this separation. Synthetic source truth may generate the public corpus, but evaluation annotations are constructed and stored separately.
+
 A shared image–text space enables direct text-to-image and image-to-text comparison. Separate text and visual spaces can use modality-specialist encoders but require rank fusion, calibration, or a learned bridge. Neither design is universally superior: test global semantics, local detail, language coverage, index cost, and source bias on the actual query distribution.
 
 ## 8. Visual retrieval needs an explicit unit
@@ -182,14 +184,16 @@ RRF is robust and simple, but its constant, participating indexes, list depths, 
 
 ![Tenant and ACL policy create the eligible candidate set before any retriever scores it.](assets/acl-aware-retrieval.svg)
 
-The secure order is:
+The secure and version-aware order is:
 
 ```text
 authenticated principal → tenant/group policy → eligible source IDs
-                        → retrieval/ranking → evidence bundle
+                        → typed version policy → retrieval/ranking → evidence bundle
 ```
 
 Post-filtering top results is unsafe and harms recall: unauthorized items may influence ranking, appear in logs or caches, occupy candidate slots, or leak through side channels. Build security filters from trusted identity and policy—not natural-language query instructions.
+
+The same rule applies to required freshness. When a request says `version_policy="current_only"`, a stale representation must be removed before scoring so it cannot displace a valid candidate. `version_policy="as_of"` requires an explicit ISO-8601 timestamp and selects coherent records effective at that time. `version_policy="historical_allowed"` permits coherent archived versions for historical questions. A source/index mismatch is ineligible under every policy; it is not a trustworthy historical record.
 
 ## 14. Metadata filters are part of retrieval semantics
 
@@ -259,6 +263,8 @@ $$
 
 A two-part question with one retrieved item has 50% item recall and 0% complete-set success. This distinction is central to multimodal synthesis.
 
+Report a retrieval-stage waterfall as well as the final number. The course measures complete-evidence recall at the initial candidate union, after fusion, after reranking, after canonical deduplication/hierarchy handling, and in the final context-budgeted bundle. If evidence is present initially but absent at the end, this table identifies whether ordering, bundle depth, deduplication, or the context budget—not candidate generation—caused the loss.
+
 ## 22. Citation existence is not citation support
 
 ![Every generated claim binds to a granular evidence ID and passes support, access, version, and sufficiency checks.](assets/citation-contract.svg)
@@ -312,9 +318,9 @@ Measure answer flips, evidence-set changes, citation drift, and unauthorized ret
 
 ## 28. Freshness and index lineage
 
-Each record should name source version/hash, representation model/version, index version, and indexing time. Updating a source without reindexing creates a stale but internally consistent vector. Retrieval quality metrics may not reveal that the answer came from an obsolete source.
+Each record should name source version/hash, effective interval, representation model/version, index version, and indexing time. Updating a source without reindexing creates a stale but internally consistent vector. Retrieval quality metrics may not reveal that the answer came from an obsolete source.
 
-Freshness checks compare the indexed source version/hash with the current source registry. Define task-specific age policies; “latest” is not always the legally effective version.
+Freshness checks compare the indexed source version/hash with the current source registry. The query must carry a typed policy: current-only, point-in-time `as_of`, or historical-allowed. Apply it after authorization and before every retriever scores candidates, then verify it again at the evidence boundary as defense in depth. “Latest” is not always the legally effective version.
 
 ## 29. Prompt injection is a data-boundary problem
 
@@ -415,8 +421,10 @@ Avoid:
 11. using an LLM for exact arithmetic already present in structured evidence;
 12. assuming more context is always safer;
 13. treating content instructions as control-plane instructions;
-14. ignoring source/index/model versions and deletion propagation; and
-15. presenting local proxies or optional model-card claims as production evidence.
+14. filtering stale or superseded versions only after they have occupied candidate slots;
+15. letting gold relevance or evaluation-only semantic fields enter synthetic proxy features;
+16. ignoring source/index/model versions and deletion propagation; and
+17. presenting local proxies or optional model-card claims as production evidence.
 
 ## 36. Lab map
 
@@ -424,19 +432,20 @@ The self-contained [notebook](lab.ipynb) implements:
 
 1. typed evidence, principal, query, retrieval-hit, bundle, claim, and citation contracts;
 2. a multimodal Vendor A/B/C corpus split before derived units;
-3. trusted ACL/tenant prefiltering with adversarial query text and leakage assertions;
+3. trusted ACL/tenant prefiltering followed by typed `current_only`, `as_of`, and `historical_allowed` enforcement before scoring;
 4. lexical BM25, semantic dense, visual, structured, and multi-vector teaching indexes;
-5. deterministic query routing, RRF, reranking, hierarchy, canonical deduplication, and context budgets;
-6. retrieval-only Recall@K, Precision@K, MRR, nDCG, item recall, and complete-set recall;
-7. full-image versus caption versus region retrieval and shortcut diagnostics;
-8. deterministic table aggregation and figure/caption evidence binding;
-9. a top-k sweep balancing sufficiency, distractors, context, and compute proxies;
-10. a labeled `local_generation_proxy`, oracle versus retrieved evidence, and failure attribution;
-11. claim-level citation verification, including unsupported, missing, wrong-ID, unauthorized, and stale injections;
-12. distractor, counterfactual, prompt-injection, stale-index, and access-control tests;
-13. frozen Vendor B policy and Vendor C reporting-only evaluation;
-14. optional disabled FAISS/model adapters with machine-readable readiness gates; and
-15. a governed JSON evidence artifact under `.artifacts/`.
+5. executable assertions that public query/corpus features exclude gold relevance, required evidence, answers, and evaluation-only semantic classes;
+6. deterministic query routing, RRF, reranking, hierarchy, canonical deduplication, and context budgets;
+7. retrieval-only Recall@K, Precision@K, MRR, nDCG, item recall, complete-set recall, and a five-stage recall waterfall;
+8. full-image versus caption versus region retrieval and shortcut diagnostics;
+9. deterministic table aggregation and figure/caption evidence binding;
+10. a top-k sweep balancing sufficiency, distractors, context, and compute proxies;
+11. a labeled `local_generation_proxy`, oracle versus retrieved evidence, and failure attribution;
+12. claim-level citation verification, including unsupported, missing, wrong-ID, unauthorized, and stale injections;
+13. distractor, counterfactual, prompt-injection, stale-index, and access-control tests;
+14. frozen Vendor B policy and Vendor C reporting-only evaluation;
+15. optional disabled FAISS/model adapters with machine-readable readiness gates; and
+16. a governed JSON evidence artifact under `.artifacts/`.
 
 ## 37. Exercises
 

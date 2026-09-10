@@ -926,6 +926,7 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
     for required in [
         "Principal",
         "EvidenceUnit",
+        "RetrievalRequest",
         "RetrievalQuery",
         "RetrievalHit",
         "EvidenceBundle",
@@ -938,6 +939,14 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
         "index_version",
         "reranker_version",
         "indexed_at",
+        "effective_from",
+        "effective_to",
+        "public_request",
+        "public_evidence_view",
+        "EVALUATION_ONLY_FIELDS",
+        "required_evidence_ids",
+        "gold_answer",
+        "evaluation_only_semantic_class",
         "Vendor A",
         "Vendor B",
         "Vendor C",
@@ -946,6 +955,11 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
         "authorized_units",
         "ALLOWED_FILTERS",
         "before scoring",
+        "version_policy_filter",
+        "current_source_versions",
+        "current_only",
+        "as_of",
+        "historical_allowed",
         "bm25_scores",
         "semantic_vector",
         "visual_scores",
@@ -958,6 +972,9 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
         "generate_candidates",
         "reciprocal_rank_fusion",
         "deterministic_rerank",
+        "assert_proxy_feature_contract",
+        "PROXY_FEATURE_BUILDERS",
+        "forbidden_parameters",
         "retrieval_metrics",
         "recall_at_k",
         "precision_at_k",
@@ -971,6 +988,13 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
         "assemble_evidence",
         "freshness_check",
         "top_k_sweep",
+        "retrieval_stage_waterfall",
+        "Initial candidates",
+        "After fusion",
+        "After reranking",
+        "After dedupe/hierarchy",
+        "Final bundle",
+        "complete_evidence_recall",
         "distractor_count",
         "deterministic_maximum",
         "local_generation_proxy",
@@ -993,6 +1017,9 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
         "distractor_result",
         "counterfactual_update",
         "stale_excluded",
+        "stale_excluded_before_scoring",
+        "stale_never_ranked",
+        "version_policy_table",
         "FROZEN_RETRIEVAL_POLICY",
         "Vendor B development only",
         "Vendor C reporting only; no route, weight, threshold, candidate depth, top-k, context budget, or rule changes",
@@ -1038,6 +1065,10 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
         '"distractor_tests"',
         '"acl_tests"',
         '"freshness_tests"',
+        '"version_policy_tests"',
+        '"proxy_feature_contract"',
+        '"evaluation_data_boundary"',
+        '"retrieval_stage_waterfall"',
         '"failure_attribution"',
         "locally_measured_evidence",
         "optional_model_observations",
@@ -1050,6 +1081,11 @@ def test_intermediate_04_contains_the_declared_multimodal_rag_lab():
     assert "retrieved content is untrusted data" in source_lower
     assert "query text and retrieved content can never grant access" in source_lower
     assert "production embedding" in source_lower
+    readme = (course / "README.md").read_text(encoding="utf-8")
+    assert "typed version policy" in readme.lower()
+    assert "before scoring" in readme.lower()
+    assert "retrieval-stage waterfall" in readme.lower()
+    assert "evaluation-only semantic classes" in readme.lower()
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
