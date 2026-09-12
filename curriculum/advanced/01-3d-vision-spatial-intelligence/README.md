@@ -132,6 +132,8 @@ $$
 
 If $T_{AB}$ maps B to A and $T_{BC}$ maps C to B, then $T_{AC}=T_{AB}T_{BC}$. Transform direction is part of the symbol, not a comment.
 
+The notebook makes this executable with separate `FramedPoints` and `RigidTransform` contracts. A transform declares source frame, target frame, and translation unit; `transform_points` rejects a frame or unit mismatch before matrix multiplication. The negative test deliberately combines `1000 mm` points with a metre-valued translation and verifies rejection. Conversion, when intended, must be explicit at a system boundary rather than inferred from magnitudes.
+
 ## 3. The pinhole camera
 
 For a camera-frame point $\mathbf{P}_c=(X,Y,Z)$ with $Z>0$, normalized image coordinates are
@@ -205,7 +207,7 @@ known target points → observed corners across diverse views
 → parameter estimate → reproject → inspect residuals and coverage
 ```
 
-The lab uses a transparent linear camera estimate on synthetic correspondences, then shows why this is a teaching baseline rather than a production calibrator. Established tools such as OpenCV refine a nonlinear camera and distortion model over multiple views.
+The lab uses a transparent linear projection-matrix estimate on synthetic 3D–2D correspondences, then shows why this is a teaching baseline rather than an intrinsic/distortion calibrator. Established tools such as OpenCV refine a nonlinear camera and distortion model over multiple target views.
 
 For observed $\mathbf{p}_i$ and reprojected $\hat{\mathbf{p}}_i$,
 
@@ -213,7 +215,7 @@ $$
 e_i=\|\mathbf{p}_i-\hat{\mathbf{p}}_i\|_2.
 $$
 
-Always report distribution and coverage, not only mean error. The notebook reports mean, median, and p95 and contrasts diverse views with a weak near-frontal calibration set.
+Always report distribution and coverage, not only mean error. The notebook reports mean, median, and p95 for a controlled distortion-coverage experiment: central-only observations hide much of the injected edge distortion. It does **not** claim to fit and compare a weak near-frontal calibration against a diverse multi-view calibration. DLT is presented separately as projection estimation. A production calibration study should fit both view sets and evaluate held-out reprojection across the full sensor.
 
 ### Calibration failure modes
 
@@ -430,7 +432,7 @@ The course does not ask a language model to calculate these values. A VLM may pr
 
 Sources include calibration residuals, pixel localization, correspondence ambiguity, disparity noise, pose uncertainty, scale error, learned-model uncertainty, temporal misalignment, and domain shift. These errors are correlated; a single scalar confidence cannot describe all of them.
 
-The notebook combines analytic stereo sensitivity with Monte Carlo propagation. A clearance estimate becomes a distribution and a decision interval:
+The notebook combines analytic stereo sensitivity with a deliberately partial Monte Carlo experiment. The clearance artifact labels its result `teaching_interval_under_point_noise_model` and records exactly what was included—synthetic point perturbation and floor-plane refitting—and excluded, including calibration covariance, correspondence bias, pose uncertainty, and systematic scale error. It is not presented as a complete 95% coverage interval for the measurement system. Under that stated model, a clearance estimate becomes a distribution and a decision interval:
 
 ```text
 lower bound above limit → accept
@@ -446,13 +448,14 @@ This is a teaching policy, not a universal safety standard. Production limits mu
 | --- | --- | --- |
 | calibration | mean/median/p95 reprojection; spatial coverage | image centre vs edge, view angle, focus/resolution |
 | correspondence | precision/recall, inlier rate, Sampson residual | repeated texture, occlusion, baseline, lighting |
-| depth | AbsRel, RMSE, $\delta_1$, edge RMSE | range, object, boundary, source, valid mask |
+| raw relative depth | rank correlation, pairwise ordering accuracy, scale/shift-invariant normalized shape error | object, boundary, source, valid mask |
+| metric depth | AbsRel, RMSE in metres, $\delta_1$, edge RMSE | range, object, boundary, source, valid mask |
 | pose | rotation error, translation error, AUC/threshold success | motion size, blur, overlap, sequence |
-| reconstruction | accuracy, completeness, Chamfer, F-score at stated tolerance | range, surface orientation, visibility |
+| reconstruction | accuracy, completeness, explicitly defined symmetric mean NN distance, F-score at stated tolerance | range, surface orientation, visibility |
 | spatial decision | distance error, interval coverage, review/unsafe decision rate | clearance band, source, calibration version |
 | systems | latency, memory, throughput, failure rate | view count, resolution, hardware, cold/warm |
 
-Chamfer distance is symmetric but can hide local structure and density bias. F-score depends on a tolerance that must include units. Attractive novel views do not establish metric accuracy.
+The notebook avoids an ambiguous bare “Chamfer” label: `symmetric_mean_nn_distance_m` is the sum of prediction-to-reference and reference-to-prediction mean Euclidean nearest-neighbour distances. Squared-distance and differently normalized Chamfer conventions also exist. This metric can still hide local structure and density bias. F-score depends on a tolerance that must include units. Attractive novel views do not establish metric accuracy.
 
 ## 20. Source-held-out evaluation
 
@@ -465,7 +468,7 @@ freeze configuration + hash
 Site C → reporting only; no threshold or policy changes
 ```
 
-Site C changes pixel noise, calibration bias, outlier rate, and geometry. The report separates reprojection, correspondence, depth, reconstruction, and clearance-decision failures so one aggregate cannot conceal the cause.
+Site C changes pixel noise, calibration bias, outlier rate, and geometry. In the parallel-stereo example, focal-length drift can preserve apparently good epipolar consistency while corrupting metric reconstruction scale; epipolar residuals alone therefore cannot certify calibration. The report separates reprojection, correspondence, depth, reconstruction, and clearance-decision failures so one aggregate cannot conceal the cause.
 
 ## 21. Failure taxonomy
 
@@ -534,7 +537,7 @@ The lab runs in this order:
 1. declare frames, units, camera models, and source roles;
 2. build a cube/floor scene and manually project it;
 3. back-project rays and compare z-depth with range;
-4. inject radial distortion and weak calibration coverage;
+4. inject radial distortion and show how central-only coverage hides edge residuals;
 5. generate correspondences, outliers, epipolar lines, and RANSAC inliers;
 6. sweep disparity, baseline, noise, and range;
 7. triangulate and measure conditioning through Monte Carlo trials;
@@ -565,9 +568,9 @@ You should now be able to explain without code:
 ## 27. Exercises
 
 - **Implementation:** add tangential distortion and numerically invert the distortion for back-projection.
-- **Diagnosis:** create a millimetre/metre fusion bug and design an assertion that catches it before rendering.
+- **Diagnosis:** add an explicit, audited millimetre-to-metre conversion boundary and prove that implicit mixing remains rejected.
 - **Experiment:** compare depth uncertainty across baseline, focal length, range, and pixel noise.
-- **Evaluation:** add a surface-normal error slice and explain what Chamfer distance missed.
+- **Evaluation:** add a surface-normal error slice and explain what symmetric mean nearest-neighbour distance missed.
 - **Architecture:** design a calibration registry with device, resolution, focus state, timestamps, and rollback.
 - **Governance:** write an acceptance policy for an optional metric-depth model without treating model confidence as calibrated uncertainty.
 
@@ -595,4 +598,3 @@ You should now be able to explain without code:
 ## 29. Transition to Advanced 02
 
 This course establishes cameras, geometry, depth, pose, reconstruction, representation, metric relations, and uncertainty. Advanced 02 can now ask a different question: how can a scene representation synthesize new views and remain editable, efficient, and geometrically accountable? That leads naturally into neural rendering, NeRFs, and Gaussian splatting.
-

@@ -1369,6 +1369,7 @@ def test_advanced_01_contains_the_declared_spatial_intelligence_lab():
 
     for required in [
         "FramedPoints",
+        "RigidTransform",
         "CameraModel",
         "make_transform",
         "invert_rigid",
@@ -1388,17 +1389,24 @@ def test_advanced_01_contains_the_declared_spatial_intelligence_lab():
         "triangulate_dlt",
         "triangulation_monte_carlo",
         "align_scale_shift",
-        "depth_metrics",
+        "relative_depth_metrics",
+        "metric_depth_metrics",
+        "spearman_rank_correlation",
+        "pairwise_ordering_accuracy",
+        "oracle_aligned_shape_RMSE_m",
         "edge_RMSE_m",
         "pose_residual",
         "rotation_error_deg",
         "point_bundle_residual",
         "cloud_metrics",
-        "chamfer_m",
+        "symmetric_mean_nn_distance_m",
         "voxelize",
         "fit_plane_svd",
         "zbuffer",
         "clearance_trials",
+        "teaching_interval_under_point_noise_model",
+        "calibration covariance",
+        "systematic scale error",
         "DEMONSTRATION_CLEARANCE_LIMIT_M",
         "Site A",
         "Site B",
@@ -1418,7 +1426,11 @@ def test_advanced_01_contains_the_declared_spatial_intelligence_lab():
     ]:
         assert required in source
 
-    assert "relative aligned for shape only" in source_lower
+    assert "1000 mm points plus a metre transform must be rejected" in source
+    assert '"prediction": "relative raw (not metres)", **depth_metrics' not in source
+    assert '"chamfer_m"' not in source
+
+    assert "shape evaluation after ground-truth alignment; not metric zero-shot accuracy" in source_lower
     assert "occluded/unknown, not free space" in source_lower
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
 
