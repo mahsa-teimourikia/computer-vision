@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "id": "planning-vs-execution",
+  "title": "Proposal authority is not execution authority",
+  "purpose": "Separate planner output from policy-controlled execution.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/planning-vs-execution.svg", "medium": "documentation and notebook", "alt_text": "The planner reads typed state and emits a structured proposal; a separate executor authorizes, validates, invokes, and records the tool."},
+  "canvas": {"width": 2048, "height": 650, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "system", "label": "The planner never receives a direct tool handle", "bounds": {"x": 64, "y": 100, "width": 1920, "height": 460}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "state", "group": "system", "label": "Typed state", "subtitle": "facts + unknowns", "type": "data", "bounds": {"x": 120, "y": 260, "width": 300, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "planner", "group": "system", "label": "Planner", "subtitle": "proposal only", "type": "agent", "bounds": {"x": 500, "y": 260, "width": 300, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "proposal", "group": "system", "label": "Plan artifact", "subtitle": "tool + args + expected evidence", "type": "service", "bounds": {"x": 880, "y": 260, "width": 320, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "executor", "group": "system", "label": "Policy executor", "subtitle": "authorize + validate", "type": "operations", "bounds": {"x": 1280, "y": 260, "width": 320, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "tool", "group": "system", "label": "Bounded tool", "subtitle": "recorded invocation", "type": "action", "bounds": {"x": 1680, "y": 260, "width": 250, "height": 120}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "state", "port": "out"}, "to": {"node": "planner", "port": "in"}, "kind": "primary", "route": [[420,320],[500,320]]},
+    {"id": "e2", "from": {"node": "planner", "port": "out"}, "to": {"node": "proposal", "port": "in"}, "kind": "primary", "route": [[800,320],[880,320]]},
+    {"id": "e3", "from": {"node": "proposal", "port": "out"}, "to": {"node": "executor", "port": "in"}, "kind": "primary", "route": [[1200,320],[1280,320]]},
+    {"id": "e4", "from": {"node": "executor", "port": "out"}, "to": {"node": "tool", "port": "in"}, "kind": "primary", "route": [[1600,320],[1680,320]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

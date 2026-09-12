@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "id": "verification-loop",
+  "title": "Tool output becomes fact only after verification",
+  "purpose": "Show result-envelope, postcondition, provenance, and claim checks.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/verification-loop.svg", "medium": "documentation and notebook", "alt_text": "A raw tool result passes through envelope validation, postconditions, provenance binding, and task verification before becoming a verified fact or rejection."},
+  "canvas": {"width": 2048, "height": 650, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "verify", "label": "Execution status alone does not establish truth", "bounds": {"x": 64, "y": 100, "width": 1920, "height": 460}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "raw", "group": "verify", "label": "Raw tool result", "type": "action", "bounds": {"x": 110, "y": 260, "width": 280, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "schema", "group": "verify", "label": "Envelope schema", "subtitle": "status + payload + source", "type": "operations", "bounds": {"x": 460, "y": 260, "width": 300, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "post", "group": "verify", "label": "Postconditions", "subtitle": "bounds · freshness · invariants", "type": "operations", "bounds": {"x": 830, "y": 260, "width": 300, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "bind", "group": "verify", "label": "Provenance bind", "subtitle": "trace event + evidence ID", "type": "data", "bounds": {"x": 1200, "y": 260, "width": 300, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "decision", "group": "verify", "label": "Accept / reject /\nuncertain", "subtitle": "fact promotion policy", "type": "agent", "bounds": {"x": 1570, "y": 260, "width": 360, "height": 120}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "raw", "port": "out"}, "to": {"node": "schema", "port": "in"}, "kind": "primary", "route": [[390,320],[460,320]]},
+    {"id": "e2", "from": {"node": "schema", "port": "out"}, "to": {"node": "post", "port": "in"}, "kind": "primary", "route": [[760,320],[830,320]]},
+    {"id": "e3", "from": {"node": "post", "port": "out"}, "to": {"node": "bind", "port": "in"}, "kind": "primary", "route": [[1130,320],[1200,320]]},
+    {"id": "e4", "from": {"node": "bind", "port": "out"}, "to": {"node": "decision", "port": "in"}, "kind": "primary", "route": [[1500,320],[1570,320]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

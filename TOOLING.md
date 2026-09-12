@@ -62,6 +62,18 @@ Intermediate 04 implements BM25, semantic and visual feature proxies, structured
 
 Intermediate 05 keeps decoding and learned inference out of its credential-free default so timing, sampling, interval, retrieval, citation, counterfactual, and streaming contracts remain inspectable. Its `local_temporal_representation_proxy` and `local_video_language_proxy` are explicitly not foundation models or quality benchmarks. Optional PE-AV, VideoMAE, and Qwen3-VL adapters are revision-pinned and disabled; production upgrades should use an approved decoder, preserve presentation timestamps and clock uncertainty, authorize before retrieval, and separately benchmark decode, sampling, encoding, indexing, localization, generation, and verification on target hardware.
 
+## Visual-agent systems
+
+| Tool or pattern | Best fit | Strengths | Constraints to review |
+| --- | --- | --- | --- |
+| Direct typed loop | Contract-first visual-agent development and evaluation | Maximum visibility into state, policy, validation, budgets, traces, and stopping | Durability, concurrency, distributed execution, and migrations remain application work |
+| [LangGraph](https://docs.langchain.com/oss/python/langgraph/graph-api) | Stateful graph workflows with loops, checkpoints, and human interrupts | Explicit state, nodes, edges, conditional routing, persistence ecosystem, and replay patterns | Graph shape does not define resource authorization, evidence validity, safe side effects, or business approval |
+| [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) | Provider-native tools, orchestration, sessions, handoffs, tracing, and guardrail hooks | Maintained Python/TypeScript runtimes and integration with Responses API capabilities | Keep credentials optional; validate schemas/results; apply independent tenant/resource policy and approval |
+| [Model Context Protocol](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization) | Interoperable discovery and invocation through tool gateways | Tool schemas plus standardized HTTP authorization and protected-resource discovery | Transport identity/scopes do not replace per-operation capability, resource, result, and business-policy checks |
+| [Qwen3-VL](https://github.com/QwenLM/Qwen3-VL/tree/96588727e44c78b25ba03ea03b8e12f7e64fd0da) | Optional open multimodal proposal generation | Common Transformers path, image/video input, structured generation, Apache-2.0 official repository/model-card metadata | Pin model revision, keep `trust_remote_code=False`, allow-list tools, evaluate injection/selection/stopping, and never grant direct execution |
+
+Intermediate 06 implements the typed state machine, nine narrow local tools, capability and resource policy, semantic input checks, output postconditions, evidence promotion, retries, budgets, loop detection, counterfactuals, security tests, and Site C reporting directly with standard Python, NumPy, pandas, Pillow, and Matplotlib. The default `local_planner_proxy` is not a foundation-agent benchmark. Optional Qwen3-VL, LangGraph, OpenAI Agents SDK, and MCP mappings are disabled; their abstractions do not replace the executor's authority boundary.
+
 ## Task frameworks
 
 | Tool | Best fit | Strengths | Constraints to review |

@@ -1260,3 +1260,124 @@ def test_intermediate_05_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_intermediate_06_contains_the_declared_bounded_visual_agent_lab():
+    course = Path("curriculum/intermediate/06-visual-agents")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "Principal",
+        "Evidence",
+        "VerifiedFact",
+        "BudgetPolicy",
+        "BudgetUsage",
+        "ToolContract",
+        "ProposedAction",
+        "ToolResult",
+        "TraceEvent",
+        "AgentState",
+        "TaskCase",
+        "Site A",
+        "Site B",
+        "Site C",
+        "construction",
+        "development_only",
+        "reporting_only_no_changes",
+        "PRIVATE_EVALUATION_TRUTH",
+        "TOOL_REGISTRY",
+        "ALLOWED_SIDE_EFFECTS",
+        "READ_ONLY",
+        "LOCAL_TRANSFORM",
+        "detect_components",
+        "inspect_image",
+        "segment_component",
+        "count_objects",
+        "search_manual",
+        "retrieve_video_event",
+        "temporal_relation",
+        "calculate",
+        "apply_maintenance_rule",
+        "validate_tool_registry",
+        "authorize",
+        "PERMISSION_POLICY",
+        "validate_arguments",
+        "box_out_of_bounds",
+        "validate_result",
+        "stale_source_version",
+        "local_planner_proxy",
+        "progress_hash",
+        "execute_action",
+        "permission_denied",
+        "run_agent",
+        "loop_detected",
+        "goal_achieved",
+        "evidence_sufficient",
+        "review_required",
+        "direct_answer_baseline",
+        "verify_claim_support",
+        "hallucinated_tool_result",
+        "tool_selection_failure",
+        "tool_input_failure",
+        "tool_runtime_failure",
+        "tool_output_failure",
+        "stale_observation",
+        "unauthorized_executions",
+        "required_tool_recall",
+        "unnecessary_tool_rate",
+        "argument_validity",
+        "verification_coverage",
+        "transient timeout then recovery",
+        "viewer permission",
+        "video tool removed",
+        "visual_text_trust",
+        "document_text_trust",
+        "relevant_counterfactual_tools",
+        "irrelevant_metadata_plan_stable",
+        "FROZEN_POLICY",
+        "FROZEN_POLICY_HASH",
+        "OPTIONAL_INTEGRATIONS",
+        "Qwen/Qwen3-VL-8B-Instruct",
+        "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+        "trust_remote_code",
+        "proposal_only",
+        "langgraph",
+        "openai_agents_sdk",
+        "mcp_gateway",
+        "validate_optional_proposal",
+        "intermediate-06-visual-agent-evidence.json",
+        '"foundation_model": False',
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "not a foundation-agent reasoning benchmark" in source_lower
+    assert "no shell, network, filesystem mutation" in source_lower
+    assert "task success cannot compensate" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_intermediate_06_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/intermediate/06-visual-agents/assets")
+    expected = {
+        "visual-agent-loop.svg",
+        "agent-state.svg",
+        "tool-gateway.svg",
+        "planning-vs-execution.svg",
+        "verification-loop.svg",
+        "agent-failure-taxonomy.svg",
+        "cross-modal-agent.svg",
+        "human-approval-boundary.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
