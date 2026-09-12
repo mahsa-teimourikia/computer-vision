@@ -129,7 +129,7 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 ## Advanced
 
 1. [**3D Vision & Spatial Intelligence: From Camera Geometry to Metric Scene Understanding**](curriculum/advanced/01-3d-vision-spatial-intelligence/README.md) — coordinate and unit contracts, camera geometry, calibration, epipolar verification, stereo uncertainty, triangulation, pose, reconstruction, point clouds, representation choice, metric spatial reasoning, and source-held-out evaluation. *(available)*
-2. **Neural rendering and 3D representations** — radiance fields, Gaussian splatting, geometry/appearance separation, view synthesis, and editability.
+2. [**Neural Rendering & 3D Scene Representations: From NeRFs to 3D Gaussian Splatting**](curriculum/advanced/02-neural-rendering-3d-scene-representations/README.md) — radiance fields, differentiable volume rendering, camera-held-out view synthesis, geometry/appearance separation, Gaussian projection and splatting, density control, compression, editability, and governed evidence. *(available)*
 3. **Advanced video and world models** — long-range dynamics, predictive representations, 4D scenes, and action relevance.
 4. **Multimodal adaptation** — parameter-efficient tuning, domain adaptation, continual learning, and forgetting.
 5. **Embodied perception** — egocentric observation, active perception, VLA systems, simulation, and planning.

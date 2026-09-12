@@ -1,0 +1,23 @@
+{
+  "version": 1, "id": "gaussian-density-control", "title": "Governed Gaussian density control", "purpose": "Show lineage-preserving clone, split, prune, and opacity-reset operations.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/gaussian-density-control.svg", "medium": "documentation and notebook", "alt_text": "Optimization statistics and primitive state enter a policy that clones small high-gradient Gaussians, splits large high-gradient Gaussians, prunes unsupported primitives, and records lineage."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 40, "min_layer_gap": 80, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "lifecycle", "label": "Topology changes require deterministic thresholds, reasons, and parent lineage", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "stats", "group": "lifecycle", "label": "PRIMITIVE STATE", "subtitle": "gradient · scale · opacity", "type": "data", "bounds": {"x": 80, "y": 285, "width": 220, "height": 130}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "policy", "group": "lifecycle", "label": "FROZEN POLICY", "subtitle": "thresholds + budget", "type": "agent", "bounds": {"x": 335, "y": 285, "width": 220, "height": 130}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "clone", "group": "lifecycle", "label": "CLONE / SPLIT", "subtitle": "add localized capacity", "type": "service", "bounds": {"x": 590, "y": 285, "width": 220, "height": 130}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "prune", "group": "lifecycle", "label": "PRUNE / RESET", "subtitle": "remove or reopen support", "type": "action", "bounds": {"x": 845, "y": 285, "width": 220, "height": 130}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "lineage", "group": "lifecycle", "label": "UPDATED SCENE", "subtitle": "IDs · parents · reasons", "type": "data", "bounds": {"x": 1100, "y": 285, "width": 220, "height": 130}, "ports": {"left": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "stats_policy", "from": {"node": "stats", "port": "right"}, "to": {"node": "policy", "port": "left"}, "kind": "primary", "route": [[300, 350], [335, 350]]},
+    {"id": "policy_clone", "from": {"node": "policy", "port": "right"}, "to": {"node": "clone", "port": "left"}, "kind": "primary", "route": [[555, 350], [590, 350]]},
+    {"id": "clone_prune", "from": {"node": "clone", "port": "right"}, "to": {"node": "prune", "port": "left"}, "kind": "primary", "route": [[810, 350], [845, 350]]},
+    {"id": "prune_lineage", "from": {"node": "prune", "port": "right"}, "to": {"node": "lineage", "port": "left"}, "kind": "primary", "route": [[1065, 350], [1100, 350]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}

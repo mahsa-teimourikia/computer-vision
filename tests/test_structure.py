@@ -1482,3 +1482,95 @@ def test_intermediate_06_diagrams_are_reusable_and_accessible():
         source = svg.read_text(encoding="utf-8")
         assert "<title" in source and "<desc" in source
         assert 'role="img"' in source
+
+
+def test_advanced_02_contains_the_declared_neural_rendering_lab():
+    course = Path("curriculum/advanced/02-neural-rendering-3d-scene-representations")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "CameraModel",
+        "RayBundle",
+        "generate_rays",
+        "ray_box_intersections",
+        "positional_encoding",
+        "volume_render",
+        "min_opacity_for_depth",
+        "scalar_loss_and_gradient",
+        "numeric=",
+        "coarse-guided fine samples",
+        "occupancy",
+        "ViewRecord",
+        "Site A",
+        "Site B",
+        "Site C",
+        "development_only",
+        "reporting_only_no_changes",
+        "same RGB, incompatible depth",
+        "2.0",
+        "4.0",
+        "global_ssim_teaching",
+        "GaussianPrimitive",
+        "project_gaussian",
+        "splat_render",
+        "sh_degree1_teaching",
+        "apply_density_control",
+        "clone",
+        "split",
+        "prune",
+        "retain",
+        "gaussian_artifact_bytes",
+        "p90_ms",
+        "DEMONSTRATION_POLICY",
+        "FROZEN_POLICY_HASH",
+        "CV_ENABLE_NERFSTUDIO=False",
+        "CV_ENABLE_GSPLAT=False",
+        "CV_ENABLE_INSTANT_NGP=False",
+        "CV_ENABLE_ORIGINAL_3DGS=False",
+        "CV_ENABLE_PYTORCH3D=False",
+        "OPTIONAL_INTEGRATIONS",
+        "abe236ee00cf90cfca6e36e65c00435d5",
+        "e4f1b665d6ba51978ac786a313921cc1cfc9f293",
+        "9bd7153cc96e6e85398bb8e70b382817149c1f03",
+        "a3063beb58cb6d2943ecac68993bd54b483a81c8",
+        "bf985a9eab3d0f127dc2d6043792f967739131e",
+        "neural_rendering_evidence.json",
+        "scene_representation_decision.csv",
+    ]:
+        assert required in source
+
+    assert "not standard ssim" in source_lower
+    assert "not nerf or 3dgs benchmark" in source_lower
+    assert "appearance gain cannot compensate" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_advanced_02_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/02-neural-rendering-3d-scene-representations/assets")
+    expected = {
+        "representation-taxonomy.svg",
+        "differentiable-rendering-loop.svg",
+        "volume-rendering-ray.svg",
+        "camera-split.svg",
+        "geometry-appearance-disagreement.svg",
+        "nerf-vs-gaussian.svg",
+        "gaussian-projection.svg",
+        "gaussian-density-control.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True

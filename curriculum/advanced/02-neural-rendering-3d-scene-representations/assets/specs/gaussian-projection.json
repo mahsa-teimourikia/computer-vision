@@ -1,0 +1,21 @@
+{
+  "version": 1, "id": "gaussian-projection", "title": "Project a 3D Gaussian into a screen ellipse", "purpose": "Show covariance transformation from a world primitive to a raster footprint.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/gaussian-projection.svg", "medium": "documentation and notebook", "alt_text": "A world-space Gaussian mean and covariance are transformed into the camera, mapped through a perspective Jacobian, and become a 2D ellipse for rasterization."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 55, "min_layer_gap": 80, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "projection", "label": "First-order covariance projection under a declared camera convention", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "world", "group": "projection", "label": "WORLD GAUSSIAN", "subtitle": "μ · R · scales · opacity", "type": "service", "bounds": {"x": 90, "y": 275, "width": 255, "height": 145}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "camera", "group": "projection", "label": "CAMERA SPACE", "subtitle": "W μ · W Σ Wᵀ", "type": "agent", "bounds": {"x": 410, "y": 275, "width": 255, "height": 145}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "jacobian", "group": "projection", "label": "PROJECTION J", "subtitle": "local perspective derivative", "type": "data", "bounds": {"x": 730, "y": 275, "width": 255, "height": 145}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "ellipse", "group": "projection", "label": "SCREEN ELLIPSE", "subtitle": "μ₂D · Σ₂D · pixel footprint", "type": "action", "bounds": {"x": 1050, "y": 275, "width": 255, "height": 145}, "ports": {"left": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "world_camera", "from": {"node": "world", "port": "right"}, "to": {"node": "camera", "port": "left"}, "kind": "primary", "route": [[345, 348], [410, 348]]},
+    {"id": "camera_jacobian", "from": {"node": "camera", "port": "right"}, "to": {"node": "jacobian", "port": "left"}, "kind": "primary", "route": [[665, 348], [730, 348]]},
+    {"id": "jacobian_ellipse", "from": {"node": "jacobian", "port": "right"}, "to": {"node": "ellipse", "port": "left"}, "kind": "primary", "route": [[985, 348], [1050, 348]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}

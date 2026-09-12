@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
+<title id="title">Split cameras before sampling rays</title>
+<desc id="description">Site A training cameras precede Site B development interpolation and a frozen policy, followed by Site C reporting-only interpolation and extrapolation cameras.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1400" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Split cameras before sampling rays</text>
+<rect x="64" y="105" width="1272" height="555" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">No Site C camera or ray may change the frozen policy</text>
+<polyline points="335,348 405,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="650,348 720,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="965,348 1035,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="90" y="270" width="245" height="155" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="212.5" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SITE A</text>
+<text x="212.5" y="332" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">training cameras</text>
+<text x="212.5" y="350" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">optimize scene</text>
+<rect x="405" y="270" width="245" height="155" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="527.5" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SITE B</text>
+<text x="527.5" y="332" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">development cameras</text>
+<text x="527.5" y="350" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">interpolation only</text>
+<rect x="720" y="270" width="245" height="155" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="842.5" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">FREEZE + HASH</text>
+<text x="842.5" y="332" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">bounds · gates · versions</text>
+<rect x="1035" y="270" width="245" height="155" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1157.5" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SITE C</text>
+<text x="1157.5" y="332" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">report interpolation +</text>
+<text x="1157.5" y="350" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">extrapolation separately</text>
+</svg>

@@ -1,0 +1,21 @@
+{
+  "version": 1, "id": "geometry-appearance-disagreement", "title": "Photometric agreement does not identify geometry", "purpose": "Show two density layouts that render the same RGB but imply incompatible depths.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/geometry-appearance-disagreement.svg", "medium": "documentation and notebook", "alt_text": "A red surface at two metres and another at four metres both render a red pixel, but their expected depths differ and geometry must be evaluated separately."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 50, "min_layer_gap": 70, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "counterexample", "label": "One photometric result, two incompatible spatial explanations", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "near", "group": "counterexample", "label": "FIELD A", "subtitle": "opaque red density\nat 2 metres", "type": "service", "bounds": {"x": 110, "y": 210, "width": 275, "height": 140}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "far", "group": "counterexample", "label": "FIELD B", "subtitle": "opaque red density\nat 4 metres", "type": "agent", "bounds": {"x": 110, "y": 435, "width": 275, "height": 140}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "rgb", "group": "counterexample", "label": "SAME RGB", "subtitle": "PSNR can be equally high", "type": "action", "bounds": {"x": 560, "y": 322, "width": 270, "height": 140}, "ports": {"left_top": {"side": "left", "offset": 0.3}, "left_bottom": {"side": "left", "offset": 0.7}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "gate", "group": "counterexample", "label": "SEPARATE GEOMETRY GATE", "subtitle": "2 m ≠ 4 m\nreview or reject", "type": "data", "bounds": {"x": 1010, "y": 322, "width": 280, "height": 140}, "ports": {"left": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "near_rgb", "from": {"node": "near", "port": "right"}, "to": {"node": "rgb", "port": "left_top"}, "kind": "primary", "route": [[385, 280], [470, 280], [470, 364], [560, 364]]},
+    {"id": "far_rgb", "from": {"node": "far", "port": "right"}, "to": {"node": "rgb", "port": "left_bottom"}, "kind": "primary", "route": [[385, 505], [470, 505], [470, 420], [560, 420]]},
+    {"id": "rgb_gate", "from": {"node": "rgb", "port": "right"}, "to": {"node": "gate", "port": "left"}, "kind": "primary", "label": "evaluate depth", "label_at": [920, 395], "route": [[830, 392], [1010, 392]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}
