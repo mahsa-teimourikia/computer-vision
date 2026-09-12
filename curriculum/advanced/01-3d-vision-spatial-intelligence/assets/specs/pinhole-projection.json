@@ -1,0 +1,325 @@
+{
+  "version": 1,
+  "id": "pinhole-projection",
+  "title": "Pinhole projection is a sequence",
+  "purpose": "Show manual perspective projection stages.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/pinhole-projection.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A 3D world point passes through world-to-camera transformation, positive-depth validation, perspective division, and intrinsic pixel mapping."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Show manual perspective projection stages.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "point",
+      "label": "3D POINT\nPw",
+      "subtitle": "world, metres",
+      "type": "service",
+      "bounds": {
+        "x": 80,
+        "y": 285,
+        "width": 190,
+        "height": 110
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "transform",
+      "label": "EXTRINSICS\nPc = R Pw + t",
+      "subtitle": "world \u2192 camera",
+      "type": "agent",
+      "bounds": {
+        "x": 340,
+        "y": 275,
+        "width": 240,
+        "height": 130
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "divide",
+      "label": "PERSPECTIVE\nx=X/Z, y=Y/Z",
+      "subtitle": "require Z > 0",
+      "type": "data",
+      "bounds": {
+        "x": 660,
+        "y": 275,
+        "width": 240,
+        "height": 130
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "intrinsics",
+      "label": "INTRINSICS\np ~ K[x,y,1]",
+      "subtitle": "pixel output",
+      "type": "action",
+      "bounds": {
+        "x": 980,
+        "y": 275,
+        "width": 240,
+        "height": 130
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "point",
+        "port": "right"
+      },
+      "to": {
+        "node": "transform",
+        "port": "left"
+      },
+      "route": [
+        [
+          270,
+          340
+        ],
+        [
+          340,
+          340
+        ]
+      ],
+      "label": "frame",
+      "kind": "primary",
+      "label_at": [
+        305,
+        331
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "transform",
+        "port": "right"
+      },
+      "to": {
+        "node": "divide",
+        "port": "left"
+      },
+      "route": [
+        [
+          580,
+          340
+        ],
+        [
+          660,
+          340
+        ]
+      ],
+      "label": "validate",
+      "kind": "primary",
+      "label_at": [
+        620,
+        331
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "divide",
+        "port": "right"
+      },
+      "to": {
+        "node": "intrinsics",
+        "port": "left"
+      },
+      "route": [
+        [
+          900,
+          340
+        ],
+        [
+          980,
+          340
+        ]
+      ],
+      "label": "raster",
+      "kind": "primary",
+      "label_at": [
+        940,
+        331
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Pinhole projection is a sequence",
+    "description": "A 3D world point passes through world-to-camera transformation, positive-depth validation, perspective division, and intrinsic pixel mapping."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

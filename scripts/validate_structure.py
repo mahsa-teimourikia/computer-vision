@@ -70,6 +70,7 @@ def validate_hub() -> None:
         "Multimodal Retrieval &amp; RAG",
         "Video-Language Understanding",
         "Visual Agents",
+        "3D Vision &amp; Spatial Intelligence",
         "oneplusi.io",
     ]
     for text in required:

@@ -547,6 +547,6 @@ The [notebook](lab.ipynb) builds one transparent vertical slice:
 
 ## 25. Transition to Advanced
 
-The Intermediate track ends with a system that can move from perception to representation, multimodal understanding, verification, retrieval, temporal evidence, and bounded agency. The Advanced track can now study richer 3D/spatial intelligence, world models, embodied perception, adaptation, and large-scale multimodal architectures without weakening these contracts.
+The Intermediate track ends with a system that can move from perception to representation, multimodal understanding, verification, retrieval, temporal evidence, and bounded agency. Continue with [Advanced 01 · 3D Vision & Spatial Intelligence](../../advanced/01-3d-vision-spatial-intelligence/README.md) to place observations in physical coordinate frames, recover metric geometry, propagate uncertainty, and create spatial evidence without weakening these contracts.
 
 [← Revisit Intermediate 05](../05-video-language-understanding/README.md) · [Run the bounded-agent notebook](lab.ipynb) · [Return to the Intermediate index](../README.md)

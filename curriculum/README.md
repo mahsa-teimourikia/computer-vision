@@ -42,7 +42,9 @@ The [intermediate track](intermediate/README.md) culminates in bounded visual ag
 
 ## Advanced
 
-The [advanced track](advanced/README.md) will cover video, vision transformers, multimodal systems, robustness, efficient inference, and production operations.
+- [01 · 3D Vision & Spatial Intelligence: From Camera Geometry to Metric Scene Understanding](advanced/01-3d-vision-spatial-intelligence/README.md) — move from coordinate frames, pinhole projection, calibration, epipolar geometry, stereo, and triangulation into pose, point-cloud reconstruction, representation choice, uncertainty, and source-held-out metric decisions.
+
+The [advanced track](advanced/README.md) continues next into neural rendering, 3D representations, world models, adaptation, and embodied perception.
 
 ## Enterprise
 

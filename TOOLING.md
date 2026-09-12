@@ -150,8 +150,15 @@ Required data checks include provenance, license, consent and privacy basis, dup
 | [Nerfstudio](https://docs.nerf.studio/) | NeRF and Gaussian-splatting research workflows | Dataset conversion, camera poses, viewer/runtime dependencies, and export path |
 | [gsplat](https://docs.gsplat.studio/) | Differentiable Gaussian splatting | CUDA/hardware fit, rasterizer compatibility, memory scaling, and benchmark protocol |
 | [PyTorch3D](https://pytorch3d.org/docs/) | Differentiable 3D operators and rendering | Build compatibility, coordinate systems, and whether the required operator is actively supported |
+| [OpenCV calib3d](https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html) | Calibration, epipolar geometry, PnP, stereo, and triangulation baselines | Camera/distortion model, pixel convention, robust-estimator defaults, degeneracy checks, and versioned calibration evidence |
+| [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) | General relative depth and separately trained metric variants | Output contract, processor/interpolation parity, checkpoint-specific license, domain/edge evaluation, and immutable weights |
+| [UniDepth](https://github.com/lpiccinelli-eth/UniDepth) | Camera-aware monocular metric depth and point prediction | Intrinsics contract, uncertainty calibration, camera/domain shift, model license, and GPU/runtime fit |
+| [DUSt3R / MASt3R / MUSt3R](https://github.com/naver/dust3r) | Learned point maps, dense correspondence, and feed-forward multi-view reconstruction research | Non-commercial checkpoint/code terms can apply; inspect alignment, scale, confidence, memory, and dependency coupling |
+| [VGGT](https://github.com/facebookresearch/vggt) / [VGGT-Ω](https://github.com/facebookresearch/vggt-omega) | Unified feed-forward cameras, depth, point maps, tracks, and static/dynamic reconstruction research | Checkpoint access and licenses differ; review view-count memory, CUDA requirements, source contamination/reproduction notes, and task-specific geometry |
 
 Every spatial lesson must state coordinate frames, handedness, units, camera model, calibration assumptions, occlusion behavior, and geometric evaluation—not only visual quality.
+
+Advanced 01 keeps the core path in NumPy/SciPy and treats OpenCV, COLMAP, Open3D, learned depth, and feed-forward reconstruction as optional layers. Its reviewed source revisions are recorded in the course constraints and notebook; those pins do not imply that all optional dependencies belong in one environment or that a code license grants rights to every checkpoint.
 
 ## Embodied and simulation tooling
 
