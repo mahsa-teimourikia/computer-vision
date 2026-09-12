@@ -1,0 +1,292 @@
+{
+  "version": 1,
+  "id": "retrieval-pipeline",
+  "title": "Production query-by-example pipeline",
+  "purpose": "Show model, index, filtering, and ranking as separate versioned contracts.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/retrieval-pipeline.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A query region moves through a versioned encoder and index, then authorization and metadata filters, ranking, and evidence results."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 740,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Visual retrieval system",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 576
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "query",
+      "group": "system",
+      "label": "Query image / region",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 290,
+        "width": 240,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "encoder",
+      "group": "system",
+      "label": "Encoder + preprocess",
+      "type": "agent",
+      "bounds": {
+        "x": 420,
+        "y": 270,
+        "width": 260,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "model \u00b7 revision \u00b7 normalization"
+    },
+    {
+      "id": "index",
+      "group": "system",
+      "label": "Vector index",
+      "type": "service",
+      "bounds": {
+        "x": 770,
+        "y": 270,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "vectors \u00b7 IDs \u00b7 index version"
+    },
+    {
+      "id": "policy",
+      "group": "system",
+      "label": "Authorization + filters",
+      "type": "action",
+      "bounds": {
+        "x": 1110,
+        "y": 270,
+        "width": 270,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "tenant \u00b7 source \u00b7 time \u00b7 family"
+    },
+    {
+      "id": "results",
+      "group": "system",
+      "label": "Ranked evidence",
+      "type": "data",
+      "bounds": {
+        "x": 1470,
+        "y": 290,
+        "width": 240,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "scores \u00b7 provenance \u00b7 review"
+    }
+  ],
+  "edges": [
+    {
+      "id": "query_encoder",
+      "from": {
+        "node": "query",
+        "port": "out"
+      },
+      "to": {
+        "node": "encoder",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          340,
+          355
+        ],
+        [
+          420,
+          355
+        ]
+      ]
+    },
+    {
+      "id": "encoder_index",
+      "from": {
+        "node": "encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "index",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          680,
+          355
+        ],
+        [
+          770,
+          355
+        ]
+      ],
+      "label": "search",
+      "label_at": [
+        725,
+        340
+      ]
+    },
+    {
+      "id": "index_policy",
+      "from": {
+        "node": "index",
+        "port": "out"
+      },
+      "to": {
+        "node": "policy",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1020,
+          355
+        ],
+        [
+          1110,
+          355
+        ]
+      ],
+      "label": "candidates",
+      "label_at": [
+        1065,
+        340
+      ]
+    },
+    {
+      "id": "policy_results",
+      "from": {
+        "node": "policy",
+        "port": "out"
+      },
+      "to": {
+        "node": "results",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1380,
+          355
+        ],
+        [
+          1470,
+          355
+        ]
+      ],
+      "label": "rank + fetch",
+      "label_at": [
+        1425,
+        340
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

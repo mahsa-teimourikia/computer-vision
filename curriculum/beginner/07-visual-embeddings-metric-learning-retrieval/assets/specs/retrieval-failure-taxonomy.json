@@ -1,0 +1,498 @@
+{
+  "version": 1,
+  "id": "retrieval-failure-taxonomy",
+  "title": "Retrieval failure taxonomy",
+  "purpose": "Separate common ranking, leakage, version, and filtering failures for automated review.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/retrieval-failure-taxonomy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A suspicious retrieval result fans out into wrong semantic neighbour, source shortcut, duplicate leakage, hard or false negative, rare-class miss, cross-version incompatibility, and filter-induced miss."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 860,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "fan-out",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Automated retrieval failure review",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 680
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "result",
+      "group": "system",
+      "label": "Suspicious neighbour",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 360,
+        "width": 250,
+        "height": 120
+      },
+      "ports": {
+        "o1": {
+          "side": "right",
+          "offset": 0.1
+        },
+        "o2": {
+          "side": "right",
+          "offset": 0.23
+        },
+        "o3": {
+          "side": "right",
+          "offset": 0.36
+        },
+        "o4": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "o5": {
+          "side": "right",
+          "offset": 0.64
+        },
+        "o6": {
+          "side": "right",
+          "offset": 0.77
+        },
+        "o7": {
+          "side": "right",
+          "offset": 0.9
+        }
+      },
+      "subtitle": "high score or missing relevant item"
+    },
+    {
+      "id": "semantic",
+      "group": "system",
+      "label": "Wrong semantic\nneighbour",
+      "type": "action",
+      "bounds": {
+        "x": 500,
+        "y": 180,
+        "width": 250,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "source",
+      "group": "system",
+      "label": "Same-source\nshortcut",
+      "type": "action",
+      "bounds": {
+        "x": 830,
+        "y": 180,
+        "width": 250,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "duplicate",
+      "group": "system",
+      "label": "Duplicate leakage",
+      "type": "action",
+      "bounds": {
+        "x": 1160,
+        "y": 180,
+        "width": 250,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "hard",
+      "group": "system",
+      "label": "Hard / false\nnegative",
+      "type": "action",
+      "bounds": {
+        "x": 1490,
+        "y": 180,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "rare",
+      "group": "system",
+      "label": "Rare-class miss",
+      "type": "action",
+      "bounds": {
+        "x": 590,
+        "y": 590,
+        "width": 250,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "version",
+      "group": "system",
+      "label": "Cross-version\nincompatibility",
+      "type": "action",
+      "bounds": {
+        "x": 950,
+        "y": 590,
+        "width": 270,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "filter",
+      "group": "system",
+      "label": "Filter-induced miss",
+      "type": "action",
+      "bounds": {
+        "x": 1330,
+        "y": 590,
+        "width": 260,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "result_semantic",
+      "from": {
+        "node": "result",
+        "port": "o1"
+      },
+      "to": {
+        "node": "semantic",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          372
+        ],
+        [
+          420,
+          372
+        ],
+        [
+          420,
+          235
+        ],
+        [
+          500,
+          235
+        ]
+      ]
+    },
+    {
+      "id": "result_source",
+      "from": {
+        "node": "result",
+        "port": "o2"
+      },
+      "to": {
+        "node": "source",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          388
+        ],
+        [
+          450,
+          388
+        ],
+        [
+          450,
+          150
+        ],
+        [
+          780,
+          150
+        ],
+        [
+          780,
+          235
+        ],
+        [
+          830,
+          235
+        ]
+      ]
+    },
+    {
+      "id": "result_duplicate",
+      "from": {
+        "node": "result",
+        "port": "o3"
+      },
+      "to": {
+        "node": "duplicate",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          403
+        ],
+        [
+          470,
+          403
+        ],
+        [
+          470,
+          130
+        ],
+        [
+          1110,
+          130
+        ],
+        [
+          1110,
+          235
+        ],
+        [
+          1160,
+          235
+        ]
+      ]
+    },
+    {
+      "id": "result_hard",
+      "from": {
+        "node": "result",
+        "port": "o4"
+      },
+      "to": {
+        "node": "hard",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          420
+        ],
+        [
+          490,
+          420
+        ],
+        [
+          490,
+          110
+        ],
+        [
+          1440,
+          110
+        ],
+        [
+          1440,
+          235
+        ],
+        [
+          1490,
+          235
+        ]
+      ]
+    },
+    {
+      "id": "result_rare",
+      "from": {
+        "node": "result",
+        "port": "o5"
+      },
+      "to": {
+        "node": "rare",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          437
+        ],
+        [
+          430,
+          437
+        ],
+        [
+          430,
+          645
+        ],
+        [
+          590,
+          645
+        ]
+      ]
+    },
+    {
+      "id": "result_version",
+      "from": {
+        "node": "result",
+        "port": "o6"
+      },
+      "to": {
+        "node": "version",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          452
+        ],
+        [
+          450,
+          452
+        ],
+        [
+          450,
+          735
+        ],
+        [
+          900,
+          735
+        ],
+        [
+          900,
+          645
+        ],
+        [
+          950,
+          645
+        ]
+      ]
+    },
+    {
+      "id": "result_filter",
+      "from": {
+        "node": "result",
+        "port": "o7"
+      },
+      "to": {
+        "node": "filter",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          468
+        ],
+        [
+          470,
+          468
+        ],
+        [
+          470,
+          755
+        ],
+        [
+          1280,
+          755
+        ],
+        [
+          1280,
+          645
+        ],
+        [
+          1330,
+          645
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

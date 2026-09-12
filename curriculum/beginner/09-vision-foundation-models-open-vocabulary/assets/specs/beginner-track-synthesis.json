@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "id": "beginner-track-synthesis",
+  "title": "Beginner track: from pixels to reusable capabilities",
+  "purpose": "Connect Courses 01 through 09 as one progression into vision foundation systems.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/beginner-track-synthesis.svg", "medium": "documentation and notebook", "alt_text": "Nine connected course stages progress from pixels and encoders through tokens, self-supervision, detection, segmentation, retrieval, temporal state, and reusable foundation capabilities."},
+  "canvas": {"width": 2200, "height": 650, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 40, "min_layer_gap": 72, "node_padding": {"x": 20, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "track", "label": "One connected Beginner progression", "bounds": {"x": 64, "y": 100, "width": 2072, "height": 480}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "c1", "group": "track", "label": "01\nPixels", "subtitle": "contracts", "type": "data", "bounds": {"x": 94, "y": 270, "width": 180, "height": 140}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "c2", "group": "track", "label": "02\nEncoders", "subtitle": "efficiency", "type": "service", "bounds": {"x": 324, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "c3", "group": "track", "label": "03\nTokens", "subtitle": "attention", "type": "agent", "bounds": {"x": 554, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "c4", "group": "track", "label": "04\nSSL", "subtitle": "objectives", "type": "agent", "bounds": {"x": 784, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "c5", "group": "track", "label": "05\nBoxes", "subtitle": "localize", "type": "action", "bounds": {"x": 1014, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "c6", "group": "track", "label": "06\nMasks", "subtitle": "segment", "type": "action", "bounds": {"x": 1244, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "c7", "group": "track", "label": "07\nSearch", "subtitle": "retrieve", "type": "data", "bounds": {"x": 1474, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "c8", "group": "track", "label": "08\nState", "subtitle": "time + pose", "type": "service", "bounds": {"x": 1704, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "c9", "group": "track", "label": "09\nFoundation", "subtitle": "reuse + prompt", "type": "agent", "bounds": {"x": 1934, "y": 270, "width": 180, "height": 140}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "c1", "port": "out"}, "to": {"node": "c2", "port": "in"}, "kind": "primary", "route": [[274,340],[324,340]]},
+    {"id": "e2", "from": {"node": "c2", "port": "out"}, "to": {"node": "c3", "port": "in"}, "kind": "primary", "route": [[504,340],[554,340]]},
+    {"id": "e3", "from": {"node": "c3", "port": "out"}, "to": {"node": "c4", "port": "in"}, "kind": "primary", "route": [[734,340],[784,340]]},
+    {"id": "e4", "from": {"node": "c4", "port": "out"}, "to": {"node": "c5", "port": "in"}, "kind": "primary", "route": [[964,340],[1014,340]]},
+    {"id": "e5", "from": {"node": "c5", "port": "out"}, "to": {"node": "c6", "port": "in"}, "kind": "primary", "route": [[1194,340],[1244,340]]},
+    {"id": "e6", "from": {"node": "c6", "port": "out"}, "to": {"node": "c7", "port": "in"}, "kind": "primary", "route": [[1424,340],[1474,340]]},
+    {"id": "e7", "from": {"node": "c7", "port": "out"}, "to": {"node": "c8", "port": "in"}, "kind": "primary", "route": [[1654,340],[1704,340]]},
+    {"id": "e8", "from": {"node": "c8", "port": "out"}, "to": {"node": "c9", "port": "in"}, "kind": "primary", "route": [[1884,340],[1934,340]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

@@ -1,0 +1,457 @@
+{
+  "version": 1,
+  "id": "sfm-pipeline",
+  "title": "Structure from motion needs verified stages",
+  "purpose": "Show the SfM and bundle-adjustment pipeline.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/sfm-pipeline.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Images become candidate matches, a verified view graph, initial cameras and points, and an optimised reconstruction with residual and coverage checks."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Show the SfM and bundle-adjustment pipeline.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "images",
+      "label": "IMAGES",
+      "subtitle": "versioned",
+      "type": "service",
+      "bounds": {
+        "x": 70,
+        "y": 300,
+        "width": 170,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "matches",
+      "label": "MATCHES",
+      "subtitle": "candidate",
+      "type": "data",
+      "bounds": {
+        "x": 285,
+        "y": 300,
+        "width": 180,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "verify",
+      "label": "VIEW GRAPH",
+      "subtitle": "robustly verified",
+      "type": "agent",
+      "bounds": {
+        "x": 520,
+        "y": 290,
+        "width": 190,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "init",
+      "label": "INITIALISE",
+      "subtitle": "poses + points",
+      "type": "agent",
+      "bounds": {
+        "x": 765,
+        "y": 290,
+        "width": 190,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "ba",
+      "label": "BUNDLE ADJUST",
+      "subtitle": "robust reprojection",
+      "type": "action",
+      "bounds": {
+        "x": 1010,
+        "y": 290,
+        "width": 210,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "qa",
+      "label": "QUALITY GATES",
+      "subtitle": "tails + coverage",
+      "type": "operations",
+      "bounds": {
+        "x": 1010,
+        "y": 500,
+        "width": 210,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "images",
+        "port": "right"
+      },
+      "to": {
+        "node": "matches",
+        "port": "left"
+      },
+      "route": [
+        [
+          240,
+          350
+        ],
+        [
+          285,
+          350
+        ]
+      ],
+      "label": "describe",
+      "kind": "primary",
+      "label_at": [
+        262,
+        341
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "matches",
+        "port": "right"
+      },
+      "to": {
+        "node": "verify",
+        "port": "left"
+      },
+      "route": [
+        [
+          465,
+          350
+        ],
+        [
+          520,
+          350
+        ]
+      ],
+      "label": "geometry",
+      "kind": "primary",
+      "label_at": [
+        492,
+        341
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "verify",
+        "port": "right"
+      },
+      "to": {
+        "node": "init",
+        "port": "left"
+      },
+      "route": [
+        [
+          710,
+          350
+        ],
+        [
+          765,
+          350
+        ]
+      ],
+      "label": "inliers",
+      "kind": "primary",
+      "label_at": [
+        738,
+        341
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "init",
+        "port": "right"
+      },
+      "to": {
+        "node": "ba",
+        "port": "left"
+      },
+      "route": [
+        [
+          955,
+          350
+        ],
+        [
+          1010,
+          350
+        ]
+      ],
+      "label": "refine",
+      "kind": "primary",
+      "label_at": [
+        982,
+        341
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "ba",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "qa",
+        "port": "top"
+      },
+      "route": [
+        [
+          1115,
+          410
+        ],
+        [
+          1115,
+          500
+        ]
+      ],
+      "label": "inspect",
+      "kind": "secondary",
+      "label_at": [
+        1115,
+        446
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Structure from motion needs verified stages",
+    "description": "Images become candidate matches, a verified view graph, initial cameras and points, and an optimised reconstruction with residual and coverage checks."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

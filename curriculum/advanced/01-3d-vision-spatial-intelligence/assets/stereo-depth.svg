@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
+<title id="title">Rectified disparity determines z-depth</title>
+<desc id="description">A left and right pixel on the same image row form disparity d; known focal length and baseline yield z-depth, with uncertainty growing at small disparity.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1400" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Rectified disparity determines z-depth</text>
+<rect x="64" y="105" width="1272" height="555" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Show stereo disparity and depth uncertainty.</text>
+<polyline points="275,340 350,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="254" y="314" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="312" y="331" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">correspond</text>
+<polyline points="560,340 650,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="547" y="314" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="605" y="331" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">subtract</text>
+<polyline points="880,340 970,340" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="867" y="314" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="925" y="331" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">f, B</text>
+<polyline points="1085,410 1085,500" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="1027" y="429" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1085" y="446" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">differentiate</text>
+<rect x="65" y="280" width="210" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="170.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">LEFT PIXEL</text>
+<text x="170.0" y="336" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">(uL, v)</text>
+<text x="170.0" y="364" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">rectified</text>
+<rect x="350" y="280" width="210" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="455.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">RIGHT PIXEL</text>
+<text x="455.0" y="336" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">(uR, v)</text>
+<text x="455.0" y="364" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">same row</text>
+<rect x="650" y="270" width="230" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="765.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">DISPARITY</text>
+<text x="765.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">d = uL − uR</text>
+<text x="765.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">pixels</text>
+<rect x="970" y="270" width="230" height="140" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1085.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Z-DEPTH</text>
+<text x="1085.0" y="326" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Z = fB / d</text>
+<text x="1085.0" y="354" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">metres if B is m</text>
+<rect x="970" y="500" width="230" height="105" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1085.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">UNCERTAINTY</text>
+<text x="1085.0" y="556" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">σZ ∝ 1/d²</text>
+<text x="1085.0" y="584" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">far range is sensitive</text>
+</svg>

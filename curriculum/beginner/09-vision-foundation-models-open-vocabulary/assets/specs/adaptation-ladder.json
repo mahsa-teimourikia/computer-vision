@@ -1,0 +1,26 @@
+{
+  "version": 1, "id": "adaptation-ladder", "title": "Adaptation ladder", "purpose": "Show increasing trainable scope and operational burden from zero-shot reuse to full fine-tuning.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/adaptation-ladder.svg", "medium": "documentation and notebook", "alt_text": "Seven steps rise from zero-shot and frozen features through linear and small heads, adapters, partial fine-tuning, and full fine-tuning as data, compute, drift, and maintenance increase."},
+  "canvas": {"width": 2100, "height": 720, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 38, "min_layer_gap": 70, "node_padding": {"x": 20, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "ladder", "label": "Increase task fit only when evidence justifies the cost", "bounds": {"x": 64, "y": 100, "width": 1972, "height": 540}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "zero", "group": "ladder", "label": "Zero-shot", "subtitle": "0 trained params", "type": "data", "bounds": {"x": 100, "y": 420, "width": 230, "height": 130}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "frozen", "group": "ladder", "label": "Frozen feature", "subtitle": "reuse geometry", "type": "data", "bounds": {"x": 380, "y": 380, "width": 230, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "linear", "group": "ladder", "label": "Linear probe", "subtitle": "small classifier", "type": "service", "bounds": {"x": 660, "y": 340, "width": 230, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "head", "group": "ladder", "label": "Small head", "subtitle": "task decoder", "type": "service", "bounds": {"x": 940, "y": 300, "width": 230, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "adapter", "group": "ladder", "label": "Adapter / LoRA", "subtitle": "PEFT artifact", "type": "agent", "bounds": {"x": 1220, "y": 260, "width": 230, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "partial", "group": "ladder", "label": "Partial tune", "subtitle": "selected blocks", "type": "agent", "bounds": {"x": 1500, "y": 220, "width": 230, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "full", "group": "ladder", "label": "Full tune", "subtitle": "all parameters", "type": "action", "bounds": {"x": 1780, "y": 180, "width": 220, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "zero", "port": "out"}, "to": {"node": "frozen", "port": "in"}, "kind": "primary", "route": [[330,485],[355,485],[355,445],[380,445]]},
+    {"id": "e2", "from": {"node": "frozen", "port": "out"}, "to": {"node": "linear", "port": "in"}, "kind": "primary", "route": [[610,445],[635,445],[635,405],[660,405]]},
+    {"id": "e3", "from": {"node": "linear", "port": "out"}, "to": {"node": "head", "port": "in"}, "kind": "primary", "route": [[890,405],[915,405],[915,365],[940,365]]},
+    {"id": "e4", "from": {"node": "head", "port": "out"}, "to": {"node": "adapter", "port": "in"}, "kind": "primary", "route": [[1170,365],[1195,365],[1195,325],[1220,325]]},
+    {"id": "e5", "from": {"node": "adapter", "port": "out"}, "to": {"node": "partial", "port": "in"}, "kind": "primary", "route": [[1450,325],[1475,325],[1475,285],[1500,285]]},
+    {"id": "e6", "from": {"node": "partial", "port": "out"}, "to": {"node": "full", "port": "in"}, "kind": "primary", "route": [[1730,285],[1755,285],[1755,245],[1780,245]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

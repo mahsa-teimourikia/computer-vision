@@ -1,0 +1,26 @@
+{
+  "version": 1, "id": "dual-encoder-alignment", "title": "CLIP-style dual-encoder alignment", "purpose": "Show image and text encoders meeting in a normalized similarity space.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/dual-encoder-alignment.svg", "medium": "documentation and notebook", "alt_text": "An image encoder and text encoder independently map inputs to normalized embeddings whose dot products form a similarity matrix for bidirectional contrastive learning."},
+  "canvas": {"width": 1800, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 52, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "alignment", "label": "Independent encoding · shared geometry", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 590}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "images", "group": "alignment", "label": "Images", "type": "data", "bounds": {"x": 120, "y": 190, "width": 220, "height": 110}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "image_encoder", "group": "alignment", "label": "Image encoder", "subtitle": "CNN or ViT", "type": "agent", "bounds": {"x": 450, "y": 180, "width": 270, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "image_embeddings", "group": "alignment", "label": "Normalized image\nembeddings", "type": "service", "bounds": {"x": 840, "y": 180, "width": 300, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "texts", "group": "alignment", "label": "Text prompts", "type": "data", "bounds": {"x": 120, "y": 490, "width": 220, "height": 110}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "text_encoder", "group": "alignment", "label": "Text encoder", "subtitle": "tokenize + transform", "type": "agent", "bounds": {"x": 450, "y": 480, "width": 270, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "text_embeddings", "group": "alignment", "label": "Normalized text\nembeddings", "type": "service", "bounds": {"x": 840, "y": 480, "width": 300, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "similarity", "group": "alignment", "label": "Similarity matrix", "subtitle": "scaled dot products", "type": "action", "bounds": {"x": 1330, "y": 315, "width": 300, "height": 150}, "ports": {"image": {"side": "left", "offset": 0.3}, "text": {"side": "left", "offset": 0.7}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "images", "port": "out"}, "to": {"node": "image_encoder", "port": "in"}, "kind": "primary", "route": [[340,245],[450,245]]},
+    {"id": "e2", "from": {"node": "image_encoder", "port": "out"}, "to": {"node": "image_embeddings", "port": "in"}, "kind": "primary", "route": [[720,245],[840,245]]},
+    {"id": "e3", "from": {"node": "texts", "port": "out"}, "to": {"node": "text_encoder", "port": "in"}, "kind": "primary", "route": [[340,545],[450,545]]},
+    {"id": "e4", "from": {"node": "text_encoder", "port": "out"}, "to": {"node": "text_embeddings", "port": "in"}, "kind": "primary", "route": [[720,545],[840,545]]},
+    {"id": "e5", "from": {"node": "image_embeddings", "port": "out"}, "to": {"node": "similarity", "port": "image"}, "kind": "primary", "route": [[1140,245],[1230,245],[1230,360],[1330,360]]},
+    {"id": "e6", "from": {"node": "text_embeddings", "port": "out"}, "to": {"node": "similarity", "port": "text"}, "kind": "primary", "route": [[1140,545],[1230,545],[1230,420],[1330,420]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

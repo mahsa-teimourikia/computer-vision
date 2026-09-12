@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 820" role="img" aria-labelledby="title description">
+<title id="title">Visual-agent failure attribution</title>
+<desc id="description">A visual-agent failure taxonomy spanning perception, planning, tools, verification, state, termination, and security.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="2048" height="820" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Visual-agent failure attribution</text>
+<rect x="64" y="100" width="1920" height="630" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Attribute the failed contract before choosing a mitigation</text>
+<polyline points="831,290 831,390 210,390 210,500" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<polyline points="895,290 895,410 480,410 480,500" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<polyline points="960,290 960,430 750,430 750,500" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<polyline points="1024,290 1024,450 1020,450 1020,500" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1088,290 1088,430 1290,430 1290,500" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<polyline points="1153,290 1153,410 1560,410 1560,500" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<polyline points="1217,290 1217,390 1830,390 1830,500" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="794" y="170" width="460" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1024.0" y="204" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Unsafe or unsupported</text>
+<text x="1024.0" y="226" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">agent outcome</text>
+<rect x="95" y="500" width="230" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="210.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Perception</text>
+<text x="210.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">miss · wrong region</text>
+<rect x="365" y="500" width="230" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="480.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Planning</text>
+<text x="480.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">wrong tool · args</text>
+<rect x="635" y="500" width="230" height="120" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="750.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Tools</text>
+<text x="750.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">denied · timeout · invalid</text>
+<rect x="905" y="500" width="230" height="120" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1020.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Verification</text>
+<text x="1020.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">stale · hallucinated</text>
+<rect x="1175" y="500" width="230" height="120" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1290.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">State</text>
+<text x="1290.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">poisoned · wrong update</text>
+<rect x="1445" y="500" width="230" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1560.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Termination</text>
+<text x="1560.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">loop · early · late</text>
+<rect x="1715" y="500" width="230" height="120" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1830.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Security</text>
+<text x="1830.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">injection · escalation</text>
+</svg>

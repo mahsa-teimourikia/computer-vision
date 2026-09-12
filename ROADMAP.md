@@ -111,32 +111,31 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 2. **Modern CNN Architectures & Efficient Vision** — residual, ConvNeXt, efficient and hybrid designs; profiling, adaptation depth, and target-hardware trade-offs. *(available)*
 3. **Vision Transformers** — patches, positions, attention, hierarchy, CNN/ViT trade-offs, and resolution shift. *(available)*
 4. **Self-Supervised Visual Representation Learning** — contrastive, masked, and teacher-student learning; probing, retrieval, and collapse prevention. *(available)*
-5. **Object Detection** — localisation, matching, DETR/YOLO-style systems, small-object slices, error diagnosis, and the transition from closed-set to open-set detection.
-6. **Segmentation & Promptable Segmentation** — semantic, instance, and panoptic outputs; boundaries, prompts, and foundation-model comparison.
-7. **Visual Embeddings, Metric Learning & Retrieval** — Siamese models, contrastive/triplet objectives, FAISS-style similarity search, re-identification, hard-example discovery, and retrieval evaluation.
-8. **Tracking, Keypoints & Pose** — temporal identity, occlusion, association, landmarks, pose estimation, and video evaluation.
-9. **Vision Foundation Models & Open-Vocabulary Vision** — promptable and open-vocabulary perception, concept segmentation, reusable embeddings, and governed adaptation.
+5. **Object Detection** — localisation, matching, DETR/YOLO-style systems, small-object slices, error diagnosis, and the transition from closed-set to open-set detection. *(available)*
+6. **Segmentation & Promptable Segmentation** — semantic, instance, and panoptic outputs; mask contracts, boundaries, prompt sensitivity, detector-to-mask error propagation, human review, and governed foundation-model comparison. *(available)*
+7. **Visual Embeddings, Metric Learning & Retrieval** — Siamese models, contrastive/triplet objectives, FAISS-style similarity search, re-identification, hard-example discovery, and retrieval evaluation. *(available)*
+8. [**Tracking, Keypoints & Pose**](curriculum/beginner/08-tracking-keypoints-pose/README.md) — temporal identity, occlusion, association, landmarks, pose estimation, and video evaluation. *(available)*
+9. [**Vision Foundation Models & Open-Vocabulary Vision**](curriculum/beginner/09-vision-foundation-models-open-vocabulary/README.md) — reusable representations, image–text alignment, prompt and vocabulary robustness, dense features, grounding, promptable segmentation, composition error propagation, adaptation, and governed evidence. *(available)*
 
 ## Intermediate
 
-1. **Convolutional networks** — receptive fields, feature hierarchies, architecture choices, and transfer learning.
-2. **Object detection** — localization, IoU, non-maximum suppression, mAP, and error diagnosis.
-3. **Semantic and instance segmentation** — masks, loss functions, class imbalance, and boundary metrics.
-4. **Data quality and augmentation** — leakage, label noise, invariance, synthetic data, and dataset shift.
-5. **Evaluation and explainability** — calibration, slices, attribution limits, robustness, and release gates.
+1. [**Vision-Language Models: From Visual Features to Multimodal Reasoning**](curriculum/intermediate/01-vision-language-models/README.md) — visual tokens, projection and resampling, multimodal fusion, autoregressive generation, instruction tuning, resolution/token budgets, grounding, hallucination diagnostics, and evidence contracts. *(available)*
+2. [**Multimodal Reasoning & Verification: From Visual Evidence to Checked Conclusions**](curriculum/intermediate/02-multimodal-reasoning-verification/README.md) — task DAGs, observed and derived facts, source-bound evidence, deterministic tools, claim verification, counterfactual sensitivity, contradiction detection, four-valued fact states, and governed advisory decisions without treating hidden chain-of-thought as an audit trail. *(available)*
+3. [**Document Intelligence: From Pixels and Layout to Structured Evidence**](curriculum/intermediate/03-document-intelligence/README.md) — mixed-input routing, coordinate contracts, OCR, layout, reading order, tables, forms, multi-page structure, normalization, evidence graphs, verification, template shift, and human review. *(available)*
+4. [**Multimodal Retrieval & RAG: From Evidence Indexing to Grounded Multimodal Answers**](curriculum/intermediate/04-multimodal-retrieval-rag/README.md) — structure-aware multimodal units, lexical/dense/visual/multi-vector indexes, trusted pre-score access control, hybrid retrieval, evidence assembly, claim-level citations, freshness, and retrieval-versus-generation evaluation. *(available)*
+5. [**Video-Language Understanding: From Temporal Evidence to Grounded Video Reasoning**](curriculum/intermediate/05-video-language-understanding/README.md) — presentation-time sampling, aliasing, order-aware representation, temporal grounding, event relations, complete evidence, long-video retrieval, streaming behavior, audio–visual conflicts, and verified temporal citations. *(available)*
+6. [**Visual Agents: From Multimodal Evidence to Bounded Tool-Using Systems**](curriculum/intermediate/06-visual-agents/README.md) — typed multimodal state, allow-listed tools, capability and resource authorization, input/output validation, evidence promotion, budgets, loop detection, recovery, safe escalation, trace evaluation, and held-out source reporting. *(available)*
 
 ## Advanced
 
-1. **Video understanding and tracking** — temporal sampling, motion, identity association, and drift.
-2. **Vision transformers** — tokenization, attention, scaling behavior, and hybrid architectures.
-3. **Self-supervised visual learning** — pretext tasks, contrastive objectives, masked modeling, transfer, and collapse prevention.
-4. **Vision foundation models** — promptable and open-vocabulary vision, foundation segmentation, embeddings, adaptation, and evaluation.
-5. **Multimodal vision-language systems** — grounding, multimodal reasoning and RAG, video LLMs, visual agents, and evaluation.
-6. **Spatial intelligence** — depth, geometry, reconstruction, Gaussian splatting, generative 3D, 4D scenes, and spatial reasoning.
-7. **Embodied intelligence** — vision-language-action, robot learning, egocentric vision, world models, simulation, and planning.
-8. **Robustness and domain adaptation** — corruptions, out-of-distribution inputs, adaptation, and uncertainty.
-9. **Efficient inference** — profiling, batching, quantization, pruning, compilation, and edge constraints.
-10. **Production operations** — serving, observability, drift detection, rollback, and incident response.
+1. [**3D Vision & Spatial Intelligence: From Camera Geometry to Metric Scene Understanding**](curriculum/advanced/01-3d-vision-spatial-intelligence/README.md) — coordinate and unit contracts, camera geometry, calibration, epipolar verification, stereo uncertainty, triangulation, pose, reconstruction, point clouds, representation choice, metric spatial reasoning, and source-held-out evaluation. *(available)*
+2. **Neural rendering and 3D representations** — radiance fields, Gaussian splatting, geometry/appearance separation, view synthesis, and editability.
+3. **Advanced video and world models** — long-range dynamics, predictive representations, 4D scenes, and action relevance.
+4. **Multimodal adaptation** — parameter-efficient tuning, domain adaptation, continual learning, and forgetting.
+5. **Embodied perception** — egocentric observation, active perception, VLA systems, simulation, and planning.
+6. **Robustness and uncertainty** — corruptions, distribution shift, geometric confidence, calibration, and failure recovery.
+7. **Efficient spatial inference** — profiling, view/token budgets, quantization, compilation, streaming memory, and edge constraints.
+8. **Production spatial operations** — calibration registries, frame graphs, observability, drift, rollback, and incident response.
 
 ## Enterprise
 

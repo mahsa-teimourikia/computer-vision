@@ -1,0 +1,385 @@
+{
+  "version": 1,
+  "id": "promptable-segmentation",
+  "title": "Promptable segmentation reuses one image embedding",
+  "purpose": "Show the SAM-style image encoder, prompt encoder, mask decoder, candidate masks, and quality estimates.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/promptable-segmentation.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "The image is encoded once into a reusable embedding. A point, box, or mask prompt is encoded separately. Both meet in a mask decoder that returns candidate masks and quality estimates."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "course",
+      "label": "Segmentation output contracts",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 1472,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "image",
+      "group": "course",
+      "label": "Image",
+      "subtitle": "encode once",
+      "type": "data",
+      "bounds": {
+        "x": 90,
+        "y": 230,
+        "width": 190,
+        "height": 130
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "image_encoder",
+      "group": "course",
+      "label": "Image encoder",
+      "subtitle": "expensive path",
+      "type": "agent",
+      "bounds": {
+        "x": 370,
+        "y": 230,
+        "width": 230,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "embedding",
+      "group": "course",
+      "label": "Image embedding",
+      "subtitle": "reused across prompts",
+      "type": "data",
+      "bounds": {
+        "x": 690,
+        "y": 230,
+        "width": 250,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "prompt",
+      "group": "course",
+      "label": "Prompt",
+      "subtitle": "point \u00b7 box \u00b7 mask",
+      "type": "action",
+      "bounds": {
+        "x": 370,
+        "y": 520,
+        "width": 230,
+        "height": 130
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "prompt_encoder",
+      "group": "course",
+      "label": "Prompt encoder",
+      "subtitle": "target representation",
+      "type": "action",
+      "bounds": {
+        "x": 690,
+        "y": 520,
+        "width": 250,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "decoder",
+      "group": "course",
+      "label": "Mask decoder",
+      "subtitle": "combine image + prompt",
+      "type": "agent",
+      "bounds": {
+        "x": 1060,
+        "y": 340,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "image": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "prompt": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "masks",
+      "group": "course",
+      "label": "Candidate\nmasks",
+      "subtitle": "quality estimates",
+      "type": "service",
+      "bounds": {
+        "x": 1370,
+        "y": 350,
+        "width": 150,
+        "height": 150
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "image_encoder_edge",
+      "from": {
+        "node": "image",
+        "port": "out"
+      },
+      "to": {
+        "node": "image_encoder",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          280,
+          295
+        ],
+        [
+          370,
+          295
+        ]
+      ]
+    },
+    {
+      "id": "encoder_embedding",
+      "from": {
+        "node": "image_encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "embedding",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          600,
+          295
+        ],
+        [
+          690,
+          295
+        ]
+      ]
+    },
+    {
+      "id": "prompt_promptencoder",
+      "from": {
+        "node": "prompt",
+        "port": "out"
+      },
+      "to": {
+        "node": "prompt_encoder",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          600,
+          585
+        ],
+        [
+          690,
+          585
+        ]
+      ]
+    },
+    {
+      "id": "embedding_decoder",
+      "from": {
+        "node": "embedding",
+        "port": "out"
+      },
+      "to": {
+        "node": "decoder",
+        "port": "image"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          940,
+          295
+        ],
+        [
+          1000,
+          295
+        ],
+        [
+          1000,
+          391
+        ],
+        [
+          1060,
+          391
+        ]
+      ],
+      "label": "cached",
+      "label_at": [
+        995,
+        285
+      ]
+    },
+    {
+      "id": "promptencoder_decoder",
+      "from": {
+        "node": "prompt_encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "decoder",
+        "port": "prompt"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          940,
+          585
+        ],
+        [
+          1000,
+          585
+        ],
+        [
+          1000,
+          459
+        ],
+        [
+          1060,
+          459
+        ]
+      ]
+    },
+    {
+      "id": "decoder_masks",
+      "from": {
+        "node": "decoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "masks",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1310,
+          425
+        ],
+        [
+          1370,
+          425
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

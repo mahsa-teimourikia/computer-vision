@@ -1,0 +1,325 @@
+{
+  "version": 1,
+  "id": "epipolar-geometry",
+  "title": "Epipolar geometry verifies correspondence",
+  "purpose": "Explain the epipolar plane and image-line constraint.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/epipolar-geometry.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Camera A observes a pixel whose ray and the camera baseline define an epipolar plane; the corresponding Camera B pixel must lie on its epipolar line."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Explain the epipolar plane and image-line constraint.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cam_a",
+      "label": "CAMERA A\npoint pA",
+      "subtitle": "source ray",
+      "type": "service",
+      "bounds": {
+        "x": 80,
+        "y": 290,
+        "width": 210,
+        "height": 115
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "plane",
+      "label": "EPIPOLAR PLANE\nCA, CB, P",
+      "subtitle": "3D constraint",
+      "type": "agent",
+      "bounds": {
+        "x": 390,
+        "y": 275,
+        "width": 250,
+        "height": 145
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "line",
+      "label": "IMAGE B LINE\nlB = F pA",
+      "subtitle": "candidate locus",
+      "type": "data",
+      "bounds": {
+        "x": 750,
+        "y": 275,
+        "width": 250,
+        "height": 145
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "match",
+      "label": "CANDIDATE pB\npB\u1d40 F pA \u2248 0",
+      "subtitle": "geometric residual",
+      "type": "action",
+      "bounds": {
+        "x": 1100,
+        "y": 275,
+        "width": 230,
+        "height": 145
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "cam_a",
+        "port": "right"
+      },
+      "to": {
+        "node": "plane",
+        "port": "left"
+      },
+      "route": [
+        [
+          290,
+          348
+        ],
+        [
+          390,
+          348
+        ]
+      ],
+      "label": "baseline + ray",
+      "kind": "primary",
+      "label_at": [
+        340,
+        339
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "plane",
+        "port": "right"
+      },
+      "to": {
+        "node": "line",
+        "port": "left"
+      },
+      "route": [
+        [
+          640,
+          348
+        ],
+        [
+          750,
+          348
+        ]
+      ],
+      "label": "intersection",
+      "kind": "primary",
+      "label_at": [
+        695,
+        339
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "line",
+        "port": "right"
+      },
+      "to": {
+        "node": "match",
+        "port": "left"
+      },
+      "route": [
+        [
+          1000,
+          348
+        ],
+        [
+          1100,
+          348
+        ]
+      ],
+      "label": "verify",
+      "kind": "primary",
+      "label_at": [
+        1050,
+        339
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Epipolar geometry verifies correspondence",
+    "description": "Camera A observes a pixel whose ray and the camera baseline define an epipolar plane; the corresponding Camera B pixel must lie on its epipolar line."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

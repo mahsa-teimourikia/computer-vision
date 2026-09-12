@@ -1,0 +1,24 @@
+{
+  "version": 1, "id": "visual-evidence-ablation", "title": "Visual Evidence Ablation", "purpose": "Compare identical image-dependent questions under correct, blank, mismatched, and counterfactual visual evidence.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/visual-evidence-ablation.svg", "medium": "documentation and notebook", "alt_text": "Four image conditions—correct, blank, wrong, and one-fact counterfactual—receive the same question. Their answer, confidence, and evidence changes feed an evidence-use diagnosis."},
+  "canvas": {"width": 1800, "height": 900, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "Same question · controlled visual intervention", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 700}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "correct", "group": "system", "label": "Correct image", "subtitle": "expected evidence", "type": "data", "bounds": {"x": 120, "y": 200, "width": 270, "height": 110}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "blank", "group": "system", "label": "Blank image", "subtitle": "visual signal removed", "type": "operations", "bounds": {"x": 530, "y": 200, "width": 270, "height": 110}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "wrong", "group": "system", "label": "Wrong image", "subtitle": "evidence mismatched", "type": "action", "bounds": {"x": 940, "y": 200, "width": 270, "height": 110}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "counter", "group": "system", "label": "Counterfactual", "subtitle": "one visual fact changed", "type": "service", "bounds": {"x": 1350, "y": 200, "width": 270, "height": 110}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "model", "group": "system", "label": "Same VLM + same question", "subtitle": "frozen prompt and decoding", "type": "agent", "bounds": {"x": 660, "y": 440, "width": 480, "height": 120}, "ports": {"a": {"side": "top", "offset": 0.12}, "b": {"side": "top", "offset": 0.38}, "c": {"side": "top", "offset": 0.62}, "d": {"side": "top", "offset": 0.88}, "out": {"side": "bottom"}}},
+    {"id": "diagnosis", "group": "system", "label": "Evidence-use diagnosis", "subtitle": "answer · score · region · expected flip", "type": "operations", "bounds": {"x": 660, "y": 650, "width": 480, "height": 110}, "ports": {"in": {"side": "top"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "correct", "port": "out"}, "to": {"node": "model", "port": "a"}, "kind": "primary", "route": [[255,310],[255,380],[718,380],[718,440]]},
+    {"id": "e2", "from": {"node": "blank", "port": "out"}, "to": {"node": "model", "port": "b"}, "kind": "primary", "route": [[665,310],[665,390],[842,390],[842,440]]},
+    {"id": "e3", "from": {"node": "wrong", "port": "out"}, "to": {"node": "model", "port": "c"}, "kind": "primary", "route": [[1075,310],[1075,390],[958,390],[958,440]]},
+    {"id": "e4", "from": {"node": "counter", "port": "out"}, "to": {"node": "model", "port": "d"}, "kind": "primary", "route": [[1485,310],[1485,380],[1082,380],[1082,440]]},
+    {"id": "e5", "from": {"node": "model", "port": "out"}, "to": {"node": "diagnosis", "port": "in"}, "kind": "primary", "route": [[900,560],[900,650]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

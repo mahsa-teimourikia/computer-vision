@@ -59,6 +59,18 @@ def validate_hub() -> None:
         "Modern CNN Architectures &amp; Efficient Vision",
         "Vision Transformers",
         "Self-Supervised Visual Representation Learning",
+        "Object Detection",
+        "Segmentation &amp; Promptable Segmentation",
+        "Visual Embeddings, Metric Learning &amp; Retrieval",
+        "Tracking, Keypoints &amp; Pose",
+        "Vision Foundation Models &amp; Open-Vocabulary Vision",
+        "Vision-Language Models",
+        "Multimodal Reasoning &amp; Verification",
+        "Document Intelligence",
+        "Multimodal Retrieval &amp; RAG",
+        "Video-Language Understanding",
+        "Visual Agents",
+        "3D Vision &amp; Spatial Intelligence",
         "oneplusi.io",
     ]
     for text in required:

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 760" role="img" aria-labelledby="title description">
+<title id="title">Triplet ordering and margin</title>
+<desc id="description">An anchor branches to a positive and negative; their distances enter a margin objective that requires the positive to be closer.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Triplet ordering and margin</text>
+<rect x="64" y="100" width="1472" height="596" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Visual retrieval system</text>
+<polyline points="330,365 400,365 400,260 480,260" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="342" y="313" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="400" y="330" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">pull</text>
+<polyline points="330,405 400,405 400,540 480,540" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="342" y="453" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="400" y="470" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">push</text>
+<polyline points="700,260 780,260 780,363 850,363" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="722" y="308" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="780" y="325" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">d(a,p)</text>
+<polyline points="700,540 780,540 780,427 850,427" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="722" y="473" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="780" y="490" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">d(a,n)</text>
+<polyline points="1130,395 1260,395" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1137" y="363" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1195" y="380" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">margin</text>
+<rect x="120" y="335" width="210" height="100" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="225.0" y="369" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Anchor</text>
+<rect x="480" y="210" width="220" height="100" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="590.0" y="244" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Positive</text>
+<text x="590.0" y="272" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">same contract label</text>
+<rect x="480" y="490" width="220" height="100" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="590.0" y="524" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Negative</text>
+<text x="590.0" y="552" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">different contract label</text>
+<rect x="850" y="315" width="280" height="160" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="990.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Triplet objective</text>
+<text x="990.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">max(0, d(a,p) − d(a,n) + m)</text>
+<rect x="1260" y="335" width="260" height="120" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1390.0" y="369" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Required ordering</text>
+<text x="1390.0" y="397" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">positive closer by margin m</text>
+</svg>

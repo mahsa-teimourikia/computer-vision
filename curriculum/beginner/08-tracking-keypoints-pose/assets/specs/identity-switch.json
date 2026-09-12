@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "id": "identity-switch",
+  "title": "Identity switch at an object crossing",
+  "purpose": "Two real objects cross while a tracker changes which predicted identity follows each physical trajectory.",
+  "output": {
+    "svg": "curriculum/beginner/08-tracking-keypoints-pose/assets/identity-switch.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Two real objects cross while a tracker changes which predicted identity follows each physical trajectory."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 720,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Structured visual state",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 550
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "before",
+      "group": "system",
+      "label": "Before crossing",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "red\u21927 \u00b7 blue\u21929"
+    },
+    {
+      "id": "ambiguity",
+      "group": "system",
+      "label": "Overlap / occlusion",
+      "type": "action",
+      "bounds": {
+        "x": 430,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "geometry ambiguous"
+    },
+    {
+      "id": "assignment",
+      "group": "system",
+      "label": "Wrong assignment",
+      "type": "agent",
+      "bounds": {
+        "x": 760,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "cost favors swap"
+    },
+    {
+      "id": "after",
+      "group": "system",
+      "label": "After crossing",
+      "type": "data",
+      "bounds": {
+        "x": 1090,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "red\u21929 \u00b7 blue\u21927"
+    },
+    {
+      "id": "impact",
+      "group": "system",
+      "label": "History corrupted",
+      "type": "operations",
+      "bounds": {
+        "x": 1420,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "pose and analytics inherit error"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "before",
+        "port": "out"
+      },
+      "to": {
+        "node": "ambiguity",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          360
+        ],
+        [
+          430,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "ambiguity",
+        "port": "out"
+      },
+      "to": {
+        "node": "assignment",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          680,
+          360
+        ],
+        [
+          760,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "assignment",
+        "port": "out"
+      },
+      "to": {
+        "node": "after",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          360
+        ],
+        [
+          1090,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "after",
+        "port": "out"
+      },
+      "to": {
+        "node": "impact",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1340,
+          360
+        ],
+        [
+          1420,
+          360
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlap": true,
+    "all_text_contained": true,
+    "edge_routes_reviewed": true,
+    "contrast_checked": true,
+    "alt_text_reviewed": true
+  }
+}

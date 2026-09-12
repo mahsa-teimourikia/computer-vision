@@ -1,0 +1,29 @@
+{
+  "version": 1, "id": "visual-token-interfaces", "title": "Visual token interfaces decide what the LLM can inspect", "purpose": "Compare pooled, full-patch, selected, and compressed vision interfaces.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/visual-token-interfaces.svg", "medium": "documentation and notebook", "alt_text": "An image becomes patch features, then branches into pooled image, all-patch, selected multi-layer, or compressed query tokens before an LLM."},
+  "canvas": {"width": 1800, "height": 900, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "Information bottleneck", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 700}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "image", "group": "system", "label": "Image", "subtitle": "H × W", "type": "data", "bounds": {"x": 110, "y": 365, "width": 190, "height": 110}, "ports": {"out": {"side": "right"}}},
+    {"id": "patches", "group": "system", "label": "Patch features", "subtitle": "N × d_v", "type": "service", "bounds": {"x": 390, "y": 365, "width": 230, "height": 110}, "ports": {"in": {"side": "left"}, "p1": {"side": "right", "offset": 0.15}, "p2": {"side": "right", "offset": 0.38}, "p3": {"side": "right", "offset": 0.62}, "p4": {"side": "right", "offset": 0.85}}},
+    {"id": "pooled", "group": "system", "label": "Pooled", "subtitle": "1 token · global", "type": "operations", "bounds": {"x": 760, "y": 170, "width": 260, "height": 100}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "all", "group": "system", "label": "All patches", "subtitle": "N tokens · detail", "type": "service", "bounds": {"x": 760, "y": 305, "width": 260, "height": 100}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "selected", "group": "system", "label": "Selected layers", "subtitle": "K tokens · selector bias", "type": "action", "bounds": {"x": 760, "y": 440, "width": 260, "height": 100}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "compressed", "group": "system", "label": "Compressed queries", "subtitle": "M tokens · bottleneck", "type": "agent", "bounds": {"x": 760, "y": 575, "width": 260, "height": 100}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "llm", "group": "system", "label": "LLM context", "subtitle": "accessible visual evidence", "type": "agent", "bounds": {"x": 1320, "y": 365, "width": 300, "height": 120}, "ports": {"a": {"side": "left", "offset": 0.18}, "b": {"side": "left", "offset": 0.39}, "c": {"side": "left", "offset": 0.61}, "d": {"side": "left", "offset": 0.82}}}
+  ],
+  "edges": [
+    {"id": "e0", "from": {"node": "image", "port": "out"}, "to": {"node": "patches", "port": "in"}, "kind": "primary", "route": [[300,420],[390,420]]},
+    {"id": "e1", "from": {"node": "patches", "port": "p1"}, "to": {"node": "pooled", "port": "in"}, "kind": "primary", "route": [[620,382],[690,382],[690,220],[760,220]]},
+    {"id": "e2", "from": {"node": "patches", "port": "p2"}, "to": {"node": "all", "port": "in"}, "kind": "primary", "route": [[620,407],[700,407],[700,355],[760,355]]},
+    {"id": "e3", "from": {"node": "patches", "port": "p3"}, "to": {"node": "selected", "port": "in"}, "kind": "primary", "route": [[620,433],[700,433],[700,490],[760,490]]},
+    {"id": "e4", "from": {"node": "patches", "port": "p4"}, "to": {"node": "compressed", "port": "in"}, "kind": "primary", "route": [[620,458],[690,458],[690,625],[760,625]]},
+    {"id": "e5", "from": {"node": "pooled", "port": "out"}, "to": {"node": "llm", "port": "a"}, "kind": "primary", "route": [[1020,220],[1170,220],[1170,387],[1320,387]]},
+    {"id": "e6", "from": {"node": "all", "port": "out"}, "to": {"node": "llm", "port": "b"}, "kind": "primary", "route": [[1020,355],[1200,355],[1200,412],[1320,412]]},
+    {"id": "e7", "from": {"node": "selected", "port": "out"}, "to": {"node": "llm", "port": "c"}, "kind": "primary", "route": [[1020,490],[1200,490],[1200,438],[1320,438]]},
+    {"id": "e8", "from": {"node": "compressed", "port": "out"}, "to": {"node": "llm", "port": "d"}, "kind": "primary", "route": [[1020,625],[1170,625],[1170,463],[1320,463]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

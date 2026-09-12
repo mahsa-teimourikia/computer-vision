@@ -1,0 +1,283 @@
+{
+  "version": 1,
+  "id": "detection-output-contract",
+  "title": "From one image label to a variable set of objects",
+  "purpose": "Contrast classification, localization, and object detection output contracts.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/detection-output-contract.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Three side-by-side flows show classification producing one class, localization producing one class and box, and detection producing a variable set of class, box, and confidence tuples."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "classification",
+      "label": "Classification",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 430,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "localization",
+      "label": "Localization",
+      "bounds": {
+        "x": 585,
+        "y": 120,
+        "width": 430,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "detection",
+      "label": "Object detection",
+      "bounds": {
+        "x": 1106,
+        "y": 120,
+        "width": 430,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "c_image",
+      "group": "classification",
+      "label": "Image",
+      "subtitle": "fixed input",
+      "type": "data",
+      "bounds": {
+        "x": 150,
+        "y": 260,
+        "width": 250,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "c_output",
+      "group": "classification",
+      "label": "One class",
+      "subtitle": "\"defective component\"",
+      "type": "service",
+      "bounds": {
+        "x": 150,
+        "y": 520,
+        "width": 250,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "top",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "l_image",
+      "group": "localization",
+      "label": "Image",
+      "subtitle": "fixed input",
+      "type": "data",
+      "bounds": {
+        "x": 675,
+        "y": 260,
+        "width": 250,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "l_output",
+      "group": "localization",
+      "label": "One class + box",
+      "subtitle": "[x, y, w, h]",
+      "type": "agent",
+      "bounds": {
+        "x": 675,
+        "y": 520,
+        "width": 250,
+        "height": 120
+      },
+      "ports": {
+        "in": {
+          "side": "top",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "d_image",
+      "group": "detection",
+      "label": "Image",
+      "subtitle": "fixed input",
+      "type": "data",
+      "bounds": {
+        "x": 1195,
+        "y": 260,
+        "width": 250,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "d_output",
+      "group": "detection",
+      "label": "Variable object set",
+      "subtitle": "box + class + confidence",
+      "type": "action",
+      "bounds": {
+        "x": 1170,
+        "y": 500,
+        "width": 300,
+        "height": 145
+      },
+      "ports": {
+        "in": {
+          "side": "top",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c_flow",
+      "from": {
+        "node": "c_image",
+        "port": "out"
+      },
+      "to": {
+        "node": "c_output",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          275,
+          370
+        ],
+        [
+          275,
+          520
+        ]
+      ]
+    },
+    {
+      "id": "l_flow",
+      "from": {
+        "node": "l_image",
+        "port": "out"
+      },
+      "to": {
+        "node": "l_output",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          800,
+          370
+        ],
+        [
+          800,
+          520
+        ]
+      ]
+    },
+    {
+      "id": "d_flow",
+      "from": {
+        "node": "d_image",
+        "port": "out"
+      },
+      "to": {
+        "node": "d_output",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1320,
+          370
+        ],
+        [
+          1320,
+          500
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

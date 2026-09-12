@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "id": "agent-state",
+  "title": "Typed state is an operational contract",
+  "purpose": "Separate goal, facts, unknowns, evidence, tool results, budget, and status.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/agent-state.svg", "medium": "documentation and notebook", "alt_text": "Typed visual-agent state contains a goal, verified facts, open questions, multimodal evidence, tool results, budgets, and an explicit status."},
+  "canvas": {"width": 2048, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "state", "label": "AgentState v1 — JSON-serializable, schema-versioned, session-local", "bounds": {"x": 180, "y": 110, "width": 1688, "height": 560}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "goal", "group": "state", "label": "Goal + identity", "subtitle": "task · principal · tenant", "type": "agent", "bounds": {"x": 250, "y": 205, "width": 430, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "facts", "group": "state", "label": "Verified facts", "subtitle": "claim → evidence IDs", "type": "data", "bounds": {"x": 809, "y": 205, "width": 430, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "unknowns", "group": "state", "label": "Open questions", "subtitle": "dependency nodes", "type": "service", "bounds": {"x": 1368, "y": 205, "width": 430, "height": 120}, "ports": {"in": {"side": "left"}}},
+    {"id": "evidence", "group": "state", "label": "Multimodal evidence", "subtitle": "region · block · interval", "type": "data", "bounds": {"x": 250, "y": 440, "width": 430, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "results", "group": "state", "label": "Tool results + trace", "subtitle": "accepted and rejected", "type": "operations", "bounds": {"x": 809, "y": 440, "width": 430, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "budget", "group": "state", "label": "Budget + status", "subtitle": "steps · calls · cost · stop", "type": "action", "bounds": {"x": 1368, "y": 440, "width": 430, "height": 120}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "goal", "port": "out"}, "to": {"node": "facts", "port": "in"}, "kind": "secondary", "route": [[680,265],[809,265]]},
+    {"id": "e2", "from": {"node": "facts", "port": "out"}, "to": {"node": "unknowns", "port": "in"}, "kind": "secondary", "route": [[1239,265],[1368,265]]},
+    {"id": "e3", "from": {"node": "evidence", "port": "out"}, "to": {"node": "results", "port": "in"}, "kind": "secondary", "route": [[680,500],[809,500]]},
+    {"id": "e4", "from": {"node": "results", "port": "out"}, "to": {"node": "budget", "port": "in"}, "kind": "secondary", "route": [[1239,500],[1368,500]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

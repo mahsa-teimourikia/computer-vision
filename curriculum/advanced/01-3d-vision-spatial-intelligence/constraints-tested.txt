@@ -1,0 +1,18 @@
+# Tested together on 2026-09-12 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+pillow==12.3.0
+scipy==1.17.1
+
+# Optional adapters are disabled and belong in isolated environments. Review the
+# exact code/checkpoint license, immutable revision, camera convention, weights,
+# preprocessing, CUDA/runtime requirements, and domain evidence before use.
+# Depth Anything V2: a561b849ebae10a6f5ef49e26c83cbbcd36c71bf
+# UniDepth:            8d8cfe4c7ee15297099983607febf0d4f32eb3d6
+# VGGT:                a288dd0f14786c93483e45524328726ab7b1b4ce
+# VGGT-Omega:          b2c61f6631d9f344a2d914bfba5d9529d6fc1d35
+# COLMAP:              d3ccaf358e00936db2bd290f2623a652b00e80bb
+# Open3D:              1a9eb990f9a20936c30c428568c602bdef760744
+

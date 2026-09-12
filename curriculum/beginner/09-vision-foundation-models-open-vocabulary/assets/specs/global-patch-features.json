@@ -1,0 +1,24 @@
+{
+  "version": 1, "id": "global-patch-features", "title": "Global and patch foundation features", "purpose": "Separate whole-image semantics from local spatial representations.",
+  "output": {"svg": "curriculum/beginner/09-vision-foundation-models-open-vocabulary/assets/global-patch-features.svg", "medium": "documentation and notebook", "alt_text": "An image becomes transformer tokens, then branches into a global feature for classification and retrieval and patch features for correspondence and dense tasks."},
+  "canvas": {"width": 1800, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 56, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "features", "label": "One encoder · two feature contracts", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 590}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "image", "group": "features", "label": "Image", "type": "data", "bounds": {"x": 120, "y": 325, "width": 220, "height": 120}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "tokens", "group": "features", "label": "ViT tokens", "subtitle": "CLS + spatial patches", "type": "agent", "bounds": {"x": 480, "y": 305, "width": 300, "height": 160}, "ports": {"in": {"side": "left", "offset": 0.5}, "global": {"side": "right", "offset": 0.3}, "patch": {"side": "right", "offset": 0.7}}},
+    {"id": "global", "group": "features", "label": "Global feature", "subtitle": "whole-image semantics", "type": "service", "bounds": {"x": 980, "y": 180, "width": 300, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "patch", "group": "features", "label": "Patch features", "subtitle": "local spatial structure", "type": "service", "bounds": {"x": 980, "y": 470, "width": 300, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "global_tasks", "group": "features", "label": "Classification\nRetrieval", "type": "action", "bounds": {"x": 1450, "y": 180, "width": 240, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "patch_tasks", "group": "features", "label": "Correspondence\nDense prediction", "type": "action", "bounds": {"x": 1450, "y": 470, "width": 240, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "image", "port": "out"}, "to": {"node": "tokens", "port": "in"}, "kind": "primary", "route": [[340,385],[480,385]]},
+    {"id": "e2", "from": {"node": "tokens", "port": "global"}, "to": {"node": "global", "port": "in"}, "kind": "primary", "route": [[780,353],[870,353],[870,245],[980,245]]},
+    {"id": "e3", "from": {"node": "tokens", "port": "patch"}, "to": {"node": "patch", "port": "in"}, "kind": "primary", "route": [[780,417],[870,417],[870,535],[980,535]]},
+    {"id": "e4", "from": {"node": "global", "port": "out"}, "to": {"node": "global_tasks", "port": "in"}, "kind": "primary", "route": [[1280,245],[1450,245]]},
+    {"id": "e5", "from": {"node": "patch", "port": "out"}, "to": {"node": "patch_tasks", "port": "in"}, "kind": "primary", "route": [[1280,535],[1450,535]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

@@ -1,0 +1,11 @@
+-c constraints-tested.txt
+
+faiss-cpu
+jupyterlab
+matplotlib
+numpy
+pandas
+pillow
+scikit-learn
+torch
+torchvision

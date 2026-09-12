@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+<title id="title">From one image label to a variable set of objects</title>
+<desc id="description">Three side-by-side flows show classification producing one class, localization producing one class and box, and detection producing a variable set of class, box, and confidence tuples.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="900" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">From one image label to a variable set of objects</text>
+<rect x="64" y="120" width="430" height="650" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Classification</text>
+<rect x="585" y="120" width="430" height="650" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="607" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Localization</text>
+<rect x="1106" y="120" width="430" height="650" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="1128" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Object detection</text>
+<polyline points="275,370 275,520" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="800,370 800,520" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1320,370 1320,500" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="150" y="260" width="250" height="110" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="275.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Image</text>
+<text x="275.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">fixed input</text>
+<rect x="150" y="520" width="250" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="275.0" y="554" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">One class</text>
+<text x="275.0" y="582" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">&quot;defective component&quot;</text>
+<rect x="675" y="260" width="250" height="110" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="800.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Image</text>
+<text x="800.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">fixed input</text>
+<rect x="675" y="520" width="250" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="800.0" y="554" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">One class + box</text>
+<text x="800.0" y="582" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">[x, y, w, h]</text>
+<rect x="1195" y="260" width="250" height="110" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1320.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Image</text>
+<text x="1320.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">fixed input</text>
+<rect x="1170" y="500" width="300" height="145" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1320.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Variable object set</text>
+<text x="1320.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">box + class + confidence</text>
+</svg>

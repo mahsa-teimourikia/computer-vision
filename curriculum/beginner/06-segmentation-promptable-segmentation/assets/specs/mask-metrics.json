@@ -1,0 +1,392 @@
+{
+  "version": 1,
+  "id": "mask-metrics",
+  "title": "Region overlap and boundary quality answer different questions",
+  "purpose": "Contrast pixel accuracy, IoU, Dice, and boundary F1.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/mask-metrics.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A prediction and target feed region-overlap metrics and a separate boundary comparison, which together support an operational decision."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "course",
+      "label": "Segmentation output contracts",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 1472,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "prediction",
+      "group": "course",
+      "label": "Prediction",
+      "subtitle": "binary/class mask",
+      "type": "service",
+      "bounds": {
+        "x": 110,
+        "y": 250,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "region": {
+          "side": "right",
+          "offset": 0.35
+        },
+        "boundary": {
+          "side": "right",
+          "offset": 0.75
+        }
+      }
+    },
+    {
+      "id": "target",
+      "group": "course",
+      "label": "Target",
+      "subtitle": "reviewed mask",
+      "type": "data",
+      "bounds": {
+        "x": 110,
+        "y": 520,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "region": {
+          "side": "right",
+          "offset": 0.35
+        },
+        "boundary": {
+          "side": "right",
+          "offset": 0.75
+        }
+      }
+    },
+    {
+      "id": "overlap",
+      "group": "course",
+      "label": "Region overlap",
+      "subtitle": "IoU \u00b7 Dice \u00b7 mIoU",
+      "type": "agent",
+      "bounds": {
+        "x": 500,
+        "y": 260,
+        "width": 300,
+        "height": 160
+      },
+      "ports": {
+        "pred": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "target": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "boundary",
+      "group": "course",
+      "label": "Boundary match",
+      "subtitle": "F1 at tolerance \u03c4",
+      "type": "action",
+      "bounds": {
+        "x": 500,
+        "y": 500,
+        "width": 300,
+        "height": 160
+      },
+      "ports": {
+        "pred": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "target": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "decision",
+      "group": "course",
+      "label": "Mask evidence",
+      "subtitle": "region + edge + slices",
+      "type": "operations",
+      "bounds": {
+        "x": 1060,
+        "y": 370,
+        "width": 330,
+        "height": 170
+      },
+      "ports": {
+        "region": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "boundary": {
+          "side": "left",
+          "offset": 0.7
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "pred_overlap",
+      "from": {
+        "node": "prediction",
+        "port": "region"
+      },
+      "to": {
+        "node": "overlap",
+        "port": "pred"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          330,
+          296
+        ],
+        [
+          420,
+          296
+        ],
+        [
+          420,
+          308
+        ],
+        [
+          500,
+          308
+        ]
+      ]
+    },
+    {
+      "id": "target_overlap",
+      "from": {
+        "node": "target",
+        "port": "region"
+      },
+      "to": {
+        "node": "overlap",
+        "port": "target"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          330,
+          566
+        ],
+        [
+          420,
+          566
+        ],
+        [
+          420,
+          372
+        ],
+        [
+          500,
+          372
+        ]
+      ]
+    },
+    {
+      "id": "pred_boundary",
+      "from": {
+        "node": "prediction",
+        "port": "boundary"
+      },
+      "to": {
+        "node": "boundary",
+        "port": "pred"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          330,
+          348
+        ],
+        [
+          390,
+          348
+        ],
+        [
+          390,
+          548
+        ],
+        [
+          500,
+          548
+        ]
+      ]
+    },
+    {
+      "id": "target_boundary",
+      "from": {
+        "node": "target",
+        "port": "boundary"
+      },
+      "to": {
+        "node": "boundary",
+        "port": "target"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          330,
+          618
+        ],
+        [
+          440,
+          618
+        ],
+        [
+          440,
+          612
+        ],
+        [
+          500,
+          612
+        ]
+      ]
+    },
+    {
+      "id": "overlap_decision",
+      "from": {
+        "node": "overlap",
+        "port": "out"
+      },
+      "to": {
+        "node": "decision",
+        "port": "region"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          800,
+          340
+        ],
+        [
+          940,
+          340
+        ],
+        [
+          940,
+          421
+        ],
+        [
+          1060,
+          421
+        ]
+      ],
+      "label": "area",
+      "label_at": [
+        940,
+        330
+      ]
+    },
+    {
+      "id": "boundary_decision",
+      "from": {
+        "node": "boundary",
+        "port": "out"
+      },
+      "to": {
+        "node": "decision",
+        "port": "boundary"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          800,
+          580
+        ],
+        [
+          940,
+          580
+        ],
+        [
+          940,
+          489
+        ],
+        [
+          1060,
+          489
+        ]
+      ],
+      "label": "edge",
+      "label_at": [
+        940,
+        570
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

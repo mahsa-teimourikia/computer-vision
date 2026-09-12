@@ -1,0 +1,381 @@
+{
+  "version": 1,
+  "id": "query-mask-classification",
+  "title": "Queries predict a class and a mask",
+  "purpose": "Show Mask2Former-style query mask classification and task-specific composition.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/query-mask-classification.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Image features enter a transformer decoder. Each query branches into a class prediction and mask prediction, which are composed for semantic, instance, or panoptic output."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "course",
+      "label": "Segmentation output contracts",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 1472,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "features",
+      "group": "course",
+      "label": "Image features",
+      "subtitle": "multi-scale pixels",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 340,
+        "width": 230,
+        "height": 140
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "decoder",
+      "group": "course",
+      "label": "Transformer decoder",
+      "subtitle": "masked attention",
+      "type": "agent",
+      "bounds": {
+        "x": 430,
+        "y": 340,
+        "width": 260,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "queries",
+      "group": "course",
+      "label": "Queries",
+      "subtitle": "region candidates",
+      "type": "service",
+      "bounds": {
+        "x": 790,
+        "y": 340,
+        "width": 220,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "class": {
+          "side": "right",
+          "offset": 0.3
+        },
+        "mask": {
+          "side": "right",
+          "offset": 0.7
+        }
+      }
+    },
+    {
+      "id": "class_head",
+      "group": "course",
+      "label": "Class",
+      "subtitle": "label / no-object",
+      "type": "action",
+      "bounds": {
+        "x": 1110,
+        "y": 230,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "mask_head",
+      "group": "course",
+      "label": "Mask",
+      "subtitle": "pixel assignment",
+      "type": "service",
+      "bounds": {
+        "x": 1110,
+        "y": 500,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "compose",
+      "group": "course",
+      "label": "Compose\noutput",
+      "subtitle": "task-specific rules",
+      "type": "operations",
+      "bounds": {
+        "x": 1355,
+        "y": 340,
+        "width": 165,
+        "height": 170
+      },
+      "ports": {
+        "class": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "mask": {
+          "side": "left",
+          "offset": 0.7
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "features_decoder",
+      "from": {
+        "node": "features",
+        "port": "out"
+      },
+      "to": {
+        "node": "decoder",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          330,
+          410
+        ],
+        [
+          430,
+          410
+        ]
+      ]
+    },
+    {
+      "id": "decoder_queries",
+      "from": {
+        "node": "decoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "queries",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          690,
+          410
+        ],
+        [
+          790,
+          410
+        ]
+      ]
+    },
+    {
+      "id": "queries_class",
+      "from": {
+        "node": "queries",
+        "port": "class"
+      },
+      "to": {
+        "node": "class_head",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          382
+        ],
+        [
+          1060,
+          382
+        ],
+        [
+          1060,
+          295
+        ],
+        [
+          1110,
+          295
+        ]
+      ]
+    },
+    {
+      "id": "queries_mask",
+      "from": {
+        "node": "queries",
+        "port": "mask"
+      },
+      "to": {
+        "node": "mask_head",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          438
+        ],
+        [
+          1060,
+          438
+        ],
+        [
+          1060,
+          565
+        ],
+        [
+          1110,
+          565
+        ]
+      ]
+    },
+    {
+      "id": "class_compose",
+      "from": {
+        "node": "class_head",
+        "port": "out"
+      },
+      "to": {
+        "node": "compose",
+        "port": "class"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1330,
+          295
+        ],
+        [
+          1342,
+          295
+        ],
+        [
+          1342,
+          391
+        ],
+        [
+          1355,
+          391
+        ]
+      ]
+    },
+    {
+      "id": "mask_compose",
+      "from": {
+        "node": "mask_head",
+        "port": "out"
+      },
+      "to": {
+        "node": "compose",
+        "port": "mask"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1330,
+          565
+        ],
+        [
+          1342,
+          565
+        ],
+        [
+          1342,
+          459
+        ],
+        [
+          1355,
+          459
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

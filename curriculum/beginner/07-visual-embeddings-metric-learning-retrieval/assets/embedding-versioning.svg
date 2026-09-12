@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1850 820" role="img" aria-labelledby="title description">
+<title id="title">Blue/green embedding index migration</title>
+<desc id="description">A governed corpus feeds encoder and index version 1 for current traffic while version 2 is re-embedded, built, validated, switched, and later replaces version 1.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1850" height="820" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Blue/green embedding index migration</text>
+<rect x="64" y="100" width="1722" height="656" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Visual retrieval system</text>
+<polyline points="310,386 360,386 360,250 420,250" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="310,434 360,434 360,580 420,580" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="302" y="483" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="360" y="500" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">re-embed</text>
+<polyline points="650,250 770,250" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="650,580 770,580" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="652" y="548" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="710" y="565" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">build</text>
+<polyline points="1020,580 1130,580" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1020,250 1430,250 1430,389 1520,389" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="1212" y="218" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1270" y="235" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">current</text>
+<polyline points="1400,580 1460,580 1460,441 1520,441" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1402" y="503" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1460" y="520" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">approved</text>
+<rect x="90" y="350" width="220" height="120" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="200.0" y="384" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Governed corpus</text>
+<rect x="420" y="190" width="230" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="535.0" y="224" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Encoder v1</text>
+<rect x="420" y="520" width="230" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="535.0" y="554" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Encoder v2</text>
+<rect x="770" y="190" width="250" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="895.0" y="224" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Index v1 · active</text>
+<rect x="770" y="520" width="250" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="895.0" y="554" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Index v2 · green</text>
+<rect x="1130" y="500" width="270" height="160" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1265.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Shadow validation</text>
+<text x="1265.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">task · ANN · filters · drift</text>
+<rect x="1520" y="350" width="260" height="130" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1650.0" y="384" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Atomic alias switch</text>
+<text x="1650.0" y="412" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">monitor · rollback · retire</text>
+</svg>
