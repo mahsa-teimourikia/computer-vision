@@ -124,7 +124,7 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 3. [**Document Intelligence: From Pixels and Layout to Structured Evidence**](curriculum/intermediate/03-document-intelligence/README.md) — mixed-input routing, coordinate contracts, OCR, layout, reading order, tables, forms, multi-page structure, normalization, evidence graphs, verification, template shift, and human review. *(available)*
 4. [**Multimodal Retrieval & RAG: From Evidence Indexing to Grounded Multimodal Answers**](curriculum/intermediate/04-multimodal-retrieval-rag/README.md) — structure-aware multimodal units, lexical/dense/visual/multi-vector indexes, trusted pre-score access control, hybrid retrieval, evidence assembly, claim-level citations, freshness, and retrieval-versus-generation evaluation. *(available)*
 5. [**Video-Language Understanding: From Temporal Evidence to Grounded Video Reasoning**](curriculum/intermediate/05-video-language-understanding/README.md) — presentation-time sampling, aliasing, order-aware representation, temporal grounding, event relations, complete evidence, long-video retrieval, streaming behavior, audio–visual conflicts, and verified temporal citations. *(available)*
-6. **Visual Agents** — typed tools, narrow permissions, budgets, stop conditions, result validation, and observable traces.
+6. [**Visual Agents: From Multimodal Evidence to Bounded Tool-Using Systems**](curriculum/intermediate/06-visual-agents/README.md) — typed multimodal state, allow-listed tools, capability and resource authorization, input/output validation, evidence promotion, budgets, loop detection, recovery, safe escalation, trace evaluation, and held-out source reporting. *(available)*
 
 ## Advanced
 

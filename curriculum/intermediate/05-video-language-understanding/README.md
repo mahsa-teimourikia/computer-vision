@@ -529,4 +529,4 @@ Design a deletion and access-revocation workflow spanning original video/audio, 
 - [Hugging Face VideoMAE documentation](https://huggingface.co/docs/transformers/model_doc/videomae)
 - [PE-AV model card](https://huggingface.co/facebook/pe-av-large)
 
-Next: **Intermediate 06 — Visual Agents**, where timestamped evidence becomes observable state for bounded perception–tool–verification loops.
+Next: [**Intermediate 06 — Visual Agents: From Multimodal Evidence to Bounded Tool-Using Systems**](../06-visual-agents/README.md), where timestamped evidence becomes observable state for bounded perception–tool–verification loops.

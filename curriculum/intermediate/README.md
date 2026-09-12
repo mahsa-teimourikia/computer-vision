@@ -9,7 +9,6 @@ Move from reusable visual perception into multimodal systems that generate, retr
 - [03 · Document Intelligence: From Pixels and Layout to Structured Evidence](03-document-intelligence/README.md) — route digital and scanned pages, preserve coordinates, recover layout and reading order, represent tables/forms/figures, normalize fields, and verify provenance across templates.
 - [04 · Multimodal Retrieval & RAG: From Evidence Indexing to Grounded Multimodal Answers](04-multimodal-retrieval-rag/README.md) — turn structured documents, cells, figures, images, and regions into authorized multimodal indexes; retrieve and assemble sufficient evidence; then verify answers and citations.
 - [05 · Video-Language Understanding: From Temporal Evidence to Grounded Video Reasoning](05-video-language-understanding/README.md) — preserve presentation time through sampling, temporal representation, event grounding, multi-event reasoning, long-video retrieval, streaming state, and verified interval citations.
+- [06 · Visual Agents: From Multimodal Evidence to Bounded Tool-Using Systems](06-visual-agents/README.md) — combine image, document, and video evidence through typed state, proposal-only planning, resource-scoped authorization, validated tools, explicit budgets, safe termination, and multidimensional evaluation.
 
-## Planned progression
-
-6. **Visual Agents** — typed tools, browser/GUI/spatial actions, permissions, budgets, stop conditions, and trace evaluation.
+The Intermediate track is complete. Continue into the Advanced track only after you can preserve these evidence, permission, execution, and termination boundaries.

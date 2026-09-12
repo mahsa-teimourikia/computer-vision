@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 650" role="img" aria-labelledby="title description">
+<title id="title">Tool output becomes fact only after verification</title>
+<desc id="description">A raw tool result passes through envelope validation, postconditions, provenance binding, and task verification before becoming a verified fact or rejection.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="2048" height="650" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Tool output becomes fact only after verification</text>
+<rect x="64" y="100" width="1920" height="460" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Execution status alone does not establish truth</text>
+<polyline points="390,320 460,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="760,320 830,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1130,320 1200,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1500,320 1570,320" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="110" y="260" width="280" height="120" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="250.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Raw tool result</text>
+<rect x="460" y="260" width="300" height="120" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
+<text x="610.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Envelope schema</text>
+<text x="610.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">status + payload + source</text>
+<rect x="830" y="260" width="300" height="120" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
+<text x="980.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Postconditions</text>
+<text x="980.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">bounds · freshness · invariants</text>
+<rect x="1200" y="260" width="300" height="120" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1350.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Provenance bind</text>
+<text x="1350.0" y="322" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">trace event + evidence ID</text>
+<rect x="1570" y="260" width="360" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1750.0" y="294" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Accept / reject /</text>
+<text x="1750.0" y="316" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">uncertain</text>
+<text x="1750.0" y="344" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">fact promotion policy</text>
+</svg>

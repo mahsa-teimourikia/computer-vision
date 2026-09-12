@@ -11,7 +11,7 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The nine complete Beginner courses now lead into five Intermediate courses:
+The nine complete Beginner courses now lead into six Intermediate courses:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
@@ -27,8 +27,9 @@ The nine complete Beginner courses now lead into five Intermediate courses:
 12. [Document Intelligence: From Pixels and Layout to Structured Evidence](curriculum/intermediate/03-document-intelligence/README.md) routes mixed documents through page, OCR, layout, reading-order, table, form, normalization, provenance, verification, source-shift, and review contracts without flattening away evidence.
 13. [Multimodal Retrieval & RAG: From Evidence Indexing to Grounded Multimodal Answers](curriculum/intermediate/04-multimodal-retrieval-rag/README.md) turns pages, cells, figures, images, and regions into authorized multimodal indexes, then measures hybrid retrieval, evidence sufficiency, claim-level citations, freshness, and retrieval-versus-generation failures.
 14. [Video-Language Understanding: From Temporal Evidence to Grounded Video Reasoning](curriculum/intermediate/05-video-language-understanding/README.md) turns timestamped streams into sampled observations, temporal representations, event intervals, multi-event relations, long-video retrieval, verified citations, and bounded streaming decisions.
+15. [Visual Agents: From Multimodal Evidence to Bounded Tool-Using Systems](curriculum/intermediate/06-visual-agents/README.md) turns image, document, and video evidence into typed state, permissioned tool proposals, validated execution, verified facts, bounded recovery, explicit stop decisions, and safe escalation.
 
-All fourteen CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate 01 exposes the common Hugging Face multimodal processor/chat-template/generation path behind an explicit opt-in flag and immutable model revisions. Intermediate 02 uses standard Python, NumPy, pandas, Pillow, and Matplotlib to keep its DAG, tool, verification, and evidence contracts fully observable without an agent framework. Intermediate 03 keeps its synthetic OCR/layout pipeline transparent and places Tesseract, Table Transformer, and PaddleOCR-VL behind revision-pinned, disabled-by-default adapters. Intermediate 04 implements BM25, semantic/visual/multi-vector proxies, RRF, reranking, evidence assembly, ACL checks, and citation verification directly; FAISS, BGE-M3, SigLIP 2, BGE reranking, and ColQwen remain course-local, pinned, and disabled by default. Intermediate 05 implements timestamp-safe sampling, temporal retrieval, interval tools, evidence completeness, citation verification, counterfactuals, and streaming state directly; TorchCodec, VideoMAE, PE-AV, and Qwen3-VL remain governed production extensions or revision-pinned, disabled-by-default adapters.
+All fifteen CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate 01 exposes the common Hugging Face multimodal processor/chat-template/generation path behind an explicit opt-in flag and immutable model revisions. Intermediate 02 uses standard Python, NumPy, pandas, Pillow, and Matplotlib to keep its DAG, tool, verification, and evidence contracts fully observable without an agent framework. Intermediate 03 keeps its synthetic OCR/layout pipeline transparent and places Tesseract, Table Transformer, and PaddleOCR-VL behind revision-pinned, disabled-by-default adapters. Intermediate 04 implements BM25, semantic/visual/multi-vector proxies, RRF, reranking, evidence assembly, ACL checks, and citation verification directly; FAISS, BGE-M3, SigLIP 2, BGE reranking, and ColQwen remain course-local, pinned, and disabled by default. Intermediate 05 implements timestamp-safe sampling, temporal retrieval, interval tools, evidence completeness, citation verification, counterfactuals, and streaming state directly. Intermediate 06 uses standard Python, NumPy, pandas, Pillow, and Matplotlib to keep typed state, tool contracts, authorization, validation, budgets, traces, failure attribution, and held-out evaluation observable; Qwen3-VL, LangGraph, the OpenAI Agents SDK, and MCP remain disabled optional mappings rather than hidden execution dependencies.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -132,7 +133,12 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
-│   └── 05-video-language-understanding/
+│   ├── 05-video-language-understanding/
+│       ├── README.md
+│       ├── lab.ipynb
+│       ├── requirements.txt
+│       └── assets/            # deterministic SVGs + coordinate specs
+│   └── 06-visual-agents/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt

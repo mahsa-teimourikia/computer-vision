@@ -1,0 +1,12 @@
+# Tested together on 2026-09-12 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+pillow==12.3.0
+
+# Optional planner/framework adapters are disabled and belong in isolated environments:
+# transformers + torch for Qwen/Qwen3-VL-8B-Instruct at revision
+# 0c351dd01ed87e9c1b53cbc748cba10e6187ff3b (Apache-2.0 model card),
+# langgraph for durable graph orchestration, or openai-agents for provider-native orchestration.
+# Re-resolve and re-review licenses, transitive code, and security posture before production use.
