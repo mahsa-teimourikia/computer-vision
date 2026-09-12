@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
+<title id="title">Differentiable rendering closes the loop</title>
+<desc id="description">Scene parameters and camera flow through a renderer to a predicted image, loss, gradients, and an updated scene.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1400" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Differentiable rendering closes the loop</text>
+<rect x="64" y="105" width="1272" height="555" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Observed image remains evidence; gradients are an optimization mechanism</text>
+<polyline points="300,348 335,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="555,348 590,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="810,348 845,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1065,348 1100,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1210,410 1210,540 190,540 190,410" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="642" y="528" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="700" y="545" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">next step</text>
+<rect x="80" y="285" width="220" height="125" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="190.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SCENE θ + CAMERA</text>
+<text x="190.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">field or primitives</text>
+<rect x="335" y="285" width="220" height="125" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="445.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">RENDERER</text>
+<text x="445.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">differentiable image formation</text>
+<rect x="590" y="285" width="220" height="125" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="700.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">PREDICTED IMAGE</text>
+<text x="700.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">RGB + optional depth</text>
+<rect x="845" y="285" width="220" height="125" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="955.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">LOSS</text>
+<text x="955.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">compare with observation</text>
+<rect x="1100" y="285" width="220" height="125" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1210.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">GRADIENT + UPDATE</text>
+<text x="1210.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">∂L/∂θ · governed step</text>
+</svg>

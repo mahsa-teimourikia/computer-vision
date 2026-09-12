@@ -1,0 +1,23 @@
+{
+  "version": 1, "id": "volume-rendering-ray", "title": "Discrete volume rendering along one ray", "purpose": "Connect ordered density samples to alpha compositing, color, opacity, and depth.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/volume-rendering-ray.svg", "medium": "documentation and notebook", "alt_text": "A camera ray passes through ordered samples whose density and interval produce alpha, transmittance, weights, rendered color, opacity, and conditional expected depth."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 40, "min_layer_gap": 80, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "ray", "label": "Front-to-back order is part of the computation", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "camera", "group": "ray", "label": "CAMERA RAY", "subtitle": "o + t d · near/far", "type": "service", "bounds": {"x": 80, "y": 285, "width": 210, "height": 125}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "samples", "group": "ray", "label": "ORDERED SAMPLES", "subtitle": "tᵢ · σᵢ · cᵢ · δᵢ", "type": "data", "bounds": {"x": 330, "y": 285, "width": 220, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "weights", "group": "ray", "label": "ALPHA + WEIGHTS", "subtitle": "αᵢ · Tᵢ · wᵢ", "type": "agent", "bounds": {"x": 590, "y": 285, "width": 220, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "render", "group": "ray", "label": "RENDERED RGB", "subtitle": "Σ wᵢcᵢ + background", "type": "action", "bounds": {"x": 850, "y": 285, "width": 220, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "evidence", "group": "ray", "label": "DEPTH + OPACITY", "subtitle": "conditional · unknown allowed", "type": "service", "bounds": {"x": 1110, "y": 285, "width": 210, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "camera_samples", "from": {"node": "camera", "port": "right"}, "to": {"node": "samples", "port": "left"}, "kind": "primary", "route": [[290, 348], [330, 348]]},
+    {"id": "samples_weights", "from": {"node": "samples", "port": "right"}, "to": {"node": "weights", "port": "left"}, "kind": "primary", "route": [[550, 348], [590, 348]]},
+    {"id": "weights_render", "from": {"node": "weights", "port": "right"}, "to": {"node": "render", "port": "left"}, "kind": "primary", "route": [[810, 348], [850, 348]]},
+    {"id": "render_evidence", "from": {"node": "render", "port": "right"}, "to": {"node": "evidence", "port": "left"}, "kind": "primary", "route": [[1070, 348], [1110, 348]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}

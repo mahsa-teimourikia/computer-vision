@@ -1,0 +1,21 @@
+{
+  "version": 1, "id": "camera-split", "title": "Split cameras before sampling rays", "purpose": "Prevent ray leakage and separate interpolation from extrapolation.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/camera-split.svg", "medium": "documentation and notebook", "alt_text": "Site A training cameras precede Site B development interpolation and a frozen policy, followed by Site C reporting-only interpolation and extrapolation cameras."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 45, "min_layer_gap": 80, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "splits", "label": "No Site C camera or ray may change the frozen policy", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "site_a", "group": "splits", "label": "SITE A", "subtitle": "training cameras\noptimize scene", "type": "data", "bounds": {"x": 90, "y": 270, "width": 245, "height": 155}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "site_b", "group": "splits", "label": "SITE B", "subtitle": "development cameras\ninterpolation only", "type": "service", "bounds": {"x": 405, "y": 270, "width": 245, "height": 155}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "freeze", "group": "splits", "label": "FREEZE + HASH", "subtitle": "bounds · gates · versions", "type": "action", "bounds": {"x": 720, "y": 270, "width": 245, "height": 155}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "site_c", "group": "splits", "label": "SITE C", "subtitle": "report interpolation +\nextrapolation separately", "type": "agent", "bounds": {"x": 1035, "y": 270, "width": 245, "height": 155}, "ports": {"left": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "a_b", "from": {"node": "site_a", "port": "right"}, "to": {"node": "site_b", "port": "left"}, "kind": "primary", "route": [[335, 348], [405, 348]]},
+    {"id": "b_freeze", "from": {"node": "site_b", "port": "right"}, "to": {"node": "freeze", "port": "left"}, "kind": "primary", "route": [[650, 348], [720, 348]]},
+    {"id": "freeze_c", "from": {"node": "freeze", "port": "right"}, "to": {"node": "site_c", "port": "left"}, "kind": "primary", "route": [[965, 348], [1035, 348]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}

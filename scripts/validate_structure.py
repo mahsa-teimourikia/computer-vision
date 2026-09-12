@@ -71,6 +71,7 @@ def validate_hub() -> None:
         "Video-Language Understanding",
         "Visual Agents",
         "3D Vision &amp; Spatial Intelligence",
+        "Neural Rendering &amp; 3D Scene Representations",
         "oneplusi.io",
     ]
     for text in required:

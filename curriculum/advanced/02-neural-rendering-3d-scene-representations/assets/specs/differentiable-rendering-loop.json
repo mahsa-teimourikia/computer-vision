@@ -1,0 +1,24 @@
+{
+  "version": 1, "id": "differentiable-rendering-loop", "title": "Differentiable rendering closes the loop", "purpose": "Show how rendered observations produce gradients that update a scene.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/differentiable-rendering-loop.svg", "medium": "documentation and notebook", "alt_text": "Scene parameters and camera flow through a renderer to a predicted image, loss, gradients, and an updated scene."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 40, "min_layer_gap": 80, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "loop", "label": "Observed image remains evidence; gradients are an optimization mechanism", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "scene", "group": "loop", "label": "SCENE θ + CAMERA", "subtitle": "field or primitives", "type": "agent", "bounds": {"x": 80, "y": 285, "width": 220, "height": 125}, "ports": {"right": {"side": "right", "offset": 0.5}, "bottom": {"side": "bottom", "offset": 0.5}}},
+    {"id": "renderer", "group": "loop", "label": "RENDERER", "subtitle": "differentiable image formation", "type": "service", "bounds": {"x": 335, "y": 285, "width": 220, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "prediction", "group": "loop", "label": "PREDICTED IMAGE", "subtitle": "RGB + optional depth", "type": "data", "bounds": {"x": 590, "y": 285, "width": 220, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "loss", "group": "loop", "label": "LOSS", "subtitle": "compare with observation", "type": "action", "bounds": {"x": 845, "y": 285, "width": 220, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "gradient", "group": "loop", "label": "GRADIENT + UPDATE", "subtitle": "∂L/∂θ · governed step", "type": "agent", "bounds": {"x": 1100, "y": 285, "width": 220, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "bottom": {"side": "bottom", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "scene_renderer", "from": {"node": "scene", "port": "right"}, "to": {"node": "renderer", "port": "left"}, "kind": "primary", "route": [[300, 348], [335, 348]]},
+    {"id": "renderer_prediction", "from": {"node": "renderer", "port": "right"}, "to": {"node": "prediction", "port": "left"}, "kind": "primary", "route": [[555, 348], [590, 348]]},
+    {"id": "prediction_loss", "from": {"node": "prediction", "port": "right"}, "to": {"node": "loss", "port": "left"}, "kind": "primary", "route": [[810, 348], [845, 348]]},
+    {"id": "loss_gradient", "from": {"node": "loss", "port": "right"}, "to": {"node": "gradient", "port": "left"}, "kind": "primary", "route": [[1065, 348], [1100, 348]]},
+    {"id": "gradient_scene", "from": {"node": "gradient", "port": "bottom"}, "to": {"node": "scene", "port": "bottom"}, "kind": "secondary", "label": "next step", "label_at": [700, 545], "route": [[1210, 410], [1210, 540], [190, 540], [190, 410]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}
