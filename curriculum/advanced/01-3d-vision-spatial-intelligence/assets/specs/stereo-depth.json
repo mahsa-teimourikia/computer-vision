@@ -1,0 +1,391 @@
+{
+  "version": 1,
+  "id": "stereo-depth",
+  "title": "Rectified disparity determines z-depth",
+  "purpose": "Show stereo disparity and depth uncertainty.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/stereo-depth.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A left and right pixel on the same image row form disparity d; known focal length and baseline yield z-depth, with uncertainty growing at small disparity."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Show stereo disparity and depth uncertainty.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "left",
+      "label": "LEFT PIXEL\n(uL, v)",
+      "subtitle": "rectified",
+      "type": "service",
+      "bounds": {
+        "x": 65,
+        "y": 280,
+        "width": 210,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "right",
+      "label": "RIGHT PIXEL\n(uR, v)",
+      "subtitle": "same row",
+      "type": "service",
+      "bounds": {
+        "x": 350,
+        "y": 280,
+        "width": 210,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "disparity",
+      "label": "DISPARITY\nd = uL \u2212 uR",
+      "subtitle": "pixels",
+      "type": "agent",
+      "bounds": {
+        "x": 650,
+        "y": 270,
+        "width": 230,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "depth",
+      "label": "Z-DEPTH\nZ = fB / d",
+      "subtitle": "metres if B is m",
+      "type": "action",
+      "bounds": {
+        "x": 970,
+        "y": 270,
+        "width": 230,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "uncertainty",
+      "label": "UNCERTAINTY\n\u03c3Z \u221d 1/d\u00b2",
+      "subtitle": "far range is sensitive",
+      "type": "data",
+      "bounds": {
+        "x": 970,
+        "y": 500,
+        "width": 230,
+        "height": 105
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "left",
+        "port": "right"
+      },
+      "to": {
+        "node": "right",
+        "port": "left"
+      },
+      "route": [
+        [
+          275,
+          340
+        ],
+        [
+          350,
+          340
+        ]
+      ],
+      "label": "correspond",
+      "kind": "primary",
+      "label_at": [
+        312,
+        331
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "right",
+        "port": "right"
+      },
+      "to": {
+        "node": "disparity",
+        "port": "left"
+      },
+      "route": [
+        [
+          560,
+          340
+        ],
+        [
+          650,
+          340
+        ]
+      ],
+      "label": "subtract",
+      "kind": "primary",
+      "label_at": [
+        605,
+        331
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "disparity",
+        "port": "right"
+      },
+      "to": {
+        "node": "depth",
+        "port": "left"
+      },
+      "route": [
+        [
+          880,
+          340
+        ],
+        [
+          970,
+          340
+        ]
+      ],
+      "label": "f, B",
+      "kind": "primary",
+      "label_at": [
+        925,
+        331
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "depth",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "uncertainty",
+        "port": "top"
+      },
+      "route": [
+        [
+          1085,
+          410
+        ],
+        [
+          1085,
+          500
+        ]
+      ],
+      "label": "differentiate",
+      "kind": "secondary",
+      "label_at": [
+        1085,
+        446
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Rectified disparity determines z-depth",
+    "description": "A left and right pixel on the same image row form disparity d; known focal length and baseline yield z-depth, with uncertainty growing at small disparity."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

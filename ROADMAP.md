@@ -128,16 +128,14 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 
 ## Advanced
 
-1. **Video understanding and tracking** — temporal sampling, motion, identity association, and drift.
-2. **Vision transformers** — tokenization, attention, scaling behavior, and hybrid architectures.
-3. **Self-supervised visual learning** — pretext tasks, contrastive objectives, masked modeling, transfer, and collapse prevention.
-4. **Vision foundation models** — promptable and open-vocabulary vision, foundation segmentation, embeddings, adaptation, and evaluation.
-5. **Multimodal vision-language systems** — grounding, multimodal reasoning and RAG, video LLMs, visual agents, and evaluation.
-6. **Spatial intelligence** — depth, geometry, reconstruction, Gaussian splatting, generative 3D, 4D scenes, and spatial reasoning.
-7. **Embodied intelligence** — vision-language-action, robot learning, egocentric vision, world models, simulation, and planning.
-8. **Robustness and domain adaptation** — corruptions, out-of-distribution inputs, adaptation, and uncertainty.
-9. **Efficient inference** — profiling, batching, quantization, pruning, compilation, and edge constraints.
-10. **Production operations** — serving, observability, drift detection, rollback, and incident response.
+1. [**3D Vision & Spatial Intelligence: From Camera Geometry to Metric Scene Understanding**](curriculum/advanced/01-3d-vision-spatial-intelligence/README.md) — coordinate and unit contracts, camera geometry, calibration, epipolar verification, stereo uncertainty, triangulation, pose, reconstruction, point clouds, representation choice, metric spatial reasoning, and source-held-out evaluation. *(available)*
+2. **Neural rendering and 3D representations** — radiance fields, Gaussian splatting, geometry/appearance separation, view synthesis, and editability.
+3. **Advanced video and world models** — long-range dynamics, predictive representations, 4D scenes, and action relevance.
+4. **Multimodal adaptation** — parameter-efficient tuning, domain adaptation, continual learning, and forgetting.
+5. **Embodied perception** — egocentric observation, active perception, VLA systems, simulation, and planning.
+6. **Robustness and uncertainty** — corruptions, distribution shift, geometric confidence, calibration, and failure recovery.
+7. **Efficient spatial inference** — profiling, view/token budgets, quantization, compilation, streaming memory, and edge constraints.
+8. **Production spatial operations** — calibration registries, frame graphs, observability, drift, rollback, and incident response.
 
 ## Enterprise
 

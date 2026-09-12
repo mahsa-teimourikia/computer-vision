@@ -1361,6 +1361,107 @@ def test_intermediate_06_contains_the_declared_bounded_visual_agent_lab():
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
 
 
+def test_advanced_01_contains_the_declared_spatial_intelligence_lab():
+    course = Path("curriculum/advanced/01-3d-vision-spatial-intelligence")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "FramedPoints",
+        "RigidTransform",
+        "CameraModel",
+        "make_transform",
+        "invert_rigid",
+        "transform_points",
+        "project_points",
+        "pixel_ray",
+        "backproject_z",
+        "distort_normalized",
+        "estimate_camera_dlt",
+        "error_summary",
+        "fundamental_from_cameras",
+        "sampson_error",
+        "eight_point_F",
+        "ransac_fundamental",
+        "disparity_to_z",
+        "stereo_sigma_z",
+        "triangulate_dlt",
+        "triangulation_monte_carlo",
+        "align_scale_shift",
+        "relative_depth_metrics",
+        "metric_depth_metrics",
+        "spearman_rank_correlation",
+        "pairwise_ordering_accuracy",
+        "oracle_aligned_shape_RMSE_m",
+        "edge_RMSE_m",
+        "pose_residual",
+        "rotation_error_deg",
+        "point_bundle_residual",
+        "cloud_metrics",
+        "symmetric_mean_nn_distance_m",
+        "voxelize",
+        "fit_plane_svd",
+        "zbuffer",
+        "clearance_trials",
+        "teaching_interval_under_point_noise_model",
+        "calibration covariance",
+        "systematic scale error",
+        "DEMONSTRATION_CLEARANCE_LIMIT_M",
+        "Site A",
+        "Site B",
+        "Site C",
+        "development_only",
+        "reporting_only_no_changes",
+        "FROZEN_POLICY",
+        "POLICY_HASH",
+        "evaluate_source",
+        "CV_ENABLE_DEPTH_ANYTHING_V2",
+        "CV_ENABLE_UNIDEPTH",
+        "CV_ENABLE_VGGT",
+        "CV_ENABLE_VGGT_OMEGA",
+        "trust_remote_code",
+        "spatial_intelligence_evidence.json",
+        "spatial_tool_decision.csv",
+    ]:
+        assert required in source
+
+    assert "1000 mm points plus a metre transform must be rejected" in source
+    assert '"prediction": "relative raw (not metres)", **depth_metrics' not in source
+    assert '"chamfer_m"' not in source
+
+    assert "shape evaluation after ground-truth alignment; not metric zero-shot accuracy" in source_lower
+    assert "occluded/unknown, not free space" in source_lower
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_advanced_01_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/01-3d-vision-spatial-intelligence/assets")
+    expected = {
+        "coordinate-frames.svg",
+        "pinhole-projection.svg",
+        "epipolar-geometry.svg",
+        "stereo-depth.svg",
+        "triangulation-uncertainty.svg",
+        "sfm-pipeline.svg",
+        "representation-landscape.svg",
+        "spatial-evidence-pipeline.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
+
+
 def test_intermediate_06_diagrams_are_reusable_and_accessible():
     assets = Path("curriculum/intermediate/06-visual-agents/assets")
     expected = {
