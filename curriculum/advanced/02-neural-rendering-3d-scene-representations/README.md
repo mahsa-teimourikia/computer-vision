@@ -14,7 +14,7 @@ After this course, you should be able to:
 
 - distinguish explicit primitives, implicit functions, and hybrid learned scene representations;
 - generate world-space camera rays with declared intrinsics, extrinsics, frame, unit, near bound, and far bound;
-- derive discrete volume-rendering alpha, transmittance, weights, color, opacity, and expected depth;
+- derive discrete volume-rendering alpha, transmittance, weights, color, opacity, and opacity-conditioned expected ray distance;
 - implement and assertion-test front-to-back compositing without a rendering framework;
 - explain radiance fields, density, view-dependent color, Fourier features, hierarchical sampling, and empty-space skipping;
 - train a bounded differentiable rendering parameter through an observable loss and gradient;
@@ -24,7 +24,7 @@ After this course, you should be able to:
 - explain NeRF failure modes including floaters, sparse-view ambiguity, pose error, exposure shift, and excessive appearance flexibility;
 - construct an anisotropic 3D Gaussian from position, rotation, scale, opacity, and appearance;
 - project a 3D covariance into a 2D ellipse with a camera-space Jacobian;
-- implement a small CPU splatter and connect its alpha compositing to volume rendering;
+- implement a small CPU splatter, label its output as camera-axis z-depth, and connect its alpha compositing to volume rendering without conflating the two depth conventions;
 - explain Gaussian densification, splitting, cloning, pruning, opacity reset, spherical harmonics, compression, and editability;
 - compare NeRF-style fields with 3D Gaussian Splatting against quality, geometry, speed, memory, portability, and governance requirements;
 - distinguish static reconstruction from dynamic, language-aligned, generative, and editable scene research; and
@@ -146,7 +146,7 @@ $T(t)$ acts like the fraction of ray contribution not already attenuated under t
 
 ## 8. Discrete volume rendering
 
-![Samples along one camera ray become alpha, transmittance, compositing weights, RGB, opacity, and expected depth.](assets/volume-rendering-ray.svg)
+![Samples along one camera ray become alpha, transmittance, compositing weights, RGB, opacity, and expected ray distance.](assets/volume-rendering-ray.svg)
 
 For ordered samples $t_i$ with interval $\delta_i$,
 
@@ -165,15 +165,23 @@ $$
 
 The notebook implements this directly and tests an empty/empty/opaque-red/empty ray plus two semi-transparent layers. Ordering matters.
 
-## 9. Rendered depth is conditional evidence
+## 9. Ray distance and camera z-depth are different contracts
 
-Expected depth is often computed as
+Because the notebook normalizes each world-space ray direction $d_w$, its parameter $t$ is metric distance along the ray. The volume renderer therefore computes an expected **ray distance**:
 
 $$
-\hat D=\frac{\sum_iw_it_i}{\sum_iw_i},
+\hat D_{ray}=\frac{\sum_iw_it_i}{\sum_iw_i},
 $$
 
-when accumulated opacity is nonzero. Broad or multimodal density can place this expectation between surfaces. A low-opacity ray must return `unknown` rather than an unquestioned distance. Median depth, expected depth, maximum-weight depth, and first-threshold depth answer different questions.
+when accumulated opacity is nonzero. Broad or multimodal density can place this expectation between surfaces. A low-opacity ray must return `unknown` rather than an unquestioned distance. Median distance, expected distance, maximum-weight distance, and first-threshold distance answer different questions.
+
+Camera-axis z-depth is a different quantity. If the normalized ray direction expressed in the camera frame is $d_c=R_{cw}d_w$, then a sample at ray distance $t$ has
+
+$$
+z_c=t(d_c)_z.
+$$
+
+Only the principal ray has $t=z_c$. The notebook names volume output `expected_ray_distance_m` and Gaussian-splatter output `expected_camera_z_m`. A downstream comparison must request one convention and explicitly convert the other through camera geometry.
 
 ## 10. Photometric training and differentiability
 
@@ -222,11 +230,20 @@ The default notebook implements PSNR and a clearly labelled global SSIM teaching
 
 When reference geometry exists, evaluate depth, points, normals, or surfaces separately. Reuse Advanced 01 contracts: metric RMSE/AbsRel where valid, directional accuracy and completeness, explicitly defined symmetric mean nearest-neighbour distance, F-score at a stated tolerance, and slices by range, view support, material, boundary, and source.
 
+The held-out notebook path compares reference and predicted camera-z arrays over jointly finite pixels:
+
+$$
+\mathrm{camera\text{-}z\ RMSE}
+=\sqrt{\frac{1}{|V|}\sum_{p\in V}\left(\hat z_c(p)-z_c(p)\right)^2},
+$$
+
+where $V$ is the declared joint-valid set. It reports `joint_valid_pixels` and separately measures `support_coverage`: the fraction of finite reference-surface pixels that also have finite predicted camera z. Excluding unsupported pixels from RMSE therefore cannot silently turn missing geometry into a strong score.
+
 ## 15. Signature failure: good RGB, bad geometry
 
-![Two density layouts render the same color but imply different depth, so photometric agreement alone cannot certify geometry.](assets/geometry-appearance-disagreement.svg)
+![Two density layouts render the same color but imply different ray distance, so photometric agreement alone cannot certify geometry.](assets/geometry-appearance-disagreement.svg)
 
-An opaque red layer at two metres and an opaque red layer at four metres can render almost the same red pixel. Their expected depths disagree by two metres. The notebook assertion-tests this counterexample and produces separate photometric and depth metrics.
+An opaque red layer at two metres and an opaque red layer at four metres can render almost the same red pixel. Their expected ray distances disagree by two metres. The notebook assertion-tests this counterexample and produces separate photometric and range metrics. A second held-out-camera experiment reuses the exact same RGB prediction with two predicted camera-z arrays: both pass the appearance gate, while only the geometrically supported representation passes camera-z RMSE.
 
 > **Course rule:** novel-view appearance quality and metric geometry quality are separate release gates.
 
@@ -234,7 +251,7 @@ An opaque red layer at two metres and an opaque red layer at four metres can ren
 
 Pose error moves rays. Exposure variation changes target colors. A flexible field may create blurred density, floaters, duplicated surfaces, or per-view appearance to reduce RGB loss. Neural rendering does not make calibration errors disappear; it may hide them.
 
-The notebook perturbs a held-out camera and compares pixel reprojection, PSNR, and geometry error. It also shows that per-view color correction can improve photometric fit without changing the wrong depth.
+The notebook perturbs a held-out camera and compares pixel reprojection, PSNR, and geometry error. It also shows that per-view color correction can improve photometric fit without changing the wrong geometry.
 
 ## 17. Floaters and unsupported density
 
@@ -286,7 +303,7 @@ $$
 \Sigma_{2D}=JW\Sigma_{3D}W^TJ^T.
 $$
 
-Near-plane clipping, numerical conditioning, antialiasing, distortion, and camera models complicate production rasterizers. The notebook computes this projection and visualizes the eigenvectors of the resulting ellipse.
+Near-plane clipping, numerical conditioning, antialiasing, distortion, and camera models complicate production rasterizers. The notebook computes this projection, explicitly returns the mean's `camera_z_m`, and visualizes the eigenvectors of the resulting ellipse.
 
 ## 21. Splatting and alpha compositing
 
@@ -297,7 +314,7 @@ C(p)=\sum_iT_i\alpha_i(p)c_i,
 \qquad T_i=\prod_{j<i}(1-\alpha_j(p)).
 $$
 
-The CPU notebook renderer is intentionally tiny and transparent. It is a semantic test of projection, ellipse evaluation, depth ordering, and opacity—not a performance claim about gsplat or the original CUDA rasterizer.
+The CPU notebook renderer is intentionally tiny and transparent. It returns opacity-conditioned `expected_camera_z_m`: the weighted camera-axis z-coordinate of contributing primitive means. It is a semantic test of projection, ellipse evaluation, depth ordering, and opacity—not a performance claim about gsplat or the original CUDA rasterizer. Mean-depth sorting is a teaching approximation; it is not proof of pixel-exact parity with production 3DGS rasterization.
 
 ## 22. Spherical harmonics and view-dependent appearance
 
@@ -314,7 +331,7 @@ The original 3DGS process interleaves parameter optimization with density contro
 - prune very low-opacity, oversized, invalid, or unsupported primitives;
 - optionally reset opacity to prevent early saturation from blocking redistribution.
 
-These are state-changing topology operations. Record thresholds, step, source, parent IDs, random seed, before/after count, and reason code. The notebook applies a deterministic miniature lifecycle and verifies lineage.
+These are state-changing topology operations. Record thresholds, step, source, parent IDs, random seed, before/after count, and reason code. The notebook applies a deterministic miniature lifecycle and verifies lineage. Its split operation uses a clearly named `split_child_opacity` initialization; it does **not** claim to implement the separate global opacity-reset lifecycle.
 
 ## 24. Compression, streaming, and scale
 
@@ -386,7 +403,8 @@ No method is labelled “state of the art” without a task, split, metric, hard
 | --- | --- | --- |
 | camera / data | reprojection, pose perturbation, exposure statistics, capture coverage | camera, trajectory region, source, resolution |
 | appearance | PSNR, standard SSIM, optional LPIPS, failure examples | interpolation vs extrapolation, material, edge, exposure |
-| opacity / depth | accumulated opacity, expected/median depth, RMSE, unknown rate | view support, range, boundary, multimodal ray |
+| ray rendering | accumulated opacity, expected/median ray distance, unknown rate | view support, range, boundary, multimodal ray |
+| held-out camera geometry | camera-z RMSE from reference and predicted arrays, support coverage | interpolation vs extrapolation, camera, source |
 | geometry | accuracy, completeness, symmetric mean NN distance, F-score, normal error | range, surface orientation, support, source |
 | Gaussian state | primitive count, invalid covariance, opacity distribution, scale tails | lifecycle step, region, lineage |
 | systems | train/render time, warm/cold latency, memory, artifact size, throughput | resolution, view count, hardware, precision |
@@ -399,7 +417,7 @@ No method is labelled “state of the art” without a task, split, metric, hard
 | rays split across train/test from one camera | suspiciously high held-out pixel score | split camera/capture identities first |
 | wrong pose or intrinsics | reprojection shift, blur, floaters, duplicated structure | quarantine capture; recalibrate or jointly refine with limits |
 | bounds clip or waste | missing surface or low occupied-sample ratio | re-estimate bounds on development data only |
-| low opacity depth | numerical depth with little support | return unknown/review |
+| low-support distance or depth | numerical range/z value with little support | return unknown/review |
 | RGB–geometry disagreement | good PSNR, poor metric depth/surface | fail geometry gate independently |
 | exposure absorbed as geometry | per-view improvement but unstable surface | model appearance explicitly and inspect geometry |
 | over-flexible directional color | high training fit, weak view transfer | regularize capacity and use held-out directions |
@@ -419,7 +437,7 @@ capture registry + immutable calibration
   → monitored viewer or bounded downstream consumer
 ```
 
-Persist capture IDs, camera model and calibration hashes, pose source, split role, bounds, code revisions, environment, renderer settings, random seeds, input checksums, loss history, topology events, metrics and slices, artifact checksum, license review, decision, and reviewer. Do not log private imagery more broadly than the approved retention policy permits.
+Persist capture IDs, camera model and calibration hashes, pose source, split role, bounds, explicit ray-distance and camera-z contracts, code revisions, environment, renderer settings, random seeds, input checksums, loss history, topology events, metrics and slices, artifact checksum, license review, decision, and reviewer. Do not log private imagery more broadly than the approved retention policy permits.
 
 ## 33. Production upgrade path
 
@@ -428,7 +446,7 @@ Persist capture IDs, camera model and calibration hashes, pose source, split rol
 | synthetic static scene | consented/versioned capture, privacy controls, transient-object policy |
 | exact cameras | calibration registry, pose QA, synchronization, rolling-shutter model |
 | NumPy ray renderer | validated CUDA kernels, numeric parity fixtures, device/error handling |
-| tiny splatter | tiled culling/sorting, antialiasing, camera-model parity, memory budgets |
+| mean-z-sorted tiny splatter | tile/intersection-aware production ordering, antialiasing, camera-model parity, memory budgets |
 | one-process artifact | job isolation, checkpoints, idempotency, retry/timeout policy, lineage store |
 | global teaching SSIM | standard locked implementation and metric versioning |
 | point-noise examples | validated uncertainty model and coverage study |
@@ -442,7 +460,7 @@ The notebook runs in this order:
 1. declare camera, ray, scene, source, and unit contracts;
 2. generate rays and intersect a metric scene box;
 3. encode positions and implement volume rendering;
-4. assertion-test known compositing answers and opacity-aware depth;
+4. assertion-test known compositing answers and opacity-aware ray distance;
 5. check a differentiable density update;
 6. compare uniform, hierarchical, and occupied sampling;
 7. enforce camera-held-out Site A/B/C roles;
@@ -451,7 +469,7 @@ The notebook runs in this order:
 10. project anisotropic Gaussians and render a tiny splat scene;
 11. apply lineage-preserving densification and pruning;
 12. compare field/splat cost and evidence contracts;
-13. freeze policy on Site B, report Site C, and save governed artifacts; and
+13. compute camera-z RMSE and support coverage from rendered arrays, demonstrate a same-RGB pass/fail geometry ablation, freeze policy on Site B, report Site C, and save governed artifacts; and
 14. inspect disabled optional integrations and the production upgrade map.
 
 ## 35. Explain without code
@@ -461,19 +479,20 @@ You should now be able to answer:
 1. Why does differentiable rendering not guarantee a unique scene?
 2. Why are near/far bounds part of the model contract?
 3. What do density, alpha, transmittance, and a compositing weight each mean?
-4. Why can expected depth lie where no physical surface exists?
+4. Why can expected ray distance lie where no physical surface exists?
 5. Why must test splits happen by camera rather than ray?
 6. Why can high PSNR coexist with wrong metric geometry?
 7. How can pose or exposure errors become floaters or blurred density?
-8. What changes when a radiance field becomes an explicit Gaussian set?
-9. Why parameterize covariance through rotation and scale?
-10. What evidence should justify densification or pruning?
-11. Why can more spherical-harmonic capacity reduce geometry identifiability?
-12. Why is a fast, beautiful viewer insufficient deployment evidence?
+8. What is the difference between expected ray distance and camera-axis z-depth, and how are they converted?
+9. What changes when a radiance field becomes an explicit Gaussian set?
+10. Why parameterize covariance through rotation and scale?
+11. What evidence should justify densification or pruning?
+12. Why can more spherical-harmonic capacity reduce geometry identifiability?
+13. Why is a fast, beautiful viewer insufficient deployment evidence?
 
 ## 36. Exercises
 
-- **Implementation:** add median rendered depth and compare it with expected and maximum-weight depth on a bimodal ray.
+- **Implementation:** add median ray distance and compare it with expected and maximum-weight ray distance on a bimodal ray.
 - **Diagnosis:** inject a crop/intrinsics mismatch and attribute the error before changing the scene.
 - **Experiment:** sweep near/far bounds and report occupied-sample ratio, rendering error, and runtime together.
 - **Geometry:** add a surface-normal metric and find a scene with good PSNR but poor normals.

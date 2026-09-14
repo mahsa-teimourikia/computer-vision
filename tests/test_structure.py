@@ -1494,10 +1494,13 @@ def test_advanced_02_contains_the_declared_neural_rendering_lab():
         "CameraModel",
         "RayBundle",
         "generate_rays",
+        "ray_distance_to_camera_z",
+        "depth_conversion_report",
         "ray_box_intersections",
         "positional_encoding",
         "volume_render",
-        "min_opacity_for_depth",
+        "min_opacity_for_ray_distance",
+        "expected_ray_distance_m",
         "scalar_loss_and_gradient",
         "numeric=",
         "coarse-guided fine samples",
@@ -1515,8 +1518,12 @@ def test_advanced_02_contains_the_declared_neural_rendering_lab():
         "GaussianPrimitive",
         "project_gaussian",
         "splat_render",
+        "expected_camera_z_m",
+        '"depth_convention":"camera_axis_z"',
         "sh_degree1_teaching",
         "apply_density_control",
+        "split_child_opacity",
+        '"global_opacity_reset_implemented":False',
         "clone",
         "split",
         "prune",
@@ -1525,6 +1532,19 @@ def test_advanced_02_contains_the_declared_neural_rendering_lab():
         "p90_ms",
         "DEMONSTRATION_POLICY",
         "FROZEN_POLICY_HASH",
+        "camera_z_rmse",
+        "np.sqrt(np.mean",
+        "surface_support_coverage",
+        "joint_valid_pixels",
+        "reference_surface_pixels",
+        "camera_z_RMSE_m",
+        "support_coverage",
+        "heldout_representation_comparison",
+        "ablation_bad_z",
+        "B_wrong_geometry_same_RGB",
+        '"appearance_gate"',
+        '"geometry_gate"',
+        '"support_gate"',
         "CV_ENABLE_NERFSTUDIO=False",
         "CV_ENABLE_GSPLAT=False",
         "CV_ENABLE_INSTANT_NGP=False",
@@ -1544,6 +1564,13 @@ def test_advanced_02_contains_the_declared_neural_rendering_lab():
     assert "not standard ssim" in source_lower
     assert "not nerf or 3dgs benchmark" in source_lower
     assert "appearance gain cannot compensate" in source_lower
+    assert "mean-depth sorting is a teaching approximation" in source_lower
+    assert '"expected_depth_m"' not in source
+    assert '"depth_RMSE_m"' not in source
+    assert "depth_error_m=" not in source
+    assert "opacity=max(" not in source
+    assert "opacity_reset_to" not in source
+    assert "camera_depth_m" not in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")

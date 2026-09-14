@@ -11,8 +11,8 @@
 <text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Topology changes require deterministic thresholds, reasons, and parent lineage</text>
 <polyline points="300,350 335,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <polyline points="555,350 590,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<polyline points="810,350 845,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<polyline points="1065,350 1100,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="810,350 835,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1075,350 1100,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <rect x="80" y="285" width="220" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
 <text x="190.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">PRIMITIVE STATE</text>
 <text x="190.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">gradient · scale · opacity</text>
@@ -22,9 +22,9 @@
 <rect x="590" y="285" width="220" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
 <text x="700.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">CLONE / SPLIT</text>
 <text x="700.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">add localized capacity</text>
-<rect x="845" y="285" width="220" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
-<text x="955.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">PRUNE / RESET</text>
-<text x="955.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">remove or reopen support</text>
+<rect x="835" y="285" width="240" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="955.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">PRUNE / OPTIONAL RESET</text>
+<text x="955.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">separate lifecycle actions</text>
 <rect x="1100" y="285" width="220" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
 <text x="1210.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">UPDATED SCENE</text>
 <text x="1210.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">IDs · parents · reasons</text>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
 <title id="title">Discrete volume rendering along one ray</title>
-<desc id="description">A camera ray passes through ordered samples whose density and interval produce alpha, transmittance, weights, rendered color, opacity, and conditional expected depth.</desc>
+<desc id="description">A camera ray passes through ordered samples whose density and interval produce alpha, transmittance, weights, rendered color, opacity, and conditional expected ray distance.</desc>
 <defs>
 <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
 <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
@@ -12,7 +12,7 @@
 <polyline points="290,348 330,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <polyline points="550,348 590,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <polyline points="810,348 850,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<polyline points="1070,348 1110,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1070,348 1090,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <rect x="80" y="285" width="210" height="125" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
 <text x="185.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">CAMERA RAY</text>
 <text x="185.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">o + t d · near/far</text>
@@ -25,7 +25,7 @@
 <rect x="850" y="285" width="220" height="125" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
 <text x="960.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">RENDERED RGB</text>
 <text x="960.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">Σ wᵢcᵢ + background</text>
-<rect x="1110" y="285" width="210" height="125" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
-<text x="1215.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">DEPTH + OPACITY</text>
-<text x="1215.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">conditional · unknown allowed</text>
+<rect x="1090" y="285" width="230" height="125" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1205.0" y="319" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">RAY DISTANCE + OPACITY</text>
+<text x="1205.0" y="347" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">conditional · unknown allowed</text>
 </svg>
