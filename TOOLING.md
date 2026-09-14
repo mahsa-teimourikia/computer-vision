@@ -164,6 +164,8 @@ Advanced 01 keeps the core path in NumPy/SciPy and treats OpenCV, COLMAP, Open3D
 
 Advanced 02 implements calibrated ray construction, discrete volume compositing, analytic gradient checks, camera-level splits, appearance-versus-geometry counterexamples, 3D-to-2D Gaussian projection, deterministic CPU splatting, density-control lineage, storage estimates, and tail timings directly with NumPy/SciPy. Instant-NGP, the original 3D Gaussian Splatting implementation, Nerfstudio, gsplat, and PyTorch3D are revision-pinned, disabled optional mappings. Their headline speed or quality is never substituted for a matched target-hardware benchmark, independent geometry evaluation, or license and artifact review.
 
+Advanced 03 implements typed state/action/observation contracts, a deterministic simulator, persistent object memory, scikit-learn Ridge transition proxies, open-loop horizon evaluation, stochastic-mode checks, counterfactuals, external physical invariants, and bounded planning directly with standard CPU libraries. DreamerV3 is an MIT-licensed latent-dynamics case study. Cosmos 3 is optional under OpenMDW-1.1 and requires model-card, hardware, guardrail, data, and downstream-license review. Dynamic 3D Gaussians has mixed licensing because required rasterizer and adapted 3DGS components carry restrictive Inria terms. Genie 3 is an official closed/research-system case study, not an executable dependency. None of these systems substitutes for held-out action, dynamics, support, planning, and sim-to-real evidence.
+
 ## Embodied and simulation tooling
 
 | Tool | Best fit | Constraints to review |

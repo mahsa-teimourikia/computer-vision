@@ -1,0 +1,286 @@
+{
+  "version": 1,
+  "id": "dynamic-scene-representations",
+  "title": "Dynamic scene representations",
+  "purpose": "Compare persistence contracts for changing 3D scenes.",
+  "output": {
+    "svg": "curriculum/advanced/03-dynamic-scenes-world-models/assets/dynamic-scene-representations.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Five representations progress from independent frames through scene flow and canonical deformation to dynamic Gaussians and object state."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Persistence becomes more explicit; no family guarantees physical truth",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1472,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "frames",
+      "group": "system",
+      "label": "PER-FRAME",
+      "subtitle": "no identity guarantee",
+      "type": "data",
+      "bounds": {
+        "x": 110,
+        "y": 260,
+        "width": 240,
+        "height": 160
+      },
+      "ports": {
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "flow",
+      "group": "system",
+      "label": "SCENE FLOW",
+      "subtitle": "3D displacement",
+      "type": "service",
+      "bounds": {
+        "x": 395,
+        "y": 260,
+        "width": 240,
+        "height": 160
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "canonical",
+      "group": "system",
+      "label": "CANONICAL +\nDEFORMATION",
+      "subtitle": "persistent coordinates",
+      "type": "agent",
+      "bounds": {
+        "x": 680,
+        "y": 260,
+        "width": 240,
+        "height": 160
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "gaussians",
+      "group": "system",
+      "label": "DYNAMIC\nGAUSSIANS",
+      "subtitle": "persistent primitives",
+      "type": "service",
+      "bounds": {
+        "x": 965,
+        "y": 260,
+        "width": 240,
+        "height": 160
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "objects",
+      "group": "system",
+      "label": "OBJECT STATE",
+      "subtitle": "identity + attributes",
+      "type": "action",
+      "bounds": {
+        "x": 1250,
+        "y": 260,
+        "width": 240,
+        "height": 160
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "frames_flow",
+      "from": {
+        "node": "frames",
+        "port": "right"
+      },
+      "to": {
+        "node": "flow",
+        "port": "left"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          350,
+          340
+        ],
+        [
+          395,
+          340
+        ]
+      ]
+    },
+    {
+      "id": "flow_canonical",
+      "from": {
+        "node": "flow",
+        "port": "right"
+      },
+      "to": {
+        "node": "canonical",
+        "port": "left"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          635,
+          340
+        ],
+        [
+          680,
+          340
+        ]
+      ]
+    },
+    {
+      "id": "canonical_gaussians",
+      "from": {
+        "node": "canonical",
+        "port": "right"
+      },
+      "to": {
+        "node": "gaussians",
+        "port": "left"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          920,
+          340
+        ],
+        [
+          965,
+          340
+        ]
+      ]
+    },
+    {
+      "id": "gaussians_objects",
+      "from": {
+        "node": "gaussians",
+        "port": "right"
+      },
+      "to": {
+        "node": "objects",
+        "port": "left"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1205,
+          340
+        ],
+        [
+          1250,
+          340
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "unique_ids",
+      "port_attachment",
+      "group_containment",
+      "no_overlaps",
+      "20px_clearance"
+    ],
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

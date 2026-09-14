@@ -1,0 +1,14 @@
+# Tested together on 2026-09-13 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+pillow==12.3.0
+scikit-learn==1.9.0
+
+# Optional systems are disabled and belong in isolated environments.
+# Review code, model, dataset, checkpoint, and transitive licenses separately.
+# DreamerV3 (MIT):                 e3f02248693a79dc8b0ebd62c93683888ddaccfe
+# NVIDIA Cosmos 3 (OpenMDW-1.1):  5a68d9d4d34c9ca2bdcb0a1d9bbbb3a2d1b8d497
+# Dynamic 3D Gaussians (mixed):   7dbbd4dec404308524ff402756bdb8143a2589b0
+# Genie 3: official architecture/limitations case study; no executable dependency.
