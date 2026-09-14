@@ -1,0 +1,19 @@
+{
+  "version": 1, "id": "representation-taxonomy", "title": "Scene representation taxonomy", "purpose": "Compare explicit, implicit, and hybrid learned 3D scene representations.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/representation-taxonomy.svg", "medium": "documentation and notebook", "alt_text": "Three scene representation families: explicit spatial primitives, implicit coordinate functions, and hybrid learned grids or feature fields."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 60, "min_layer_gap": 80, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "scene", "label": "Choose by downstream query, not by visual novelty", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "explicit", "group": "scene", "label": "EXPLICIT", "subtitle": "points · voxels · meshes\nGaussian primitives", "type": "service", "bounds": {"x": 110, "y": 270, "width": 330, "height": 155}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "implicit", "group": "scene", "label": "IMPLICIT", "subtitle": "occupancy · SDF\nradiance field", "type": "agent", "bounds": {"x": 535, "y": 270, "width": 330, "height": 155}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "hybrid", "group": "scene", "label": "HYBRID / LEARNED", "subtitle": "tensor · hash · feature\nlanguage-aligned fields", "type": "data", "bounds": {"x": 960, "y": 270, "width": 330, "height": 155}, "ports": {"left": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "explicit_to_implicit", "from": {"node": "explicit", "port": "right"}, "to": {"node": "implicit", "port": "left"}, "kind": "secondary", "label": "continuum", "label_at": [488, 350], "route": [[440, 348], [535, 348]]},
+    {"id": "implicit_to_hybrid", "from": {"node": "implicit", "port": "right"}, "to": {"node": "hybrid", "port": "left"}, "kind": "secondary", "label": "combine", "label_at": [912, 350], "route": [[865, 348], [960, 348]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}

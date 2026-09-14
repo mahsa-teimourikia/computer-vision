@@ -1,0 +1,25 @@
+{
+  "version": 1, "id": "nerf-vs-gaussian", "title": "Implicit fields and explicit Gaussians", "purpose": "Compare NeRF ray sampling and Gaussian projection while connecting their compositing structure.",
+  "output": {"svg": "curriculum/advanced/02-neural-rendering-3d-scene-representations/assets/nerf-vs-gaussian.svg", "medium": "documentation and notebook", "alt_text": "An implicit field is queried along rays while explicit Gaussians are projected into splats; both feed ordered alpha compositing and a rendered image."},
+  "canvas": {"width": 1400, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 50, "min_layer_gap": 70, "node_padding": {"x": 20, "y": 14}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}}},
+  "groups": [{"id": "comparison", "label": "Different representations and execution · related front-to-back compositing", "bounds": {"x": 64, "y": 105, "width": 1272, "height": 555}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "field", "group": "comparison", "label": "NERF-STYLE FIELD", "subtitle": "continuous query function", "type": "agent", "bounds": {"x": 90, "y": 205, "width": 250, "height": 125}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "ray_samples", "group": "comparison", "label": "RAY SAMPLES", "subtitle": "density + color", "type": "data", "bounds": {"x": 410, "y": 205, "width": 230, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "gaussians", "group": "comparison", "label": "GAUSSIAN SET", "subtitle": "explicit primitives", "type": "service", "bounds": {"x": 90, "y": 455, "width": 250, "height": 125}, "ports": {"right": {"side": "right", "offset": 0.5}}},
+    {"id": "splats", "group": "comparison", "label": "PROJECTED SPLATS", "subtitle": "elliptical footprints", "type": "data", "bounds": {"x": 410, "y": 455, "width": 230, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "composite", "group": "comparison", "label": "ORDERED ALPHA", "subtitle": "shared compositing form", "type": "action", "bounds": {"x": 755, "y": 330, "width": 240, "height": 125}, "ports": {"left_top": {"side": "left", "offset": 0.3}, "left_bottom": {"side": "left", "offset": 0.7}, "right": {"side": "right", "offset": 0.5}}},
+    {"id": "image", "group": "comparison", "label": "RENDERED IMAGE", "subtitle": "appearance evidence", "type": "service", "bounds": {"x": 1080, "y": 330, "width": 230, "height": 125}, "ports": {"left": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "field_samples", "from": {"node": "field", "port": "right"}, "to": {"node": "ray_samples", "port": "left"}, "kind": "primary", "route": [[340, 268], [410, 268]]},
+    {"id": "samples_composite", "from": {"node": "ray_samples", "port": "right"}, "to": {"node": "composite", "port": "left_top"}, "kind": "primary", "route": [[640, 268], [690, 268], [690, 368], [755, 368]]},
+    {"id": "gaussian_splats", "from": {"node": "gaussians", "port": "right"}, "to": {"node": "splats", "port": "left"}, "kind": "primary", "route": [[340, 518], [410, 518]]},
+    {"id": "splats_composite", "from": {"node": "splats", "port": "right"}, "to": {"node": "composite", "port": "left_bottom"}, "kind": "primary", "route": [[640, 518], [690, 518], [690, 418], [755, 418]]},
+    {"id": "composite_image", "from": {"node": "composite", "port": "right"}, "to": {"node": "image", "port": "left"}, "kind": "primary", "route": [[995, 392], [1080, 392]]}
+  ],
+  "validation": {"status": "validated", "checked": ["unique_ids", "port_attachment", "group_containment", "no_overlaps", "20px_clearance"], "no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true},
+  "source": {"renderer": "scripts/render_course_diagrams.py", "deterministic": true}
+}

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "id": "agent-failure-taxonomy",
+  "title": "Visual-agent failure attribution",
+  "purpose": "Group failures by perception, planning, execution, verification, state, termination, and security.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/agent-failure-taxonomy.svg", "medium": "documentation and notebook", "alt_text": "A visual-agent failure taxonomy spanning perception, planning, tools, verification, state, termination, and security."},
+  "canvas": {"width": 2048, "height": 820, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 44, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "taxonomy", "label": "Attribute the failed contract before choosing a mitigation", "bounds": {"x": 64, "y": 100, "width": 1920, "height": 630}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "root", "group": "taxonomy", "label": "Unsafe or unsupported\nagent outcome", "type": "agent", "bounds": {"x": 794, "y": 170, "width": 460, "height": 120}, "ports": {"out1": {"side": "bottom", "offset": 0.08}, "out2": {"side": "bottom", "offset": 0.22}, "out3": {"side": "bottom", "offset": 0.36}, "out4": {"side": "bottom", "offset": 0.50}, "out5": {"side": "bottom", "offset": 0.64}, "out6": {"side": "bottom", "offset": 0.78}, "out7": {"side": "bottom", "offset": 0.92}}},
+    {"id": "perception", "group": "taxonomy", "label": "Perception", "subtitle": "miss · wrong region", "type": "service", "bounds": {"x": 95, "y": 500, "width": 230, "height": 120}, "ports": {"in": {"side": "top"}}},
+    {"id": "planning", "group": "taxonomy", "label": "Planning", "subtitle": "wrong tool · args", "type": "agent", "bounds": {"x": 365, "y": 500, "width": 230, "height": 120}, "ports": {"in": {"side": "top"}}},
+    {"id": "tools", "group": "taxonomy", "label": "Tools", "subtitle": "denied · timeout · invalid", "type": "action", "bounds": {"x": 635, "y": 500, "width": 230, "height": 120}, "ports": {"in": {"side": "top"}}},
+    {"id": "verify", "group": "taxonomy", "label": "Verification", "subtitle": "stale · hallucinated", "type": "operations", "bounds": {"x": 905, "y": 500, "width": 230, "height": 120}, "ports": {"in": {"side": "top"}}},
+    {"id": "state", "group": "taxonomy", "label": "State", "subtitle": "poisoned · wrong update", "type": "data", "bounds": {"x": 1175, "y": 500, "width": 230, "height": 120}, "ports": {"in": {"side": "top"}}},
+    {"id": "stop", "group": "taxonomy", "label": "Termination", "subtitle": "loop · early · late", "type": "service", "bounds": {"x": 1445, "y": 500, "width": 230, "height": 120}, "ports": {"in": {"side": "top"}}},
+    {"id": "security", "group": "taxonomy", "label": "Security", "subtitle": "injection · escalation", "type": "operations", "bounds": {"x": 1715, "y": 500, "width": 230, "height": 120}, "ports": {"in": {"side": "top"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "root", "port": "out1"}, "to": {"node": "perception", "port": "in"}, "kind": "secondary", "route": [[831,290],[831,390],[210,390],[210,500]]},
+    {"id": "e2", "from": {"node": "root", "port": "out2"}, "to": {"node": "planning", "port": "in"}, "kind": "secondary", "route": [[895,290],[895,410],[480,410],[480,500]]},
+    {"id": "e3", "from": {"node": "root", "port": "out3"}, "to": {"node": "tools", "port": "in"}, "kind": "secondary", "route": [[960,290],[960,430],[750,430],[750,500]]},
+    {"id": "e4", "from": {"node": "root", "port": "out4"}, "to": {"node": "verify", "port": "in"}, "kind": "primary", "route": [[1024,290],[1024,450],[1020,450],[1020,500]]},
+    {"id": "e5", "from": {"node": "root", "port": "out5"}, "to": {"node": "state", "port": "in"}, "kind": "secondary", "route": [[1088,290],[1088,430],[1290,430],[1290,500]]},
+    {"id": "e6", "from": {"node": "root", "port": "out6"}, "to": {"node": "stop", "port": "in"}, "kind": "secondary", "route": [[1153,290],[1153,410],[1560,410],[1560,500]]},
+    {"id": "e7", "from": {"node": "root", "port": "out7"}, "to": {"node": "security", "port": "in"}, "kind": "secondary", "route": [[1217,290],[1217,390],[1830,390],[1830,500]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

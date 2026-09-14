@@ -1,0 +1,30 @@
+{
+  "version": 1, "id": "dual-encoder-vs-generative-vlm", "title": "Alignment is not generative vision-language modeling", "purpose": "Contrast compatibility scoring with visual conditioning for autoregressive language generation.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/dual-encoder-vs-generative-vlm.svg", "medium": "documentation and notebook", "alt_text": "The upper dual-encoder path maps an image and text to separate embeddings and a similarity score. The lower generative VLM path maps image patches through a connector into an LLM context that produces answer tokens."},
+  "canvas": {"width": 1600, "height": 900, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [
+    {"id": "alignment", "label": "Dual encoder · compatibility", "bounds": {"x": 64, "y": 100, "width": 1472, "height": 300}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "generation", "label": "Generative VLM · conditional next token", "bounds": {"x": 64, "y": 440, "width": 1472, "height": 350}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "image_embed", "group": "alignment", "label": "Image encoder", "subtitle": "z_image", "type": "service", "bounds": {"x": 180, "y": 200, "width": 250, "height": 110}, "ports": {"out": {"side": "right"}}},
+    {"id": "text_embed", "group": "alignment", "label": "Text encoder", "subtitle": "z_text", "type": "data", "bounds": {"x": 560, "y": 200, "width": 250, "height": 110}, "ports": {"out": {"side": "right"}}},
+    {"id": "similarity", "group": "alignment", "label": "Compatibility score", "subtitle": "rank · classify · retrieve", "type": "operations", "bounds": {"x": 1040, "y": 200, "width": 330, "height": 110}, "ports": {"image": {"side": "left", "offset": 0.35}, "text": {"side": "left", "offset": 0.72}}},
+    {"id": "vision", "group": "generation", "label": "Vision encoder", "subtitle": "patch features", "type": "service", "bounds": {"x": 120, "y": 570, "width": 230, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "connector", "group": "generation", "label": "Connector", "subtitle": "project · resample", "type": "agent", "bounds": {"x": 440, "y": 570, "width": 230, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "llm", "group": "generation", "label": "Language model", "subtitle": "visual + text context", "type": "agent", "bounds": {"x": 760, "y": 570, "width": 260, "height": 120}, "ports": {"vision": {"side": "left", "offset": 0.35}, "text": {"side": "top"}, "out": {"side": "right"}}},
+    {"id": "prompt", "group": "generation", "label": "Prompt tokens", "type": "data", "bounds": {"x": 770, "y": 475, "width": 240, "height": 70}, "ports": {"out": {"side": "bottom"}}},
+    {"id": "answer", "group": "generation", "label": "Generated answer", "subtitle": "y1 · y2 · …", "type": "action", "bounds": {"x": 1130, "y": 570, "width": 270, "height": 120}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "a1", "from": {"node": "image_embed", "port": "out"}, "to": {"node": "similarity", "port": "image"}, "kind": "primary", "route": [[430,255],[930,255],[930,238],[1040,238]]},
+    {"id": "a2", "from": {"node": "text_embed", "port": "out"}, "to": {"node": "similarity", "port": "text"}, "kind": "primary", "route": [[810,255],[930,255],[930,279],[1040,279]]},
+    {"id": "g1", "from": {"node": "vision", "port": "out"}, "to": {"node": "connector", "port": "in"}, "kind": "primary", "route": [[350,630],[440,630]]},
+    {"id": "g2", "from": {"node": "connector", "port": "out"}, "to": {"node": "llm", "port": "vision"}, "kind": "primary", "route": [[670,630],[710,630],[710,612],[760,612]]},
+    {"id": "g3", "from": {"node": "prompt", "port": "out"}, "to": {"node": "llm", "port": "text"}, "kind": "primary", "route": [[890,545],[890,570]]},
+    {"id": "g4", "from": {"node": "llm", "port": "out"}, "to": {"node": "answer", "port": "in"}, "kind": "primary", "route": [[1020,630],[1130,630]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

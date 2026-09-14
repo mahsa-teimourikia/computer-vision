@@ -1,0 +1,322 @@
+{
+  "version": 1,
+  "id": "hard-negative-mining",
+  "title": "Reviewed hard-negative mining loop",
+  "purpose": "Show offline mining as a data-quality loop with review before feedback.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/hard-negative-mining.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A loop embeds the training corpus, retrieves nearest wrong-label examples, reviews false negatives, trains on approved triplets, and returns to the corpus."
+  },
+  "canvas": {
+    "width": 1700,
+    "height": 740,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Visual retrieval system",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1572,
+        "height": 576
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "corpus",
+      "group": "system",
+      "label": "Training corpus",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 290,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "bottom",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "labels \u00b7 groups \u00b7 sources"
+    },
+    {
+      "id": "embed",
+      "group": "system",
+      "label": "Embed corpus",
+      "type": "agent",
+      "bounds": {
+        "x": 400,
+        "y": 290,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "current encoder"
+    },
+    {
+      "id": "retrieve",
+      "group": "system",
+      "label": "Mine neighbours",
+      "type": "service",
+      "bounds": {
+        "x": 700,
+        "y": 290,
+        "width": 230,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "nearest wrong label"
+    },
+    {
+      "id": "review",
+      "group": "system",
+      "label": "Review candidate",
+      "type": "action",
+      "bounds": {
+        "x": 1010,
+        "y": 270,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "hard \u00b7 false \u00b7 duplicate \u00b7 shortcut"
+    },
+    {
+      "id": "train",
+      "group": "system",
+      "label": "Train approved triplet",
+      "type": "agent",
+      "bounds": {
+        "x": 1350,
+        "y": 290,
+        "width": 250,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "feedback": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "record active loss"
+    }
+  ],
+  "edges": [
+    {
+      "id": "corpus_embed",
+      "from": {
+        "node": "corpus",
+        "port": "out"
+      },
+      "to": {
+        "node": "embed",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          320,
+          355
+        ],
+        [
+          400,
+          355
+        ]
+      ]
+    },
+    {
+      "id": "embed_retrieve",
+      "from": {
+        "node": "embed",
+        "port": "out"
+      },
+      "to": {
+        "node": "retrieve",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          620,
+          355
+        ],
+        [
+          700,
+          355
+        ]
+      ]
+    },
+    {
+      "id": "retrieve_review",
+      "from": {
+        "node": "retrieve",
+        "port": "out"
+      },
+      "to": {
+        "node": "review",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          930,
+          355
+        ],
+        [
+          1010,
+          355
+        ]
+      ]
+    },
+    {
+      "id": "review_train",
+      "from": {
+        "node": "review",
+        "port": "out"
+      },
+      "to": {
+        "node": "train",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1260,
+          355
+        ],
+        [
+          1350,
+          355
+        ]
+      ],
+      "label": "approved",
+      "label_at": [
+        1305,
+        340
+      ]
+    },
+    {
+      "id": "feedback",
+      "from": {
+        "node": "train",
+        "port": "feedback"
+      },
+      "to": {
+        "node": "corpus",
+        "port": "in"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          1475,
+          420
+        ],
+        [
+          1475,
+          570
+        ],
+        [
+          210,
+          570
+        ],
+        [
+          210,
+          420
+        ]
+      ],
+      "label": "repeat with versioned encoder",
+      "label_at": [
+        845,
+        555
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

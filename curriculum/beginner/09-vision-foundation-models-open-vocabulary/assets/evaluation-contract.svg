@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 940" role="img" aria-labelledby="title description">
+<title id="title">Capability-specific evaluation contract</title>
+<desc id="description">A foundation system fans out to separate representation, language, localization, segmentation, composition, systems, and governance evaluation before a deployment decision.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="2000" height="940" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Capability-specific evaluation contract</text>
+<rect x="64" y="100" width="1872" height="770" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">No single foundation score</text>
+<polyline points="790,280 790,360 210,360 210,470" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="860,280 860,380 470,380 470,470" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="930,280 930,400 730,400 730,470" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1000,280 1000,400 990,400 990,470" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1070,280 1070,400 1250,400 1250,470" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1140,280 1140,380 1510,380 1510,470" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1210,280 1210,360 1770,360 1770,470" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="210,600 210,660 1000,660 1000,720" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<polyline points="1770,600 1770,680 1000,680 1000,720" fill="none" stroke="#8492A6" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="8 7"/>
+<rect x="750" y="150" width="500" height="130" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1000.0" y="184" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Foundation vision system</text>
+<text x="1000.0" y="212" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">versioned model + prompts + composition</text>
+<rect x="90" y="470" width="240" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="210.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Representation</text>
+<text x="210.0" y="532" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">probe · retrieval · dense</text>
+<rect x="350" y="470" width="240" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="470.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Language</text>
+<text x="470.0" y="532" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">prompt · vocabulary</text>
+<rect x="610" y="470" width="240" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="730.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Localization</text>
+<text x="730.0" y="532" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">box · phrase</text>
+<rect x="870" y="470" width="240" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="990.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Segmentation</text>
+<text x="990.0" y="532" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">region · boundary</text>
+<rect x="1130" y="470" width="240" height="130" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1250.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Composition</text>
+<text x="1250.0" y="532" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">stage propagation</text>
+<rect x="1390" y="470" width="240" height="130" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1510.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Systems</text>
+<text x="1510.0" y="532" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">latency · memory</text>
+<rect x="1650" y="470" width="240" height="130" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1770.0" y="504" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Governance</text>
+<text x="1770.0" y="532" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">license · provenance</text>
+<rect x="750" y="720" width="500" height="120" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1000.0" y="754" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Bounded deployment decision</text>
+<text x="1000.0" y="782" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">pass · abstain · review · reject</text>
+</svg>

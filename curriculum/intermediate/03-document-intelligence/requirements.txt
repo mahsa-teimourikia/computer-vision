@@ -1,0 +1,11 @@
+-c constraints-tested.txt
+
+jupyterlab
+matplotlib
+numpy
+pandas
+pillow
+
+# Optional, disabled by default: pytesseract + Tesseract 5.5.3 system binary
+# Optional, isolated environment: transformers for Table Transformer checkpoints
+# Optional, isolated environment: paddleocr[doc-parser] for PaddleOCR-VL-1.6

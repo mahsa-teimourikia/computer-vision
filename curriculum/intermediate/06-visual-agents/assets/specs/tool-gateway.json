@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "id": "tool-gateway",
+  "title": "Tool availability is not authorization",
+  "purpose": "Show a proposed action crossing policy before approved tools are reachable.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/tool-gateway.svg", "medium": "documentation and notebook", "alt_text": "A planner proposal passes through principal, resource, capability, and side-effect policy before an approved tool registry can execute it."},
+  "canvas": {"width": 2048, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "gateway", "label": "Policy boundary — immutable to the planner", "bounds": {"x": 64, "y": 100, "width": 1920, "height": 560}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "planner", "group": "gateway", "label": "Planner", "subtitle": "proposes tool + args", "type": "agent", "bounds": {"x": 120, "y": 300, "width": 280, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "policy", "group": "gateway", "label": "Policy gate", "subtitle": "principal · tenant · resource", "type": "operations", "bounds": {"x": 480, "y": 300, "width": 300, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "registry", "group": "gateway", "label": "Approved registry", "subtitle": "contract + version + side effect", "type": "service", "bounds": {"x": 860, "y": 300, "width": 320, "height": 120}, "ports": {"in": {"side": "left"}, "out1": {"side": "right", "offset": 0.25}, "out2": {"side": "right", "offset": 0.75}}},
+    {"id": "read", "group": "gateway", "label": "Read-only tools", "subtitle": "vision · docs · video", "type": "data", "bounds": {"x": 1300, "y": 200, "width": 330, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "local", "group": "gateway", "label": "Local transforms", "subtitle": "crop · resize · calculate", "type": "action", "bounds": {"x": 1300, "y": 440, "width": 330, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "result", "group": "gateway", "label": "Validated result", "subtitle": "source-bound envelope", "type": "operations", "bounds": {"x": 1710, "y": 320, "width": 230, "height": 120}, "ports": {"in1": {"side": "left", "offset": 0.25}, "in2": {"side": "left", "offset": 0.75}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "planner", "port": "out"}, "to": {"node": "policy", "port": "in"}, "kind": "primary", "route": [[400,360],[480,360]]},
+    {"id": "e2", "from": {"node": "policy", "port": "out"}, "to": {"node": "registry", "port": "in"}, "kind": "primary", "route": [[780,360],[860,360]]},
+    {"id": "e3", "from": {"node": "registry", "port": "out1"}, "to": {"node": "read", "port": "in"}, "kind": "primary", "route": [[1180,330],[1230,330],[1230,260],[1300,260]]},
+    {"id": "e4", "from": {"node": "registry", "port": "out2"}, "to": {"node": "local", "port": "in"}, "kind": "primary", "route": [[1180,390],[1230,390],[1230,500],[1300,500]]},
+    {"id": "e5", "from": {"node": "read", "port": "out"}, "to": {"node": "result", "port": "in1"}, "kind": "primary", "route": [[1630,260],[1670,260],[1670,350],[1710,350]]},
+    {"id": "e6", "from": {"node": "local", "port": "out"}, "to": {"node": "result", "port": "in2"}, "kind": "primary", "route": [[1630,500],[1670,500],[1670,410],[1710,410]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

@@ -1,0 +1,321 @@
+{
+  "version": 1,
+  "id": "document-evidence-graph",
+  "title": "Document evidence graph",
+  "purpose": "Trace a normalized field back to the synthetic logical document.",
+  "output": {
+    "svg": "curriculum/intermediate/03-document-intelligence/assets/document-evidence-graph.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A normalized field traces through its transformation, source span or table cell, layout region, page render hash, and the synthetic logical-document hash."
+  },
+  "canvas": {
+    "width": 1788,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Document evidence graph",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1660,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "field",
+      "group": "system",
+      "label": "Normalized field",
+      "type": "service",
+      "bounds": {
+        "x": 100,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "transform",
+      "group": "system",
+      "label": "Transformation",
+      "type": "agent",
+      "bounds": {
+        "x": 360,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "source",
+      "group": "system",
+      "label": "Span or cell",
+      "type": "data",
+      "bounds": {
+        "x": 620,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "region",
+      "group": "system",
+      "label": "Layout region",
+      "type": "service",
+      "bounds": {
+        "x": 880,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "page",
+      "group": "system",
+      "label": "Page + render hash",
+      "type": "data",
+      "bounds": {
+        "x": 1140,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "document",
+      "group": "system",
+      "label": "Logical document\nSHA-256",
+      "type": "operations",
+      "bounds": {
+        "x": 1400,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "field",
+        "port": "out"
+      },
+      "to": {
+        "node": "transform",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          325
+        ],
+        [
+          360,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "transform",
+        "port": "out"
+      },
+      "to": {
+        "node": "source",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          570,
+          325
+        ],
+        [
+          620,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "source",
+        "port": "out"
+      },
+      "to": {
+        "node": "region",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          830,
+          325
+        ],
+        [
+          880,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "region",
+        "port": "out"
+      },
+      "to": {
+        "node": "page",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          325
+        ],
+        [
+          1140,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "page",
+        "port": "out"
+      },
+      "to": {
+        "node": "document",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1350,
+          325
+        ],
+        [
+          1400,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

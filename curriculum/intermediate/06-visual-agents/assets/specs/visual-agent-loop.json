@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "visual-agent-loop",
+  "title": "Bounded visual-agent loop",
+  "purpose": "Show the observable lifecycle from goal through safe termination.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/visual-agent-loop.svg", "medium": "documentation and notebook", "alt_text": "A bounded visual-agent loop from goal and observation through planning, authorization, tool execution, verification, state update, and stop or escalation."},
+  "canvas": {"width": 2048, "height": 650, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 40, "min_layer_gap": 64, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "loop", "label": "Every transition is observable; policy remains outside planner control", "bounds": {"x": 64, "y": 100, "width": 1920, "height": 480}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "goal", "group": "loop", "label": "Goal +\nprincipal", "type": "data", "bounds": {"x": 100, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "observe", "group": "loop", "label": "Observe +\nupdate state", "type": "service", "bounds": {"x": 335, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "repeat": {"side": "bottom"}, "out": {"side": "right"}}},
+    {"id": "plan", "group": "loop", "label": "Propose\nnext action", "type": "agent", "bounds": {"x": 570, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "authorize", "group": "loop", "label": "Authorize +\nvalidate input", "type": "operations", "bounds": {"x": 805, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "execute", "group": "loop", "label": "Execute\nbounded tool", "type": "action", "bounds": {"x": 1040, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "verify", "group": "loop", "label": "Validate +\nverify result", "type": "operations", "bounds": {"x": 1275, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "state", "group": "loop", "label": "Promote\nevidence", "type": "data", "bounds": {"x": 1510, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "stop", "group": "loop", "label": "Stop / continue /\nhuman review", "type": "agent", "bounds": {"x": 1745, "y": 270, "width": 190, "height": 110}, "ports": {"in": {"side": "left"}, "continue": {"side": "bottom"}, "out": {"side": "right"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "goal", "port": "out"}, "to": {"node": "observe", "port": "in"}, "kind": "primary", "route": [[290,325],[335,325]]},
+    {"id": "e2", "from": {"node": "observe", "port": "out"}, "to": {"node": "plan", "port": "in"}, "kind": "primary", "route": [[525,325],[570,325]]},
+    {"id": "e3", "from": {"node": "plan", "port": "out"}, "to": {"node": "authorize", "port": "in"}, "kind": "primary", "route": [[760,325],[805,325]]},
+    {"id": "e4", "from": {"node": "authorize", "port": "out"}, "to": {"node": "execute", "port": "in"}, "kind": "primary", "route": [[995,325],[1040,325]]},
+    {"id": "e5", "from": {"node": "execute", "port": "out"}, "to": {"node": "verify", "port": "in"}, "kind": "primary", "route": [[1230,325],[1275,325]]},
+    {"id": "e6", "from": {"node": "verify", "port": "out"}, "to": {"node": "state", "port": "in"}, "kind": "primary", "route": [[1465,325],[1510,325]]},
+    {"id": "e7", "from": {"node": "state", "port": "out"}, "to": {"node": "stop", "port": "in"}, "kind": "primary", "route": [[1700,325],[1745,325]]},
+    {"id": "e8", "from": {"node": "stop", "port": "continue"}, "to": {"node": "observe", "port": "repeat"}, "kind": "secondary", "label": "continue within budget", "label_at": [1100,480], "route": [[1840,380],[1840,480],[430,480],[430,380]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

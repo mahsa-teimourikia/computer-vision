@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "id": "space-time-representations",
+  "title": "Temporal representation preserves order and motion",
+  "purpose": "Frames become spatial embeddings, ordered clip tokens, motion and state-change features, a temporal representation, and a language-aligned clip embedding.",
+  "output": {
+    "svg": "curriculum/intermediate/05-video-language-understanding/assets/space-time-representations.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Frames become spatial embeddings, ordered clip tokens, motion and state-change features, a temporal representation, and a language-aligned clip embedding."
+  },
+  "canvas": {
+    "width": 2048,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 36,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Temporal representation preserves order and motion",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1920,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "frames",
+      "group": "system",
+      "label": "Timestamped\nframes",
+      "type": "data",
+      "bounds": {
+        "x": 139,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "spatial",
+      "group": "system",
+      "label": "Frame\nembeddings",
+      "type": "service",
+      "bounds": {
+        "x": 399,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "tokens",
+      "group": "system",
+      "label": "Ordered clip\ntokens",
+      "type": "data",
+      "bounds": {
+        "x": 659,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "motion",
+      "group": "system",
+      "label": "Motion + state\nchange",
+      "type": "agent",
+      "bounds": {
+        "x": 919,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "temporal",
+      "group": "system",
+      "label": "Temporal\nencoder",
+      "type": "agent",
+      "bounds": {
+        "x": 1179,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "align",
+      "group": "system",
+      "label": "Video-text\nalignment",
+      "type": "service",
+      "bounds": {
+        "x": 1439,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "clip",
+      "group": "system",
+      "label": "Clip\nembedding",
+      "type": "data",
+      "bounds": {
+        "x": 1699,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "frames",
+        "port": "out"
+      },
+      "to": {
+        "node": "spatial",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          349,
+          325
+        ],
+        [
+          399,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "spatial",
+        "port": "out"
+      },
+      "to": {
+        "node": "tokens",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          609,
+          325
+        ],
+        [
+          659,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "tokens",
+        "port": "out"
+      },
+      "to": {
+        "node": "motion",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          869,
+          325
+        ],
+        [
+          919,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "motion",
+        "port": "out"
+      },
+      "to": {
+        "node": "temporal",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1129,
+          325
+        ],
+        [
+          1179,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "temporal",
+        "port": "out"
+      },
+      "to": {
+        "node": "align",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1389,
+          325
+        ],
+        [
+          1439,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e6",
+      "from": {
+        "node": "align",
+        "port": "out"
+      },
+      "to": {
+        "node": "clip",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1649,
+          325
+        ],
+        [
+          1699,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

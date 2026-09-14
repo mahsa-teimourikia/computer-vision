@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
+<title id="title">Choose 3D representation by query</title>
+<desc id="description">Measured points branch into point clouds, voxels, meshes, implicit fields, Gaussian scenes, or learned point maps according to the required spatial query.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1400" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Choose 3D representation by query</text>
+<rect x="64" y="105" width="1272" height="555" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Compare common 3D representations.</text>
+<polyline points="295,365 335,365 335,220 385,220" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="282" y="266" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="340" y="283" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">sample</text>
+<polyline points="295,365 385,365" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="282" y="339" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="340" y="356" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">occupy</text>
+<polyline points="295,365 335,365 335,510 385,510" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="282" y="412" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="340" y="429" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">surface</text>
+<polyline points="595,220 725,220" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="602" y="194" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="660" y="211" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">fit</text>
+<polyline points="595,365 725,365" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="602" y="339" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="660" y="356" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">render</text>
+<polyline points="595,510 725,510" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="602" y="484" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="660" y="501" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">infer</text>
+<polyline points="945,220 1000,220 1000,339 1055,339" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="942" y="254" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1000" y="271" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">evaluate</text>
+<polyline points="945,365 1055,365" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="942" y="339" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1000" y="356" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">evaluate</text>
+<polyline points="945,510 1000,510 1000,391 1055,391" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="942" y="424" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1000" y="441" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">evaluate</text>
+<rect x="75" y="310" width="220" height="110" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="185.0" y="344" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">DOWNSTREAM QUERY</text>
+<text x="185.0" y="372" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">measurement, occupancy, rendering</text>
+<rect x="385" y="170" width="210" height="100" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="490.0" y="204" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">POINT CLOUD</text>
+<text x="490.0" y="232" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">observed samples</text>
+<rect x="385" y="315" width="210" height="100" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="490.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">VOXELS</text>
+<text x="490.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">regular volume</text>
+<rect x="385" y="460" width="210" height="100" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="490.0" y="494" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">MESH</text>
+<text x="490.0" y="522" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">explicit surface</text>
+<rect x="725" y="170" width="220" height="100" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="835.0" y="204" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">IMPLICIT FIELD</text>
+<text x="835.0" y="232" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">continuous query</text>
+<rect x="725" y="315" width="220" height="100" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="835.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">GAUSSIAN SCENE</text>
+<text x="835.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">view synthesis</text>
+<rect x="725" y="460" width="220" height="100" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="835.0" y="494" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">LEARNED POINT MAP</text>
+<text x="835.0" y="522" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">feed-forward prior</text>
+<rect x="1055" y="300" width="270" height="130" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1190.0" y="334" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SELECT WITH</text>
+<text x="1190.0" y="356" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">frames · scale · uncertainty</text>
+<text x="1190.0" y="384" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">not visual appeal</text>
+</svg>

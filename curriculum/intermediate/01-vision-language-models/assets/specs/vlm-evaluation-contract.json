@@ -1,0 +1,33 @@
+{
+  "version": 1, "id": "vlm-evaluation-contract", "title": "A VLM release needs multiple evidence contracts", "purpose": "Keep answer, grounding, robustness, systems, safety, and governance evidence separate before a release decision.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/vlm-evaluation-contract.svg", "medium": "documentation and notebook", "alt_text": "A versioned VLM candidate fans out to separate answer quality, evidence grounding, visual robustness, systems, safety, and governance evaluations. All feed a bounded release or review gate."},
+  "canvas": {"width": 1800, "height": 980, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "top-to-bottom", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "No single overall score", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 780}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "candidate", "group": "system", "label": "Versioned VLM bundle", "subtitle": "model · processor · prompt · decoder", "type": "agent", "bounds": {"x": 640, "y": 150, "width": 520, "height": 120}, "ports": {"a": {"side": "bottom", "offset": 0.08}, "b": {"side": "bottom", "offset": 0.25}, "c": {"side": "bottom", "offset": 0.42}, "d": {"side": "bottom", "offset": 0.58}, "e": {"side": "bottom", "offset": 0.75}, "f": {"side": "bottom", "offset": 0.92}}},
+    {"id": "answer", "group": "system", "label": "Answer quality", "subtitle": "task metrics", "type": "service", "bounds": {"x": 90, "y": 390, "width": 240, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "evidence", "group": "system", "label": "Grounding", "subtitle": "region + consistency", "type": "data", "bounds": {"x": 370, "y": 390, "width": 240, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "robust", "group": "system", "label": "Robustness", "subtitle": "ablation + counterfactual", "type": "action", "bounds": {"x": 650, "y": 390, "width": 240, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "systems", "group": "system", "label": "Systems", "subtitle": "tokens · latency · memory", "type": "operations", "bounds": {"x": 930, "y": 390, "width": 240, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "safety", "group": "system", "label": "Safety", "subtitle": "privacy · injection · misuse", "type": "action", "bounds": {"x": 1210, "y": 390, "width": 240, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "govern", "group": "system", "label": "Governance", "subtitle": "lineage · license · rollback", "type": "operations", "bounds": {"x": 1490, "y": 390, "width": 240, "height": 110}, "ports": {"in": {"side": "top"}, "out": {"side": "bottom"}}},
+    {"id": "gate", "group": "system", "label": "Deterministic release gate", "subtitle": "release · review · reject", "type": "agent", "bounds": {"x": 650, "y": 700, "width": 500, "height": 120}, "ports": {"a": {"side": "top", "offset": 0.08}, "b": {"side": "top", "offset": 0.25}, "c": {"side": "top", "offset": 0.42}, "d": {"side": "top", "offset": 0.58}, "e": {"side": "top", "offset": 0.75}, "f": {"side": "top", "offset": 0.92}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "candidate", "port": "a"}, "to": {"node": "answer", "port": "in"}, "kind": "primary", "route": [[682,270],[682,320],[210,320],[210,390]]},
+    {"id": "e2", "from": {"node": "candidate", "port": "b"}, "to": {"node": "evidence", "port": "in"}, "kind": "primary", "route": [[770,270],[770,335],[490,335],[490,390]]},
+    {"id": "e3", "from": {"node": "candidate", "port": "c"}, "to": {"node": "robust", "port": "in"}, "kind": "primary", "route": [[858,270],[858,390],[770,390]]},
+    {"id": "e4", "from": {"node": "candidate", "port": "d"}, "to": {"node": "systems", "port": "in"}, "kind": "primary", "route": [[942,270],[942,340],[1050,340],[1050,390]]},
+    {"id": "e5", "from": {"node": "candidate", "port": "e"}, "to": {"node": "safety", "port": "in"}, "kind": "primary", "route": [[1030,270],[1030,325],[1330,325],[1330,390]]},
+    {"id": "e6", "from": {"node": "candidate", "port": "f"}, "to": {"node": "govern", "port": "in"}, "kind": "primary", "route": [[1118,270],[1118,310],[1610,310],[1610,390]]},
+    {"id": "g1", "from": {"node": "answer", "port": "out"}, "to": {"node": "gate", "port": "a"}, "kind": "primary", "route": [[210,500],[210,620],[690,620],[690,700]]},
+    {"id": "g2", "from": {"node": "evidence", "port": "out"}, "to": {"node": "gate", "port": "b"}, "kind": "primary", "route": [[490,500],[490,635],[775,635],[775,700]]},
+    {"id": "g3", "from": {"node": "robust", "port": "out"}, "to": {"node": "gate", "port": "c"}, "kind": "primary", "route": [[770,500],[770,650],[860,650],[860,700]]},
+    {"id": "g4", "from": {"node": "systems", "port": "out"}, "to": {"node": "gate", "port": "d"}, "kind": "primary", "route": [[1050,500],[1050,650],[940,650],[940,700]]},
+    {"id": "g5", "from": {"node": "safety", "port": "out"}, "to": {"node": "gate", "port": "e"}, "kind": "primary", "route": [[1330,500],[1330,635],[1025,635],[1025,700]]},
+    {"id": "g6", "from": {"node": "govern", "port": "out"}, "to": {"node": "gate", "port": "f"}, "kind": "primary", "route": [[1610,500],[1610,620],[1110,620],[1110,700]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

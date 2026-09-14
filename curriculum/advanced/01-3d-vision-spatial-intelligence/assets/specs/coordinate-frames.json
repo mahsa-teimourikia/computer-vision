@@ -1,0 +1,325 @@
+{
+  "version": 1,
+  "id": "coordinate-frames",
+  "title": "Every quantity declares its frame",
+  "purpose": "Show the explicit coordinate transform chain.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/coordinate-frames.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "World points are transformed into camera coordinates, divided onto a normalized image plane, and mapped by intrinsics into pixels."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Show the explicit coordinate transform chain.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "world",
+      "label": "WORLD\n(Xw, Yw, Zw)",
+      "subtitle": "metres",
+      "type": "service",
+      "bounds": {
+        "x": 70,
+        "y": 285,
+        "width": 240,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "camera",
+      "label": "CAMERA\n(Xc, Yc, Zc)",
+      "subtitle": "T_cw \u00b7 +z forward",
+      "type": "agent",
+      "bounds": {
+        "x": 390,
+        "y": 285,
+        "width": 240,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "normalized",
+      "label": "NORMALIZED IMAGE\n(x=X/Z, y=Y/Z)",
+      "subtitle": "dimensionless",
+      "type": "data",
+      "bounds": {
+        "x": 710,
+        "y": 285,
+        "width": 260,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "pixel",
+      "label": "PIXEL\n(u, v)",
+      "subtitle": "top-left origin",
+      "type": "action",
+      "bounds": {
+        "x": 1050,
+        "y": 285,
+        "width": 240,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "world-camera",
+      "from": {
+        "node": "world",
+        "port": "right"
+      },
+      "to": {
+        "node": "camera",
+        "port": "left"
+      },
+      "route": [
+        [
+          310,
+          345
+        ],
+        [
+          390,
+          345
+        ]
+      ],
+      "label": "R, t",
+      "kind": "primary",
+      "label_at": [
+        350,
+        336
+      ]
+    },
+    {
+      "id": "camera-normalized",
+      "from": {
+        "node": "camera",
+        "port": "right"
+      },
+      "to": {
+        "node": "normalized",
+        "port": "left"
+      },
+      "route": [
+        [
+          630,
+          345
+        ],
+        [
+          710,
+          345
+        ]
+      ],
+      "label": "divide by Z",
+      "kind": "primary",
+      "label_at": [
+        670,
+        336
+      ]
+    },
+    {
+      "id": "normalized-pixel",
+      "from": {
+        "node": "normalized",
+        "port": "right"
+      },
+      "to": {
+        "node": "pixel",
+        "port": "left"
+      },
+      "route": [
+        [
+          970,
+          345
+        ],
+        [
+          1050,
+          345
+        ]
+      ],
+      "label": "K",
+      "kind": "primary",
+      "label_at": [
+        1010,
+        336
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Every quantity declares its frame",
+    "description": "World points are transformed into camera coordinates, divided onto a normalized image plane, and mapped by intrinsics into pixels."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

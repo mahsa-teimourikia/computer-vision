@@ -1,0 +1,299 @@
+{
+  "version": 1,
+  "id": "dense-vs-set-prediction",
+  "title": "Dense prediction and set prediction solve duplication differently",
+  "purpose": "Contrast YOLO-style dense predictions with DETR-style object-query sets.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/dense-vs-set-prediction.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "The dense path produces many candidates and uses confidence filtering plus NMS, while the set path uses object queries, one-to-one Hungarian matching, and no traditional NMS."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "dense",
+      "label": "Dense one-stage philosophy",
+      "bounds": {
+        "x": 64,
+        "y": 130,
+        "width": 700,
+        "height": 620
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "set",
+      "label": "DETR set-prediction philosophy",
+      "bounds": {
+        "x": 836,
+        "y": 130,
+        "width": 700,
+        "height": 620
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "dense_features",
+      "group": "dense",
+      "label": "Multi-scale features",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 315,
+        "width": 190,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "dense_head",
+      "group": "dense",
+      "label": "Dense head",
+      "subtitle": "many candidate boxes",
+      "type": "agent",
+      "bounds": {
+        "x": 365,
+        "y": 300,
+        "width": 190,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "dense_nms",
+      "group": "dense",
+      "label": "Filter + NMS",
+      "subtitle": "duplicate removal",
+      "type": "action",
+      "bounds": {
+        "x": 590,
+        "y": 300,
+        "width": 140,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "set_features",
+      "group": "set",
+      "label": "Visual features",
+      "type": "data",
+      "bounds": {
+        "x": 900,
+        "y": 315,
+        "width": 180,
+        "height": 110
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "queries",
+      "group": "set",
+      "label": "Object queries",
+      "subtitle": "learned detection slots",
+      "type": "agent",
+      "bounds": {
+        "x": 1135,
+        "y": 300,
+        "width": 190,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "matching",
+      "group": "set",
+      "label": "One-to-one\nset",
+      "subtitle": "Hungarian\ntraining match",
+      "type": "service",
+      "bounds": {
+        "x": 1360,
+        "y": 300,
+        "width": 140,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "d1",
+      "from": {
+        "node": "dense_features",
+        "port": "out"
+      },
+      "to": {
+        "node": "dense_head",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          370
+        ],
+        [
+          365,
+          370
+        ]
+      ]
+    },
+    {
+      "id": "d2",
+      "from": {
+        "node": "dense_head",
+        "port": "out"
+      },
+      "to": {
+        "node": "dense_nms",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          555,
+          370
+        ],
+        [
+          590,
+          370
+        ]
+      ]
+    },
+    {
+      "id": "s1",
+      "from": {
+        "node": "set_features",
+        "port": "out"
+      },
+      "to": {
+        "node": "queries",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1080,
+          370
+        ],
+        [
+          1135,
+          370
+        ]
+      ]
+    },
+    {
+      "id": "s2",
+      "from": {
+        "node": "queries",
+        "port": "out"
+      },
+      "to": {
+        "node": "matching",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1325,
+          370
+        ],
+        [
+          1360,
+          370
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

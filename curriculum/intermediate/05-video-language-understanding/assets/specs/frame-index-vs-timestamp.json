@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "id": "frame-index-vs-timestamp",
+  "title": "Frame index is metadata; timestamp is temporal evidence",
+  "purpose": "A sequence showing capture frames, dropped and variable-rate observations, presentation timestamps, sampled evidence, interval localization, and a timestamped claim.",
+  "output": {
+    "svg": "curriculum/intermediate/05-video-language-understanding/assets/frame-index-vs-timestamp.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A sequence showing capture frames, dropped and variable-rate observations, presentation timestamps, sampled evidence, interval localization, and a timestamped claim."
+  },
+  "canvas": {
+    "width": 2048,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 36,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Frame index is metadata; timestamp is temporal evidence",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1920,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "capture",
+      "group": "system",
+      "label": "Capture\nframes",
+      "type": "data",
+      "bounds": {
+        "x": 139,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "vfr",
+      "group": "system",
+      "label": "Variable rate +\ndrops",
+      "type": "operations",
+      "bounds": {
+        "x": 399,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "pts",
+      "group": "system",
+      "label": "Presentation\ntimestamps",
+      "type": "data",
+      "bounds": {
+        "x": 659,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "sample",
+      "group": "system",
+      "label": "Sampled\nobservations",
+      "type": "service",
+      "bounds": {
+        "x": 919,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "event",
+      "group": "system",
+      "label": "Event\ninterval",
+      "type": "agent",
+      "bounds": {
+        "x": 1179,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "citation",
+      "group": "system",
+      "label": "Time-range\ncitation",
+      "type": "action",
+      "bounds": {
+        "x": 1439,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "audit",
+      "group": "system",
+      "label": "Clock + source\nprovenance",
+      "type": "operations",
+      "bounds": {
+        "x": 1699,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "capture",
+        "port": "out"
+      },
+      "to": {
+        "node": "vfr",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          349,
+          325
+        ],
+        [
+          399,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "vfr",
+        "port": "out"
+      },
+      "to": {
+        "node": "pts",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          609,
+          325
+        ],
+        [
+          659,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "pts",
+        "port": "out"
+      },
+      "to": {
+        "node": "sample",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          869,
+          325
+        ],
+        [
+          919,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "sample",
+        "port": "out"
+      },
+      "to": {
+        "node": "event",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1129,
+          325
+        ],
+        [
+          1179,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "event",
+        "port": "out"
+      },
+      "to": {
+        "node": "citation",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1389,
+          325
+        ],
+        [
+          1439,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e6",
+      "from": {
+        "node": "citation",
+        "port": "out"
+      },
+      "to": {
+        "node": "audit",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1649,
+          325
+        ],
+        [
+          1699,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}
