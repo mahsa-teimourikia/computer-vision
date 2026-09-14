@@ -2,7 +2,7 @@
 
 > **Central question:** How can calibrated observations become a learnable scene representation for novel-view synthesis—and what evidence is required before treating that representation as physical geometry?
 
-[← Advanced 01 · 3D Vision & Spatial Intelligence](../01-3d-vision-spatial-intelligence/README.md) · [Run the notebook](lab.ipynb) · [Advanced track](../README.md)
+[← Advanced 01 · 3D Vision & Spatial Intelligence](../01-3d-vision-spatial-intelligence/README.md) · [Run the notebook](lab.ipynb) · [Advanced track](../README.md) · [Advanced 03 · Dynamic Scenes & World Models →](../03-dynamic-scenes-world-models/README.md)
 
 Advanced 01 recovered explicit, frame-aware geometry from calibrated observations. This course introduces a different reconstruction signal: render a predicted observation, compare it with the captured image, and optimize the scene representation through the image-formation process. That signal can produce remarkable novel views. It can also absorb pose, exposure, geometry, and appearance errors into a visually convincing but physically unreliable scene.
 
@@ -528,4 +528,4 @@ You should now be able to answer:
 
 ## 38. Transition to Advanced 03
 
-This course learns a static scene from calibrated observations and makes appearance/geometry disagreement explicit. Advanced 03 can now add time, state transition, prediction, and action relevance: dynamic scenes and world models must explain not only how a world looks from another view, but how it changes and whether that change supports a decision.
+This course learns a static scene from calibrated observations and makes appearance/geometry disagreement explicit. Continue to [Advanced 03](../03-dynamic-scenes-world-models/README.md), which adds time, persistent state, action-conditioned transitions, counterfactual futures, and planning-relevant evaluation.
