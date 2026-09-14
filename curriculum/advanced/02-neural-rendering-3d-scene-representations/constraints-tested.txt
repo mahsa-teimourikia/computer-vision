@@ -1,0 +1,16 @@
+# Tested together on 2026-09-12 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+pillow==12.3.0
+scipy==1.17.1
+
+# Optional GPU integrations are disabled and belong in isolated environments.
+# Pin the exact repository, submodules, code/data/scene licenses, camera converter,
+# PyTorch/CUDA toolchain, and artifact checksums before use.
+# Instant-NGP:        abe236ee00cf90cfca6e36e65c00435d5
+# 3DGS reference:     e4f1b665d6ba51978ac786a313921cc1cfc9f293
+# Nerfstudio:         9bd7153cc96e6e85398bb8e70b382817149c1f03
+# gsplat:              a3063beb58cb6d2943ecac68993bd54b483a81c8
+# PyTorch3D:           bf985a9eab3d0f127dc2d6043792f967739131e

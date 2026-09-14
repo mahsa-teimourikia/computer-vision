@@ -43,8 +43,9 @@ The [intermediate track](intermediate/README.md) culminates in bounded visual ag
 ## Advanced
 
 - [01 · 3D Vision & Spatial Intelligence: From Camera Geometry to Metric Scene Understanding](advanced/01-3d-vision-spatial-intelligence/README.md) — move from coordinate frames, pinhole projection, calibration, epipolar geometry, stereo, and triangulation into pose, point-cloud reconstruction, representation choice, uncertainty, and source-held-out metric decisions.
+- [02 · Neural Rendering & 3D Scene Representations: From NeRFs to 3D Gaussian Splatting](advanced/02-neural-rendering-3d-scene-representations/README.md) — move from camera rays and volume rendering into held-out view synthesis, independent geometry evaluation, Gaussian projection and splatting, density-control lineage, systems trade-offs, and governed scene evidence.
 
-The [advanced track](advanced/README.md) continues next into neural rendering, 3D representations, world models, adaptation, and embodied perception.
+The [advanced track](advanced/README.md) continues next into dynamic scenes, world models, adaptation, and embodied perception.
 
 ## Enterprise
 

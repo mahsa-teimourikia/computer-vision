@@ -149,6 +149,8 @@ Required data checks include provenance, license, consent and privacy basis, dup
 | [COLMAP](https://colmap.github.io/) | Structure-from-motion and multi-view stereo baselines | Camera calibration, feature assumptions, compute cost, and sparse/dense failure diagnosis |
 | [Nerfstudio](https://docs.nerf.studio/) | NeRF and Gaussian-splatting research workflows | Dataset conversion, camera poses, viewer/runtime dependencies, and export path |
 | [gsplat](https://docs.gsplat.studio/) | Differentiable Gaussian splatting | CUDA/hardware fit, rasterizer compatibility, memory scaling, and benchmark protocol |
+| [Instant-NGP](https://github.com/NVlabs/instant-ngp) | CUDA-oriented multiresolution hash-grid NeRF research and fast scene fitting | NVIDIA toolchain, native build, camera/data conversion, hash-grid capacity, release provenance, and target-scene evaluation |
+| [3D Gaussian Splatting reference](https://github.com/graphdeco-inria/gaussian-splatting) | Author implementation of anisotropic Gaussian scene optimization and real-time rasterization | CUDA extensions, submodules, scene licenses, SfM initialization, density-control growth, viewer dependencies, and exact commit identity |
 | [PyTorch3D](https://pytorch3d.org/docs/) | Differentiable 3D operators and rendering | Build compatibility, coordinate systems, and whether the required operator is actively supported |
 | [OpenCV calib3d](https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html) | Calibration, epipolar geometry, PnP, stereo, and triangulation baselines | Camera/distortion model, pixel convention, robust-estimator defaults, degeneracy checks, and versioned calibration evidence |
 | [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) | General relative depth and separately trained metric variants | Output contract, processor/interpolation parity, checkpoint-specific license, domain/edge evaluation, and immutable weights |
@@ -159,6 +161,8 @@ Required data checks include provenance, license, consent and privacy basis, dup
 Every spatial lesson must state coordinate frames, handedness, units, camera model, calibration assumptions, occlusion behavior, and geometric evaluation—not only visual quality.
 
 Advanced 01 keeps the core path in NumPy/SciPy and treats OpenCV, COLMAP, Open3D, learned depth, and feed-forward reconstruction as optional layers. Its reviewed source revisions are recorded in the course constraints and notebook; those pins do not imply that all optional dependencies belong in one environment or that a code license grants rights to every checkpoint.
+
+Advanced 02 implements calibrated ray construction, discrete volume compositing, analytic gradient checks, camera-level splits, appearance-versus-geometry counterexamples, 3D-to-2D Gaussian projection, deterministic CPU splatting, density-control lineage, storage estimates, and tail timings directly with NumPy/SciPy. Instant-NGP, the original 3D Gaussian Splatting implementation, Nerfstudio, gsplat, and PyTorch3D are revision-pinned, disabled optional mappings. Their headline speed or quality is never substituted for a matched target-hardware benchmark, independent geometry evaluation, or license and artifact review.
 
 ## Embodied and simulation tooling
 

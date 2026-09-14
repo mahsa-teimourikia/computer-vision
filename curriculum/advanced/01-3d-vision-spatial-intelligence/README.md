@@ -597,4 +597,4 @@ You should now be able to explain without code:
 
 ## 29. Transition to Advanced 02
 
-This course establishes cameras, geometry, depth, pose, reconstruction, representation, metric relations, and uncertainty. Advanced 02 can now ask a different question: how can a scene representation synthesize new views and remain editable, efficient, and geometrically accountable? That leads naturally into neural rendering, NeRFs, and Gaussian splatting.
+This course establishes cameras, geometry, depth, pose, reconstruction, representation, metric relations, and uncertainty. Continue to [Advanced 02 · Neural Rendering & 3D Scene Representations](../02-neural-rendering-3d-scene-representations/README.md) to learn how NeRF-style fields and Gaussian primitives synthesize new views while keeping appearance, geometry, efficiency, and provenance accountable.
