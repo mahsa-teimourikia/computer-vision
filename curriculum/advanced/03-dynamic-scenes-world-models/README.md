@@ -31,9 +31,10 @@ After this course, you should be able to:
 - implement typed world, object, action, and observation contracts with declared units, IDs, bounds, and timestamps;
 - keep a ground-truth simulator separate from an inference-visible `local_world_model_proxy`;
 - fit and compare action-conditioned and action-ignorant one-step predictors;
-- measure position/velocity error by rollout horizon rather than report only teacher-forced accuracy;
-- test action responsiveness, wrong-action behavior, relevant sensitivity, irrelevant invariance, and object permanence;
-- evaluate stochastic future coverage without rewarding invalid diversity;
+- measure vector-norm position/velocity RMSE by rollout horizon rather than report only teacher-forced accuracy;
+- test action responsiveness, wrong-action behavior, continuous motion, discrete valve-state transitions, relevant sensitivity, and irrelevant invariance;
+- distinguish known-ID persistence through occlusion from true re-identification;
+- evaluate stochastic future coverage, invalid outcomes, and mode-frequency calibration without rewarding invalid diversity;
 - apply deterministic, task-specific physical consistency checks that model outputs cannot self-certify;
 - distinguish passive prediction, model response to intervention, and validated real-world causal effect;
 - use a world model for bounded model-predictive planning without conflating model, policy, reward, and execution;
@@ -123,7 +124,7 @@ The lab uses a bounded schema:
 }
 ```
 
-Observation of an open valve and intervention to open a valve are different conditioning events. A model's response to an intervention-like input is not proof of the real-world causal effect $p(Y\mid do(X))$.
+Observation of an open valve and intervention to open a valve are different conditioning events. The training and evaluation corpora exercise both continuous cart actions and discrete `open_valve` / `close_valve` transitions. A model's response to an intervention-like input is not proof of the real-world causal effect $p(Y\mid do(X))$.
 
 ## 6. Passive and action-conditioned dynamics
 
@@ -169,7 +170,7 @@ This distribution mismatch creates exposure bias. Small position or velocity err
 
 ![One-step predictions recursively feed future inputs, causing compounding open-loop drift.](assets/rollout-error.svg)
 
-The notebook reports position and velocity RMSE at horizons 1, 5, 10, and 20. It does not rename a teacher-forced batch metric as rollout performance.
+The notebook reports position and velocity **vector RMSE** at horizons 1, 5, 10, and 20. It does not rename a teacher-forced batch metric as rollout performance.
 
 ## 11. Error type must remain visible by horizon
 
@@ -182,21 +183,30 @@ e_p=\|\hat p-p\|_2,
 \qquad e_v=\|\hat v-v\|_2.
 $$
 
+Across $N$ examples, the course uses RMSE over those Euclidean vector errors:
+
+$$
+\operatorname{position\_vector\_RMSE}
+=\sqrt{\frac{1}{N}\sum_{i=1}^{N}\|\hat p_i-p_i\|_2^2},
+$$
+
+with the analogous definition for velocity. This is deliberately named `position_vector_RMSE_m` rather than generic coordinate-wise RMSE. Discrete valve transitions are reported separately as `valve_state_accuracy`.
+
 Event timing error is $\Delta t=t_{pred}-t_{true}$; report bias, MAE, and tail error over a declared event population.
 
 ## 12. Multiple futures and stochastic validity
 
 At an intersection, left, right, stop, and continue may all be plausible. A deterministic mean trajectory can lie through an obstacle and match no valid mode. A stochastic model should cover valid modes, calibrate probabilities, and reject invalid futures.
 
-The branching lab reports `valid_mode_coverage` and `invalid_future_rate`. Diversity without validity is not quality; predicting only the most common future is mode collapse.
+The branching lab first uses a valid-only known-answer sampler to test the metric implementation. A separate noisy stochastic predictor can emit valid left/right outcomes, an invalid middle, and an out-of-range future. The lab reports `valid_mode_coverage`, `invalid_future_rate`, and `mode_frequency_TV_distance` against the declared target outcome distribution. Diversity without validity is not quality; predicting only the most common future is mode collapse.
 
 ## 13. Physical consistency is a checked contract
 
 Task-specific invariants include bounds, maximum displacement, speed, collision, persistent ID, rigid size, support, and valve state. They are not a claim of universal physics. The deterministic `validate_rollout()` checker operates outside the model; generated output cannot self-certify.
 
-## 14. Object permanence
+## 14. Known-identity permanence
 
-An object may be visible, occluded, and visible again. A memory-aware estimator retains its identity and marks uncertainty/age; an observation-only baseline deletes it. Identity continuity must be measured independently from image reconstruction.
+An object may be visible, occluded, and visible again. The lab's memory-aware estimator retains a **known sensor-facing ID** and marks the object hidden while an observation-only baseline would delete it. This demonstrates bounded persistence, not re-identification: association after an ID change remains an Advanced 04 problem. The estimator stores each object's last observation timestamp, computes velocity using the actual elapsed time, and rejects non-increasing timestamps rather than silently inventing a denominator.
 
 ## 15. Action and counterfactual evaluation
 
@@ -366,9 +376,9 @@ Add concurrency, latency budgets, deterministic replay, dependency failures, sch
 
 ## 30. Exercises
 
-1. Add a delayed `open_valve` transition and prove that a single observation is non-Markov.
+1. Add a hidden actuator mode and delayed valve transition, then prove that a single observation is non-Markov.
 2. Replace Ridge with a small scikit-learn MLP while preserving the exact inference/evaluation boundary.
-3. Add event-time bias, MAE, and p95 for cart arrival.
+3. Compare interpolated event timing with discrete-step timing and add an interval-censoring policy.
 4. Introduce a second occluding object and distinguish uncertain identity from deletion.
 5. Add a calibrated ensemble support estimate and compare safe-work blocking with exploit prevention.
 6. Extend the planner to replan after every true step without granting it hidden simulator state.
@@ -383,7 +393,7 @@ Add concurrency, latency budgets, deterministic replay, dependency failures, sch
 - What does action conditioning add, and why is a text prompt not automatically a physical action?
 - Why can one-step accuracy hide long-horizon failure?
 - Why can a deterministic mean future be physically meaningless?
-- How are object permanence, scene flow, and camera/object-motion separation connected?
+- How are known-ID persistence, true re-identification, scene flow, and camera/object-motion separation different?
 - What does an action-ignorance test reveal?
 - Why are relevant sensitivity and irrelevant invariance both necessary?
 - How can a planner exploit a small model error?

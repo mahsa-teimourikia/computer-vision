@@ -1631,15 +1631,26 @@ def test_advanced_03_contains_the_declared_world_model_lab():
         "evaluate_one_step",
         "evaluate_rollout",
         "open_loop_recursive",
-        "position_RMSE_m",
-        "velocity_RMSE_mps",
-        "state_accuracy",
+        "position_vector_RMSE_m",
+        "velocity_vector_RMSE_mps",
+        "valve_state_accuracy",
+        "VALVE_ACTIONS",
+        "MODEL_ACTIONS",
+        "valve_transition_report",
+        "Valve actions must target valve_1",
+        "previous_timestamp_s",
+        "Observation timestamps must increase for each known object",
+        "elapsed_time_velocity_test",
+        "known_identity_persistence_report",
         "action_sensitivity_teaching",
         "action_consistency_rate",
         "wrong_action_test",
         "counterfactual_matrix",
         "valid_mode_coverage",
         "invalid_future_rate",
+        "mode_frequency_TV_distance",
+        "known_answer_metrics",
+        "NOISY_MODEL_PROBABILITIES",
         "time_to_event_metrics",
         "timing_MAE_s",
         "timing_p95_abs_s",
@@ -1669,6 +1680,8 @@ def test_advanced_03_contains_the_declared_world_model_lab():
     assert "generated video can never authorize an actuator" in source_lower
     assert "def predict(self, state: WorldState, action: Action)" in source
     assert "def predict(self, state: WorldState, action: Action, hidden" not in source
+    assert "observation.timestamp_s - previous_timestamp_s" in source
+    assert "observation.timestamp_s - 0.0" not in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
