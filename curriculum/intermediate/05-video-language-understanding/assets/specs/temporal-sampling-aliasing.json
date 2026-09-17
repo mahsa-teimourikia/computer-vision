@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "id": "temporal-sampling-aliasing",
+  "title": "Sampling policy determines which events are observable",
+  "purpose": "A progression from a short ground-truth event through sparse sampling and temporal aliasing to event-aware resampling and measured recall versus compute.",
+  "output": {
+    "svg": "curriculum/intermediate/05-video-language-understanding/assets/temporal-sampling-aliasing.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A progression from a short ground-truth event through sparse sampling and temporal aliasing to event-aware resampling and measured recall versus compute."
+  },
+  "canvas": {
+    "width": 2048,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 36,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Sampling policy determines which events are observable",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1920,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "event",
+      "group": "system",
+      "label": "300 ms\nevent",
+      "type": "data",
+      "bounds": {
+        "x": 139,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "sparse",
+      "group": "system",
+      "label": "1 FPS\nsamples",
+      "type": "service",
+      "bounds": {
+        "x": 399,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "miss",
+      "group": "system",
+      "label": "Event\nmissed",
+      "type": "operations",
+      "bounds": {
+        "x": 659,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "signal",
+      "group": "system",
+      "label": "Observable change\nsignal",
+      "type": "data",
+      "bounds": {
+        "x": 919,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "dense",
+      "group": "system",
+      "label": "Adaptive dense\nsampling",
+      "type": "agent",
+      "bounds": {
+        "x": 1179,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "found",
+      "group": "system",
+      "label": "Event\nobserved",
+      "type": "action",
+      "bounds": {
+        "x": 1439,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "measure",
+      "group": "system",
+      "label": "Recall vs\nframes",
+      "type": "operations",
+      "bounds": {
+        "x": 1699,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "event",
+        "port": "out"
+      },
+      "to": {
+        "node": "sparse",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          349,
+          325
+        ],
+        [
+          399,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "sparse",
+        "port": "out"
+      },
+      "to": {
+        "node": "miss",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          609,
+          325
+        ],
+        [
+          659,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "miss",
+        "port": "out"
+      },
+      "to": {
+        "node": "signal",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          869,
+          325
+        ],
+        [
+          919,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "signal",
+        "port": "out"
+      },
+      "to": {
+        "node": "dense",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1129,
+          325
+        ],
+        [
+          1179,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "dense",
+        "port": "out"
+      },
+      "to": {
+        "node": "found",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1389,
+          325
+        ],
+        [
+          1439,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e6",
+      "from": {
+        "node": "found",
+        "port": "out"
+      },
+      "to": {
+        "node": "measure",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1649,
+          325
+        ],
+        [
+          1699,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

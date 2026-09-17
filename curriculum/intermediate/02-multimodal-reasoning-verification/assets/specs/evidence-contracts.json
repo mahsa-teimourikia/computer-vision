@@ -1,0 +1,507 @@
+{
+  "version": 1,
+  "id": "evidence-contracts",
+  "title": "Evidence is capability-specific",
+  "purpose": "Compare the evidence required for attribute, relation, counting, and change claims.",
+  "output": {
+    "svg": "curriculum/intermediate/02-multimodal-reasoning-verification/assets/evidence-contracts.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Four rows show an attribute claim requiring one region, a relation requiring two bound regions, a count requiring the complete unique set, and a change requiring before and after facts plus the decision rule."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Evidence must match the capability",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 700
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "attribute",
+      "group": "system",
+      "label": "Attribute claim",
+      "subtitle": "valve is scratched",
+      "type": "service",
+      "bounds": {
+        "x": 120,
+        "y": 170,
+        "width": 390,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "attribute_e",
+      "group": "system",
+      "label": "Sufficient evidence",
+      "subtitle": "one identified valve region",
+      "type": "data",
+      "bounds": {
+        "x": 700,
+        "y": 170,
+        "width": 430,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "attribute_v",
+      "group": "system",
+      "label": "Independent check",
+      "subtitle": "identity \u00b7 coverage \u00b7 replay",
+      "type": "action",
+      "bounds": {
+        "x": 1320,
+        "y": 170,
+        "width": 340,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "relation",
+      "group": "system",
+      "label": "Relation claim",
+      "subtitle": "valve left of pipe",
+      "type": "service",
+      "bounds": {
+        "x": 120,
+        "y": 315,
+        "width": 390,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "relation_e",
+      "group": "system",
+      "label": "Sufficient evidence",
+      "subtitle": "subject + reference regions",
+      "type": "data",
+      "bounds": {
+        "x": 700,
+        "y": 315,
+        "width": 430,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "relation_v",
+      "group": "system",
+      "label": "Independent check",
+      "subtitle": "identity \u00b7 coverage \u00b7 replay",
+      "type": "action",
+      "bounds": {
+        "x": 1320,
+        "y": 315,
+        "width": 340,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "counting",
+      "group": "system",
+      "label": "Counting claim",
+      "subtitle": "four bolts present",
+      "type": "service",
+      "bounds": {
+        "x": 120,
+        "y": 460,
+        "width": 390,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "counting_e",
+      "group": "system",
+      "label": "Sufficient evidence",
+      "subtitle": "four unique instance regions",
+      "type": "data",
+      "bounds": {
+        "x": 700,
+        "y": 460,
+        "width": 430,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "counting_v",
+      "group": "system",
+      "label": "Independent check",
+      "subtitle": "identity \u00b7 coverage \u00b7 replay",
+      "type": "action",
+      "bounds": {
+        "x": 1320,
+        "y": 460,
+        "width": 340,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "change",
+      "group": "system",
+      "label": "Change claim",
+      "subtitle": "panel became safer",
+      "type": "service",
+      "bounds": {
+        "x": 120,
+        "y": 605,
+        "width": 390,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "change_e",
+      "group": "system",
+      "label": "Sufficient evidence",
+      "subtitle": "before + after facts + rule",
+      "type": "data",
+      "bounds": {
+        "x": 700,
+        "y": 605,
+        "width": 430,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "change_v",
+      "group": "system",
+      "label": "Independent check",
+      "subtitle": "identity \u00b7 coverage \u00b7 replay",
+      "type": "action",
+      "bounds": {
+        "x": 1320,
+        "y": 605,
+        "width": 340,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "attribute1",
+      "from": {
+        "node": "attribute",
+        "port": "out"
+      },
+      "to": {
+        "node": "attribute_e",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          510,
+          222
+        ],
+        [
+          700,
+          222
+        ]
+      ]
+    },
+    {
+      "id": "attribute2",
+      "from": {
+        "node": "attribute_e",
+        "port": "out"
+      },
+      "to": {
+        "node": "attribute_v",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1130,
+          222
+        ],
+        [
+          1320,
+          222
+        ]
+      ]
+    },
+    {
+      "id": "relation1",
+      "from": {
+        "node": "relation",
+        "port": "out"
+      },
+      "to": {
+        "node": "relation_e",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          510,
+          367
+        ],
+        [
+          700,
+          367
+        ]
+      ]
+    },
+    {
+      "id": "relation2",
+      "from": {
+        "node": "relation_e",
+        "port": "out"
+      },
+      "to": {
+        "node": "relation_v",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1130,
+          367
+        ],
+        [
+          1320,
+          367
+        ]
+      ]
+    },
+    {
+      "id": "counting1",
+      "from": {
+        "node": "counting",
+        "port": "out"
+      },
+      "to": {
+        "node": "counting_e",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          510,
+          512
+        ],
+        [
+          700,
+          512
+        ]
+      ]
+    },
+    {
+      "id": "counting2",
+      "from": {
+        "node": "counting_e",
+        "port": "out"
+      },
+      "to": {
+        "node": "counting_v",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1130,
+          512
+        ],
+        [
+          1320,
+          512
+        ]
+      ]
+    },
+    {
+      "id": "change1",
+      "from": {
+        "node": "change",
+        "port": "out"
+      },
+      "to": {
+        "node": "change_e",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          510,
+          657
+        ],
+        [
+          700,
+          657
+        ]
+      ]
+    },
+    {
+      "id": "change2",
+      "from": {
+        "node": "change_e",
+        "port": "out"
+      },
+      "to": {
+        "node": "change_v",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1130,
+          657
+        ],
+        [
+          1320,
+          657
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

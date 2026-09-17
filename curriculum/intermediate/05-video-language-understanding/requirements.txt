@@ -1,0 +1,10 @@
+-c constraints-tested.txt
+
+jupyterlab
+matplotlib
+numpy
+pandas
+pillow
+
+# Optional, disabled by default: torchcodec for FFmpeg-backed timestamp-aware decoding.
+# Optional, isolated environment: transformers + torch for pinned VideoMAE, PE-AV, and Qwen3-VL adapters.

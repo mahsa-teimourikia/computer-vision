@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 780" role="img" aria-labelledby="title description">
+<title id="title">Exact search versus approximate candidates</title>
+<desc id="description">A query branches to exact exhaustive search and approximate candidate search; both feed an ANN recall, latency, and memory comparison.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1700" height="780" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Exact search versus approximate candidates</text>
+<rect x="64" y="100" width="1572" height="616" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Visual retrieval system</text>
+<polyline points="320,370 380,370 380,260 450,260" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="320,410 380,410 380,570 450,570" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="720,260 810,260 810,372 900,372" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="752" y="313" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="810" y="330" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">exact top-K</text>
+<polyline points="720,570 810,570 810,448 900,448" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="752" y="493" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="810" y="510" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">ANN top-K</text>
+<polyline points="1200,410 1360,410" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1222" y="378" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="1280" y="395" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">measured evidence</text>
+<rect x="100" y="340" width="220" height="100" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="210.0" y="374" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Query vector</text>
+<rect x="450" y="190" width="270" height="140" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="585.0" y="224" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Exact Flat search</text>
+<text x="585.0" y="252" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">scan all N vectors · ground truth</text>
+<rect x="450" y="500" width="270" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="585.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Approximate search</text>
+<text x="585.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">navigate candidate subset</text>
+<rect x="900" y="315" width="300" height="190" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1050.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Evaluate trade-off</text>
+<text x="1050.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">ANN Recall@K · median/p95 latency · memory</text>
+<rect x="1360" y="350" width="270" height="120" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1495.0" y="384" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Choose against contract</text>
+</svg>

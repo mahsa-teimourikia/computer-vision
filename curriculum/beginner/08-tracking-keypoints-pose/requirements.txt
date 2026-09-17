@@ -1,0 +1,10 @@
+--constraint constraints-tested.txt
+jupyterlab
+matplotlib
+numpy
+pandas
+pillow
+scipy
+scikit-learn
+torch
+torchvision

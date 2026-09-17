@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "id": "tracking-by-detection",
+  "title": "Tracking by detection",
+  "purpose": "Frames become detections, matched observations, persistent tracks, and structured temporal state.",
+  "output": {
+    "svg": "curriculum/beginner/08-tracking-keypoints-pose/assets/tracking-by-detection.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Frames become detections, matched observations, persistent tracks, and structured temporal state."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 720,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Structured visual state",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 550
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "frames",
+      "group": "system",
+      "label": "Timestamped\nframes",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "source \u00b7 camera"
+    },
+    {
+      "id": "detector",
+      "group": "system",
+      "label": "Detector",
+      "type": "agent",
+      "bounds": {
+        "x": 430,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "boxes \u00b7 scores \u00b7 classes"
+    },
+    {
+      "id": "association",
+      "group": "system",
+      "label": "Association",
+      "type": "service",
+      "bounds": {
+        "x": 760,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "geometry \u00b7 motion \u00b7 appearance"
+    },
+    {
+      "id": "tracks",
+      "group": "system",
+      "label": "Track lifecycle",
+      "type": "action",
+      "bounds": {
+        "x": 1090,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "birth \u00b7 lost \u00b7 recovered"
+    },
+    {
+      "id": "state",
+      "group": "system",
+      "label": "Structured state",
+      "type": "data",
+      "bounds": {
+        "x": 1420,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "ID \u00b7 pose \u00b7 history"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "frames",
+        "port": "out"
+      },
+      "to": {
+        "node": "detector",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          360
+        ],
+        [
+          430,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "detector",
+        "port": "out"
+      },
+      "to": {
+        "node": "association",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          680,
+          360
+        ],
+        [
+          760,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "association",
+        "port": "out"
+      },
+      "to": {
+        "node": "tracks",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          360
+        ],
+        [
+          1090,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "tracks",
+        "port": "out"
+      },
+      "to": {
+        "node": "state",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1340,
+          360
+        ],
+        [
+          1420,
+          360
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlap": true,
+    "all_text_contained": true,
+    "edge_routes_reviewed": true,
+    "contrast_checked": true,
+    "alt_text_reviewed": true
+  }
+}

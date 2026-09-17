@@ -1,0 +1,347 @@
+{
+  "version": 1,
+  "id": "reasoning-dependency-dag",
+  "title": "A decision is a dependency graph",
+  "purpose": "Make the three required facts and derived threshold observable before the final rule.",
+  "output": {
+    "svg": "curriculum/intermediate/02-multimodal-reasoning-verification/assets/reasoning-dependency-dag.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Scratch, spatial, and bolt-count facts feed a maintenance rule; the count first feeds a less-than-three predicate, and the rule emits true, false, or review."
+  },
+  "canvas": {
+    "width": 1840,
+    "height": 820,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Observable reasoning contract",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1712,
+        "height": 656
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "scratch",
+      "group": "system",
+      "label": "Scratch fact",
+      "subtitle": "observed \u00b7 valve_1",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 180,
+        "width": 260,
+        "height": 104
+      },
+      "ports": {
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "side",
+      "group": "system",
+      "label": "Spatial fact",
+      "subtitle": "geometry(valve, pipe)",
+      "type": "operations",
+      "bounds": {
+        "x": 120,
+        "y": 350,
+        "width": 260,
+        "height": 104
+      },
+      "ports": {
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "count",
+      "group": "system",
+      "label": "Bolt count",
+      "subtitle": "count(unique IDs)",
+      "type": "operations",
+      "bounds": {
+        "x": 120,
+        "y": 520,
+        "width": 260,
+        "height": 104
+      },
+      "ports": {
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "threshold",
+      "group": "system",
+      "label": "Count < 3",
+      "subtitle": "arithmetic predicate",
+      "type": "operations",
+      "bounds": {
+        "x": 520,
+        "y": 520,
+        "width": 260,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "rule",
+      "group": "system",
+      "label": "Maintenance rule",
+      "subtitle": "scratch \u2227 left \u2227 count<3",
+      "type": "agent",
+      "bounds": {
+        "x": 930,
+        "y": 335,
+        "width": 360,
+        "height": 120
+      },
+      "ports": {
+        "s": {
+          "side": "left",
+          "offset": 0.2
+        },
+        "r": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "c": {
+          "side": "left",
+          "offset": 0.8
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "decision",
+      "group": "system",
+      "label": "Decision state",
+      "subtitle": "true \u00b7 false \u00b7 review",
+      "type": "action",
+      "bounds": {
+        "x": 1450,
+        "y": 335,
+        "width": 260,
+        "height": 104
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "scratch",
+        "port": "out"
+      },
+      "to": {
+        "node": "rule",
+        "port": "s"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          380,
+          232
+        ],
+        [
+          720,
+          232
+        ],
+        [
+          720,
+          359
+        ],
+        [
+          930,
+          359
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "side",
+        "port": "out"
+      },
+      "to": {
+        "node": "rule",
+        "port": "r"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          380,
+          402
+        ],
+        [
+          820,
+          402
+        ],
+        [
+          820,
+          395
+        ],
+        [
+          930,
+          395
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "count",
+        "port": "out"
+      },
+      "to": {
+        "node": "threshold",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          380,
+          572
+        ],
+        [
+          520,
+          572
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "threshold",
+        "port": "out"
+      },
+      "to": {
+        "node": "rule",
+        "port": "c"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          780,
+          572
+        ],
+        [
+          840,
+          572
+        ],
+        [
+          840,
+          431
+        ],
+        [
+          930,
+          431
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "rule",
+        "port": "out"
+      },
+      "to": {
+        "node": "decision",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1290,
+          395
+        ],
+        [
+          1380,
+          395
+        ],
+        [
+          1380,
+          387
+        ],
+        [
+          1450,
+          387
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

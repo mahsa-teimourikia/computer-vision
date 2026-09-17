@@ -11,14 +11,28 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The first four complete courses form a connected foundations sequence:
+The nine complete Beginner courses lead into six Intermediate courses and three Advanced courses:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
 3. [Vision Transformers](curriculum/beginner/03-vision-transformers/README.md) moves from patches, positions, and manual attention to a minimal ViT, a controlled CNN/ViT/Swin benchmark, resolution interpolation, attention-distance diagnostics, and architecture selection.
 4. [Self-Supervised Visual Representation Learning](curriculum/beginner/04-self-supervised-visual-representation-learning/README.md) moves from manual NT-Xent and augmentation contracts through matched contrastive/teacher–student/reconstruction experiments, explicit collapse diagnostics, repeated label-efficiency evaluation, global-versus-patch testing, and governed foundation-feature decisions.
+5. [Object Detection](curriculum/beginner/05-object-detection/README.md) moves from box contracts, IoU, matching, AP, anchors, and feature pyramids through a trained dense detector, NMS, Hungarian assignment, YOLO/DETR design choices, open-vocabulary extensions, and source-aware deployment evidence.
+6. [Segmentation & Promptable Segmentation](curriculum/beginner/06-segmentation-promptable-segmentation/README.md) moves from mask contracts, U-Net, losses, overlap, and boundaries through source-sliced semantic evaluation, prompt sensitivity, detector-box error propagation, human review, and a governed optional SAM 3.1 adapter.
+7. [Visual Embeddings, Metric Learning & Retrieval](curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/README.md) turns explicit similarity contracts into normalized embeddings, metric-learning objectives, simulated mining adjudication, exact and approximate search, retrieval failure analysis, and versioned enterprise evidence.
+8. [Tracking, Keypoints & Pose](curriculum/beginner/08-tracking-keypoints-pose/README.md) builds timestamp-aware association, lifecycle, motion, appearance, and Byte-style recovery before connecting persistent identity to landmark accuracy, pose geometry, temporal stability, and failure propagation.
+9. [Vision Foundation Models & Open-Vocabulary Vision](curriculum/beginner/09-vision-foundation-models-open-vocabulary/README.md) synthesizes the track through reusable visual features, image–text alignment, prompt and vocabulary evaluation, patch correspondence, language-conditioned localization, detector→segmenter composition, and governed adaptation.
+10. [Vision-Language Models: From Visual Features to Multimodal Reasoning](curriculum/intermediate/01-vision-language-models/README.md) turns visual features into language-model context through projection, resampling, fusion, and causal generation, then tests grounding, hallucination, evidence, structured output, and systems contracts.
+11. [Multimodal Reasoning & Verification: From Visual Evidence to Checked Conclusions](curriculum/intermediate/02-multimodal-reasoning-verification/README.md) decomposes bounded questions into evidence-bound facts, deterministic tool calls, checked claims, counterfactual and contradiction tests, uncertainty-aware decisions, and governed evidence artifacts.
+12. [Document Intelligence: From Pixels and Layout to Structured Evidence](curriculum/intermediate/03-document-intelligence/README.md) routes mixed documents through page, OCR, layout, reading-order, table, form, normalization, provenance, verification, source-shift, and review contracts without flattening away evidence.
+13. [Multimodal Retrieval & RAG: From Evidence Indexing to Grounded Multimodal Answers](curriculum/intermediate/04-multimodal-retrieval-rag/README.md) turns pages, cells, figures, images, and regions into authorized multimodal indexes, then measures hybrid retrieval, evidence sufficiency, claim-level citations, freshness, and retrieval-versus-generation failures.
+14. [Video-Language Understanding: From Temporal Evidence to Grounded Video Reasoning](curriculum/intermediate/05-video-language-understanding/README.md) turns timestamped streams into sampled observations, temporal representations, event intervals, multi-event relations, long-video retrieval, verified citations, and bounded streaming decisions.
+15. [Visual Agents: From Multimodal Evidence to Bounded Tool-Using Systems](curriculum/intermediate/06-visual-agents/README.md) turns image, document, and video evidence into typed state, permissioned tool proposals, validated execution, verified facts, bounded recovery, explicit stop decisions, and safe escalation.
+16. [3D Vision & Spatial Intelligence: From Camera Geometry to Metric Scene Understanding](curriculum/advanced/01-3d-vision-spatial-intelligence/README.md) turns calibrated 2D observations into frame-aware projection, robust correspondence, stereo depth, triangulation, pose, reconstruction, uncertainty, and source-held-out metric spatial evidence.
+17. [Neural Rendering & 3D Scene Representations: From NeRFs to 3D Gaussian Splatting](curriculum/advanced/02-neural-rendering-3d-scene-representations/README.md) turns calibrated cameras into rays, differentiable volume rendering, held-out novel views, separate appearance/geometry evidence, explicit Gaussian projection and splatting, governed density control, and source-held-out scene decisions.
+18. [Dynamic Scenes & World Models: From 4D Scene State to Action-Conditioned Futures](curriculum/advanced/03-dynamic-scenes-world-models/README.md) turns partial observations into persistent state, action-conditioned dynamics, horizon-aware evaluation, checked counterfactuals, planning-exploit evidence, and support-aware decisions without authorizing physical action.
 
-All four CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, and scikit-learn APIs and keep all teaching code inside the notebook.
+All eighteen CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, and scikit-learn APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate courses preserve multimodal evidence and bounded-agent contracts while keeping heavyweight models disabled. Advanced 01–02 expose metric geometry and neural-rendering mechanics. Advanced 03 uses dataclasses, NumPy, pandas, Pillow, Matplotlib, and scikit-learn Ridge for a transparent action-conditioned world-model proxy; DreamerV3, Cosmos 3, Dynamic 3D Gaussians, and Genie 3 remain revision-governed optional case studies rather than hidden execution dependencies.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -71,13 +85,83 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
-│   └── 04-self-supervised-visual-representation-learning/
+│   ├── 04-self-supervised-visual-representation-learning/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 05-object-detection/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 06-segmentation-promptable-segmentation/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 07-visual-embeddings-metric-learning-retrieval/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 08-tracking-keypoints-pose/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 09-vision-foundation-models-open-vocabulary/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt
 │       └── assets/            # deterministic SVGs + coordinate specs
 ├── intermediate/
+│   ├── 01-vision-language-models/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 02-multimodal-reasoning-verification/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 03-document-intelligence/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 04-multimodal-retrieval-rag/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 05-video-language-understanding/
+│       ├── README.md
+│       ├── lab.ipynb
+│       ├── requirements.txt
+│       └── assets/            # deterministic SVGs + coordinate specs
+│   └── 06-visual-agents/
+│       ├── README.md
+│       ├── lab.ipynb
+│       ├── requirements.txt
+│       └── assets/            # deterministic SVGs + coordinate specs
 ├── advanced/
+│   ├── 01-3d-vision-spatial-intelligence/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 02-neural-rendering-3d-scene-representations/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 03-dynamic-scenes-world-models/
+│       ├── README.md
+│       ├── lab.ipynb
+│       ├── requirements.txt
+│       └── assets/            # deterministic SVGs + coordinate specs
 ├── enterprise/
 ├── capstones/
 └── shared/

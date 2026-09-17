@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "id": "semantic-vs-instance",
+  "title": "Same class, different output identity",
+  "purpose": "Show why semantic segmentation merges same-class objects while instance segmentation separates them.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/semantic-vs-instance.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "The same image with three components becomes one component-class region under semantic segmentation and three separately identified masks under instance segmentation."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "semantic_group",
+      "label": "Semantic",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 696,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    },
+    {
+      "id": "instance_group",
+      "label": "Instance",
+      "bounds": {
+        "x": 840,
+        "y": 120,
+        "width": 696,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "semantic_image",
+      "group": "semantic_group",
+      "label": "Three components",
+      "subtitle": "same semantic class",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 300,
+        "width": 240,
+        "height": 150
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "semantic_mask",
+      "group": "semantic_group",
+      "label": "One class mask",
+      "subtitle": "component pixels",
+      "type": "service",
+      "bounds": {
+        "x": 470,
+        "y": 300,
+        "width": 240,
+        "height": 150
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "instance_image",
+      "group": "instance_group",
+      "label": "Three components",
+      "subtitle": "same semantic class",
+      "type": "data",
+      "bounds": {
+        "x": 900,
+        "y": 300,
+        "width": 240,
+        "height": 150
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "instance_masks",
+      "group": "instance_group",
+      "label": "Three object masks",
+      "subtitle": "IDs 1, 2, 3",
+      "type": "agent",
+      "bounds": {
+        "x": 1250,
+        "y": 300,
+        "width": 240,
+        "height": 150
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "semantic_map",
+      "from": {
+        "node": "semantic_image",
+        "port": "out"
+      },
+      "to": {
+        "node": "semantic_mask",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          360,
+          375
+        ],
+        [
+          470,
+          375
+        ]
+      ],
+      "label": "class per pixel",
+      "label_at": [
+        415,
+        365
+      ]
+    },
+    {
+      "id": "instance_map",
+      "from": {
+        "node": "instance_image",
+        "port": "out"
+      },
+      "to": {
+        "node": "instance_masks",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1140,
+          375
+        ],
+        [
+          1250,
+          375
+        ]
+      ],
+      "label": "class + ID",
+      "label_at": [
+        1195,
+        365
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

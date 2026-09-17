@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "id": "temporal-retrieval-hierarchy",
+  "title": "Long-video retrieval descends from coarse context to precise intervals",
+  "purpose": "A hierarchy from a long video to scenes, clips, observable change points, event intervals, track context, and the minimum sufficient temporal evidence bundle.",
+  "output": {
+    "svg": "curriculum/intermediate/05-video-language-understanding/assets/temporal-retrieval-hierarchy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A hierarchy from a long video to scenes, clips, observable change points, event intervals, track context, and the minimum sufficient temporal evidence bundle."
+  },
+  "canvas": {
+    "width": 2048,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 36,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Long-video retrieval descends from coarse context to precise intervals",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1920,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "video",
+      "group": "system",
+      "label": "Long\nvideo",
+      "type": "data",
+      "bounds": {
+        "x": 139,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "scene",
+      "group": "system",
+      "label": "Coarse\nscene",
+      "type": "service",
+      "bounds": {
+        "x": 399,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "clip",
+      "group": "system",
+      "label": "Candidate\nclip",
+      "type": "service",
+      "bounds": {
+        "x": 659,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "change",
+      "group": "system",
+      "label": "Dense local\nresampling",
+      "type": "agent",
+      "bounds": {
+        "x": 919,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "event",
+      "group": "system",
+      "label": "Event\ninterval",
+      "type": "data",
+      "bounds": {
+        "x": 1179,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "track",
+      "group": "system",
+      "label": "Track + state\ncontext",
+      "type": "agent",
+      "bounds": {
+        "x": 1439,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "bundle",
+      "group": "system",
+      "label": "Temporal evidence\nbundle",
+      "type": "action",
+      "bounds": {
+        "x": 1699,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "video",
+        "port": "out"
+      },
+      "to": {
+        "node": "scene",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          349,
+          325
+        ],
+        [
+          399,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "scene",
+        "port": "out"
+      },
+      "to": {
+        "node": "clip",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          609,
+          325
+        ],
+        [
+          659,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "clip",
+        "port": "out"
+      },
+      "to": {
+        "node": "change",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          869,
+          325
+        ],
+        [
+          919,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "change",
+        "port": "out"
+      },
+      "to": {
+        "node": "event",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1129,
+          325
+        ],
+        [
+          1179,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "event",
+        "port": "out"
+      },
+      "to": {
+        "node": "track",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1389,
+          325
+        ],
+        [
+          1439,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e6",
+      "from": {
+        "node": "track",
+        "port": "out"
+      },
+      "to": {
+        "node": "bundle",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1649,
+          325
+        ],
+        [
+          1699,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

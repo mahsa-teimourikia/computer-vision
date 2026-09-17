@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "id": "mask-rcnn",
+  "title": "Mask R-CNN adds an aligned mask branch",
+  "purpose": "Connect detection proposals to ROI Align and parallel class, box, and mask heads.",
+  "output": {
+    "svg": "curriculum/beginner/06-segmentation-promptable-segmentation/assets/mask-rcnn.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An image flows through a backbone and feature pyramid into proposals and ROI Align, which branches to class, box, and per-instance mask outputs."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "course",
+      "label": "Segmentation output contracts",
+      "bounds": {
+        "x": 64,
+        "y": 120,
+        "width": 1472,
+        "height": 650
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "image",
+      "group": "course",
+      "label": "Image",
+      "subtitle": "H \u00d7 W \u00d7 3",
+      "type": "data",
+      "bounds": {
+        "x": 95,
+        "y": 330,
+        "width": 180,
+        "height": 130
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "backbone",
+      "group": "course",
+      "label": "Backbone + FPN",
+      "subtitle": "multi-scale features",
+      "type": "agent",
+      "bounds": {
+        "x": 355,
+        "y": 330,
+        "width": 250,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "proposals",
+      "group": "course",
+      "label": "Proposals",
+      "subtitle": "candidate boxes",
+      "type": "service",
+      "bounds": {
+        "x": 685,
+        "y": 330,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "roi",
+      "group": "course",
+      "label": "ROI Align",
+      "subtitle": "subpixel sampling",
+      "type": "action",
+      "bounds": {
+        "x": 985,
+        "y": 330,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "class": {
+          "side": "right",
+          "offset": 0.2
+        },
+        "box": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "mask": {
+          "side": "right",
+          "offset": 0.8
+        }
+      }
+    },
+    {
+      "id": "heads",
+      "group": "course",
+      "label": "Parallel heads",
+      "subtitle": "class \u00b7 box \u00b7 mask",
+      "type": "operations",
+      "bounds": {
+        "x": 1300,
+        "y": 300,
+        "width": 210,
+        "height": 190
+      },
+      "ports": {
+        "class": {
+          "side": "left",
+          "offset": 0.25
+        },
+        "box": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "mask": {
+          "side": "left",
+          "offset": 0.75
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "image_backbone",
+      "from": {
+        "node": "image",
+        "port": "out"
+      },
+      "to": {
+        "node": "backbone",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          275,
+          395
+        ],
+        [
+          355,
+          395
+        ]
+      ]
+    },
+    {
+      "id": "backbone_proposals",
+      "from": {
+        "node": "backbone",
+        "port": "out"
+      },
+      "to": {
+        "node": "proposals",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          605,
+          395
+        ],
+        [
+          685,
+          395
+        ]
+      ]
+    },
+    {
+      "id": "proposals_roi",
+      "from": {
+        "node": "proposals",
+        "port": "out"
+      },
+      "to": {
+        "node": "roi",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          905,
+          395
+        ],
+        [
+          985,
+          395
+        ]
+      ]
+    },
+    {
+      "id": "roi_class",
+      "from": {
+        "node": "roi",
+        "port": "class"
+      },
+      "to": {
+        "node": "heads",
+        "port": "class"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1205,
+          356
+        ],
+        [
+          1250,
+          356
+        ],
+        [
+          1250,
+          348
+        ],
+        [
+          1300,
+          348
+        ]
+      ],
+      "label": "class",
+      "label_at": [
+        1248,
+        338
+      ]
+    },
+    {
+      "id": "roi_box",
+      "from": {
+        "node": "roi",
+        "port": "box"
+      },
+      "to": {
+        "node": "heads",
+        "port": "box"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1205,
+          395
+        ],
+        [
+          1300,
+          395
+        ]
+      ],
+      "label": "box",
+      "label_at": [
+        1252,
+        385
+      ]
+    },
+    {
+      "id": "roi_mask",
+      "from": {
+        "node": "roi",
+        "port": "mask"
+      },
+      "to": {
+        "node": "heads",
+        "port": "mask"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1205,
+          434
+        ],
+        [
+          1250,
+          434
+        ],
+        [
+          1250,
+          442
+        ],
+        [
+          1300,
+          442
+        ]
+      ],
+      "label": "mask",
+      "label_at": [
+        1248,
+        455
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

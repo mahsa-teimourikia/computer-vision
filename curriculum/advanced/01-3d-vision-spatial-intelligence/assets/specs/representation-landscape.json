@@ -1,0 +1,675 @@
+{
+  "version": 1,
+  "id": "representation-landscape",
+  "title": "Choose 3D representation by query",
+  "purpose": "Compare common 3D representations.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/representation-landscape.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Measured points branch into point clouds, voxels, meshes, implicit fields, Gaussian scenes, or learned point maps according to the required spatial query."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Compare common 3D representations.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "query",
+      "label": "DOWNSTREAM QUERY",
+      "subtitle": "measurement, occupancy, rendering",
+      "type": "action",
+      "bounds": {
+        "x": 75,
+        "y": 310,
+        "width": 220,
+        "height": 110
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "points",
+      "label": "POINT CLOUD",
+      "subtitle": "observed samples",
+      "type": "service",
+      "bounds": {
+        "x": 385,
+        "y": 170,
+        "width": 210,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "voxels",
+      "label": "VOXELS",
+      "subtitle": "regular volume",
+      "type": "service",
+      "bounds": {
+        "x": 385,
+        "y": 315,
+        "width": 210,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "mesh",
+      "label": "MESH",
+      "subtitle": "explicit surface",
+      "type": "service",
+      "bounds": {
+        "x": 385,
+        "y": 460,
+        "width": 210,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "implicit",
+      "label": "IMPLICIT FIELD",
+      "subtitle": "continuous query",
+      "type": "agent",
+      "bounds": {
+        "x": 725,
+        "y": 170,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "gaussian",
+      "label": "GAUSSIAN SCENE",
+      "subtitle": "view synthesis",
+      "type": "agent",
+      "bounds": {
+        "x": 725,
+        "y": 315,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "learned",
+      "label": "LEARNED POINT MAP",
+      "subtitle": "feed-forward prior",
+      "type": "agent",
+      "bounds": {
+        "x": 725,
+        "y": 460,
+        "width": 220,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "decision",
+      "label": "SELECT WITH\nframes \u00b7 scale \u00b7 uncertainty",
+      "subtitle": "not visual appeal",
+      "type": "data",
+      "bounds": {
+        "x": 1055,
+        "y": 300,
+        "width": 270,
+        "height": 130
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "q1",
+      "from": {
+        "node": "query",
+        "port": "right"
+      },
+      "to": {
+        "node": "points",
+        "port": "left"
+      },
+      "route": [
+        [
+          295,
+          365
+        ],
+        [
+          335,
+          365
+        ],
+        [
+          335,
+          220
+        ],
+        [
+          385,
+          220
+        ]
+      ],
+      "label": "sample",
+      "kind": "primary",
+      "label_at": [
+        340,
+        283
+      ]
+    },
+    {
+      "id": "q2",
+      "from": {
+        "node": "query",
+        "port": "right"
+      },
+      "to": {
+        "node": "voxels",
+        "port": "left"
+      },
+      "route": [
+        [
+          295,
+          365
+        ],
+        [
+          385,
+          365
+        ]
+      ],
+      "label": "occupy",
+      "kind": "primary",
+      "label_at": [
+        340,
+        356
+      ]
+    },
+    {
+      "id": "q3",
+      "from": {
+        "node": "query",
+        "port": "right"
+      },
+      "to": {
+        "node": "mesh",
+        "port": "left"
+      },
+      "route": [
+        [
+          295,
+          365
+        ],
+        [
+          335,
+          365
+        ],
+        [
+          335,
+          510
+        ],
+        [
+          385,
+          510
+        ]
+      ],
+      "label": "surface",
+      "kind": "primary",
+      "label_at": [
+        340,
+        429
+      ]
+    },
+    {
+      "id": "p1",
+      "from": {
+        "node": "points",
+        "port": "right"
+      },
+      "to": {
+        "node": "implicit",
+        "port": "left"
+      },
+      "route": [
+        [
+          595,
+          220
+        ],
+        [
+          725,
+          220
+        ]
+      ],
+      "label": "fit",
+      "kind": "primary",
+      "label_at": [
+        660,
+        211
+      ]
+    },
+    {
+      "id": "p2",
+      "from": {
+        "node": "voxels",
+        "port": "right"
+      },
+      "to": {
+        "node": "gaussian",
+        "port": "left"
+      },
+      "route": [
+        [
+          595,
+          365
+        ],
+        [
+          725,
+          365
+        ]
+      ],
+      "label": "render",
+      "kind": "primary",
+      "label_at": [
+        660,
+        356
+      ]
+    },
+    {
+      "id": "p3",
+      "from": {
+        "node": "mesh",
+        "port": "right"
+      },
+      "to": {
+        "node": "learned",
+        "port": "left"
+      },
+      "route": [
+        [
+          595,
+          510
+        ],
+        [
+          725,
+          510
+        ]
+      ],
+      "label": "infer",
+      "kind": "primary",
+      "label_at": [
+        660,
+        501
+      ]
+    },
+    {
+      "id": "d1",
+      "from": {
+        "node": "implicit",
+        "port": "right"
+      },
+      "to": {
+        "node": "decision",
+        "port": "left_top"
+      },
+      "route": [
+        [
+          945,
+          220
+        ],
+        [
+          1000,
+          220
+        ],
+        [
+          1000,
+          339
+        ],
+        [
+          1055,
+          339
+        ]
+      ],
+      "label": "evaluate",
+      "kind": "primary",
+      "label_at": [
+        1000,
+        271
+      ]
+    },
+    {
+      "id": "d2",
+      "from": {
+        "node": "gaussian",
+        "port": "right"
+      },
+      "to": {
+        "node": "decision",
+        "port": "left"
+      },
+      "route": [
+        [
+          945,
+          365
+        ],
+        [
+          1055,
+          365
+        ]
+      ],
+      "label": "evaluate",
+      "kind": "primary",
+      "label_at": [
+        1000,
+        356
+      ]
+    },
+    {
+      "id": "d3",
+      "from": {
+        "node": "learned",
+        "port": "right"
+      },
+      "to": {
+        "node": "decision",
+        "port": "left_bottom"
+      },
+      "route": [
+        [
+          945,
+          510
+        ],
+        [
+          1000,
+          510
+        ],
+        [
+          1000,
+          391
+        ],
+        [
+          1055,
+          391
+        ]
+      ],
+      "label": "evaluate",
+      "kind": "primary",
+      "label_at": [
+        1000,
+        441
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Choose 3D representation by query",
+    "description": "Measured points branch into point clouds, voxels, meshes, implicit fields, Gaussian scenes, or learned point maps according to the required spatial query."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

@@ -1,0 +1,9 @@
+# Tested together on 2026-09-01. Update only after executing the notebook and tests.
+jupyterlab==4.4.9
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+pillow==12.3.0
+scipy==1.17.1
+torch==2.13.0
+torchvision==0.28.0

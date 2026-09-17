@@ -1,0 +1,11 @@
+-c constraints-tested.txt
+
+jupyterlab
+matplotlib
+numpy
+pandas
+pillow
+
+# Optional, disabled by default: faiss-cpu for local exact/ANN vector indexes.
+# Optional, isolated environment: transformers/sentence-transformers for pinned encoders and rerankers.
+# Optional, isolated environment: colpali-engine for pinned multi-vector document retrieval.
