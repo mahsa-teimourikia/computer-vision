@@ -171,11 +171,15 @@ Advanced 03 implements typed state/action/observation contracts, a deterministic
 | Tool | Best fit | Constraints to review |
 | --- | --- | --- |
 | [LeRobot](https://huggingface.co/docs/lerobot/) | Open robot-learning datasets, policies, and hardware integrations | Dataset/action schema, control rate, embodiment transfer, and model/hardware support |
+| [robomimic](https://robomimic.github.io/docs/) | Offline imitation/RL baselines, demonstration datasets, and rollout evaluation | Environment/version coupling, action normalization, dataset splits, simulator requirements, and language/observation schema |
 | [MuJoCo](https://mujoco.readthedocs.io/) | Fast contact-rich physics and control research | Simulation-to-real gap, sensors, contact parameters, and task reproducibility |
+| [ManiSkill](https://maniskill.readthedocs.io/) | Standardized manipulation tasks, observation/control modes, demonstrations, and CPU/GPU simulation | Task/controller version, asset identity, replay preprocessing, benchmark protocol, hardware requirements, and reality gap |
 | [NVIDIA Isaac Sim](https://docs.isaacsim.omniverse.nvidia.com/) / Isaac Lab | Photoreal simulation, synthetic data, and GPU robot learning | NVIDIA hardware/software dependency, licensing, determinism, and deployment separation |
 | [ROS 2](https://docs.ros.org/en/rolling/) | Robot middleware and system integration | Real-time boundaries, message contracts, QoS, identity/security, and lifecycle management |
 
 Physical-action labs default to simulation, bounded action spaces, explicit stop conditions, recorded state/action traces, and human approval before any real actuator path.
+
+Advanced 04 keeps the executable path in standard Python, NumPy, pandas, Matplotlib, and scikit-learn. It teaches versioned embodiment/observation/action contracts, explicit frames and units, goal ambiguity, embodiment-conditioned affordances, normalization and tokenization, a Ridge behavioral-cloning/proprioception ablation, covariate-shift rollout, disturbed open-loop versus receding-horizon chunks, freshness deadlines, independent reach/collision checks, digest-bound single-use simulation permits, postcondition recovery, and reporting-only embodiment shift. LeRobot, OpenVLA, openpi, Isaac GR00T, ManiSkill, MuJoCo, and robomimic are disabled, revision-pinned mappings. Their code licenses do not grant rights to every checkpoint, dataset, robot asset, or transitive component, and none authorizes a physical actuator path.
 
 ## Deployment and operations
 

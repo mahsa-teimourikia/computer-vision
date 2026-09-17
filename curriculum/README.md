@@ -45,8 +45,9 @@ The [intermediate track](intermediate/README.md) culminates in bounded visual ag
 - [01 · 3D Vision & Spatial Intelligence: From Camera Geometry to Metric Scene Understanding](advanced/01-3d-vision-spatial-intelligence/README.md) — move from coordinate frames, pinhole projection, calibration, epipolar geometry, stereo, and triangulation into pose, point-cloud reconstruction, representation choice, uncertainty, and source-held-out metric decisions.
 - [02 · Neural Rendering & 3D Scene Representations: From NeRFs to 3D Gaussian Splatting](advanced/02-neural-rendering-3d-scene-representations/README.md) — move from camera rays and volume rendering into held-out view synthesis, independent geometry evaluation, Gaussian projection and splatting, density-control lineage, systems trade-offs, and governed scene evidence.
 - [03 · Dynamic Scenes & World Models: From 4D Scene State to Action-Conditioned Futures](advanced/03-dynamic-scenes-world-models/README.md) — move from partial observations into persistent state, action-conditioned transitions, stochastic futures, horizon-aware evaluation, object permanence, physical checks, counterfactual planning, model exploitation, and support-aware mitigation.
+- [04 · Embodied Vision & Vision-Language-Action Models: From Visual Grounding to Closed-Loop Action](advanced/04-embodied-vision-vla-models/README.md) — move from timestamped observations, goals, proprioception, and embodiment contracts into grounding, affordances, action representations, behavioral cloning, independent feasibility gates, simulation-only authorization, feedback, and recovery.
 
-The [advanced track](advanced/README.md) continues next into embodied vision, vision-language-action systems, and multimodal adaptation.
+The [advanced track](advanced/README.md) continues next into spatial intelligence and memory, embodied simulation, and multimodal adaptation.
 
 ## Enterprise
 

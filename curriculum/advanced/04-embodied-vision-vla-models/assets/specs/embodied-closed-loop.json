@@ -1,0 +1,290 @@
+{
+  "version": 1,
+  "id": "embodied-closed-loop",
+  "title": "Embodied closed loop",
+  "purpose": "Keep the entire observation-to-feedback contract visible.",
+  "output": {
+    "svg": "curriculum/advanced/04-embodied-vision-vla-models/assets/embodied-closed-loop.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A timestamped observation and goal become grounded state, an action proposal, independently checked simulation execution, and verified feedback that loops to a new observation."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "A policy proposes; trusted checks and measured feedback decide what happens next",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1472,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "group": "system",
+      "label": "OBSERVE + GOAL",
+      "subtitle": "vision \u00b7 proprioception \u00b7 time",
+      "type": "data",
+      "bounds": {
+        "x": 94,
+        "y": 278,
+        "width": 230,
+        "height": 150
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n2",
+      "group": "system",
+      "label": "GROUND + AFFORD",
+      "subtitle": "entities \u00b7 frames \u00b7 compatibility",
+      "type": "service",
+      "bounds": {
+        "x": 390,
+        "y": 278,
+        "width": 230,
+        "height": 150
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n3",
+      "group": "system",
+      "label": "POLICY PROPOSAL",
+      "subtitle": "typed chunk \u00b7 confidence",
+      "type": "agent",
+      "bounds": {
+        "x": 686,
+        "y": 278,
+        "width": 230,
+        "height": 150
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n4",
+      "group": "system",
+      "label": "CHECK + EXECUTE",
+      "subtitle": "permit \u00b7 bounded simulation",
+      "type": "action",
+      "bounds": {
+        "x": 982,
+        "y": 278,
+        "width": 230,
+        "height": 150
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n5",
+      "group": "system",
+      "label": "VERIFY + RECOVER",
+      "subtitle": "postconditions \u00b7 stop/replan",
+      "type": "operations",
+      "bounds": {
+        "x": 1278,
+        "y": 278,
+        "width": 230,
+        "height": 150
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "n1",
+        "port": "right"
+      },
+      "to": {
+        "node": "n2",
+        "port": "left"
+      },
+      "route": [
+        [
+          324,
+          353
+        ],
+        [
+          390,
+          353
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "n2",
+        "port": "right"
+      },
+      "to": {
+        "node": "n3",
+        "port": "left"
+      },
+      "route": [
+        [
+          620,
+          353
+        ],
+        [
+          686,
+          353
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "n3",
+        "port": "right"
+      },
+      "to": {
+        "node": "n4",
+        "port": "left"
+      },
+      "route": [
+        [
+          916,
+          353
+        ],
+        [
+          982,
+          353
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "n4",
+        "port": "right"
+      },
+      "to": {
+        "node": "n5",
+        "port": "left"
+      },
+      "route": [
+        [
+          1212,
+          353
+        ],
+        [
+          1278,
+          353
+        ]
+      ],
+      "kind": "primary"
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "group_containment",
+      "20px_clearance",
+      "edge_ports",
+      "orthogonal_routes",
+      "accessible_title_and_description"
+    ]
+  },
+  "source": {
+    "kind": "coordinate_spec",
+    "deterministic": true,
+    "reviewed_on": "2026-09-17"
+  }
+}

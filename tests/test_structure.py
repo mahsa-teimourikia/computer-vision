@@ -1712,3 +1712,122 @@ def test_advanced_03_diagrams_are_reusable_and_accessible():
         assert data["validation"]["status"] == "validated"
         assert "20px_clearance" in data["validation"]["checked"]
         assert data["source"]["deterministic"] is True
+
+
+def test_advanced_04_contains_the_declared_embodied_vla_lab():
+    course = Path("curriculum/advanced/04-embodied-vision-vla-models")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "EmbodimentContract",
+        "SceneObject",
+        "Observation",
+        "GroundedGoal",
+        "ActionProposal",
+        "Action without frame is invalid",
+        "CAMERA_TO_BASE",
+        "LocalGroundingProxy",
+        "clarification_required",
+        "unsafe_action_after_ambiguity_rate",
+        "AffordanceRecord",
+        "grasp_affordance",
+        "ActionNormalizer",
+        "normalize",
+        "denormalize",
+        "tokenize_action",
+        "tokenization_translation_vector_error_m",
+        "Ridge",
+        "vision_only_policy",
+        "proprioception_aware_policy",
+        "translation_vector_MAE_m",
+        "rollout_bc",
+        "LocalVLAPolicyProxy",
+        "local_vla_policy_proxy",
+        "foundation_model = False",
+        "ValidationDecision",
+        "validate_action",
+        "stale_observation",
+        "embodiment_mismatch",
+        "delta_limit_exceeded",
+        "unreachable_target",
+        "collision_proxy_violation",
+        "gripper_incompatible",
+        "unsafe_high_confidence",
+        "plan_chunk",
+        "open_loop_chunk",
+        "receding_horizon",
+        "visual_servo",
+        "control_frequency_hz",
+        "SimulationPermit",
+        "simulation_only",
+        "SimulationExecutor",
+        "consumed_nonces",
+        "replay_blocked",
+        "mutated_proposal_blocked",
+        "PostconditionEvidence",
+        "verify_grasp",
+        "propose_pick_place_step",
+        "closed_loop_task_metrics",
+        "closed_loop_pick_place_success",
+        "steps_to_completion",
+        "proposal_violation_rate",
+        "executed_violation_rate",
+        "valid_work_block_rate",
+        "FROZEN_POLICY_HASH",
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "reporting only; no model, feature, normalizer, threshold, chunk, or rule changes",
+        "failure_attribution",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "CV_ENABLE_LEROBOT=False",
+        "CV_ENABLE_OPENVLA=False",
+        "CV_ENABLE_OPENPI=False",
+        "CV_ENABLE_GR00T=False",
+        "CV_ENABLE_MANISKILL=False",
+        "CV_ENABLE_MUJOCO=False",
+        "5aa74557f84c54d4b458f8b9643c5aa2982acfed",
+        "c8f03f48af692657d3060c19588038c7220e9af9",
+        "215abfb217dbac7d5f1273282331b9b1866c0479",
+        "51d4c89f72fda44cbf77285c6a8114b52676b8a1",
+        "embodied_vla_evidence.json",
+        "embodied_vla_decision.csv",
+        '"physical_authorization": "none"',
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "not a vlm, foundation model, or grounding benchmark" in source_lower
+    assert "no cell connects to hardware" in source_lower
+    assert "policy output is untrusted data" in source_lower
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_advanced_04_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/04-embodied-vision-vla-models/assets")
+    expected = {
+        "embodied-closed-loop.svg",
+        "model-role-taxonomy.svg",
+        "embodiment-contract.svg",
+        "grounding-affordance.svg",
+        "action-space-taxonomy.svg",
+        "action-chunking-feedback.svg",
+        "action-verification-gateway.svg",
+        "stale-observation.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
