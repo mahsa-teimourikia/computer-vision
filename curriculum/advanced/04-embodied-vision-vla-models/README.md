@@ -56,7 +56,7 @@ Advanced 01: metric geometry and frames
 
 ### Scenario, success criteria, and boundaries
 
-The notebook uses a credential-free 2D workcell proxy for the instruction “put the red block in the blue tray.” Site A supplies expert demonstrations for an `arm_A` embodiment. Site B selects all policy, normalization, freshness, chunk, and safety settings. The frozen policy is hashed before Site C introduces a different reach and gripper contract. A local deterministic grounding proxy and a small scikit-learn behavioral-cloning policy make the interfaces inspectable; neither is a foundation model or robotics benchmark.
+The notebook uses a credential-free 2D workcell proxy for the instruction “put the red block in the blue tray.” Site A supplies expert demonstrations for an `arm_A` embodiment. Site B selects all policy, normalization, freshness, chunk, and safety settings. The frozen policy is hashed before Site C introduces broader workspace/object-width support and a held-out `arm_B` reach and gripper contract. Site C reports reachability shift, affordance-compatibility shift, and their combined feasible-action rate without tuning. A local deterministic grounding proxy and a small scikit-learn behavioral-cloning policy make the interfaces inspectable; neither is a foundation model or robotics benchmark.
 
 The lab runs only a local simulator. No code connects to hardware, ROS, a robot SDK, a remote model, or a device. A proposal is not executable. A validation decision is not authorization. A single-use permit in the notebook is valid only for the named local simulation environment. The exported evidence says `"physical_authorization": "none"`.
 
@@ -165,8 +165,11 @@ does not say whether the values are metres or radians, or whether the displaceme
 ```json
 {
   "translation_delta_m": [0.01, 0.0, 0.0],
+  "translation_unit": "metre",
   "frame": "robot_base",
   "control_mode": "cartesian_delta",
+  "source_capture_timestamp_s": 12.36,
+  "observation_timestamp_s": 12.40,
   "embodiment_version": "arm_A/cartesian_delta/v1"
 }
 ```
@@ -339,7 +342,7 @@ Before `grasp`, the target must be uniquely identified, current, reachable, tool
 
 ## 33. Postconditions
 
-After `grasp`, ask whether the object moved with the gripper, the gripper closed to a plausible width, the target remains associated, and the scene is safe. “Command issued” is an execution event; it is not task success.
+After `grasp`, ask whether the object moved with the gripper, the gripper closed to a plausible width, the target remains associated, and the scene is safe. After `release`, verify from a new observation that the gripper opened and the target is within the destination tolerance. The notebook’s complete episode updates `held` and `task_success` only after these source-bound verifiers succeed. “Command issued” is an execution event; it is not task success.
 
 ## 34. Action verification and authorization
 
@@ -375,7 +378,7 @@ Visual servoing turns measured visual error into a small control correction and 
 
 ![Capture, inference, validation, and execution consume time; stale proposals are rejected and require re-observation.](assets/stale-observation.svg)
 
-If an observation captured at $t_o$ produces an action at $t_a$, age is $t_a-t_o$. Camera, synchronization, preprocessing, model, network, validation, controller, and actuation delays all contribute. The action records both timestamps, and the gateway rejects age beyond the Site B threshold.
+If sensor evidence was captured at $t_c$, assembled into an observation at $t_o$, and checked for action at $t_a$, then sensor age is $t_a-t_c$, policy compute age is measured from $t_o$, and total action latency begins at $t_c$. Camera, synchronization, preprocessing, model, network, validation, controller, and actuation delays all contribute. The action carries both the source capture and processed-observation timestamps; the gateway binds them to the exact observation and rejects sensor age beyond the Site B threshold. Resetting a later processing timestamp cannot make an old frame fresh.
 
 ## 40. Control frequency
 
@@ -397,9 +400,9 @@ Report at least:
 | action prediction | translation vector MAE/RMSE in metres; gripper accuracy; tokenization reconstruction error |
 | rollout | task success with denominator; path length; steps; time-to-completion; final goal distance |
 | constraints | proposal violation rate; executed violation rate; false block / valid-work block rate |
-| feedback | postcondition detection; intervention rate; recovery attempt and recovery success |
-| timing | observation age; stale-block rate; end-to-end median/p90/p95 latency; deadline miss rate |
-| shift | Site B and untouched Site C slices by object, source, goal, and embodiment |
+| feedback | source-bound grasp/release verification; intervention rate; recovery attempts / eligible failures; successful recoveries / attempts |
+| timing | sensor evidence age; policy compute age; total action median/p90/p95 latency; stale-block and deadline-miss rates |
+| shift | Site B and untouched Site C slices by object, source, goal, embodiment, reachability, affordance compatibility, and combined feasibility |
 
 Keep learned quality, deterministic safety checks, system reliability, and task outcomes separate. Report repeated episodes and uncertainty; one successful video is not an evaluation.
 

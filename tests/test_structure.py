@@ -1727,6 +1727,8 @@ def test_advanced_04_contains_the_declared_embodied_vla_lab():
         "GroundedGoal",
         "ActionProposal",
         "Action without frame is invalid",
+        "source_capture_timestamp_s",
+        'translation_unit: Literal["metre"]',
         "CAMERA_TO_BASE",
         "LocalGroundingProxy",
         "clarification_required",
@@ -1768,6 +1770,9 @@ def test_advanced_04_contains_the_declared_embodied_vla_lab():
         "mutated_proposal_blocked",
         "PostconditionEvidence",
         "verify_grasp",
+        "verify_release",
+        "episode_postconditions",
+        "result_block_observed",
         "propose_pick_place_step",
         "closed_loop_task_metrics",
         "closed_loop_pick_place_success",
@@ -1778,6 +1783,8 @@ def test_advanced_04_contains_the_declared_embodied_vla_lab():
         "FROZEN_POLICY_HASH",
         "policy_hash_before_site_c",
         "policy_hash_after_site_c",
+        "affordance_compatible_rate_arm_B",
+        "combined_feasible_action_rate_arm_B",
         "reporting only; no model, feature, normalizer, threshold, chunk, or rule changes",
         "failure_attribution",
         "OPTIONAL_TOOL_MANIFESTS",
@@ -1801,6 +1808,12 @@ def test_advanced_04_contains_the_declared_embodied_vla_lab():
     assert "not a vlm, foundation model, or grounding benchmark" in source_lower
     assert "no cell connects to hardware" in source_lower
     assert "policy output is untrusted data" in source_lower
+    assert "sensor_age_s = now_s - observation.camera_captured_at_s" in source
+    assert '["feedback", "recovery_attempt_rate", recovery_attempt_rate]' in source
+    assert 'if post.task_effect_verified:\n            held, ee, block = True' in source
+    assert 'if post.task_effect_verified:\n            held, ee, block, task_success = False' in source
+    assert 'held = True\n' not in source
+    assert 'task_success = True\n' not in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
