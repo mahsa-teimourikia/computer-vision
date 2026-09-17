@@ -74,6 +74,7 @@ def validate_hub() -> None:
         "Neural Rendering &amp; 3D Scene Representations",
         "Dynamic Scenes &amp; World Models",
         "Embodied Vision &amp; Vision-Language-Action Models",
+        "Spatial Memory, Scene Graphs &amp; Navigation",
         "oneplusi.io",
     ]
     for text in required:

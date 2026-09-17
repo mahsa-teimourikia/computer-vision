@@ -181,6 +181,8 @@ Physical-action labs default to simulation, bounded action spaces, explicit stop
 
 Advanced 04 keeps the executable path in standard Python, NumPy, pandas, Matplotlib, and scikit-learn. It teaches versioned embodiment/observation/action contracts, explicit frames and units, goal ambiguity, embodiment-conditioned affordances, normalization and tokenization, a Ridge behavioral-cloning/proprioception ablation, covariate-shift rollout, disturbed open-loop versus receding-horizon chunks, freshness deadlines, independent reach/collision checks, digest-bound single-use simulation permits, postcondition recovery, and reporting-only embodiment shift. LeRobot, OpenVLA, openpi, Isaac GR00T, ManiSkill, MuJoCo, and robomimic are disabled, revision-pinned mappings. Their code licenses do not grant rights to every checkpoint, dataset, robot asset, or transitive component, and none authorizes a physical actuator path.
 
+Advanced 05 implements pose composition, drift metrics, log-odds occupancy, staged object association, temporal memory, provenance-bearing scene relations, deterministic queries, A*, unknown-space policy, replanning, update validation, versioning, and plan invalidation directly with NumPy, pandas, Matplotlib, scikit-learn, and NetworkX. OpenCV/Open3D, ROS 2 Nav2, SLAM Toolbox/RTAB-Map, Hydra, Habitat-Lab, ConceptGraphs, Open3DSG, 3D-Mem, and MSGNav are reviewed as optional systems rather than hidden dependencies. Semantic embeddings discover candidates only; graph, geometry, time, and authorization checks remain authoritative. Paths are advisory and the evidence grants no physical authorization.
+
 ## Deployment and operations
 
 | Tool | Best fit | Strengths | Constraints to review |

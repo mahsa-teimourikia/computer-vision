@@ -2,7 +2,7 @@
 
 > **Central question:** How can a system convert multimodal observations and a goal into physically meaningful, embodiment-compatible actions while continuously verifying what actually happened?
 
-[← Advanced 03 · Dynamic Scenes & World Models](../03-dynamic-scenes-world-models/README.md) · [Run the notebook](lab.ipynb) · [Advanced track](../README.md)
+[← Advanced 03 · Dynamic Scenes & World Models](../03-dynamic-scenes-world-models/README.md) · [Run the notebook](lab.ipynb) · [Advanced track](../README.md) · [Advanced 05 · Spatial Memory →](../05-spatial-memory-scene-graphs-navigation/README.md)
 
 Advanced 03 asked what would happen if action $a$ were taken. This course asks which action should be proposed, checked, executed in a bounded environment, and verified:
 
