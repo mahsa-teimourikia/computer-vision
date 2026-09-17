@@ -75,7 +75,8 @@
           <button class="lesson-card available" data-level="intermediate" data-workspace="visual-agents"><span class="pill">INTERMEDIATE · 06</span><span class="status">AVAILABLE</span><h3>Visual Agents</h3><p>Typed multimodal state, permissioned tools, validated execution, evidence verification, budgets, safe stops, recovery, and escalation.</p><span class="arrow">→</span></button>
           <button class="lesson-card available" data-level="advanced" data-workspace="spatial-intelligence"><span class="pill">ADVANCED · 01</span><span class="status">AVAILABLE</span><h3>3D Vision &amp; Spatial Intelligence</h3><p>Camera geometry, calibration, epipolar verification, stereo depth, triangulation, pose, reconstruction, uncertainty, and metric decisions.</p><span class="arrow">→</span></button>
           <button class="lesson-card available" data-level="advanced" data-workspace="neural-rendering"><span class="pill">ADVANCED · 02</span><span class="status">AVAILABLE</span><h3>Neural Rendering &amp; 3D Scene Representations</h3><p>Calibrated rays, volume rendering, held-out views, NeRFs, Gaussian splatting, geometry evidence, density control, and governed scene decisions.</p><span class="arrow">→</span></button>
-          <article class="lesson-card" data-level="advanced"><span class="pill">ADVANCED · NEXT</span><span class="status">PLANNED</span><h3>Dynamic 3D, generative worlds &amp; world models</h3><p>4D scenes, generative 3D, semantic fields, editable spatial worlds, predictive world models, and embodied perception.</p></article>
+          <button class="lesson-card available" data-level="advanced" data-workspace="world-models"><span class="pill">ADVANCED · 03</span><span class="status">AVAILABLE</span><h3>Dynamic Scenes &amp; World Models</h3><p>Persistent state, action-conditioned futures, rollout drift, physical checks, planning exploits, and support-aware mitigation.</p><span class="arrow">→</span></button>
+          <article class="lesson-card" data-level="advanced"><span class="pill">ADVANCED · NEXT</span><span class="status">PLANNED</span><h3>Embodied Vision &amp; VLA Systems</h3><p>Egocentric perception, robot observations, manipulation, navigation, and governed vision-language-action architectures.</p></article>
           <article class="lesson-card" data-level="enterprise"><span class="pill">ENTERPRISE</span><span class="status">PLANNED</span><h3>Governed vision platforms</h3><p>Edge systems, evaluation, observability, security, robustness, privacy, and governance.</p></article>
           <article class="lesson-card" data-level="capstone"><span class="pill">CAPSTONE</span><span class="status">PLANNED</span><h3>Integrated vision systems</h3><p>Inspection, multimodal knowledge, video operations, spatial twins, and embodied agents.</p></article>
         </div>
@@ -545,8 +546,36 @@ assert site_c_report["policy_hash"] == frozen_policy_hash</code></pre>
           </form>
         </div>
       </section>
+
+      <section class="workspace" id="workspace-world-models" data-workspace-panel="world-models" aria-labelledby="world-models-title" hidden>
+        <div class="workspace-heading"><div><p class="eyebrow">ADVANCED · COURSE 03</p><h2 id="world-models-title">Dynamic Scenes &amp; World Models</h2></div><p class="duration">14–18 HOURS · CPU DEFAULT</p></div>
+        <div class="workspace-tabs" role="tablist" aria-label="Advanced Course 03 view"><button role="tab" aria-selected="true" data-view="world-models-learn">01 / Learn</button><button role="tab" aria-selected="false" data-view="world-models-lab">02 / Lab</button><button role="tab" aria-selected="false" data-view="world-models-checkpoint">03 / Checkpoint</button></div>
+        <div class="view active" id="world-models-learn" role="tabpanel">
+          <div><p class="eyebrow">OUTCOME</p><p class="outcome">Represent persistent world state, predict action-conditioned futures, and evaluate whether model-based plans remain supported and physically consistent.</p><p>Move from observations, memory, structured actions, and explicit transitions through 4D representations, recursive and stochastic futures, object permanence, counterfactual tests, planning exploitation, source shift, and governed evidence.</p><div class="actions"><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/advanced/03-dynamic-scenes-world-models/README.md">Read the chapter ↗</a><a class="text-link" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/advanced/03-dynamic-scenes-world-models/lab.ipynb">Open notebook ↗</a></div></div>
+          <aside class="signal-panel"><p class="eyebrow">WATCH FOR</p><ul><li>Observation treated as complete state</li><li>Action-ignorant predictors hidden by passive motion</li><li>Teacher-forced accuracy presented as rollout evidence</li><li>Diverse but physically invalid futures</li><li>Occlusion treated as deletion</li><li>Optimizers exploiting unsupported model regions</li></ul></aside>
+        </div>
+        <div class="view" id="world-models-lab" role="tabpanel" hidden>
+          <div><p class="eyebrow">PRACTICAL LAB</p><p class="outcome">Build typed state/action contracts and a true simulator; fit action-aware and passive proxies; test rollout, counterfactuals, permanence, and physics; then expose and mitigate a planning exploit before reporting Site C.</p><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/advanced/03-dynamic-scenes-world-models/lab.ipynb">Run the guided notebook ↗</a></div>
+          <pre aria-label="Example Python"><code>prediction = local_world_model_proxy.predict(state, action)
+rollout_metrics = evaluate_rollout(model, hidden_dynamics)
+violations = validate_rollout(predicted_states)
+choice = support_aware_plan(candidates, frozen_policy)
+assert evidence["authorization"] == "none"</code></pre>
+        </div>
+        <div class="view" id="world-models-checkpoint" role="tabpanel" hidden>
+          <form class="quiz-form" data-review="observation versus state, action conditioning, recursive rollout, stochastic validity, object permanence, model exploitation, support, and authorization">
+            <fieldset><legend>What makes a model useful as a world model for action selection?</legend><label><input type="radio" name="q1" value="1" /> It represents task-relevant state and predicts how structured actions change possible futures.</label><label><input type="radio" name="q1" value="0" /> It produces any plausible-looking video.</label><label><input type="radio" name="q1" value="0" /> It accepts natural-language prompts.</label></fieldset>
+            <fieldset><legend>Why can two identical images require different predictive states?</legend><label><input type="radio" name="q2" value="1" /> Hidden velocity, occluded identity, or actuator context can differ even when visible pixels match.</label><label><input type="radio" name="q2" value="0" /> Images always contain complete dynamics.</label><label><input type="radio" name="q2" value="0" /> State is only image compression.</label></fieldset>
+            <fieldset><legend>Why must open-loop error be reported by horizon?</legend><label><input type="radio" name="q3" value="1" /> Deployment feeds predictions back into the model, so small one-step errors and support shift can compound.</label><label><input type="radio" name="q3" value="0" /> Teacher forcing always overstates latency.</label><label><input type="radio" name="q3" value="0" /> Horizon changes the action schema.</label></fieldset>
+            <fieldset><legend>Why is high sample diversity insufficient for stochastic futures?</legend><label><input type="radio" name="q4" value="1" /> Samples must cover valid modes while keeping physically invalid futures low.</label><label><input type="radio" name="q4" value="0" /> Every different sample is equally correct.</label><label><input type="radio" name="q4" value="0" /> Diversity proves calibrated uncertainty.</label></fieldset>
+            <fieldset><legend>How can a planner make a modest world-model error dangerous?</legend><label><input type="radio" name="q5" value="1" /> Optimization searches for high-scoring predictions and can deliberately select an unsupported blind spot.</label><label><input type="radio" name="q5" value="0" /> Planning averages away all model errors.</label><label><input type="radio" name="q5" value="0" /> A typed action guarantees physical feasibility.</label></fieldset>
+            <fieldset><legend>What does a successful support-aware simulation authorize?</legend><label><input type="radio" name="q6" value="1" /> Nothing by itself; a trusted application still needs independent constraints, policy, approval, and realized-outcome verification.</label><label><input type="radio" name="q6" value="0" /> Immediate actuator access.</label><label><input type="radio" name="q6" value="0" /> A real-world causal claim.</label></fieldset>
+            <button class="button primary" type="submit">Check answers</button><p class="quiz-result" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
     </main>
     <footer><span>VISION / FIELD GUIDE</span><span>OPEN SOURCE · LEARN IN PUBLIC</span><a href="https://oneplusi.io">One+i · Responsible AI ↗</a></footer>
-    <script src="app.js?v=17"></script>
+    <script src="app.js?v=18"></script>
   </body>
 </html>

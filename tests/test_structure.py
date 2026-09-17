@@ -1601,3 +1601,114 @@ def test_advanced_02_diagrams_are_reusable_and_accessible():
         assert data["validation"]["status"] == "validated"
         assert "20px_clearance" in data["validation"]["checked"]
         assert data["source"]["deterministic"] is True
+
+
+def test_advanced_03_contains_the_declared_world_model_lab():
+    course = Path("curriculum/advanced/03-dynamic-scenes-world-models")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "ObjectState",
+        "WorldState",
+        "Action",
+        "Observation",
+        "HiddenDynamics",
+        "step_environment",
+        "render_observation",
+        "same observation does not imply same predictive state",
+        "PersistentStateEstimator",
+        "evaluation_only_next_state",
+        "development_only",
+        "reporting_only_no_changes",
+        "LocalWorldModelProxy",
+        "local_world_model_proxy",
+        "foundation_model",
+        "Ridge",
+        "action_conditioned",
+        "action_ignorant",
+        "evaluate_one_step",
+        "evaluate_rollout",
+        "open_loop_recursive",
+        "position_vector_RMSE_m",
+        "velocity_vector_RMSE_mps",
+        "valve_state_accuracy",
+        "VALVE_ACTIONS",
+        "MODEL_ACTIONS",
+        "valve_transition_report",
+        "Valve actions must target valve_1",
+        "previous_timestamp_s",
+        "Observation timestamps must increase for each known object",
+        "elapsed_time_velocity_test",
+        "known_identity_persistence_report",
+        "action_sensitivity_teaching",
+        "action_consistency_rate",
+        "wrong_action_test",
+        "counterfactual_matrix",
+        "valid_mode_coverage",
+        "invalid_future_rate",
+        "mode_frequency_TV_distance",
+        "known_answer_metrics",
+        "NOISY_MODEL_PROBABILITIES",
+        "time_to_event_metrics",
+        "timing_MAE_s",
+        "timing_p95_abs_s",
+        "validate_rollout",
+        "planning_model_step",
+        "true_plan_step",
+        "planning_model_exploitation",
+        "support_aware_score",
+        "FROZEN_POLICY_HASH",
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "failure_attribution",
+        "CV_ENABLE_DREAMERV3=False",
+        "CV_ENABLE_COSMOS3=False",
+        "CV_ENABLE_DYNAMIC_3D_GAUSSIANS=False",
+        "e3f02248693a79dc8b0ebd62c93683888ddaccfe",
+        "5a68d9d4d34c9ca2bdcb0a1d9bbbb3a2d1b8d497",
+        "7dbbd4dec404308524ff402756bdb8143a2589b0",
+        "world_model_evidence.json",
+        "world_model_decision.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "planner never queries evaluation truth while selecting" in source_lower
+    assert "not a foundation world model" in source_lower
+    assert "generated video can never authorize an actuator" in source_lower
+    assert "def predict(self, state: WorldState, action: Action)" in source
+    assert "def predict(self, state: WorldState, action: Action, hidden" not in source
+    assert "observation.timestamp_s - previous_timestamp_s" in source
+    assert "observation.timestamp_s - 0.0" not in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_advanced_03_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/03-dynamic-scenes-world-models/assets")
+    expected = {
+        "world-model-loop.svg",
+        "observation-vs-state.svg",
+        "world-model-taxonomy.svg",
+        "dynamic-scene-representations.svg",
+        "rollout-error.svg",
+        "counterfactual-actions.svg",
+        "world-model-planning.svg",
+        "model-exploitation.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True

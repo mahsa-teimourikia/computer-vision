@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "id": "world-model-planning",
+  "title": "Planning with a world model",
+  "purpose": "Keep candidate generation, prediction, scoring, choice, and true execution distinct.",
+  "output": {
+    "svg": "curriculum/advanced/03-dynamic-scenes-world-models/assets/world-model-planning.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Candidate action sequences are rolled out by the approximate model, scored transparently, selected by policy, then compared with true execution."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "The planner cannot query evaluation truth while selecting",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1472,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "candidates",
+      "group": "system",
+      "label": "CANDIDATE PLANS",
+      "subtitle": "bounded sequences",
+      "type": "action",
+      "bounds": {
+        "x": 110,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "model",
+      "group": "system",
+      "label": "MODEL ROLLOUTS",
+      "subtitle": "predicted futures",
+      "type": "agent",
+      "bounds": {
+        "x": 402,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "score",
+      "group": "system",
+      "label": "SCORER",
+      "subtitle": "goal · collision · cost",
+      "type": "operations",
+      "bounds": {
+        "x": 694,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "choose",
+      "group": "system",
+      "label": "POLICY CHOICE",
+      "subtitle": "recommend first action",
+      "type": "service",
+      "bounds": {
+        "x": 986,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "truth",
+      "group": "system",
+      "label": "TRUE EXECUTION",
+      "subtitle": "realized evidence",
+      "type": "data",
+      "bounds": {
+        "x": 1278,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "candidates_to_model",
+      "from": {
+        "node": "candidates",
+        "port": "right"
+      },
+      "to": {
+        "node": "model",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          320,
+          350
+        ],
+        [
+          402,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "model_to_score",
+      "from": {
+        "node": "model",
+        "port": "right"
+      },
+      "to": {
+        "node": "score",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          612,
+          350
+        ],
+        [
+          694,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "score_to_choose",
+      "from": {
+        "node": "score",
+        "port": "right"
+      },
+      "to": {
+        "node": "choose",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          904,
+          350
+        ],
+        [
+          986,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "choose_to_truth",
+      "from": {
+        "node": "choose",
+        "port": "right"
+      },
+      "to": {
+        "node": "truth",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1196,
+          350
+        ],
+        [
+          1278,
+          350
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "unique_ids",
+      "port_attachment",
+      "group_containment",
+      "no_overlaps",
+      "20px_clearance"
+    ],
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

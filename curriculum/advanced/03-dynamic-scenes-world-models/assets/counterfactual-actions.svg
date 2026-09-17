@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 760" role="img" aria-labelledby="title description">
+<title id="title">Counterfactual action test</title>
+<desc id="description">The same initial state branches to a left displacement, stopped state, and right displacement under three actions.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Counterfactual action test</text>
+<rect x="64" y="105" width="1472" height="555" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Action responsiveness requires both relevant change and irrelevant invariance</text>
+<polyline points="430,355 760,355 760,210 1080,210" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="702" y="193" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="760" y="210" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">left</text>
+<polyline points="430,355 760,355 760,380 1080,380" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="702" y="353" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="760" y="370" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">stop</text>
+<polyline points="430,355 760,355 760,550 1080,550" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="702" y="533" width="116" height="24" rx="6" fill="#F7F9FC"/>
+<text x="760" y="550" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" fill="#52606D">right</text>
+<rect x="130" y="270" width="300" height="170" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="280.0" y="304" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SAME INITIAL STATE</text>
+<text x="280.0" y="332" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">cart x=0 · v=0</text>
+<rect x="1080" y="145" width="300" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1230.0" y="179" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">MOVE LEFT</text>
+<text x="1230.0" y="207" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">future Δx &lt; 0</text>
+<rect x="1080" y="315" width="300" height="130" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1230.0" y="349" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">STOP</text>
+<text x="1230.0" y="377" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">future velocity = 0</text>
+<rect x="1080" y="485" width="300" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1230.0" y="519" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">MOVE RIGHT</text>
+<text x="1230.0" y="547" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">future Δx &gt; 0</text>
+</svg>

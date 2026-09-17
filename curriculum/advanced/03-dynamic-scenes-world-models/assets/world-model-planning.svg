@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 760" role="img" aria-labelledby="title description">
+<title id="title">Planning with a world model</title>
+<desc id="description">Candidate action sequences are rolled out by the approximate model, scored transparently, selected by policy, then compared with true execution.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Planning with a world model</text>
+<rect x="64" y="105" width="1472" height="555" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">The planner cannot query evaluation truth while selecting</text>
+<polyline points="320,350 402,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="612,350 694,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="904,350 986,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1196,350 1278,350" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="110" y="280" width="210" height="140" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="215.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">CANDIDATE PLANS</text>
+<text x="215.0" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">bounded sequences</text>
+<rect x="402" y="280" width="210" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="507.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">MODEL ROLLOUTS</text>
+<text x="507.0" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">predicted futures</text>
+<rect x="694" y="280" width="210" height="140" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="799.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SCORER</text>
+<text x="799.0" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">goal · collision · cost</text>
+<rect x="986" y="280" width="210" height="140" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1091.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">POLICY CHOICE</text>
+<text x="1091.0" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">recommend first action</text>
+<rect x="1278" y="280" width="210" height="140" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1383.0" y="314" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">TRUE EXECUTION</text>
+<text x="1383.0" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">realized evidence</text>
+</svg>
