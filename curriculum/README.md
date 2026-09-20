@@ -47,8 +47,9 @@ The [intermediate track](intermediate/README.md) culminates in bounded visual ag
 - [03 · Dynamic Scenes & World Models: From 4D Scene State to Action-Conditioned Futures](advanced/03-dynamic-scenes-world-models/README.md) — move from partial observations into persistent state, action-conditioned transitions, stochastic futures, horizon-aware evaluation, object permanence, physical checks, counterfactual planning, model exploitation, and support-aware mitigation.
 - [04 · Embodied Vision & Vision-Language-Action Models: From Visual Grounding to Closed-Loop Action](advanced/04-embodied-vision-vla-models/README.md) — move from timestamped observations, goals, proprioception, and embodiment contracts into grounding, affordances, action representations, behavioral cloning, independent feasibility gates, simulation-only authorization, feedback, and recovery.
 - [05 · Spatial Memory, Scene Graphs & Navigation: From Observations to Persistent World Knowledge](advanced/05-spatial-memory-scene-graphs-navigation/README.md) — move from noisy pose and partial observations into occupancy, persistent object identity, place and scene graphs, temporal queries, semantic candidate verification, hierarchical planning, replanning, and versioned memory governance.
+- [06 · Multimodal Adaptation & Continual Learning: From Domain Shift to Safe Capability Evolution](advanced/06-multimodal-adaptation-continual-learning/README.md) — characterize multimodal shift; compare frozen reuse, projectors, adapters, prompts, LoRA, partial, and full tuning; measure alignment drift and forgetting; and gate release with replay governance, capability regression evidence, lineage, and rollback.
 
-The [advanced track](advanced/README.md) continues next into multimodal adaptation, robustness, efficient spatial inference, and production operations.
+The [advanced track](advanced/README.md) continues next into robustness, efficient spatial inference, and production operations.
 
 ## Enterprise
 

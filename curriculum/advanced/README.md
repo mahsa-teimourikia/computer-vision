@@ -9,6 +9,7 @@ Move from multimodal evidence systems into metric spatial representations, learn
 - [03 · Dynamic Scenes & World Models: From 4D Scene State to Action-Conditioned Futures](03-dynamic-scenes-world-models/README.md) — separate observation from persistent state; fit action-conditioned dynamics; evaluate recursive and stochastic futures; preserve identity; check physical constraints; expose planner exploitation; and report source-held-out dynamics evidence.
 - [04 · Embodied Vision & Vision-Language-Action Models: From Visual Grounding to Closed-Loop Action](04-embodied-vision-vla-models/README.md) — bind goals to physical entities; condition affordances on embodiment; compare action representations and behavioral cloning; validate frames, freshness, reach, and collision; issue simulation-only permits; verify postconditions; and report held-out embodiment evidence.
 - [05 · Spatial Memory, Scene Graphs & Navigation: From Observations to Persistent World Knowledge](05-spatial-memory-scene-graphs-navigation/README.md) — combine noisy localization, occupancy evidence, persistent object identity, relation provenance, typed current/historical queries, semantic candidate verification, A*, topology, active perception, replanning, and governed memory updates.
+- [06 · Multimodal Adaptation & Continual Learning: From Domain Shift to Safe Capability Evolution](06-multimodal-adaptation-continual-learning/README.md) — characterize visual/language/task shift; compare adaptation surfaces; measure target gain, legacy regression, representation and alignment drift; control sequential forgetting; and issue lineage-bound shadow/reject/rollback decisions.
 
 ## Planned progression
 
@@ -18,7 +19,8 @@ Move from multimodal evidence systems into metric spatial representations, learn
   → 03 Dynamic Scenes & World Models
   → 04 Embodied Vision & Vision-Language-Action Models
   → 05 Spatial Memory, Scene Graphs & Navigation
-  → multimodal adaptation and production spatial operations
+  → 06 Multimodal Adaptation & Continual Learning
+  → robustness and production spatial operations
 ```
 
 Complete Intermediate [Visual Agents](../intermediate/06-visual-agents/README.md) before starting this track. Preserve its evidence, authorization, and bounded-execution contracts when spatial systems later connect perception to action.

@@ -1,0 +1,14 @@
+# Tested together on 2026-09-20 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+scikit-learn==1.9.0
+torch==2.13.0
+
+# Optional systems are disabled and belong in isolated environments.
+# Review code, data, checkpoint, adapter, and transitive licenses separately.
+# Hugging Face PEFT (Apache-2.0): 50a277e7c87db460ef7444055788f9da29f2da71
+# Transformers (Apache-2.0):      c587bc884db2c2e31fc2b8102314656b17aa07b1
+# Avalanche (MIT):                eb075be393e1f458b2c352514ff6c17b5a2c0f4e
+# MLflow (Apache-2.0):             1dfa0fa5b82a600de5cfb80210c12fb60f34f982

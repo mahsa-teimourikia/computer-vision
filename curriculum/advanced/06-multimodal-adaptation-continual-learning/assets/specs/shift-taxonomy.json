@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "id": "shift-taxonomy",
+  "title": "Shift is not one thing",
+  "purpose": "Separate adaptation causes before choosing a method.",
+  "output": {
+    "svg": "curriculum/advanced/06-multimodal-adaptation-continual-learning/assets/shift-taxonomy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Seven shift types are shown: sensor, environment, object, task, language, policy, and embodiment; policy and embodiment require contracts beyond representation tuning."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 580,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "g",
+      "label": "Characterize what changed before selecting trainable parameters",
+      "bounds": {
+        "x": 64,
+        "y": 90,
+        "width": 1272,
+        "height": 420
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sensor",
+      "group": "g",
+      "label": "SENSOR",
+      "subtitle": "camera \u00b7 codec",
+      "type": "service",
+      "bounds": {
+        "x": 100,
+        "y": 180,
+        "width": 190,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "environment",
+      "group": "g",
+      "label": "ENVIRONMENT",
+      "subtitle": "light \u00b7 site",
+      "type": "service",
+      "bounds": {
+        "x": 315,
+        "y": 180,
+        "width": 190,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "object",
+      "group": "g",
+      "label": "OBJECT",
+      "subtitle": "class \u00b7 defect",
+      "type": "data",
+      "bounds": {
+        "x": 530,
+        "y": 180,
+        "width": 190,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "task",
+      "group": "g",
+      "label": "TASK",
+      "subtitle": "output contract",
+      "type": "agent",
+      "bounds": {
+        "x": 745,
+        "y": 180,
+        "width": 190,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "language",
+      "group": "g",
+      "label": "LANGUAGE",
+      "subtitle": "terms \u00b7 prompts",
+      "type": "agent",
+      "bounds": {
+        "x": 960,
+        "y": 180,
+        "width": 190,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "g",
+      "label": "POLICY",
+      "subtitle": "decision rule",
+      "type": "action",
+      "bounds": {
+        "x": 315,
+        "y": 330,
+        "width": 190,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "embodiment",
+      "group": "g",
+      "label": "EMBODIMENT",
+      "subtitle": "robot \u00b7 action",
+      "type": "action",
+      "bounds": {
+        "x": 745,
+        "y": 330,
+        "width": 190,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "unique_ids",
+      "port_attachment",
+      "20px_clearance"
+    ],
+    "notes": "Deterministic coordinate layout; routes terminate at declared ports."
+  },
+  "source": {
+    "deterministic": true,
+    "renderer": "scripts/render_course_diagrams.py"
+  }
+}
