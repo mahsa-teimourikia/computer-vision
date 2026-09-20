@@ -11,7 +11,7 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
-The nine complete Beginner courses lead into six Intermediate courses and six Advanced courses:
+The nine complete Beginner courses lead into six Intermediate courses and seven Advanced courses:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
 2. [Modern CNN Architectures & Efficient Vision](curriculum/beginner/02-modern-cnn-architectures-efficient-vision/README.md) explains residual and efficient blocks, then compares five official pretrained backbones through controlled probes, profiling, resolution, robustness, Pareto fronts, and deployment contracts.
@@ -34,8 +34,9 @@ The nine complete Beginner courses lead into six Intermediate courses and six Ad
 19. [Embodied Vision & Vision-Language-Action Models: From Visual Grounding to Closed-Loop Action](curriculum/advanced/04-embodied-vision-vla-models/README.md) turns timestamped observations, goals, proprioception, and embodiment contracts into grounded affordances, typed action proposals, independent feasibility gates, simulation-only permits, verified postconditions, and bounded recovery.
 20. [Spatial Memory, Scene Graphs & Navigation: From Observations to Persistent World Knowledge](curriculum/advanced/05-spatial-memory-scene-graphs-navigation/README.md) turns limited observations and noisy odometry into typed occupancy, object, place, relation, query, and navigation memory with provenance, history, source-held-out evidence, poisoning rejection, and plan invalidation.
 21. [Multimodal Adaptation & Continual Learning: From Domain Shift to Safe Capability Evolution](curriculum/advanced/06-multimodal-adaptation-continual-learning/README.md) characterizes visual, language, task, policy, and embodiment shift; compares frozen reuse, adapters, prompts, LoRA, partial, and full tuning; measures alignment drift and forgetting; and gates candidate promotion with lineage, replay governance, regression evidence, and rollback.
+22. [Robustness, Uncertainty & Failure Recovery: From Distribution Shift to Risk-Aware Vision Systems](curriculum/advanced/07-robustness-uncertainty-failure-recovery/README.md) separates degradation, calibration, uncertainty, OOD evidence, and error detection; then turns risk–coverage, conformal sets, fail-closed policy, and independently verified bounded recovery into operational evidence.
 
-All twenty-one CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, scikit-learn, and course-scoped graph APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate courses preserve multimodal evidence and bounded-agent contracts while keeping heavyweight models disabled. Advanced 01–02 expose metric geometry and neural-rendering mechanics. Advanced 03 uses a transparent action-conditioned world-model proxy. Advanced 04 uses typed dataclasses and standard CPU libraries for a simulation-only embodied policy lab. Advanced 05 adds NetworkX for transparent place routing while implementing pose, occupancy, association, query, and A* primitives directly. Advanced 06 implements a tiny dual encoder, PEFT primitives, drift diagnostics, replay, regularization, distillation, routing, and promotion gates directly; heavyweight adaptation ecosystems remain disabled, revision-governed mappings.
+All twenty-two CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, scikit-learn, and course-scoped graph APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate courses preserve multimodal evidence and bounded-agent contracts while keeping heavyweight models disabled. Advanced 01–02 expose metric geometry and neural-rendering mechanics. Advanced 03 uses a transparent action-conditioned world-model proxy. Advanced 04 uses typed dataclasses and standard CPU libraries for a simulation-only embodied policy lab. Advanced 05 adds NetworkX for transparent place routing while implementing pose, occupancy, association, query, and A* primitives directly. Advanced 06 implements a tiny dual encoder, PEFT primitives, drift diagnostics, replay, regularization, distillation, routing, and promotion gates directly. Advanced 07 implements corruption stress tests, calibration, uncertainty/OOD/error diagnostics, conformal sets, selective policy, and verified recovery directly; heavyweight reliability suites remain disabled, revision-governed mappings.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -175,7 +176,12 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
-│   └── 06-multimodal-adaptation-continual-learning/
+│   ├── 06-multimodal-adaptation-continual-learning/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 07-robustness-uncertainty-failure-recovery/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt

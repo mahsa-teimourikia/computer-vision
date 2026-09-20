@@ -2121,3 +2121,107 @@ def test_advanced_06_diagrams_are_reusable_and_accessible():
         assert data["validation"]["status"] == "validated"
         assert "20px_clearance" in data["validation"]["checked"]
         assert data["source"]["deterministic"] is True
+
+
+def test_advanced_07_contains_the_declared_robustness_uncertainty_and_recovery_lab():
+    course = Path("curriculum/advanced/07-robustness-uncertainty-failure-recovery")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "SourceContract",
+        "MetricSpec",
+        "SensorObservation",
+        "ReliabilityPolicy",
+        "RiskDecision",
+        "TinyReliabilityCNN",
+        "ensemble_outputs",
+        "expected_calibration_error",
+        "brier_score",
+        "negative_log_likelihood",
+        "Six corruption families × five severities",
+        "assert len(corruption_results) == 30",
+        "false_confidence_example",
+        "mc_dropout_scores",
+        "probabilities_at_temperature",
+        '"selected_on": "Site B development only"',
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "centroid_distance",
+        "mahalanobis",
+        "energy",
+        "fpr_at_target_tpr",
+        '"positive_class": "OOD"',
+        "error_detection_auroc",
+        "conformal_quantile",
+        "conformal_report",
+        "risk_coverage_curve",
+        'risk_coverage["expected_cost_proxy"]',
+        "FROZEN_POLICY_HASH",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "application_risk_gate",
+        "run_bounded_recovery",
+        "fresh_reobservation_verified_by_simulation_oracle",
+        "alternate_centroid_verified_by_simulation_oracle",
+        "always_answer",
+        "abstain_only",
+        "bounded_recovery",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "robustness_uncertainty_recovery_evidence.json",
+        "robustness_uncertainty_recovery_decisions.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c is reporting-only" in source_lower
+    assert "not a foundation-model benchmark, production reliability result, physical safety case, or deployment authorization" in source_lower
+    assert "simulation oracle" in source_lower
+    assert source.index("FROZEN_POLICY_HASH") < source.index("site_c_outputs")
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source
+    assert "assert (gate_assertions.query(\"case != 'complete evidence'\")[\"result\"] != \"PASS\").all()" in source
+    assert "assert (recovery_decisions[\"authorization\"] == \"none\").all()" in source
+    assert "assert not ((recovery_decisions[\"terminal_state\"] == \"verified_recovery\") & (~recovery_decisions[\"verified\"])).any()" in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "confidence is not uncertainty",
+        "calibration is population-dependent",
+        "ood detection is not error detection",
+        "exchangeability",
+        "risk–coverage",
+        "missing calibration, ood, freshness, dependency, or recovery-verification evidence cannot silently become `accept`",
+        "attempted recovery is not successful recovery",
+        "confidence never grants authority",
+    ]:
+        assert required in readme
+
+
+def test_advanced_07_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/07-robustness-uncertainty-failure-recovery/assets")
+    expected = {
+        "reliability-lifecycle.svg",
+        "failure-taxonomy.svg",
+        "uncertainty-sources.svg",
+        "calibration-reliability.svg",
+        "ood-vs-error.svg",
+        "risk-coverage.svg",
+        "recovery-state-machine.svg",
+        "enterprise-reliability-architecture.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
