@@ -1980,3 +1980,144 @@ def test_advanced_05_diagrams_are_reusable_and_accessible():
         assert data["validation"]["status"] == "validated"
         assert "20px_clearance" in data["validation"]["checked"]
         assert data["source"]["deterministic"] is True
+
+
+def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab():
+    course = Path("curriculum/advanced/06-multimodal-adaptation-continual-learning")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "BaseModelContract",
+        "ShiftContract",
+        "CapabilitySuiteContract",
+        "ReplayBufferContract",
+        "CandidateArtifact",
+        "MetricSpec",
+        "GateCheck",
+        "PromotionDecision",
+        "reporting_only_no_changes",
+        "TinyDualEncoder",
+        "immutable_baseline_hash",
+        "AdaptedDualEncoder",
+        "linear_probe",
+        "projector",
+        "adapter",
+        "visual_prompt",
+        "lora",
+        "partial_ft",
+        "full_ft",
+        "lora_parameter_count",
+        "for rank in (1, 2, 4, 8, 16)",
+        "rank_sweep",
+        "target_gain_B",
+        "legacy_regression_A",
+        "image_to_text_accuracy",
+        "text_to_image_accuracy",
+        "paired_cosine",
+        "neighborhood_retention",
+        "representation_drift",
+        "stability_plasticity_controls",
+        "pretext_vs_downstream",
+        "shortcut_only_full_ft",
+        "failure_injection",
+        "FROZEN_POLICY_HASH",
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "reporting only; no method, rank, prompt, threshold, buffer, epoch, seed, or rule changes",
+        "continual_run",
+        "sequential_full_finetune",
+        "replay_50",
+        "diagonal_fisher",
+        "ewc",
+        "distillation",
+        "forgetting_matrix",
+        "signed_improvement",
+        "metric_direction_assertions",
+        "continual_metric_evidence",
+        "reference_semantics",
+        "backward_transfer_A",
+        "forward_transfer_C_proxy",
+        "for capacity in (0, 10, 50, 200)",
+        "REPLAY_BUFFER_CONTRACT",
+        "source_class_balanced_replay",
+        "replay_selection_audit",
+        "isolated_adapters",
+        "route_adapter",
+        "ambiguous_domain",
+        "unknown_domain_abstention",
+        "wrong_base_blocked",
+        "base_checkpoint_digest_mismatch",
+        "promote_to_shadow",
+        "evaluate_promotion_gate",
+        "A_all_required_metrics_pass",
+        "B_legacy_metric_fails",
+        "C_alignment_metric_missing",
+        "D_rollback_artifact_missing",
+        "E_suite_version_mismatch",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "rollback_target_hash",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "CV_ENABLE_PEFT = False",
+        "CV_ENABLE_AVALANCHE = False",
+        "50a277e7c87db460ef7444055788f9da29f2da71",
+        "eb075be393e1f458b2c352514ff6c17b5a2c0f4e",
+        "multimodal_adaptation_evidence.json",
+        "multimodal_adaptation_decision.csv",
+        '"foundation_model": False',
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "not a foundation model, vlm benchmark, or production adaptation result" in source_lower
+    assert "site c is reporting-only" in source_lower
+    assert 'make_site("C", "continual_training_experience"' not in source
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source
+    assert "assert wrong_base_blocked" in source
+    assert "assert promotion_decision.authorization == \"none\"" in source
+    assert '"C_alignment_metric_missing": "needs_review"' in source
+    assert '"D_rollback_artifact_missing": "reject"' in source
+    assert '"E_suite_version_mismatch": "reject"' in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "improvement on the new task is not sufficient evidence",
+        "low rank not imply low forgetting",
+        "site c is then reporting-only",
+        "training job produces a candidate",
+        "replay buffer contract",
+        "metric direction is a hard contract",
+        "absence of regression evidence is not evidence of no regression",
+    ]:
+        assert required in readme
+
+
+def test_advanced_06_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/06-multimodal-adaptation-continual-learning/assets")
+    expected = {
+        "adaptation-lifecycle.svg",
+        "shift-taxonomy.svg",
+        "adaptation-methods.svg",
+        "lora-low-rank.svg",
+        "multimodal-alignment-drift.svg",
+        "stability-plasticity.svg",
+        "continual-learning-strategies.svg",
+        "capability-promotion-gate.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True

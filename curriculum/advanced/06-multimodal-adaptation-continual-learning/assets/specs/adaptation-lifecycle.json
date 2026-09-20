@@ -1,0 +1,222 @@
+{
+  "version": 1,
+  "id": "adaptation-lifecycle",
+  "title": "Safe adaptation lifecycle",
+  "purpose": "Show adaptation as a governed release process.",
+  "output": {
+    "svg": "curriculum/advanced/06-multimodal-adaptation-continual-learning/assets/adaptation-lifecycle.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A validated base and characterized shift feed a bounded adaptation; an independent regression gate either promotes to shadow, rejects, or rolls back."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 520,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "g",
+      "label": "Target gain and legacy preservation are co-equal release evidence",
+      "bounds": {
+        "x": 64,
+        "y": 90,
+        "width": 1272,
+        "height": 360
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "group": "g",
+      "label": "VALIDATED BASE",
+      "subtitle": "contract + capability suite",
+      "type": "data",
+      "bounds": {
+        "x": 104,
+        "y": 220,
+        "width": 260,
+        "height": 126
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n2",
+      "group": "g",
+      "label": "BOUNDED ADAPTATION",
+      "subtitle": "method \u00b7 scope \u00b7 lineage",
+      "type": "agent",
+      "bounds": {
+        "x": 570,
+        "y": 220,
+        "width": 260,
+        "height": 126
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n3",
+      "group": "g",
+      "label": "INDEPENDENT GATE",
+      "subtitle": "shadow \u00b7 reject \u00b7 rollback",
+      "type": "action",
+      "bounds": {
+        "x": 1036,
+        "y": 220,
+        "width": 260,
+        "height": 126
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "n1",
+        "port": "right"
+      },
+      "to": {
+        "node": "n2",
+        "port": "left"
+      },
+      "route": [
+        [
+          364,
+          283
+        ],
+        [
+          570,
+          283
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "n2",
+        "port": "right"
+      },
+      "to": {
+        "node": "n3",
+        "port": "left"
+      },
+      "route": [
+        [
+          830,
+          283
+        ],
+        [
+          1036,
+          283
+        ]
+      ],
+      "kind": "primary"
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "unique_ids",
+      "port_attachment",
+      "20px_clearance"
+    ],
+    "notes": "Deterministic coordinate layout; routes terminate at declared ports."
+  },
+  "source": {
+    "deterministic": true,
+    "renderer": "scripts/render_course_diagrams.py"
+  }
+}

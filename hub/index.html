@@ -78,6 +78,7 @@
           <button class="lesson-card available" data-level="advanced" data-workspace="world-models"><span class="pill">ADVANCED · 03</span><span class="status">AVAILABLE</span><h3>Dynamic Scenes &amp; World Models</h3><p>Persistent state, action-conditioned futures, rollout drift, physical checks, planning exploits, and support-aware mitigation.</p><span class="arrow">→</span></button>
           <button class="lesson-card available" data-level="advanced" data-workspace="embodied-vla"><span class="pill">ADVANCED · 04</span><span class="status">AVAILABLE</span><h3>Embodied Vision &amp; Vision-Language-Action Models</h3><p>Grounded goals, embodiment contracts, action proposals, independent feasibility, simulation-only permits, feedback, and recovery.</p><span class="arrow">→</span></button>
           <button class="lesson-card available" data-level="advanced" data-workspace="spatial-memory"><span class="pill">ADVANCED · 05</span><span class="status">AVAILABLE</span><h3>Spatial Memory, Scene Graphs &amp; Navigation</h3><p>Persistent object and place memory, relation provenance, typed queries, hierarchical planning, replanning, and governed updates.</p><span class="arrow">→</span></button>
+          <button class="lesson-card available" data-level="advanced" data-workspace="multimodal-adaptation"><span class="pill">ADVANCED · 06</span><span class="status">AVAILABLE</span><h3>Multimodal Adaptation &amp; Continual Learning</h3><p>Shift diagnosis, PEFT, alignment drift, replay, forgetting, regression gates, lineage, promotion, and rollback.</p><span class="arrow">→</span></button>
           <article class="lesson-card" data-level="enterprise"><span class="pill">ENTERPRISE</span><span class="status">PLANNED</span><h3>Governed vision platforms</h3><p>Edge systems, evaluation, observability, security, robustness, privacy, and governance.</p></article>
           <article class="lesson-card" data-level="capstone"><span class="pill">CAPSTONE</span><span class="status">PLANNED</span><h3>Integrated vision systems</h3><p>Inspection, multimodal knowledge, video operations, spatial twins, and embodied agents.</p></article>
         </div>
@@ -630,8 +631,36 @@ assert evidence["physical_authorization"] == "none"</code></pre>
           </form>
         </div>
       </section>
+
+      <section class="workspace" id="workspace-multimodal-adaptation" data-workspace-panel="multimodal-adaptation" aria-labelledby="multimodal-adaptation-title" hidden>
+        <div class="workspace-heading"><div><p class="eyebrow">ADVANCED · COURSE 06</p><h2 id="multimodal-adaptation-title">Multimodal Adaptation &amp; Continual Learning</h2></div><p class="duration">14–18 HOURS · CPU DEFAULT</p></div>
+        <div class="workspace-tabs" role="tablist" aria-label="Advanced Course 06 view"><button role="tab" aria-selected="true" data-view="multimodal-adaptation-learn">01 / Learn</button><button role="tab" aria-selected="false" data-view="multimodal-adaptation-lab">02 / Lab</button><button role="tab" aria-selected="false" data-view="multimodal-adaptation-checkpoint">03 / Checkpoint</button></div>
+        <div class="view active" id="multimodal-adaptation-learn" role="tabpanel">
+          <div><p class="eyebrow">OUTCOME</p><p class="outcome">Acquire useful capability on a new domain while making legacy interference, alignment drift, forgetting, lineage, and rollback evidence explicit.</p><p>Diagnose shift before training; compare frozen reuse, projectors, adapters, prompts, LoRA, partial, and full fine-tuning; then move through replay, regularization, distillation, parameter isolation, capability regression, and trusted release control.</p><div class="actions"><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/advanced/06-multimodal-adaptation-continual-learning/README.md">Read the chapter ↗</a><a class="text-link" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/advanced/06-multimodal-adaptation-continual-learning/lab.ipynb">Open notebook ↗</a></div></div>
+          <aside class="signal-panel"><p class="eyebrow">WATCH FOR</p><ul><li>Every failure called domain shift</li><li>Low loss treated as release evidence</li><li>Small adapters assumed not to forget</li><li>Classification hiding retrieval regression</li><li>Replay without privacy or source balance</li><li>Site C reused for method selection</li><li>Training allowed to self-promote</li></ul></aside>
+        </div>
+        <div class="view" id="multimodal-adaptation-lab" role="tabpanel" hidden>
+          <div><p class="eyebrow">PRACTICAL LAB</p><p class="outcome">Adapt a tiny image–text encoder to Site B, measure representation and alignment drift, run a separate continual stream with replay/EWC/distillation/routing, freeze policy before Site C, and emit a digest-bound shadow/reject/rollback decision.</p><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/advanced/06-multimodal-adaptation-continual-learning/lab.ipynb">Run the guided notebook ↗</a></div>
+          <pre aria-label="Example Python"><code>candidate = AdaptedDualEncoder(base_model, "lora", rank=2)
+target_gain = adapted_B["macro_f1"] - base_B["macro_f1"]
+legacy_regression = adapted_A["macro_f1"] - base_A["macro_f1"]
+validate_candidate_contract(CANDIDATE, BASE_CONTRACT)
+assert promotion_decision.authorization == "none"</code></pre>
+        </div>
+        <div class="view" id="multimodal-adaptation-checkpoint" role="tabpanel" hidden>
+          <form class="quiz-form" data-review="shift characterization, adaptation scope, LoRA, alignment, forgetting, replay, lineage, and release authority">
+            <fieldset><legend>Why is a new policy threshold not automatically a representation-adaptation problem?</legend><label><input type="radio" name="q1" value="1" /> The perception relation may remain valid while a deterministic business rule changes.</label><label><input type="radio" name="q1" value="0" /> Every policy change requires full fine-tuning.</label><label><input type="radio" name="q1" value="0" /> Labels cannot encode policy.</label></fieldset>
+            <fieldset><legend>What does a successful linear probe suggest?</legend><label><input type="radio" name="q2" value="1" /> Needed information may already be accessible in the frozen representation.</label><label><input type="radio" name="q2" value="0" /> Full fine-tuning is always necessary next.</label><label><input type="radio" name="q2" value="0" /> Legacy regression is impossible.</label></fieldset>
+            <fieldset><legend>Why does low-rank adaptation not guarantee low forgetting?</legend><label><input type="radio" name="q3" value="1" /> A small parameter update can still cause a large behavioral or alignment change.</label><label><input type="radio" name="q3" value="0" /> LoRA never changes predictions.</label><label><input type="radio" name="q3" value="0" /> Rank only controls artifact filenames.</label></fieldset>
+            <fieldset><legend>Why evaluate image→text and text→image retrieval after visual adaptation?</legend><label><input type="radio" name="q4" value="1" /> Classification can remain strong while cross-modal geometry and retrieval regress.</label><label><input type="radio" name="q4" value="0" /> Both metrics are identical to training loss.</label><label><input type="radio" name="q4" value="0" /> Text embeddings always move with image embeddings.</label></fieldset>
+            <fieldset><legend>What is a replay buffer in a production lifecycle?</legend><label><input type="radio" name="q5" value="1" /> A versioned governed data artifact with selection, rights, retention, deletion, and source-balance obligations.</label><label><input type="radio" name="q5" value="0" /> An unrestricted cache of any prior input.</label><label><input type="radio" name="q5" value="0" /> A guarantee that forgetting reaches zero.</label></fieldset>
+            <fieldset><legend>What may a successful training job authorize?</legend><label><input type="radio" name="q6" value="1" /> Nothing by itself; a trusted release service verifies evidence, lineage, policy, approvals, and rollback.</label><label><input type="radio" name="q6" value="0" /> Immediate production deployment.</label><label><input type="radio" name="q6" value="0" /> Reuse of Site C for threshold tuning.</label></fieldset>
+            <button class="button primary" type="submit">Check answers</button><p class="quiz-result" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
     </main>
     <footer><span>VISION / FIELD GUIDE</span><span>OPEN SOURCE · LEARN IN PUBLIC</span><a href="https://oneplusi.io">One+i · Responsible AI ↗</a></footer>
-    <script src="app.js?v=20"></script>
+    <script src="app.js?v=21"></script>
   </body>
 </html>
