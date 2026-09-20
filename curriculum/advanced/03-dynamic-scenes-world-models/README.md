@@ -2,7 +2,7 @@
 
 > **Central question:** How can a model represent the state of a changing physical world, predict how that state evolves, and distinguish passive future prediction from action-conditioned simulation?
 
-[← Advanced 02 · Neural Rendering & 3D Scene Representations](../02-neural-rendering-3d-scene-representations/README.md) · [Run the notebook](lab.ipynb) · [Advanced track](../README.md)
+[← Advanced 02 · Neural Rendering & 3D Scene Representations](../02-neural-rendering-3d-scene-representations/README.md) · [Run the notebook](lab.ipynb) · [Advanced track](../README.md) · [Advanced 04 · Embodied Vision & VLA Models →](../04-embodied-vision-vla-models/README.md)
 
 Advanced 02 asked what static scene and camera could explain an observation. This course adds time, persistent state, actions, uncertainty, counterfactuals, and planning:
 
@@ -50,7 +50,7 @@ Complete [Advanced 01](../01-3d-vision-spatial-intelligence/README.md) and [Adva
 Advanced 01: metric geometry
   → Advanced 02: learned static scene and rendering
   → Advanced 03: persistent dynamic state and action-conditioned futures
-  → Advanced 04: embodied perception and VLA systems (not implemented here)
+  → Advanced 04: embodied perception and VLA systems
 ```
 
 ### Scenario, success criteria, and boundaries
@@ -427,4 +427,4 @@ observations
   → predicted-versus-realized evidence
 ```
 
-Advanced 04 will connect this foundation to embodied perception and vision-language-action systems. It is intentionally not implemented here.
+Continue to [Advanced 04](../04-embodied-vision-vla-models/README.md), which connects this predictive foundation to goal grounding, embodiment-conditioned affordances, action representations, independent feasibility checks, bounded simulated execution, and verified feedback.
