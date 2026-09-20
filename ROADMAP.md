@@ -132,10 +132,11 @@ This radar was reviewed on **2026-08-31**. It is a curriculum watchlist, not a c
 2. [**Neural Rendering & 3D Scene Representations: From NeRFs to 3D Gaussian Splatting**](curriculum/advanced/02-neural-rendering-3d-scene-representations/README.md) — radiance fields, differentiable volume rendering, camera-held-out view synthesis, geometry/appearance separation, Gaussian projection and splatting, density control, compression, editability, and governed evidence. *(available)*
 3. [**Dynamic Scenes & World Models: From 4D Scene State to Action-Conditioned Futures**](curriculum/advanced/03-dynamic-scenes-world-models/README.md) — persistent state, partial observability, dynamic 3D/4D representations, action-conditioned transitions, stochastic futures, recursive rollout, physical consistency, planning exploitation, support-aware mitigation, and source-held-out dynamics shift. *(available)*
 4. [**Embodied Vision & Vision-Language-Action Models: From Visual Grounding to Closed-Loop Action**](curriculum/advanced/04-embodied-vision-vla-models/README.md) — timestamped observations, proprioception, embodiment contracts, referent grounding, affordances, action spaces, behavioral cloning, chunking, independent feasibility checks, simulation-only permits, feedback, recovery, and held-out embodiment evidence. *(available)*
-5. **Multimodal adaptation** — parameter-efficient tuning, domain adaptation, continual learning, and forgetting.
-6. **Robustness and uncertainty** — corruptions, distribution shift, geometric confidence, calibration, and failure recovery.
-7. **Efficient spatial inference** — profiling, view/token budgets, quantization, compilation, streaming memory, and edge constraints.
-8. **Production spatial operations** — calibration registries, frame graphs, observability, drift, rollback, and incident response.
+5. [**Spatial Memory, Scene Graphs & Navigation: From Observations to Persistent World Knowledge**](curriculum/advanced/05-spatial-memory-scene-graphs-navigation/README.md) — localization drift, occupancy evidence, unknown-space policy, object identity, temporal memory, relation provenance, scene/place graphs, typed queries, semantic candidate verification, A*, topology, active perception, replanning, source-held-out evaluation, and trusted versioned updates. *(available)*
+6. **Multimodal adaptation** — parameter-efficient tuning, domain adaptation, continual learning, and forgetting.
+7. **Robustness and uncertainty** — corruptions, distribution shift, geometric confidence, calibration, and failure recovery.
+8. **Efficient spatial inference** — profiling, view/token budgets, quantization, compilation, streaming memory, and edge constraints.
+9. **Production spatial operations** — calibration registries, frame graphs, observability, drift, rollback, and incident response.
 
 ## Enterprise
 

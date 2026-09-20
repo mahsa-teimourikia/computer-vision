@@ -8,6 +8,7 @@ Move from multimodal evidence systems into metric spatial representations, learn
 - [02 · Neural Rendering & 3D Scene Representations: From NeRFs to 3D Gaussian Splatting](02-neural-rendering-3d-scene-representations/README.md) — generate rays; derive and test volume rendering; split held-out cameras; separate appearance from geometry; project and splat anisotropic Gaussians; govern density control; and report source-held-out scene evidence.
 - [03 · Dynamic Scenes & World Models: From 4D Scene State to Action-Conditioned Futures](03-dynamic-scenes-world-models/README.md) — separate observation from persistent state; fit action-conditioned dynamics; evaluate recursive and stochastic futures; preserve identity; check physical constraints; expose planner exploitation; and report source-held-out dynamics evidence.
 - [04 · Embodied Vision & Vision-Language-Action Models: From Visual Grounding to Closed-Loop Action](04-embodied-vision-vla-models/README.md) — bind goals to physical entities; condition affordances on embodiment; compare action representations and behavioral cloning; validate frames, freshness, reach, and collision; issue simulation-only permits; verify postconditions; and report held-out embodiment evidence.
+- [05 · Spatial Memory, Scene Graphs & Navigation: From Observations to Persistent World Knowledge](05-spatial-memory-scene-graphs-navigation/README.md) — combine noisy localization, occupancy evidence, persistent object identity, relation provenance, typed current/historical queries, semantic candidate verification, A*, topology, active perception, replanning, and governed memory updates.
 
 ## Planned progression
 
@@ -16,8 +17,8 @@ Move from multimodal evidence systems into metric spatial representations, learn
   → 02 Neural Rendering & 3D Scene Representations
   → 03 Dynamic Scenes & World Models
   → 04 Embodied Vision & Vision-Language-Action Models
-  → 05 Spatial intelligence and memory
-  → embodied simulation and multimodal adaptation
+  → 05 Spatial Memory, Scene Graphs & Navigation
+  → multimodal adaptation and production spatial operations
 ```
 
 Complete Intermediate [Visual Agents](../intermediate/06-visual-agents/README.md) before starting this track. Preserve its evidence, authorization, and bounded-execution contracts when spatial systems later connect perception to action.

@@ -1844,3 +1844,139 @@ def test_advanced_04_diagrams_are_reusable_and_accessible():
         assert data["validation"]["status"] == "validated"
         assert "20px_clearance" in data["validation"]["checked"]
         assert data["source"]["deterministic"] is True
+
+
+def test_advanced_05_contains_the_declared_spatial_memory_lab():
+    course = Path("curriculum/advanced/05-spatial-memory-scene-graphs-navigation")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "Pose2D",
+        "TrueWorld",
+        "SensorPacket",
+        "sensor_proxy",
+        "trajectory_metrics",
+        "ATE_RMSE_m",
+        "RPE_RMSE_m",
+        "OccupancyMemory",
+        "log_odds",
+        "unknown",
+        "ObjectObservation",
+        "MemoryObject",
+        "association_score",
+        "duplicate landmark",
+        "identity merge risk",
+        "FROZEN_ASSOCIATION",
+        "apply_negative_evidence",
+        "location_history",
+        "location_at",
+        "RelationRecord",
+        "INVERSE",
+        "TRANSITIVE",
+        "validate_relation",
+        "missing_provenance",
+        "SpatialQueryEngine",
+        "current_query",
+        "historical_query",
+        "local_semantic_retrieval_proxy",
+        "candidate_only",
+        "astar",
+        "known_path",
+        "unknown_policy",
+        "inflate_obstacles",
+        "topological_route",
+        "NavigationPlan",
+        "PlanDependencies",
+        "resource_keys",
+        "invalidate_plan_if_affected",
+        "stale_memory_failure",
+        "memory_assisted_recovery",
+        "memoryless_search",
+        "naive_stale_memory",
+        "freshness_aware_memory",
+        "strategy_comparison",
+        "wrong_location_visits",
+        "successful_recovery",
+        "replanned_path",
+        "loop_candidates",
+        "TrustedMapState",
+        "LoopClosureCandidate",
+        "canonical_map_state",
+        "propose_loop_closure",
+        "verify_loop_closure",
+        "apply_verified_loop_closure",
+        "before_rejected_loop",
+        "rejected_route_before",
+        "rejected_route_after",
+        "loop_non_mutation_report",
+        "verified_false_loop_rate",
+        "viewpoint_memory",
+        "active_view",
+        "FROZEN_CONFIG",
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "reporting_only_no_changes",
+        "site_c_metrics",
+        "evaluation_only_site_c",
+        "site_c_packets",
+        "failure_attribution",
+        "TrustedMemoryManager",
+        "corrupt_edge",
+        "poison_candidate",
+        "memory_update_trace",
+        "affected_resources",
+        "unrelated_update_report",
+        "relevant_update_report",
+        "plan_invalidation_comparison",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "CV_ENABLE_HYDRA=False",
+        "2e58a35baea629eee8838409771876acff015daf",
+        "0fb6f43ffe806a8088a171b036336c093bcf604e",
+        "93277a02bd89171f8121e84203121cf7af9ebb5d",
+        "f445e0828a2c5d5845ccdbd0992fc5eed871d19a",
+        "76b2d4d0e09e549ebdc08127a603ba8e81120b94",
+        "spatial_memory_evidence.json",
+        "spatial_memory_decision.csv",
+        "physical_authorization",
+        "'authorization': 'none'",
+    ]:
+        assert required in source
+
+    assert "not a foundation-model or retrieval benchmark" not in source_lower or "foundation_model" in source
+    assert "local-simulation-only" in source_lower
+    assert "assert canonical_map_state(trusted_map)==before_rejected_loop" in source
+    assert "assert rejected_route_after==rejected_route_before" in source
+    assert "assert unrelated_update_report['invalidated'] is False" in source
+    assert "assert relevant_update_report['invalidated'] is True" in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+
+def test_advanced_05_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/05-spatial-memory-scene-graphs-navigation/assets")
+    expected = {
+        "spatial-memory-loop.svg",
+        "map-representation-taxonomy.svg",
+        "occupancy-evidence.svg",
+        "association-errors.svg",
+        "object-memory-lifecycle.svg",
+        "scene-graph-provenance.svg",
+        "hierarchical-navigation.svg",
+        "plan-invalidation.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True

@@ -1,0 +1,9 @@
+-c constraints-tested.txt
+
+jupyterlab
+matplotlib
+networkx
+numpy
+pandas
+pillow
+scikit-learn

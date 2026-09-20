@@ -1,0 +1,16 @@
+# Tested together on 2026-09-17 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+networkx==3.6.1
+numpy==2.5.2
+pandas==3.0.5
+pillow==12.3.0
+scikit-learn==1.9.0
+
+# Optional systems are disabled and belong in isolated environments.
+# Review code, data, checkpoint, asset, and transitive licenses separately.
+# Hydra (BSD-3-Clause):        2e58a35baea629eee8838409771876acff015daf
+# Habitat-Lab (MIT):          0fb6f43ffe806a8088a171b036336c093bcf604e
+# ConceptGraphs (MIT code):   93277a02bd89171f8121e84203121cf7af9ebb5d
+# 3D-Mem (research code):     f445e0828a2c5d5845ccdbd0992fc5eed871d19a
+# Navigation2 (Apache-2.0):   76b2d4d0e09e549ebdc08127a603ba8e81120b94
