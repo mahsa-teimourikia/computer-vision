@@ -194,7 +194,7 @@ Negative \(R_j\) is regression when higher is better. For losses or latency, rev
 
 ## 15. Representation and neighborhood drift
 
-For fixed legacy input \(x\), compare \(z_{\text{base}}(x)\) and \(z_{\text{adapted}}(x)\) using cosine movement, distance, and top-k neighbor overlap. Drift is diagnostic, not automatically bad: useful adaptation often changes representations. Ask whether the change improves intended structure while preserving required neighborhoods and modality alignment.
+For fixed legacy input \(x\), compare \(z_{\text{base}}(x)\) and \(z_{\text{adapted}}(x)\) using cosine movement, distance, and top-k neighbor overlap. Drift is diagnostic, not automatically bad: useful adaptation often changes representations. Ask whether the change improves intended structure while preserving required neighborhoods and modality alignment. The lab makes this concrete with a frozen no-movement control, a bounded adapter, and broader projector tuning that gains target capability while retaining fewer legacy neighbors. Minimum drift is not the goal; useful plasticity with retained validated structure is.
 
 ## 16. Negative transfer and low-loss traps
 
@@ -222,6 +222,15 @@ F_A=M_{A,\text{best previous}}-M_{A,\text{current}}.
 
 Backward transfer asks how learning later experiences changes earlier ones; the change can be positive. Forward transfer compares learning a future task after prior experience with learning it from the original base. State the reference point, task identity assumptions, and aggregation.
 
+Metric direction is a hard contract, not an implicit convention:
+
+```python
+MetricSpec(name="macro_f1", direction="higher_is_better")
+MetricSpec(name="ece", direction="lower_is_better")
+```
+
+A single `signed_improvement(current, reference, metric_spec)` function makes positive mean improvement for every metric. The notebook assertion-tests that rising accuracy and falling ECE are positive, while rising latency is negative. Every forgetting/BWT/FWT record stores the metric, direction, reference semantics, reference value, current value, and signed delta. Its forward-transfer value is explicitly a proxy because the tiny lab does not train a separate single-task control.
+
 The central artifact is an evaluation matrix:
 
 | Evaluated experience | after A | after B | after C |
@@ -245,7 +254,7 @@ Replay mixes new examples with governed samples from earlier experiences. It is 
 }
 ```
 
-The notebook sweeps 0, 10, 50, and 200 retained examples and reports target plasticity, legacy retention, memory cost, and training time. Production replay also requires privacy, consent, retention, deletion, licensing, and representativeness controls.
+The notebook sweeps 0, 10, 50, and 200 retained examples and reports target plasticity, legacy retention, memory cost, and training time. Its selector balances both source and class and exports a membership audit. Random, class-balanced, and source-class-balanced replay encode different representativeness assumptions; a class-balanced buffer can still omit a legacy source. Production replay also requires privacy, consent, retention, deletion, licensing, and representativeness controls.
 
 ## 20. Regularization and distillation
 
@@ -261,7 +270,7 @@ The diagonal Fisher estimate and \(\lambda\) are approximations and hyperparamet
 
 ![Replay, regularization, distillation, and isolated adapters preserve prior behavior through different mechanisms and failure modes.](assets/continual-learning-strategies.svg)
 
-Task/domain-specific adapters or prompt pools isolate parameters. Composition can share capabilities, but router identity, fallback behavior, capacity growth, adapter compatibility, and unknown domains require evaluation. Domain labels supplied by model text are untrusted; routing should use authenticated deployment context or a separately evaluated detector.
+Task/domain-specific adapters or prompt pools isolate parameters. Composition can share capabilities, but router identity, fallback behavior, capacity growth, adapter compatibility, and unknown domains require evaluation. Domain labels supplied by model text are untrusted; routing should use authenticated deployment context or a separately evaluated detector. The notebook evaluates correct routing, deliberate misrouting, unknown-domain abstention, ambiguous-domain abstention, and capability under the wrong adapter.
 
 ## 22. Continual vocabulary and alignment
 
@@ -295,6 +304,8 @@ The held-out source tests generalization under this frozen policy. It is not a s
 ![Training proposes a candidate; an independent capability suite, lineage validator, and policy gate issue a bounded decision and preserve rollback.](assets/capability-promotion-gate.svg)
 
 The training job produces a candidate and evidence. It cannot promote itself. A trusted release service verifies exact base/candidate digests, suite version, data manifests, metric directions, thresholds, unresolved risks, approvals, and rollback target.
+
+Each required check resolves to `PASS`, `FAIL`, or `MISSING`. Only a complete all-`PASS` suite may produce `promote_to_shadow`; missing capability evidence produces `needs_review`, while a failed metric, suite mismatch, frozen-policy violation, or absent rollback artifact produces `reject`. The notebook assertion-tests all five cases. Absence of regression evidence is not evidence of no regression.
 
 Possible decisions are `promote_to_shadow`, `reject`, `needs_review`, and `rollback`. Notebook success grants no production authority.
 
@@ -360,12 +371,12 @@ No method is “state of the art” without a specific scenario, stream, backbon
 6. exact LoRA math, parameter counts, and rank sweep;
 7. matched projector, adapter, prompt, LoRA, partial, and full fine-tuning;
 8. transfer-gain, legacy-regression, parameter, timing, and artifact comparison;
-9. representation drift, neighborhood retention, and bidirectional alignment checks;
+9. three-control representation drift, neighborhood retention, and bidirectional alignment checks;
 10. low-loss / poor-retention counterexample and failure attribution;
-11. A→B→C sequential learning and forgetting matrix;
-12. replay-size sweep plus EWC, distillation, and isolated routing comparisons;
+11. A→B→C sequential learning with direction-aware forgetting/BWT/FWT evidence;
+12. source-class-balanced replay sweep plus EWC, distillation, and router failure comparisons;
 13. Site-B candidate and gate freeze, followed by untouched Site-C reporting;
-14. capability promotion/rejection/rollback decision; and
+14. fail-closed capability promotion/rejection/review scenarios, including missing evidence; and
 15. JSON/CSV evidence export with optional-tool manifests and unresolved assumptions.
 
 ## 31. Production upgrade path

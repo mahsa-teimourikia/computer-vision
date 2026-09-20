@@ -1994,6 +1994,8 @@ def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab
         "CapabilitySuiteContract",
         "ReplayBufferContract",
         "CandidateArtifact",
+        "MetricSpec",
+        "GateCheck",
         "PromotionDecision",
         "reporting_only_no_changes",
         "TinyDualEncoder",
@@ -2016,6 +2018,7 @@ def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab
         "paired_cosine",
         "neighborhood_retention",
         "representation_drift",
+        "stability_plasticity_controls",
         "pretext_vs_downstream",
         "shortcut_only_full_ft",
         "failure_injection",
@@ -2030,15 +2033,30 @@ def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab
         "ewc",
         "distillation",
         "forgetting_matrix",
+        "signed_improvement",
+        "metric_direction_assertions",
+        "continual_metric_evidence",
+        "reference_semantics",
         "backward_transfer_A",
         "forward_transfer_C_proxy",
         "for capacity in (0, 10, 50, 200)",
         "REPLAY_BUFFER_CONTRACT",
+        "source_class_balanced_replay",
+        "replay_selection_audit",
         "isolated_adapters",
         "route_adapter",
+        "ambiguous_domain",
+        "unknown_domain_abstention",
         "wrong_base_blocked",
         "base_checkpoint_digest_mismatch",
         "promote_to_shadow",
+        "evaluate_promotion_gate",
+        "A_all_required_metrics_pass",
+        "B_legacy_metric_fails",
+        "C_alignment_metric_missing",
+        "D_rollback_artifact_missing",
+        "E_suite_version_mismatch",
+        'Literal["PASS", "FAIL", "MISSING"]',
         "rollback_target_hash",
         "OPTIONAL_TOOL_MANIFESTS",
         "CV_ENABLE_PEFT = False",
@@ -2058,6 +2076,9 @@ def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab
     assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source
     assert "assert wrong_base_blocked" in source
     assert "assert promotion_decision.authorization == \"none\"" in source
+    assert '"C_alignment_metric_missing": "needs_review"' in source
+    assert '"D_rollback_artifact_missing": "reject"' in source
+    assert '"E_suite_version_mismatch": "reject"' in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
@@ -2069,6 +2090,8 @@ def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab
         "site c is then reporting-only",
         "training job produces a candidate",
         "replay buffer contract",
+        "metric direction is a hard contract",
+        "absence of regression evidence is not evidence of no regression",
     ]:
         assert required in readme
 
