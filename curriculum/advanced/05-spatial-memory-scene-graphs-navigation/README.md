@@ -146,6 +146,18 @@ retrieval candidate
 
 Place recognition proposes; geometry verifies. The notebook deliberately injects a perceptual-aliasing failure and shows that a second structural signal rejects it.
 
+Rejection is a transaction boundary, not just a label in an evaluation table. A loop candidate cannot alter the trusted pose graph, occupancy, place identity, or downstream route until verification succeeds. The lab hashes canonical map state and recomputes the route before and after a rejected alias:
+
+```python
+before = canonical_map_state(trusted_map)
+result = verify_loop_closure(candidate)
+apply_verified_loop_closure(trusted_map, candidate, result)
+
+assert result.accepted is False
+assert canonical_map_state(trusted_map) == before
+assert route_after == route_before
+```
+
 ## 7. Object identity and association
 
 Object memory is not a bag of detections. Each sensor observation gets a unique observation ID. Association either links it to a persistent entity or creates a new one.
@@ -176,7 +188,7 @@ Negative evidence is admissible only if the object was expected to be visible: t
 
 Nodes may represent objects, places, agents, observations, or viewpoints. Edges may express `in`, `contains`, `left_of`, `right_of`, `near`, `connected_to`, `visible_from`, or `observed_at`.
 
-Direction matters: `toolbox in bay_B` is not `bay_B in toolbox`. The relation registry declares inverses and symmetry. It also declares which relations may be transitive. `left_of` can be transitive under a consistent axis and tolerance; `near` generally is not.
+Direction matters: `toolbox in bay_B` is not `bay_B in toolbox`. The relation registry declares inverses and symmetry. It also declares which relations may be transitive. A deterministic **metric** `left_of` relation derived from positions in one coordinate frame may support transitive inference under a declared tolerance. A model-predicted or qualitative `left_of` relation does not gain transitivity automatically. `near` generally is not transitive.
 
 Every accepted edge carries:
 
@@ -237,6 +249,16 @@ Obstacle inflation represents robot footprint and localization uncertainty. A co
 
 If a target has a fresh verified location, navigation can plan to a safe observation pose near it. If memory is stale, the plan should first verify the last-known location. A failure there updates memory, invalidates dependent plans, and transitions to memory-based search over likely places or active observation—not repeated blind execution.
 
+The lab compares three policies on the same moved-toolbox case:
+
+| Policy | Use of prior memory | Expected behavior |
+| --- | --- | --- |
+| memoryless search | none | searches place hypotheses without a stored target location |
+| naive stale memory | treats the old location as current truth | visits the wrong location and fails to recover |
+| freshness-aware memory | treats the old location as a hypothesis | verifies it, records the miss, and continues searching |
+
+It reports distance travelled, steps to target, wrong-location visits, re-observations, and successful recovery. The comparison demonstrates that memory with weak freshness semantics can be worse than having no memory.
+
 Dynamic obstacles live in a short-horizon layer separate from persistent static memory. Replanning uses the newest admissible layer and records why the prior path became invalid.
 
 ## 15. Exploration, information gain, and visibility memory
@@ -280,7 +302,16 @@ The notebook reports examples for drift, false closure, duplicate entity, merged
 
 Sensor, model, retrieval, and agent outputs are untrusted candidates. Only a trusted memory manager can accept an update after schema, frame, timestamp, source, uncertainty, authorization, and consistency validation.
 
-Every accepted update creates a trace and increments the memory version. Plans record the version and the entities/edges/cells on which they depend. A moved object, new obstacle, retired relation, or superseding localization correction invalidates affected plans. A corrupted edge and a poisoned high-confidence update are deliberately rejected in the lab.
+Every accepted update creates a trace and increments the memory version. Version mismatch alone does **not** invalidate every plan. Plans carry typed dependency sets for cells, places, graph edges, and entity properties; accepted updates carry equally specific affected-resource keys. Their intersection decides whether a plan remains advisory or becomes invalid:
+
+```text
+accepted memory update
+  → changed resources: cells / places / edges / entity properties
+  → intersect with each plan's typed dependencies
+  → invalidate affected plans only
+```
+
+A toolbox appearance update therefore leaves a charging-station route intact, while a new obstacle or retired connectivity edge in its hallway invalidates it. A moved goal, occupied path cell, retired relation, or superseding localization correction similarly invalidates only dependent plans. A corrupted edge and a poisoned high-confidence update are rejected before they can advance trusted memory.
 
 ## 19. Tooling review
 
@@ -311,11 +342,11 @@ The notebook follows this evidence path:
 9. deterministic current/historical query engine;
 10. semantic candidate retrieval followed by spatial verification;
 11. A*, unknown-space policy, inflation, and topology;
-12. stale object-goal failure, recovery, and dynamic replanning;
-13. loop-closure aliasing and verification;
+12. memoryless, naive stale-memory, and freshness-aware object-goal navigation plus dynamic replanning;
+13. loop-closure aliasing, verification, and rejected-candidate non-mutation;
 14. visibility memory and active perception;
 15. frozen Site-C evaluation and stage-wise attribution;
-16. poisoning rejection, memory trace, versioning, and plan invalidation; and
+16. poisoning rejection, memory trace, versioning, and dependency-selective plan invalidation; and
 17. JSON/CSV enterprise evidence export.
 
 ## 21. Decision artifact

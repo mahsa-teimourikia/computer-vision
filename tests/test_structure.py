@@ -1888,10 +1888,29 @@ def test_advanced_05_contains_the_declared_spatial_memory_lab():
         "inflate_obstacles",
         "topological_route",
         "NavigationPlan",
+        "PlanDependencies",
+        "resource_keys",
+        "invalidate_plan_if_affected",
         "stale_memory_failure",
         "memory_assisted_recovery",
+        "memoryless_search",
+        "naive_stale_memory",
+        "freshness_aware_memory",
+        "strategy_comparison",
+        "wrong_location_visits",
+        "successful_recovery",
         "replanned_path",
         "loop_candidates",
+        "TrustedMapState",
+        "LoopClosureCandidate",
+        "canonical_map_state",
+        "propose_loop_closure",
+        "verify_loop_closure",
+        "apply_verified_loop_closure",
+        "before_rejected_loop",
+        "rejected_route_before",
+        "rejected_route_after",
+        "loop_non_mutation_report",
         "verified_false_loop_rate",
         "viewpoint_memory",
         "active_view",
@@ -1907,6 +1926,10 @@ def test_advanced_05_contains_the_declared_spatial_memory_lab():
         "corrupt_edge",
         "poison_candidate",
         "memory_update_trace",
+        "affected_resources",
+        "unrelated_update_report",
+        "relevant_update_report",
+        "plan_invalidation_comparison",
         "OPTIONAL_TOOL_MANIFESTS",
         "CV_ENABLE_HYDRA=False",
         "2e58a35baea629eee8838409771876acff015daf",
@@ -1923,6 +1946,10 @@ def test_advanced_05_contains_the_declared_spatial_memory_lab():
 
     assert "not a foundation-model or retrieval benchmark" not in source_lower or "foundation_model" in source
     assert "local-simulation-only" in source_lower
+    assert "assert canonical_map_state(trusted_map)==before_rejected_loop" in source
+    assert "assert rejected_route_after==rejected_route_before" in source
+    assert "assert unrelated_update_report['invalidated'] is False" in source
+    assert "assert relevant_update_report['invalidated'] is True" in source
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
