@@ -1,0 +1,430 @@
+{
+  "version": 1,
+  "id": "triangulation-uncertainty",
+  "title": "Triangulation quality depends on ray angle",
+  "purpose": "Compare well-conditioned and weak triangulation.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/triangulation-uncertainty.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A wide ray intersection constrains a near point strongly, while nearly parallel rays create a long depth uncertainty region for a far point."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Compare well-conditioned and weak triangulation.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "wide_a",
+      "label": "CAMERA A",
+      "subtitle": "",
+      "type": "service",
+      "bounds": {
+        "x": 90,
+        "y": 235,
+        "width": 180,
+        "height": 90
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "wide_b",
+      "label": "CAMERA B",
+      "subtitle": "",
+      "type": "service",
+      "bounds": {
+        "x": 90,
+        "y": 445,
+        "width": 180,
+        "height": 90
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "wide_p",
+      "label": "WIDE ANGLE\nsmall uncertainty",
+      "subtitle": "",
+      "type": "action",
+      "bounds": {
+        "x": 470,
+        "y": 320,
+        "width": 250,
+        "height": 125
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "narrow_a",
+      "label": "CAMERA A",
+      "subtitle": "",
+      "type": "service",
+      "bounds": {
+        "x": 790,
+        "y": 235,
+        "width": 180,
+        "height": 90
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "narrow_b",
+      "label": "CAMERA B",
+      "subtitle": "",
+      "type": "service",
+      "bounds": {
+        "x": 790,
+        "y": 445,
+        "width": 180,
+        "height": 90
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "narrow_p",
+      "label": "NEARLY PARALLEL\nlarge depth uncertainty",
+      "subtitle": "",
+      "type": "agent",
+      "bounds": {
+        "x": 1100,
+        "y": 320,
+        "width": 230,
+        "height": 125
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "w1",
+      "from": {
+        "node": "wide_a",
+        "port": "right"
+      },
+      "to": {
+        "node": "wide_p",
+        "port": "left_top"
+      },
+      "route": [
+        [
+          270,
+          280
+        ],
+        [
+          470,
+          358
+        ]
+      ],
+      "label": "ray",
+      "kind": "primary",
+      "label_at": [
+        370,
+        310
+      ]
+    },
+    {
+      "id": "w2",
+      "from": {
+        "node": "wide_b",
+        "port": "right"
+      },
+      "to": {
+        "node": "wide_p",
+        "port": "left_bottom"
+      },
+      "route": [
+        [
+          270,
+          490
+        ],
+        [
+          470,
+          408
+        ]
+      ],
+      "label": "ray",
+      "kind": "primary",
+      "label_at": [
+        370,
+        440
+      ]
+    },
+    {
+      "id": "n1",
+      "from": {
+        "node": "narrow_a",
+        "port": "right"
+      },
+      "to": {
+        "node": "narrow_p",
+        "port": "left_top"
+      },
+      "route": [
+        [
+          970,
+          280
+        ],
+        [
+          1100,
+          358
+        ]
+      ],
+      "label": "ray",
+      "kind": "secondary",
+      "label_at": [
+        1035,
+        310
+      ]
+    },
+    {
+      "id": "n2",
+      "from": {
+        "node": "narrow_b",
+        "port": "right"
+      },
+      "to": {
+        "node": "narrow_p",
+        "port": "left_bottom"
+      },
+      "route": [
+        [
+          970,
+          490
+        ],
+        [
+          1100,
+          408
+        ]
+      ],
+      "label": "ray",
+      "kind": "secondary",
+      "label_at": [
+        1035,
+        440
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Triangulation quality depends on ray angle",
+    "description": "A wide ray intersection constrains a near point strongly, while nearly parallel rays create a long depth uncertainty region for a far point."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

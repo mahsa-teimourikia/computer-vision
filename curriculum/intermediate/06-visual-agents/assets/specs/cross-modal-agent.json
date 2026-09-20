@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "id": "cross-modal-agent",
+  "title": "Cross-modal evidence before decision",
+  "purpose": "Combine image, manual, and video evidence under one verified dependency graph.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/cross-modal-agent.svg", "medium": "documentation and notebook", "alt_text": "Inspection image, maintenance manual, and recent video each feed an authorized tool and verifier before a deterministic manual-review decision."},
+  "canvas": {"width": 2048, "height": 860, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "cross", "label": "All required modalities remain independently source-bound", "bounds": {"x": 64, "y": 100, "width": 1920, "height": 670}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "image", "group": "cross", "label": "Inspection image", "subtitle": "region evidence", "type": "data", "bounds": {"x": 110, "y": 180, "width": 300, "height": 110}, "ports": {"out": {"side": "right"}}},
+    {"id": "manual", "group": "cross", "label": "Maintenance manual", "subtitle": "page/block evidence", "type": "data", "bounds": {"x": 110, "y": 375, "width": 300, "height": 110}, "ports": {"out": {"side": "right"}}},
+    {"id": "video", "group": "cross", "label": "Recent video", "subtitle": "interval + track evidence", "type": "data", "bounds": {"x": 110, "y": 570, "width": 300, "height": 110}, "ports": {"out": {"side": "right"}}},
+    {"id": "vision", "group": "cross", "label": "Vision tool", "subtitle": "damage observation", "type": "service", "bounds": {"x": 540, "y": 180, "width": 300, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "search", "group": "cross", "label": "Document search", "subtitle": "cited policy rule", "type": "service", "bounds": {"x": 540, "y": 375, "width": 300, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "event", "group": "cross", "label": "Video event search", "subtitle": "recent recurrence", "type": "service", "bounds": {"x": 540, "y": 570, "width": 300, "height": 110}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "verify", "group": "cross", "label": "Evidence verifier", "subtitle": "complete + fresh + supported", "type": "operations", "bounds": {"x": 1010, "y": 365, "width": 350, "height": 130}, "ports": {"in1": {"side": "left", "offset": 0.2}, "in2": {"side": "left", "offset": 0.5}, "in3": {"side": "left", "offset": 0.8}, "out": {"side": "right"}}},
+    {"id": "decision", "group": "cross", "label": "Deterministic rule", "subtitle": "recommend or review", "type": "agent", "bounds": {"x": 1530, "y": 365, "width": 380, "height": 130}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "image", "port": "out"}, "to": {"node": "vision", "port": "in"}, "kind": "primary", "route": [[410,235],[540,235]]},
+    {"id": "e2", "from": {"node": "manual", "port": "out"}, "to": {"node": "search", "port": "in"}, "kind": "primary", "route": [[410,430],[540,430]]},
+    {"id": "e3", "from": {"node": "video", "port": "out"}, "to": {"node": "event", "port": "in"}, "kind": "primary", "route": [[410,625],[540,625]]},
+    {"id": "e4", "from": {"node": "vision", "port": "out"}, "to": {"node": "verify", "port": "in1"}, "kind": "primary", "route": [[840,235],[930,235],[930,391],[1010,391]]},
+    {"id": "e5", "from": {"node": "search", "port": "out"}, "to": {"node": "verify", "port": "in2"}, "kind": "primary", "route": [[840,430],[1010,430]]},
+    {"id": "e6", "from": {"node": "event", "port": "out"}, "to": {"node": "verify", "port": "in3"}, "kind": "primary", "route": [[840,625],[930,625],[930,469],[1010,469]]},
+    {"id": "e7", "from": {"node": "verify", "port": "out"}, "to": {"node": "decision", "port": "in"}, "kind": "primary", "route": [[1360,430],[1530,430]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

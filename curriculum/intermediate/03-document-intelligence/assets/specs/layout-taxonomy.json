@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "id": "layout-taxonomy",
+  "title": "A page contains typed layout regions",
+  "purpose": "Present the core region classes used in the course.",
+  "output": {
+    "svg": "curriculum/intermediate/03-document-intelligence/assets/layout-taxonomy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Six layout region groups: title and heading, paragraph and list, table, figure and caption, form field, and header and footer."
+  },
+  "canvas": {
+    "width": 1788,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "A page contains typed layout regions",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1660,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "title",
+      "group": "system",
+      "label": "Title / heading",
+      "type": "service",
+      "bounds": {
+        "x": 100,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "paragraph",
+      "group": "system",
+      "label": "Paragraph / list",
+      "type": "data",
+      "bounds": {
+        "x": 360,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "table",
+      "group": "system",
+      "label": "Table",
+      "type": "agent",
+      "bounds": {
+        "x": 620,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "figure",
+      "group": "system",
+      "label": "Figure / caption",
+      "type": "agent",
+      "bounds": {
+        "x": 880,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "form",
+      "group": "system",
+      "label": "Form field",
+      "type": "action",
+      "bounds": {
+        "x": 1140,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "boiler",
+      "group": "system",
+      "label": "Header / footer",
+      "type": "operations",
+      "bounds": {
+        "x": 1400,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

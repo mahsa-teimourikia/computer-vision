@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "id": "detection-error-taxonomy",
+  "title": "Detection failures live at instance and slice levels",
+  "purpose": "Separate correct detections, prediction errors, missed targets, and cross-slice failures.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/detection-error-taxonomy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An evaluated image branches to correct detections, prediction errors, coverage failures, and slice-level failures. Prediction errors include localization, wrong class, duplicate, and background false positive. Coverage failures include missed objects. Small-object and source-shift failures are measured as slices rather than exclusive per-instance labels."
+  },
+  "canvas": {"width": 1800, "height": 1000, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "instances", "label": "Per-instance outcomes", "bounds": {"x": 64, "y": 130, "width": 1120, "height": 780}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "slices", "label": "Cross-instance slices", "bounds": {"x": 1220, "y": 130, "width": 516, "height": 780}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "evaluated", "group": "instances", "label": "Evaluated image", "subtitle": "predictions + ground truth", "type": "data", "bounds": {"x": 110, "y": 400, "width": 230, "height": 130}, "ports": {"correct": {"side": "right", "offset": 0.2}, "prediction": {"side": "right", "offset": 0.5}, "coverage": {"side": "right", "offset": 0.8}, "source": {"side": "top", "offset": 0.5}}},
+    {"id": "correct", "group": "instances", "label": "Correct", "subtitle": "class + IoU + unique match", "type": "data", "bounds": {"x": 450, "y": 210, "width": 230, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "prediction_error", "group": "instances", "label": "Prediction error", "subtitle": "a returned box is wrong", "type": "agent", "bounds": {"x": 450, "y": 400, "width": 230, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "localization": {"side": "right", "offset": 0.2}, "class": {"side": "right", "offset": 0.4}, "duplicate": {"side": "right", "offset": 0.6}, "background": {"side": "right", "offset": 0.8}}},
+    {"id": "coverage_failure", "group": "instances", "label": "Coverage failure", "subtitle": "a target was not claimed", "type": "agent", "bounds": {"x": 450, "y": 620, "width": 230, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "missed": {"side": "right", "offset": 0.5}}},
+    {"id": "localization", "group": "instances", "label": "Localization error", "subtitle": "right region, IoU too low", "type": "action", "bounds": {"x": 820, "y": 150, "width": 250, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "wrong_class", "group": "instances", "label": "Wrong class", "subtitle": "overlap, incorrect label", "type": "action", "bounds": {"x": 820, "y": 300, "width": 250, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "duplicate", "group": "instances", "label": "Duplicate", "subtitle": "object already matched", "type": "action", "bounds": {"x": 820, "y": 450, "width": 250, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "background_fp", "group": "instances", "label": "Background FP", "subtitle": "no plausible target overlap", "type": "action", "bounds": {"x": 820, "y": 600, "width": 250, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "missed", "group": "instances", "label": "Missed object", "subtitle": "unmatched ground truth", "type": "action", "bounds": {"x": 820, "y": 750, "width": 250, "height": 110}, "ports": {"in": {"side": "left", "offset": 0.5}, "slice": {"side": "right", "offset": 0.5}}},
+    {"id": "small_failure", "group": "slices", "label": "Small-object failure", "subtitle": "miss/error rate by size", "type": "service", "bounds": {"x": 1350, "y": 270, "width": 250, "height": 120}, "ports": {"in": {"side": "left", "offset": 0.5}}},
+    {"id": "source_failure", "group": "slices", "label": "Source-shift failure", "subtitle": "quality gap by factory", "type": "service", "bounds": {"x": 1350, "y": 560, "width": 250, "height": 120}, "ports": {"in": {"side": "left", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "to_correct", "from": {"node": "evaluated", "port": "correct"}, "to": {"node": "correct", "port": "in"}, "kind": "primary", "route": [[340, 426], [390, 426], [390, 265], [450, 265]]},
+    {"id": "to_prediction", "from": {"node": "evaluated", "port": "prediction"}, "to": {"node": "prediction_error", "port": "in"}, "kind": "primary", "route": [[340, 465], [450, 455]]},
+    {"id": "to_coverage", "from": {"node": "evaluated", "port": "coverage"}, "to": {"node": "coverage_failure", "port": "in"}, "kind": "primary", "route": [[340, 504], [390, 504], [390, 675], [450, 675]]},
+    {"id": "prediction_localization", "from": {"node": "prediction_error", "port": "localization"}, "to": {"node": "localization", "port": "in"}, "kind": "primary", "route": [[680, 422], [750, 422], [750, 205], [820, 205]]},
+    {"id": "prediction_class", "from": {"node": "prediction_error", "port": "class"}, "to": {"node": "wrong_class", "port": "in"}, "kind": "primary", "route": [[680, 444], [760, 444], [760, 355], [820, 355]]},
+    {"id": "prediction_duplicate", "from": {"node": "prediction_error", "port": "duplicate"}, "to": {"node": "duplicate", "port": "in"}, "kind": "primary", "route": [[680, 466], [760, 466], [760, 505], [820, 505]]},
+    {"id": "prediction_background", "from": {"node": "prediction_error", "port": "background"}, "to": {"node": "background_fp", "port": "in"}, "kind": "primary", "route": [[680, 488], [750, 488], [750, 655], [820, 655]]},
+    {"id": "coverage_missed", "from": {"node": "coverage_failure", "port": "missed"}, "to": {"node": "missed", "port": "in"}, "kind": "primary", "route": [[680, 675], [740, 675], [740, 805], [820, 805]]},
+    {"id": "coverage_small", "from": {"node": "missed", "port": "slice"}, "to": {"node": "small_failure", "port": "in"}, "kind": "secondary", "route": [[1070, 805], [1160, 805], [1160, 330], [1350, 330]]},
+    {"id": "evaluated_source", "from": {"node": "evaluated", "port": "source"}, "to": {"node": "source_failure", "port": "in"}, "kind": "secondary", "route": [[225, 400], [225, 100], [1180, 100], [1180, 620], [1350, 620]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 980" role="img" aria-labelledby="title description">
+<title id="title">Three ways to connect visual features to language</title>
+<desc id="description">Three horizontal rows show visual features mapped by a projector into an LLM sequence, compressed by learned queries, or retained as separate memory for language cross-attention.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1800" height="980" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Three ways to connect visual features to language</text>
+<rect x="64" y="100" width="1672" height="240" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Token projection</text>
+<rect x="64" y="370" width="1672" height="240" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="404" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Query resampling</text>
+<rect x="64" y="640" width="1672" height="240" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="674" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Separate visual memory</text>
+<polyline points="420,232 650,232" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="900,232 1140,232" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="420,502 650,502" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="900,502 1140,502" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="420,772 650,772" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="900,772 1140,772" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="170" y="185" width="250" height="95" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="295.0" y="219" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">N visual tokens</text>
+<rect x="650" y="185" width="250" height="95" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="775.0" y="219" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Linear / MLP</text>
+<rect x="1140" y="185" width="310" height="95" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1295.0" y="219" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">N LLM-width tokens</text>
+<rect x="170" y="455" width="250" height="95" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="295.0" y="489" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">N visual tokens</text>
+<rect x="650" y="455" width="250" height="95" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="775.0" y="489" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">M learned queries</text>
+<text x="775.0" y="517" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">cross-attend</text>
+<rect x="1140" y="455" width="310" height="95" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1295.0" y="489" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">M compressed tokens</text>
+<text x="1295.0" y="517" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">M ≪ N</text>
+<rect x="170" y="725" width="250" height="95" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="295.0" y="759" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Visual memory</text>
+<text x="295.0" y="787" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">keys + values</text>
+<rect x="650" y="725" width="250" height="95" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="775.0" y="759" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Cross-attention</text>
+<text x="775.0" y="787" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">language queries</text>
+<rect x="1140" y="725" width="310" height="95" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1295.0" y="759" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Updated language state</text>
+</svg>

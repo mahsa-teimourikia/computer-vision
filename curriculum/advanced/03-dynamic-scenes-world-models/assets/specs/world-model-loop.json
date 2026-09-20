@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "id": "world-model-loop",
+  "title": "World model loop",
+  "purpose": "Separate sensing, persistent state, action-conditioned transition, and decoded evidence.",
+  "output": {
+    "svg": "curriculum/advanced/03-dynamic-scenes-world-models/assets/world-model-loop.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "An observation is encoded into persistent state; a structured action conditions dynamics; future state is decoded into future observations."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Prediction is advisory; constraints and authorization remain external",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1472,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "observation",
+      "group": "system",
+      "label": "OBSERVATION",
+      "subtitle": "RGB · depth · sensors",
+      "type": "data",
+      "bounds": {
+        "x": 110,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "state",
+      "group": "system",
+      "label": "PERSISTENT STATE",
+      "subtitle": "identity · pose · velocity",
+      "type": "service",
+      "bounds": {
+        "x": 402,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "dynamics",
+      "group": "system",
+      "label": "DYNAMICS + ACTION",
+      "subtitle": "transition distribution",
+      "type": "agent",
+      "bounds": {
+        "x": 694,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "future_state",
+      "group": "system",
+      "label": "FUTURE STATE",
+      "subtitle": "uncertainty · events",
+      "type": "service",
+      "bounds": {
+        "x": 986,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "future_obs",
+      "group": "system",
+      "label": "FUTURE OBSERVATION",
+      "subtitle": "rendered evidence",
+      "type": "data",
+      "bounds": {
+        "x": 1278,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "observation_to_state",
+      "from": {
+        "node": "observation",
+        "port": "right"
+      },
+      "to": {
+        "node": "state",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          320,
+          350
+        ],
+        [
+          402,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "state_to_dynamics",
+      "from": {
+        "node": "state",
+        "port": "right"
+      },
+      "to": {
+        "node": "dynamics",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          612,
+          350
+        ],
+        [
+          694,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "dynamics_to_future_state",
+      "from": {
+        "node": "dynamics",
+        "port": "right"
+      },
+      "to": {
+        "node": "future_state",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          904,
+          350
+        ],
+        [
+          986,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "future_state_to_future_obs",
+      "from": {
+        "node": "future_state",
+        "port": "right"
+      },
+      "to": {
+        "node": "future_obs",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1196,
+          350
+        ],
+        [
+          1278,
+          350
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "unique_ids",
+      "port_attachment",
+      "group_containment",
+      "no_overlaps",
+      "20px_clearance"
+    ],
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

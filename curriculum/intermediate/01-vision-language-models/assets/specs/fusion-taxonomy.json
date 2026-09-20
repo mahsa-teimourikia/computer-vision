@@ -1,0 +1,22 @@
+{
+  "version": 1, "id": "fusion-taxonomy", "title": "Multimodal fusion is an architectural choice", "purpose": "Place late alignment, token projection, query resampling, cross-attention, and deeper fusion along an interaction-cost continuum.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/fusion-taxonomy.svg", "medium": "documentation and notebook", "alt_text": "A left-to-right continuum from late separate embeddings through token projection, query resampling, cross-attention, and deeper multimodal fusion, with interaction and architectural cost increasing."},
+  "canvas": {"width": 1800, "height": 760, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [{"id": "system", "label": "Increasing multimodal interaction and implementation coupling →", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 560}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "late", "group": "system", "label": "Late", "subtitle": "embedding score", "type": "operations", "bounds": {"x": 120, "y": 300, "width": 250, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "projection", "group": "system", "label": "Projection", "subtitle": "visual prefix", "type": "service", "bounds": {"x": 440, "y": 300, "width": 250, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "resample", "group": "system", "label": "Resampling", "subtitle": "fixed queries", "type": "agent", "bounds": {"x": 760, "y": 300, "width": 250, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "cross", "group": "system", "label": "Cross-attention", "subtitle": "visual memory", "type": "action", "bounds": {"x": 1080, "y": 300, "width": 250, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "deep", "group": "system", "label": "Deeper fusion", "subtitle": "multi-level / joint", "type": "agent", "bounds": {"x": 1400, "y": 300, "width": 250, "height": 120}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "late", "port": "out"}, "to": {"node": "projection", "port": "in"}, "kind": "primary", "route": [[370,360],[440,360]]},
+    {"id": "e2", "from": {"node": "projection", "port": "out"}, "to": {"node": "resample", "port": "in"}, "kind": "primary", "route": [[690,360],[760,360]]},
+    {"id": "e3", "from": {"node": "resample", "port": "out"}, "to": {"node": "cross", "port": "in"}, "kind": "primary", "route": [[1010,360],[1080,360]]},
+    {"id": "e4", "from": {"node": "cross", "port": "out"}, "to": {"node": "deep", "port": "in"}, "kind": "primary", "route": [[1330,360],[1400,360]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

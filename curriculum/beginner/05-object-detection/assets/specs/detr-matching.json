@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "id": "detr-matching",
+  "title": "DETR matching creates one global assignment",
+  "purpose": "Show how object queries and ground truth meet in a weighted cost matrix before Hungarian one-to-one assignment.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/detr-matching.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Object queries produce a prediction set. Predictions and ground-truth objects feed a weighted classification, L1, and GIoU cost matrix. The Hungarian algorithm selects a minimum-cost one-to-one assignment, leaving other queries as no-object."
+  },
+  "canvas": {"width": 1600, "height": 900, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 80, "node_padding": {"x": 24, "y": 16}},
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"},
+      "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"},
+      "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"},
+      "action": {"fill": "#FFF1DF", "stroke": "#F59E42"},
+      "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}
+    }
+  },
+  "groups": [
+    {"id": "sets", "label": "Predictions and targets", "bounds": {"x": 64, "y": 130, "width": 660, "height": 620}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "assignment", "label": "Global one-to-one matching", "bounds": {"x": 780, "y": 130, "width": 756, "height": 620}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "queries", "group": "sets", "label": "Object queries", "subtitle": "learned slots", "type": "agent", "bounds": {"x": 110, "y": 250, "width": 200, "height": 130}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "predictions", "group": "sets", "label": "Prediction set", "subtitle": "class + box per query", "type": "service", "bounds": {"x": 390, "y": 250, "width": 260, "height": 130}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "ground_truth", "group": "sets", "label": "Ground truth", "subtitle": "labeled boxes", "type": "data", "bounds": {"x": 390, "y": 520, "width": 260, "height": 130}, "ports": {"out": {"side": "right", "offset": 0.5}}},
+    {"id": "cost_matrix", "group": "assignment", "label": "Weighted cost matrix", "subtitle": "class + L1 + GIoU", "type": "operations", "bounds": {"x": 820, "y": 290, "width": 270, "height": 180}, "ports": {"predictions": {"side": "left", "offset": 0.35}, "targets": {"side": "left", "offset": 0.75}, "out": {"side": "right", "offset": 0.5}}},
+    {"id": "hungarian", "group": "assignment", "label": "Hungarian algorithm", "subtitle": "minimum total cost", "type": "action", "bounds": {"x": 1190, "y": 290, "width": 280, "height": 180}, "ports": {"in": {"side": "left", "offset": 0.5}, "out": {"side": "bottom", "offset": 0.5}}},
+    {"id": "matched", "group": "assignment", "label": "One-to-one assignment", "subtitle": "unmatched queries → no object", "type": "service", "bounds": {"x": 1190, "y": 570, "width": 280, "height": 110}, "ports": {"in": {"side": "top", "offset": 0.5}}}
+  ],
+  "edges": [
+    {"id": "query_predictions", "from": {"node": "queries", "port": "out"}, "to": {"node": "predictions", "port": "in"}, "kind": "primary", "route": [[310, 315], [390, 315]]},
+    {"id": "predictions_cost", "from": {"node": "predictions", "port": "out"}, "to": {"node": "cost_matrix", "port": "predictions"}, "kind": "primary", "route": [[650, 315], [740, 315], [740, 353], [820, 353]]},
+    {"id": "targets_cost", "from": {"node": "ground_truth", "port": "out"}, "to": {"node": "cost_matrix", "port": "targets"}, "kind": "primary", "route": [[650, 585], [740, 585], [740, 425], [820, 425]]},
+    {"id": "cost_hungarian", "from": {"node": "cost_matrix", "port": "out"}, "to": {"node": "hungarian", "port": "in"}, "kind": "primary", "route": [[1090, 380], [1190, 380]]},
+    {"id": "hungarian_match", "from": {"node": "hungarian", "port": "out"}, "to": {"node": "matched", "port": "in"}, "kind": "primary", "route": [[1330, 470], [1330, 570]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

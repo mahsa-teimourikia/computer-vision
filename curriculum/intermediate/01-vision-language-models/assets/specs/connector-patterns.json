@@ -1,0 +1,32 @@
+{
+  "version": 1, "id": "connector-patterns", "title": "Three ways to connect visual features to language", "purpose": "Compare direct projection, learned-query resampling, and cross-attention visual memory.",
+  "output": {"svg": "curriculum/intermediate/01-vision-language-models/assets/connector-patterns.svg", "medium": "documentation and notebook", "alt_text": "Three horizontal rows show visual features mapped by a projector into an LLM sequence, compressed by learned queries, or retained as separate memory for language cross-attention."},
+  "canvas": {"width": 1800, "height": 980, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#D7DEE8"}}},
+  "groups": [
+    {"id": "projection", "label": "Token projection", "bounds": {"x": 64, "y": 100, "width": 1672, "height": 240}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "resampling", "label": "Query resampling", "bounds": {"x": 64, "y": 370, "width": 1672, "height": 240}, "fill": "#FFFFFF", "stroke": "#D7DEE8"},
+    {"id": "cross", "label": "Separate visual memory", "bounds": {"x": 64, "y": 640, "width": 1672, "height": 240}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}
+  ],
+  "nodes": [
+    {"id": "pv", "group": "projection", "label": "N visual tokens", "type": "data", "bounds": {"x": 170, "y": 185, "width": 250, "height": 95}, "ports": {"out": {"side": "right"}}},
+    {"id": "pp", "group": "projection", "label": "Linear / MLP", "type": "service", "bounds": {"x": 650, "y": 185, "width": 250, "height": 95}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "pl", "group": "projection", "label": "N LLM-width tokens", "type": "agent", "bounds": {"x": 1140, "y": 185, "width": 310, "height": 95}, "ports": {"in": {"side": "left"}}},
+    {"id": "rv", "group": "resampling", "label": "N visual tokens", "type": "data", "bounds": {"x": 170, "y": 455, "width": 250, "height": 95}, "ports": {"out": {"side": "right"}}},
+    {"id": "rq", "group": "resampling", "label": "M learned queries", "subtitle": "cross-attend", "type": "agent", "bounds": {"x": 650, "y": 455, "width": 250, "height": 95}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "rl", "group": "resampling", "label": "M compressed tokens", "subtitle": "M ≪ N", "type": "agent", "bounds": {"x": 1140, "y": 455, "width": 310, "height": 95}, "ports": {"in": {"side": "left"}}},
+    {"id": "cv", "group": "cross", "label": "Visual memory", "subtitle": "keys + values", "type": "data", "bounds": {"x": 170, "y": 725, "width": 250, "height": 95}, "ports": {"out": {"side": "right"}}},
+    {"id": "ca", "group": "cross", "label": "Cross-attention", "subtitle": "language queries", "type": "action", "bounds": {"x": 650, "y": 725, "width": 250, "height": 95}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "cl", "group": "cross", "label": "Updated language state", "type": "agent", "bounds": {"x": 1140, "y": 725, "width": 310, "height": 95}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "p1", "from": {"node": "pv", "port": "out"}, "to": {"node": "pp", "port": "in"}, "kind": "primary", "route": [[420,232],[650,232]]},
+    {"id": "p2", "from": {"node": "pp", "port": "out"}, "to": {"node": "pl", "port": "in"}, "kind": "primary", "route": [[900,232],[1140,232]]},
+    {"id": "r1", "from": {"node": "rv", "port": "out"}, "to": {"node": "rq", "port": "in"}, "kind": "primary", "route": [[420,502],[650,502]]},
+    {"id": "r2", "from": {"node": "rq", "port": "out"}, "to": {"node": "rl", "port": "in"}, "kind": "primary", "route": [[900,502],[1140,502]]},
+    {"id": "c1", "from": {"node": "cv", "port": "out"}, "to": {"node": "ca", "port": "in"}, "kind": "primary", "route": [[420,772],[650,772]]},
+    {"id": "c2", "from": {"node": "ca", "port": "out"}, "to": {"node": "cl", "port": "in"}, "kind": "primary", "route": [[900,772],[1140,772]]}
+  ],
+  "validation": {"no_overlaps": true, "route_around_nodes": true, "min_text_padding": 16, "min_connector_clearance": 12, "verify_port_attachment": true, "verify_contrast": true}
+}

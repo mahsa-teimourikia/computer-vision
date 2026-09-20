@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "id": "track-pose-state",
+  "title": "Structured track and pose state",
+  "purpose": "A versioned track combines identity, box, motion, landmarks, configuration, confidence, lifecycle, and temporal history.",
+  "output": {
+    "svg": "curriculum/beginner/08-tracking-keypoints-pose/assets/track-pose-state.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A versioned track combines identity, box, motion, landmarks, configuration, confidence, lifecycle, and temporal history."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 720,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Structured visual state",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1672,
+        "height": 550
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "observation",
+      "group": "system",
+      "label": "Observation",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "box \u00b7 score \u00b7 timestamp"
+    },
+    {
+      "id": "identity",
+      "group": "system",
+      "label": "Track identity",
+      "type": "service",
+      "bounds": {
+        "x": 430,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "local ID \u00b7 lifecycle"
+    },
+    {
+      "id": "motion",
+      "group": "system",
+      "label": "Motion state",
+      "type": "agent",
+      "bounds": {
+        "x": 760,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "position \u00b7 velocity"
+    },
+    {
+      "id": "pose",
+      "group": "system",
+      "label": "Pose state",
+      "type": "agent",
+      "bounds": {
+        "x": 1090,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "landmarks \u00b7 geometry"
+    },
+    {
+      "id": "history",
+      "group": "system",
+      "label": "Temporal history",
+      "type": "data",
+      "bounds": {
+        "x": 1420,
+        "y": 275,
+        "width": 250,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "events \u00b7 provenance"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "observation",
+        "port": "out"
+      },
+      "to": {
+        "node": "identity",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          360
+        ],
+        [
+          430,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "identity",
+        "port": "out"
+      },
+      "to": {
+        "node": "motion",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          680,
+          360
+        ],
+        [
+          760,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "motion",
+        "port": "out"
+      },
+      "to": {
+        "node": "pose",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          360
+        ],
+        [
+          1090,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "pose",
+        "port": "out"
+      },
+      "to": {
+        "node": "history",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1340,
+          360
+        ],
+        [
+          1420,
+          360
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlap": true,
+    "all_text_contained": true,
+    "edge_routes_reviewed": true,
+    "contrast_checked": true,
+    "alt_text_reviewed": true
+  }
+}

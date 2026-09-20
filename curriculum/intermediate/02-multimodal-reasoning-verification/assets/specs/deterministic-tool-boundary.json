@@ -1,0 +1,372 @@
+{
+  "version": 1,
+  "id": "deterministic-tool-boundary",
+  "title": "Use exact tools after semantic extraction",
+  "purpose": "Separate perception uncertainty from deterministic execution and record every call.",
+  "output": {
+    "svg": "curriculum/intermediate/02-multimodal-reasoning-verification/assets/deterministic-tool-boundary.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A versioned perception adapter produces structured observations for geometry, count, and arithmetic tools; all tools write versioned input and output events."
+  },
+  "canvas": {
+    "width": 1800,
+    "height": 820,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "semantic",
+      "label": "Semantic boundary",
+      "bounds": {
+        "x": 64,
+        "y": 110,
+        "width": 520,
+        "height": 610
+      },
+      "fill": "#F0EEFF",
+      "stroke": "#7667E8"
+    },
+    {
+      "id": "exact",
+      "label": "Deterministic boundary",
+      "bounds": {
+        "x": 650,
+        "y": 110,
+        "width": 1086,
+        "height": 610
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "perception",
+      "group": "semantic",
+      "label": "Versioned perception",
+      "subtitle": "objects \u00b7 attributes \u00b7 regions",
+      "type": "agent",
+      "bounds": {
+        "x": 150,
+        "y": 330,
+        "width": 350,
+        "height": 120
+      },
+      "ports": {
+        "g": {
+          "side": "right",
+          "offset": 0.25
+        },
+        "c": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "a": {
+          "side": "right",
+          "offset": 0.75
+        }
+      }
+    },
+    {
+      "id": "geometry",
+      "group": "exact",
+      "label": "Geometry tool",
+      "subtitle": "boxes \u2192 relations",
+      "type": "operations",
+      "bounds": {
+        "x": 720,
+        "y": 190,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "count",
+      "group": "exact",
+      "label": "Counting tool",
+      "subtitle": "instance IDs \u2192 cardinality",
+      "type": "operations",
+      "bounds": {
+        "x": 720,
+        "y": 360,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "arithmetic",
+      "group": "exact",
+      "label": "Arithmetic tool",
+      "subtitle": "values \u2192 predicate",
+      "type": "operations",
+      "bounds": {
+        "x": 720,
+        "y": 530,
+        "width": 300,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left"
+        },
+        "out": {
+          "side": "right"
+        }
+      }
+    },
+    {
+      "id": "events",
+      "group": "exact",
+      "label": "Tool event log",
+      "subtitle": "version \u00b7 inputs \u00b7 outputs \u00b7 error",
+      "type": "data",
+      "bounds": {
+        "x": 1260,
+        "y": 330,
+        "width": 390,
+        "height": 120
+      },
+      "ports": {
+        "g": {
+          "side": "left",
+          "offset": 0.25
+        },
+        "c": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "a": {
+          "side": "left",
+          "offset": 0.75
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "g",
+      "from": {
+        "node": "perception",
+        "port": "g"
+      },
+      "to": {
+        "node": "geometry",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          500,
+          360
+        ],
+        [
+          610,
+          360
+        ],
+        [
+          610,
+          245
+        ],
+        [
+          720,
+          245
+        ]
+      ]
+    },
+    {
+      "id": "c",
+      "from": {
+        "node": "perception",
+        "port": "c"
+      },
+      "to": {
+        "node": "count",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          500,
+          390
+        ],
+        [
+          720,
+          415
+        ]
+      ]
+    },
+    {
+      "id": "a",
+      "from": {
+        "node": "perception",
+        "port": "a"
+      },
+      "to": {
+        "node": "arithmetic",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          500,
+          420
+        ],
+        [
+          610,
+          420
+        ],
+        [
+          610,
+          585
+        ],
+        [
+          720,
+          585
+        ]
+      ]
+    },
+    {
+      "id": "ge",
+      "from": {
+        "node": "geometry",
+        "port": "out"
+      },
+      "to": {
+        "node": "events",
+        "port": "g"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1020,
+          245
+        ],
+        [
+          1140,
+          245
+        ],
+        [
+          1140,
+          360
+        ],
+        [
+          1260,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "ce",
+      "from": {
+        "node": "count",
+        "port": "out"
+      },
+      "to": {
+        "node": "events",
+        "port": "c"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1020,
+          415
+        ],
+        [
+          1260,
+          390
+        ]
+      ]
+    },
+    {
+      "id": "ae",
+      "from": {
+        "node": "arithmetic",
+        "port": "out"
+      },
+      "to": {
+        "node": "events",
+        "port": "a"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1020,
+          585
+        ],
+        [
+          1140,
+          585
+        ],
+        [
+          1140,
+          420
+        ],
+        [
+          1260,
+          420
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

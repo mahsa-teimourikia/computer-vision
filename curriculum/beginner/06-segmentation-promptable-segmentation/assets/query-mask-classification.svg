@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+<title id="title">Queries predict a class and a mask</title>
+<desc id="description">Image features enter a transformer decoder. Each query branches into a class prediction and mask prediction, which are composed for semantic, instance, or panoptic output.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1600" height="900" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Queries predict a class and a mask</text>
+<rect x="64" y="120" width="1472" height="650" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="154" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Segmentation output contracts</text>
+<polyline points="330,410 430,410" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="690,410 790,410" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1010,382 1060,382 1060,295 1110,295" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1010,438 1060,438 1060,565 1110,565" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1330,295 1342,295 1342,391 1355,391" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1330,565 1342,565 1342,459 1355,459" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="100" y="340" width="230" height="140" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="215.0" y="374" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Image features</text>
+<text x="215.0" y="402" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">multi-scale pixels</text>
+<rect x="430" y="340" width="260" height="140" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="560.0" y="374" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Transformer decoder</text>
+<text x="560.0" y="402" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">masked attention</text>
+<rect x="790" y="340" width="220" height="140" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="900.0" y="374" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Queries</text>
+<text x="900.0" y="402" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">region candidates</text>
+<rect x="1110" y="230" width="220" height="130" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1220.0" y="264" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Class</text>
+<text x="1220.0" y="292" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">label / no-object</text>
+<rect x="1110" y="500" width="220" height="130" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="1220.0" y="534" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Mask</text>
+<text x="1220.0" y="562" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">pixel assignment</text>
+<rect x="1355" y="340" width="165" height="170" rx="16" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1437.5" y="374" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Compose</text>
+<text x="1437.5" y="396" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">output</text>
+<text x="1437.5" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">task-specific rules</text>
+</svg>

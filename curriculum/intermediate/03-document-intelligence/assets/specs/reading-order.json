@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "id": "reading-order",
+  "title": "Reading order is a separate prediction",
+  "purpose": "Show why naive coordinate order fails and a column graph helps.",
+  "output": {
+    "svg": "curriculum/intermediate/03-document-intelligence/assets/reading-order.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A two-column page demonstrates naive y-x interleaving before a column-aware graph restores intended reading order."
+  },
+  "canvas": {
+    "width": 1528,
+    "height": 650,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Reading order is a separate prediction",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1400,
+        "height": 480
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "page",
+      "group": "system",
+      "label": "Two-column page",
+      "type": "data",
+      "bounds": {
+        "x": 100,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "naive",
+      "group": "system",
+      "label": "Naive y / x sort",
+      "type": "operations",
+      "bounds": {
+        "x": 360,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "wrong",
+      "group": "system",
+      "label": "A1 B1 A2 B2",
+      "type": "action",
+      "bounds": {
+        "x": 620,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "graph",
+      "group": "system",
+      "label": "Column-aware graph",
+      "type": "agent",
+      "bounds": {
+        "x": 880,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "right",
+      "group": "system",
+      "label": "A1 A2 A3\nB1 B2 B3",
+      "type": "service",
+      "bounds": {
+        "x": 1140,
+        "y": 270,
+        "width": 210,
+        "height": 110
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "page",
+        "port": "out"
+      },
+      "to": {
+        "node": "naive",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          325
+        ],
+        [
+          360,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "naive",
+        "port": "out"
+      },
+      "to": {
+        "node": "wrong",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          570,
+          325
+        ],
+        [
+          620,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "wrong",
+        "port": "out"
+      },
+      "to": {
+        "node": "graph",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          830,
+          325
+        ],
+        [
+          880,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "graph",
+        "port": "out"
+      },
+      "to": {
+        "node": "right",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          325
+        ],
+        [
+          1140,
+          325
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

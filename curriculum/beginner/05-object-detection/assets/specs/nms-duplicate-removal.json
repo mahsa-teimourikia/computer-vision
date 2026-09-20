@@ -1,0 +1,273 @@
+{
+  "version": 1,
+  "id": "nms-duplicate-removal",
+  "title": "Non-maximum suppression removes duplicate hypotheses",
+  "purpose": "Show the greedy sequence behind class-aware NMS.",
+  "output": {
+    "svg": "curriculum/beginner/05-object-detection/assets/nms-duplicate-removal.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Dense overlapping predictions are sorted by score, the highest box is kept, highly overlapping same-class boxes are suppressed, and a smaller final set remains."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "flow",
+      "label": "Greedy post-processing",
+      "bounds": {
+        "x": 64,
+        "y": 150,
+        "width": 1472,
+        "height": 570
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "raw",
+      "group": "flow",
+      "label": "Dense predictions",
+      "subtitle": "many overlapping boxes",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 330,
+        "width": 250,
+        "height": 130
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "sort",
+      "group": "flow",
+      "label": "Sort by score",
+      "type": "operations",
+      "bounds": {
+        "x": 460,
+        "y": 345,
+        "width": 210,
+        "height": 100
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "keep",
+      "group": "flow",
+      "label": "Keep maximum",
+      "subtitle": "highest confidence",
+      "type": "agent",
+      "bounds": {
+        "x": 760,
+        "y": 330,
+        "width": 220,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "suppress",
+      "group": "flow",
+      "label": "Suppress overlap",
+      "subtitle": "same class, IoU > threshold",
+      "type": "action",
+      "bounds": {
+        "x": 1030,
+        "y": 330,
+        "width": 240,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "final",
+      "group": "flow",
+      "label": "Final detections",
+      "subtitle": "repeat until empty",
+      "type": "service",
+      "bounds": {
+        "x": 1330,
+        "y": 330,
+        "width": 160,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "n1",
+      "from": {
+        "node": "raw",
+        "port": "out"
+      },
+      "to": {
+        "node": "sort",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          370,
+          395
+        ],
+        [
+          460,
+          395
+        ]
+      ]
+    },
+    {
+      "id": "n2",
+      "from": {
+        "node": "sort",
+        "port": "out"
+      },
+      "to": {
+        "node": "keep",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          670,
+          395
+        ],
+        [
+          760,
+          395
+        ]
+      ]
+    },
+    {
+      "id": "n3",
+      "from": {
+        "node": "keep",
+        "port": "out"
+      },
+      "to": {
+        "node": "suppress",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          980,
+          395
+        ],
+        [
+          1030,
+          395
+        ]
+      ]
+    },
+    {
+      "id": "n4",
+      "from": {
+        "node": "suppress",
+        "port": "out"
+      },
+      "to": {
+        "node": "final",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1270,
+          395
+        ],
+        [
+          1330,
+          395
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

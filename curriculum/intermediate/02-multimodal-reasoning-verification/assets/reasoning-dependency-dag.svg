@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1840 820" role="img" aria-labelledby="title description">
+<title id="title">A decision is a dependency graph</title>
+<desc id="description">Scratch, spatial, and bolt-count facts feed a maintenance rule; the count first feeds a less-than-three predicate, and the rule emits true, false, or review.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1840" height="820" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">A decision is a dependency graph</text>
+<rect x="64" y="100" width="1712" height="656" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="134" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">Observable reasoning contract</text>
+<polyline points="380,232 720,232 720,359 930,359" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="380,402 820,402 820,395 930,395" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="380,572 520,572" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="780,572 840,572 840,431 930,431" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1290,395 1380,395 1380,387 1450,387" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="120" y="180" width="260" height="104" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="250.0" y="214" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Scratch fact</text>
+<text x="250.0" y="242" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">observed · valve_1</text>
+<rect x="120" y="350" width="260" height="104" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
+<text x="250.0" y="384" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Spatial fact</text>
+<text x="250.0" y="412" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">geometry(valve, pipe)</text>
+<rect x="120" y="520" width="260" height="104" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
+<text x="250.0" y="554" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Bolt count</text>
+<text x="250.0" y="582" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">count(unique IDs)</text>
+<rect x="520" y="520" width="260" height="104" rx="16" fill="#FFFFFF" stroke="#8A97A8" stroke-width="2" filter="url(#shadow)"/>
+<text x="650.0" y="554" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Count &lt; 3</text>
+<text x="650.0" y="582" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">arithmetic predicate</text>
+<rect x="930" y="335" width="360" height="120" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="1110.0" y="369" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Maintenance rule</text>
+<text x="1110.0" y="397" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">scratch ∧ left ∧ count&lt;3</text>
+<rect x="1450" y="335" width="260" height="104" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1580.0" y="369" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">Decision state</text>
+<text x="1580.0" y="397" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">true · false · review</text>
+</svg>

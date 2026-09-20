@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "id": "rollout-error",
+  "title": "Recursive rollout compounds error",
+  "purpose": "Contrast a strong one-step prediction with open-loop distribution shift.",
+  "output": {
+    "svg": "curriculum/advanced/03-dynamic-scenes-world-models/assets/rollout-error.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A true state produces a small one-step error; predicted states are fed back and drift grows over horizons 5, 10, and 20."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 80,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Open-loop metrics must be reported by horizon",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1472,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "truth",
+      "group": "system",
+      "label": "TRUE STATE t",
+      "subtitle": "teacher-forced input",
+      "type": "data",
+      "bounds": {
+        "x": 110,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "one",
+      "group": "system",
+      "label": "PREDICT t+1",
+      "subtitle": "small local error",
+      "type": "service",
+      "bounds": {
+        "x": 402,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "five",
+      "group": "system",
+      "label": "ROLLOUT 5",
+      "subtitle": "feedback begins",
+      "type": "agent",
+      "bounds": {
+        "x": 694,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "ten",
+      "group": "system",
+      "label": "ROLLOUT 10",
+      "subtitle": "support weakens",
+      "type": "agent",
+      "bounds": {
+        "x": 986,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "twenty",
+      "group": "system",
+      "label": "ROLLOUT 20",
+      "subtitle": "compounding drift",
+      "type": "action",
+      "bounds": {
+        "x": 1278,
+        "y": 280,
+        "width": 210,
+        "height": 140
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "truth_to_one",
+      "from": {
+        "node": "truth",
+        "port": "right"
+      },
+      "to": {
+        "node": "one",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          320,
+          350
+        ],
+        [
+          402,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "one_to_five",
+      "from": {
+        "node": "one",
+        "port": "right"
+      },
+      "to": {
+        "node": "five",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          612,
+          350
+        ],
+        [
+          694,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "five_to_ten",
+      "from": {
+        "node": "five",
+        "port": "right"
+      },
+      "to": {
+        "node": "ten",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          904,
+          350
+        ],
+        [
+          986,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "ten_to_twenty",
+      "from": {
+        "node": "ten",
+        "port": "right"
+      },
+      "to": {
+        "node": "twenty",
+        "port": "left"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1196,
+          350
+        ],
+        [
+          1278,
+          350
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "unique_ids",
+      "port_attachment",
+      "group_containment",
+      "no_overlaps",
+      "20px_clearance"
+    ],
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

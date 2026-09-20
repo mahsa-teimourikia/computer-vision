@@ -1,0 +1,457 @@
+{
+  "version": 1,
+  "id": "spatial-evidence-pipeline",
+  "title": "Metric decisions remain evidence-bound",
+  "purpose": "Show the spatial evidence and review pipeline.",
+  "output": {
+    "svg": "curriculum/advanced/01-3d-vision-spatial-intelligence/assets/spatial-evidence-pipeline.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Versioned sensors and calibration produce frame-aware geometry, deterministic measurements, propagated uncertainty, a policy decision, and an auditable evidence record."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 40,
+    "min_layer_gap": 64,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#8A97A8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "diagram",
+      "label": "Show the spatial evidence and review pipeline.",
+      "bounds": {
+        "x": 64,
+        "y": 105,
+        "width": 1272,
+        "height": 555
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "sensor",
+      "label": "SENSORS + CAL",
+      "subtitle": "versioned",
+      "type": "service",
+      "bounds": {
+        "x": 70,
+        "y": 295,
+        "width": 205,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "geometry",
+      "label": "FRAME-AWARE\nGEOMETRY",
+      "subtitle": "scale + visibility",
+      "type": "agent",
+      "bounds": {
+        "x": 320,
+        "y": 295,
+        "width": 210,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "measure",
+      "label": "MEASURE",
+      "subtitle": "deterministic",
+      "type": "action",
+      "bounds": {
+        "x": 590,
+        "y": 295,
+        "width": 190,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "uncertainty",
+      "label": "UNCERTAINTY",
+      "subtitle": "interval / coverage",
+      "type": "data",
+      "bounds": {
+        "x": 840,
+        "y": 295,
+        "width": 200,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "decision",
+      "label": "DECISION",
+      "subtitle": "accept / review / reject",
+      "type": "action",
+      "bounds": {
+        "x": 1100,
+        "y": 295,
+        "width": 190,
+        "height": 120
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    },
+    {
+      "id": "audit",
+      "label": "EVIDENCE RECORD",
+      "subtitle": "sources + versions",
+      "type": "operations",
+      "bounds": {
+        "x": 1100,
+        "y": 500,
+        "width": 190,
+        "height": 100
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "left_top": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "left_bottom": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "group": "diagram"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "sensor",
+        "port": "right"
+      },
+      "to": {
+        "node": "geometry",
+        "port": "left"
+      },
+      "route": [
+        [
+          275,
+          355
+        ],
+        [
+          320,
+          355
+        ]
+      ],
+      "label": "project/fuse",
+      "kind": "primary",
+      "label_at": [
+        298,
+        346
+      ]
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "geometry",
+        "port": "right"
+      },
+      "to": {
+        "node": "measure",
+        "port": "left"
+      },
+      "route": [
+        [
+          530,
+          355
+        ],
+        [
+          590,
+          355
+        ]
+      ],
+      "label": "query",
+      "kind": "primary",
+      "label_at": [
+        560,
+        346
+      ]
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "measure",
+        "port": "right"
+      },
+      "to": {
+        "node": "uncertainty",
+        "port": "left"
+      },
+      "route": [
+        [
+          780,
+          355
+        ],
+        [
+          840,
+          355
+        ]
+      ],
+      "label": "propagate",
+      "kind": "primary",
+      "label_at": [
+        810,
+        346
+      ]
+    },
+    {
+      "id": "e4",
+      "from": {
+        "node": "uncertainty",
+        "port": "right"
+      },
+      "to": {
+        "node": "decision",
+        "port": "left"
+      },
+      "route": [
+        [
+          1040,
+          355
+        ],
+        [
+          1100,
+          355
+        ]
+      ],
+      "label": "policy",
+      "kind": "primary",
+      "label_at": [
+        1070,
+        346
+      ]
+    },
+    {
+      "id": "e5",
+      "from": {
+        "node": "decision",
+        "port": "bottom"
+      },
+      "to": {
+        "node": "audit",
+        "port": "top"
+      },
+      "route": [
+        [
+          1195,
+          415
+        ],
+        [
+          1195,
+          500
+        ]
+      ],
+      "label": "record",
+      "kind": "secondary",
+      "label_at": [
+        1195,
+        449
+      ]
+    }
+  ],
+  "validation": {
+    "checked": [
+      "unique_ids",
+      "contained_nodes",
+      "port_endpoints",
+      "20px_clearance"
+    ],
+    "status": "validated"
+  },
+  "accessibility": {
+    "title": "Metric decisions remain evidence-bound",
+    "description": "Versioned sensors and calibration produce frame-aware geometry, deterministic measurements, propagated uncertainty, a policy decision, and an auditable evidence record."
+  },
+  "source": {
+    "renderer": "scripts/render_course_diagrams.py",
+    "deterministic": true
+  }
+}

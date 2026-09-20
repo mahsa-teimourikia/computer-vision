@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "id": "human-approval-boundary",
+  "title": "Recommendation is not authorization",
+  "purpose": "Place human business approval before consequential external action.",
+  "output": {"svg": "curriculum/intermediate/06-visual-agents/assets/human-approval-boundary.svg", "medium": "documentation and notebook", "alt_text": "Verified evidence leads to an agent recommendation, then a human approval gate validates the exact payload before any external action."},
+  "canvas": {"width": 2048, "height": 650, "background": "#F7F9FC", "margin": 64, "grid": 8},
+  "layout": {"primary_flow": "left-to-right", "min_node_gap": 48, "min_layer_gap": 72, "node_padding": {"x": 24, "y": 16}},
+  "style": {"font_family": "Inter, Arial, sans-serif", "title_color": "#16324F", "semantic_colors": {"service": {"fill": "#EAF1FF", "stroke": "#2F6BFF"}, "agent": {"fill": "#F0EEFF", "stroke": "#7667E8"}, "data": {"fill": "#E5F7F6", "stroke": "#16A3A5"}, "action": {"fill": "#FFF1DF", "stroke": "#F59E42"}, "operations": {"fill": "#FFFFFF", "stroke": "#8A97A8"}}},
+  "groups": [{"id": "approval", "label": "No external-write implementation exists in the teaching registry", "bounds": {"x": 64, "y": 100, "width": 1920, "height": 460}, "fill": "#FFFFFF", "stroke": "#D7DEE8"}],
+  "nodes": [
+    {"id": "evidence", "group": "approval", "label": "Verified evidence", "subtitle": "complete dependency graph", "type": "data", "bounds": {"x": 110, "y": 260, "width": 330, "height": 120}, "ports": {"out": {"side": "right"}}},
+    {"id": "recommend", "group": "approval", "label": "Agent recommendation", "subtitle": "authorization = none", "type": "agent", "bounds": {"x": 520, "y": 260, "width": 340, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "review", "group": "approval", "label": "Human approval gate", "subtitle": "principal · payload hash · expiry", "type": "operations", "bounds": {"x": 940, "y": 260, "width": 360, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "policy", "group": "approval", "label": "Business policy", "subtitle": "independent authorization", "type": "service", "bounds": {"x": 1380, "y": 260, "width": 330, "height": 120}, "ports": {"in": {"side": "left"}, "out": {"side": "right"}}},
+    {"id": "action", "group": "approval", "label": "External action", "subtitle": "conceptual only", "type": "action", "bounds": {"x": 1790, "y": 260, "width": 150, "height": 120}, "ports": {"in": {"side": "left"}}}
+  ],
+  "edges": [
+    {"id": "e1", "from": {"node": "evidence", "port": "out"}, "to": {"node": "recommend", "port": "in"}, "kind": "primary", "route": [[440,320],[520,320]]},
+    {"id": "e2", "from": {"node": "recommend", "port": "out"}, "to": {"node": "review", "port": "in"}, "kind": "primary", "route": [[860,320],[940,320]]},
+    {"id": "e3", "from": {"node": "review", "port": "out"}, "to": {"node": "policy", "port": "in"}, "kind": "primary", "route": [[1300,320],[1380,320]]},
+    {"id": "e4", "from": {"node": "policy", "port": "out"}, "to": {"node": "action", "port": "in"}, "kind": "secondary", "route": [[1710,320],[1790,320]]}
+  ],
+  "validation": {"checked": ["unique_ids", "contained_nodes", "port_endpoints", "20px_clearance"], "status": "validated"}
+}

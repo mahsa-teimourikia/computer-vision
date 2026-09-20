@@ -1,0 +1,248 @@
+{
+  "version": 1,
+  "id": "embedding-space",
+  "title": "From images to task-defined neighbours",
+  "purpose": "Explain that an encoder creates vectors but the product contract defines which neighbours are useful.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/embedding-space.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A left-to-right flow from industrial images through a visual encoder and embedding vectors to neighbourhoods labeled by component, defect, or duplicate relevance."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 720,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Visual retrieval system",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1472,
+        "height": 556
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "images",
+      "group": "system",
+      "label": "Images / regions",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 290,
+        "width": 230,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "products \u00b7 defects \u00b7 crops"
+    },
+    {
+      "id": "encoder",
+      "group": "system",
+      "label": "Visual encoder",
+      "type": "agent",
+      "bounds": {
+        "x": 450,
+        "y": 290,
+        "width": 230,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "f\u03b8(x)"
+    },
+    {
+      "id": "vectors",
+      "group": "system",
+      "label": "Embedding space",
+      "type": "service",
+      "bounds": {
+        "x": 780,
+        "y": 290,
+        "width": 230,
+        "height": 130
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "z \u2208 \u211d\u1d48"
+    },
+    {
+      "id": "neighbors",
+      "group": "system",
+      "label": "Useful neighbours",
+      "type": "action",
+      "bounds": {
+        "x": 1110,
+        "y": 270,
+        "width": 330,
+        "height": 170
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "component \u00b7 defect \u00b7 duplicate"
+    }
+  ],
+  "edges": [
+    {
+      "id": "images_encoder",
+      "from": {
+        "node": "images",
+        "port": "out"
+      },
+      "to": {
+        "node": "encoder",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          350,
+          355
+        ],
+        [
+          450,
+          355
+        ]
+      ],
+      "label": "encode",
+      "label_at": [
+        400,
+        340
+      ]
+    },
+    {
+      "id": "encoder_vectors",
+      "from": {
+        "node": "encoder",
+        "port": "out"
+      },
+      "to": {
+        "node": "vectors",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          680,
+          355
+        ],
+        [
+          780,
+          355
+        ]
+      ],
+      "label": "vector",
+      "label_at": [
+        730,
+        340
+      ]
+    },
+    {
+      "id": "vectors_neighbors",
+      "from": {
+        "node": "vectors",
+        "port": "out"
+      },
+      "to": {
+        "node": "neighbors",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1010,
+          355
+        ],
+        [
+          1110,
+          355
+        ]
+      ],
+      "label": "contract",
+      "label_at": [
+        1060,
+        340
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}

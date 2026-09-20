@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title description">
+<title id="title">Project a 3D Gaussian into a screen ellipse</title>
+<desc id="description">A world-space Gaussian mean and covariance are transformed into the camera, mapped through a perspective Jacobian, and become a 2D ellipse for rasterization.</desc>
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#16324F" flood-opacity="0.10"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#52606D"/></marker>
+</defs>
+<rect width="1400" height="760" fill="#F7F9FC"/>
+<text x="64" y="58" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#16324F">Project a 3D Gaussian into a screen ellipse</text>
+<rect x="64" y="105" width="1272" height="555" rx="20" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+<text x="86" y="139" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="#16324F">First-order covariance projection under a declared camera convention</text>
+<polyline points="345,348 410,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="665,348 730,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="985,348 1050,348" fill="none" stroke="#52606D" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="90" y="275" width="255" height="145" rx="16" fill="#EAF1FF" stroke="#2F6BFF" stroke-width="2" filter="url(#shadow)"/>
+<text x="217.5" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">WORLD GAUSSIAN</text>
+<text x="217.5" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">μ · R · scales · opacity</text>
+<rect x="410" y="275" width="255" height="145" rx="16" fill="#F0EEFF" stroke="#7667E8" stroke-width="2" filter="url(#shadow)"/>
+<text x="537.5" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">CAMERA SPACE</text>
+<text x="537.5" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">W μ · W Σ Wᵀ</text>
+<rect x="730" y="275" width="255" height="145" rx="16" fill="#E5F7F6" stroke="#16A3A5" stroke-width="2" filter="url(#shadow)"/>
+<text x="857.5" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">PROJECTION J</text>
+<text x="857.5" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">local perspective derivative</text>
+<rect x="1050" y="275" width="255" height="145" rx="16" fill="#FFF1DF" stroke="#F59E42" stroke-width="2" filter="url(#shadow)"/>
+<text x="1177.5" y="309" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#16324F">SCREEN ELLIPSE</text>
+<text x="1177.5" y="337" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#52606D">μ₂D · Σ₂D · pixel footprint</text>
+</svg>

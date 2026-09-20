@@ -1,0 +1,388 @@
+{
+  "version": 1,
+  "id": "siamese-network",
+  "title": "Siamese shared-weight encoding",
+  "purpose": "Show that Siamese describes shared parameters rather than one particular loss.",
+  "output": {
+    "svg": "curriculum/beginner/07-visual-embeddings-metric-learning-retrieval/assets/siamese-network.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Two images pass through encoder branches tied by shared weights, then their embeddings enter a similarity or metric-learning loss."
+  },
+  "canvas": {
+    "width": 1600,
+    "height": 760,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 24,
+      "y": 16
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "system",
+      "label": "Visual retrieval system",
+      "bounds": {
+        "x": 64,
+        "y": 100,
+        "width": 1472,
+        "height": 596
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "image_a",
+      "group": "system",
+      "label": "Image A",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 220,
+        "width": 190,
+        "height": 90
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "image_b",
+      "group": "system",
+      "label": "Image B",
+      "type": "data",
+      "bounds": {
+        "x": 120,
+        "y": 470,
+        "width": 190,
+        "height": 90
+      },
+      "ports": {
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "encoder_a",
+      "group": "system",
+      "label": "Encoder \u03b8",
+      "type": "agent",
+      "bounds": {
+        "x": 440,
+        "y": 190,
+        "width": 230,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "tie": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "shared parameters"
+    },
+    {
+      "id": "encoder_b",
+      "group": "system",
+      "label": "Encoder \u03b8",
+      "type": "agent",
+      "bounds": {
+        "x": 440,
+        "y": 440,
+        "width": 230,
+        "height": 140
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "tie": {
+          "side": "top",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "shared parameters"
+    },
+    {
+      "id": "compare",
+      "group": "system",
+      "label": "Similarity / loss",
+      "type": "service",
+      "bounds": {
+        "x": 830,
+        "y": 315,
+        "width": 260,
+        "height": 150
+      },
+      "ports": {
+        "a": {
+          "side": "left",
+          "offset": 0.3
+        },
+        "b": {
+          "side": "left",
+          "offset": 0.7
+        },
+        "out": {
+          "side": "right",
+          "offset": 0.5
+        }
+      },
+      "subtitle": "contrastive \u00b7 triplet \u00b7 SupCon"
+    },
+    {
+      "id": "geometry",
+      "group": "system",
+      "label": "Updated geometry",
+      "type": "action",
+      "bounds": {
+        "x": 1220,
+        "y": 340,
+        "width": 250,
+        "height": 100
+      },
+      "ports": {
+        "in": {
+          "side": "left",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "a_to_encoder",
+      "from": {
+        "node": "image_a",
+        "port": "out"
+      },
+      "to": {
+        "node": "encoder_a",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          265
+        ],
+        [
+          380,
+          265
+        ],
+        [
+          380,
+          260
+        ],
+        [
+          440,
+          260
+        ]
+      ]
+    },
+    {
+      "id": "b_to_encoder",
+      "from": {
+        "node": "image_b",
+        "port": "out"
+      },
+      "to": {
+        "node": "encoder_b",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          310,
+          515
+        ],
+        [
+          380,
+          515
+        ],
+        [
+          380,
+          510
+        ],
+        [
+          440,
+          510
+        ]
+      ]
+    },
+    {
+      "id": "weight_tie",
+      "from": {
+        "node": "encoder_a",
+        "port": "tie"
+      },
+      "to": {
+        "node": "encoder_b",
+        "port": "tie"
+      },
+      "kind": "secondary",
+      "route": [
+        [
+          555,
+          330
+        ],
+        [
+          555,
+          440
+        ]
+      ],
+      "label": "same \u03b8",
+      "label_at": [
+        610,
+        390
+      ]
+    },
+    {
+      "id": "a_to_compare",
+      "from": {
+        "node": "encoder_a",
+        "port": "out"
+      },
+      "to": {
+        "node": "compare",
+        "port": "a"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          670,
+          260
+        ],
+        [
+          750,
+          260
+        ],
+        [
+          750,
+          360
+        ],
+        [
+          830,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "b_to_compare",
+      "from": {
+        "node": "encoder_b",
+        "port": "out"
+      },
+      "to": {
+        "node": "compare",
+        "port": "b"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          670,
+          510
+        ],
+        [
+          750,
+          510
+        ],
+        [
+          750,
+          420
+        ],
+        [
+          830,
+          420
+        ]
+      ]
+    },
+    {
+      "id": "compare_geometry",
+      "from": {
+        "node": "compare",
+        "port": "out"
+      },
+      "to": {
+        "node": "geometry",
+        "port": "in"
+      },
+      "kind": "primary",
+      "route": [
+        [
+          1090,
+          390
+        ],
+        [
+          1220,
+          390
+        ]
+      ],
+      "label": "optimize",
+      "label_at": [
+        1155,
+        375
+      ]
+    }
+  ],
+  "validation": {
+    "no_overlaps": true,
+    "route_around_nodes": true,
+    "min_text_padding": 16,
+    "min_connector_clearance": 12,
+    "verify_port_attachment": true,
+    "verify_contrast": true
+  }
+}
