@@ -1,0 +1,7 @@
+event_type,deployment_id,sensor_id,calibration_id,window,p95_reprojection_error_px,instantaneous_status,warning_streak,invalid_streak,operational_status
+calibration_health,inspection-prod-042,camera_17,calib-008,0,0.8764271881479815,healthy,0,0,healthy
+calibration_health,inspection-prod-042,camera_17,calib-008,1,1.35254195933112,healthy,0,0,healthy
+calibration_health,inspection-prod-042,camera_17,calib-008,2,3.371699209283539,warning_candidate,1,0,healthy
+calibration_health,inspection-prod-042,camera_17,calib-008,3,4.89823662050076,invalid_candidate,2,1,warning
+calibration_health,inspection-prod-042,camera_17,calib-008,4,4.963088761871746,invalid_candidate,3,2,invalid
+calibration_health,inspection-prod-042,camera_17,calib-008,5,6.138988631194199,invalid_candidate,4,3,invalid

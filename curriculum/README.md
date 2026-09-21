@@ -50,8 +50,9 @@ The [intermediate track](intermediate/README.md) culminates in bounded visual ag
 - [06 · Multimodal Adaptation & Continual Learning: From Domain Shift to Safe Capability Evolution](advanced/06-multimodal-adaptation-continual-learning/README.md) — characterize multimodal shift; compare frozen reuse, projectors, adapters, prompts, LoRA, partial, and full tuning; measure alignment drift and forgetting; and gate release with replay governance, capability regression evidence, lineage, and rollback.
 - [07 · Robustness, Uncertainty & Failure Recovery: From Distribution Shift to Risk-Aware Vision Systems](advanced/07-robustness-uncertainty-failure-recovery/README.md) — measure corruption and source degradation; separate confidence, calibration, uncertainty, OOD, and error evidence; then govern abstention, conformal sets, and bounded recovery with fail-closed verification.
 - [08 · Efficient Spatial & Multimodal Inference: From Profiling to Edge-Aware Deployment](advanced/08-efficient-spatial-multimodal-inference/README.md) — profile the end-to-end workload; reduce resolution, tokens, precision, structure, and repeated work; model batching and backpressure; and gate optimized artifacts on complete systems, capability, reliability, and lineage evidence.
+- [09 · Production Spatial AI Operations & Observability: From Deployment Contracts to Incident Recovery](advanced/09-production-spatial-ai-operations-observability/README.md) — bind immutable configuration and spatial dependencies; monitor component and capability health; join delayed outcomes; operate shadow/canary gates; and recover through selective containment, state-aware rollback, independent verification, and audit.
 
-The [advanced track](advanced/README.md) continues next into production spatial operations.
+The [advanced track](advanced/README.md) now forms a complete path from metric geometry to production spatial operations.
 
 ## Enterprise
 

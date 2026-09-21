@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "id": "progressive-delivery-gates",
+  "title": "Evidence-aware progressive delivery",
+  "purpose": "Gate shadow and canary using infrastructure and capability evidence.",
+  "output": {
+    "svg": "curriculum/advanced/09-production-spatial-ai-operations-observability/assets/progressive-delivery-gates.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "A candidate moves from shadow to an assigned canary, then waits for complete evidence before promotion or rollback."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 520,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "g",
+      "label": "Fast and healthy-looking is not promotable while capability evidence is missing",
+      "bounds": {
+        "x": 64,
+        "y": 90,
+        "width": 1272,
+        "height": 360
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "group": "g",
+      "label": "SHADOW",
+      "subtitle": "no production control",
+      "type": "data",
+      "bounds": {
+        "x": 96,
+        "y": 220,
+        "width": 240,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n2",
+      "group": "g",
+      "label": "CANARY",
+      "subtitle": "explicit site/device assignment",
+      "type": "agent",
+      "bounds": {
+        "x": 408,
+        "y": 220,
+        "width": 240,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n3",
+      "group": "g",
+      "label": "EVIDENCE GATE",
+      "subtitle": "infra + capability + labels",
+      "type": "operations",
+      "bounds": {
+        "x": 720,
+        "y": 220,
+        "width": 240,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n4",
+      "group": "g",
+      "label": "PROMOTE / HOLD",
+      "subtitle": "reject \u00b7 rollback \u00b7 audit",
+      "type": "action",
+      "bounds": {
+        "x": 1032,
+        "y": 220,
+        "width": 240,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "n1",
+        "port": "right"
+      },
+      "to": {
+        "node": "n2",
+        "port": "left"
+      },
+      "route": [
+        [
+          336,
+          276
+        ],
+        [
+          408,
+          276
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "n2",
+        "port": "right"
+      },
+      "to": {
+        "node": "n3",
+        "port": "left"
+      },
+      "route": [
+        [
+          648,
+          276
+        ],
+        [
+          720,
+          276
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "n3",
+        "port": "right"
+      },
+      "to": {
+        "node": "n4",
+        "port": "left"
+      },
+      "route": [
+        [
+          960,
+          276
+        ],
+        [
+          1032,
+          276
+        ]
+      ],
+      "kind": "primary"
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "unique_ids",
+      "port_attachment",
+      "20px_clearance"
+    ],
+    "notes": "Deterministic coordinate layout; routes terminate at declared ports."
+  },
+  "source": {
+    "deterministic": true,
+    "renderer": "scripts/render_course_diagrams.py"
+  }
+}

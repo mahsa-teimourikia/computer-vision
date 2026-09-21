@@ -1,0 +1,639 @@
+{
+  "course": "Advanced 09 \u2014 Production Spatial AI Operations & Observability",
+  "incident_id": "INC-2026-0918-CAMERA17",
+  "deployment_manifest_before": {
+    "deployment_id": "inspection-prod-042",
+    "digest": "ef7d92bdfbdede94ab879f22c1dcbf8aba6667b08c61b606a11876278a2999fe"
+  },
+  "deployment_manifest_after": {
+    "deployment_id": "inspection-prod-043",
+    "digest": "8129ef2d80073d9ea5c7550c46176b3b4f143e304fa952a8c073651a9155724e"
+  },
+  "policy_hash_before_site_c": "05eeea9680f796a61f6f2c401d75deb1b4ac86ac36f3695a81943ec15a453f57",
+  "policy_hash_after_site_c": "05eeea9680f796a61f6f2c401d75deb1b4ac86ac36f3695a81943ec15a453f57",
+  "compatibility_checks": [
+    {
+      "name": "known_model_contract",
+      "status": "PASS",
+      "detail": "inspection-model@1.4.0"
+    },
+    {
+      "name": "processor_compatibility",
+      "status": "PASS",
+      "detail": "inspection-processor@2.1.0"
+    },
+    {
+      "name": "runtime_compatibility",
+      "status": "PASS",
+      "detail": "edge-runtime@8"
+    },
+    {
+      "name": "memory_schema_readable",
+      "status": "PASS",
+      "detail": "schema=3"
+    },
+    {
+      "name": "index_encoder_compatibility",
+      "status": "PASS",
+      "detail": "query=text-embed-4; index=text-embed-4"
+    },
+    {
+      "name": "calibration_sensor_binding",
+      "status": "PASS",
+      "detail": "camera-17-calibration"
+    }
+  ],
+  "deployment_readiness": {
+    "valid": [
+      {
+        "category": "structural",
+        "name": "known_model_contract",
+        "status": "PASS",
+        "detail": "inspection-model@1.4.0"
+      },
+      {
+        "category": "structural",
+        "name": "processor_compatibility",
+        "status": "PASS",
+        "detail": "inspection-processor@2.1.0"
+      },
+      {
+        "category": "structural",
+        "name": "runtime_compatibility",
+        "status": "PASS",
+        "detail": "edge-runtime@8"
+      },
+      {
+        "category": "structural",
+        "name": "memory_schema_readable",
+        "status": "PASS",
+        "detail": "schema=3"
+      },
+      {
+        "category": "structural",
+        "name": "index_encoder_compatibility",
+        "status": "PASS",
+        "detail": "query=text-embed-4; index=text-embed-4"
+      },
+      {
+        "category": "structural",
+        "name": "calibration_sensor_binding",
+        "status": "PASS",
+        "detail": "camera-17-calibration"
+      },
+      {
+        "category": "temporal",
+        "name": "calibration_time_validity",
+        "status": "PASS",
+        "detail": "observation=2026-09-18T12:00:00Z; valid=[2026-08-01T00:00:00Z, 2026-09-18T13:01:00Z)"
+      },
+      {
+        "category": "operational",
+        "name": "calibration_health",
+        "status": "PASS",
+        "detail": "healthy"
+      }
+    ],
+    "expired": [
+      {
+        "category": "structural",
+        "name": "known_model_contract",
+        "status": "PASS",
+        "detail": "inspection-model@1.4.0"
+      },
+      {
+        "category": "structural",
+        "name": "processor_compatibility",
+        "status": "PASS",
+        "detail": "inspection-processor@2.1.0"
+      },
+      {
+        "category": "structural",
+        "name": "runtime_compatibility",
+        "status": "PASS",
+        "detail": "edge-runtime@8"
+      },
+      {
+        "category": "structural",
+        "name": "memory_schema_readable",
+        "status": "PASS",
+        "detail": "schema=3"
+      },
+      {
+        "category": "structural",
+        "name": "index_encoder_compatibility",
+        "status": "PASS",
+        "detail": "query=text-embed-4; index=text-embed-4"
+      },
+      {
+        "category": "structural",
+        "name": "calibration_sensor_binding",
+        "status": "PASS",
+        "detail": "camera-17-calibration"
+      },
+      {
+        "category": "temporal",
+        "name": "calibration_time_validity",
+        "status": "FAIL",
+        "detail": "observation=2026-09-18T14:00:00Z; valid=[2026-08-01T00:00:00Z, 2026-09-18T13:01:00Z)"
+      },
+      {
+        "category": "operational",
+        "name": "calibration_health",
+        "status": "PASS",
+        "detail": "healthy"
+      }
+    ],
+    "warning": [
+      {
+        "category": "structural",
+        "name": "known_model_contract",
+        "status": "PASS",
+        "detail": "inspection-model@1.4.0"
+      },
+      {
+        "category": "structural",
+        "name": "processor_compatibility",
+        "status": "PASS",
+        "detail": "inspection-processor@2.1.0"
+      },
+      {
+        "category": "structural",
+        "name": "runtime_compatibility",
+        "status": "PASS",
+        "detail": "edge-runtime@8"
+      },
+      {
+        "category": "structural",
+        "name": "memory_schema_readable",
+        "status": "PASS",
+        "detail": "schema=3"
+      },
+      {
+        "category": "structural",
+        "name": "index_encoder_compatibility",
+        "status": "PASS",
+        "detail": "query=text-embed-4; index=text-embed-4"
+      },
+      {
+        "category": "structural",
+        "name": "calibration_sensor_binding",
+        "status": "PASS",
+        "detail": "camera-17-calibration"
+      },
+      {
+        "category": "temporal",
+        "name": "calibration_time_validity",
+        "status": "PASS",
+        "detail": "observation=2026-09-18T12:00:00Z; valid=[2026-08-01T00:00:00Z, 2026-09-18T13:01:00Z)"
+      },
+      {
+        "category": "operational",
+        "name": "calibration_health",
+        "status": "WARNING",
+        "detail": "warning"
+      }
+    ],
+    "recovered": [
+      {
+        "category": "structural",
+        "name": "known_model_contract",
+        "status": "PASS",
+        "detail": "inspection-model@1.4.0"
+      },
+      {
+        "category": "structural",
+        "name": "processor_compatibility",
+        "status": "PASS",
+        "detail": "inspection-processor@2.1.0"
+      },
+      {
+        "category": "structural",
+        "name": "runtime_compatibility",
+        "status": "PASS",
+        "detail": "edge-runtime@8"
+      },
+      {
+        "category": "structural",
+        "name": "memory_schema_readable",
+        "status": "PASS",
+        "detail": "schema=3"
+      },
+      {
+        "category": "structural",
+        "name": "index_encoder_compatibility",
+        "status": "PASS",
+        "detail": "query=text-embed-4; index=text-embed-4"
+      },
+      {
+        "category": "structural",
+        "name": "calibration_sensor_binding",
+        "status": "PASS",
+        "detail": "camera-17-calibration"
+      },
+      {
+        "category": "temporal",
+        "name": "calibration_time_validity",
+        "status": "PASS",
+        "detail": "observation=2026-09-18T13:08:00Z; valid=[2026-09-18T13:01:00Z, 2027-03-18T13:01:00Z)"
+      },
+      {
+        "category": "operational",
+        "name": "calibration_health",
+        "status": "PASS",
+        "detail": "healthy"
+      }
+    ]
+  },
+  "calibration_policy": {
+    "warning_p95_px": 2.0,
+    "invalid_p95_px": 4.0,
+    "persistence_windows": 2,
+    "minimum_landmarks": 30
+  },
+  "calibration_site_c": [
+    {
+      "site": "Site C",
+      "window": 0,
+      "samples": 40,
+      "median_px": 0.6911558142179564,
+      "p95_px": 0.8764271881479815,
+      "max_px": 1.0106932619298636,
+      "instantaneous_status": "healthy",
+      "warning_streak": 0,
+      "invalid_streak": 0,
+      "operational_status": "healthy"
+    },
+    {
+      "site": "Site C",
+      "window": 1,
+      "samples": 40,
+      "median_px": 1.0027166100053366,
+      "p95_px": 1.35254195933112,
+      "max_px": 1.4258293419227759,
+      "instantaneous_status": "healthy",
+      "warning_streak": 0,
+      "invalid_streak": 0,
+      "operational_status": "healthy"
+    },
+    {
+      "site": "Site C",
+      "window": 2,
+      "samples": 40,
+      "median_px": 2.535545997574568,
+      "p95_px": 3.371699209283539,
+      "max_px": 3.9494565017206655,
+      "instantaneous_status": "warning_candidate",
+      "warning_streak": 1,
+      "invalid_streak": 0,
+      "operational_status": "healthy"
+    },
+    {
+      "site": "Site C",
+      "window": 3,
+      "samples": 40,
+      "median_px": 3.8208195991486287,
+      "p95_px": 4.89823662050076,
+      "max_px": 4.959365271204306,
+      "instantaneous_status": "invalid_candidate",
+      "warning_streak": 2,
+      "invalid_streak": 1,
+      "operational_status": "warning"
+    },
+    {
+      "site": "Site C",
+      "window": 4,
+      "samples": 40,
+      "median_px": 4.1643608233208,
+      "p95_px": 4.963088761871746,
+      "max_px": 5.2403431897291375,
+      "instantaneous_status": "invalid_candidate",
+      "warning_streak": 3,
+      "invalid_streak": 2,
+      "operational_status": "invalid"
+    },
+    {
+      "site": "Site C",
+      "window": 5,
+      "samples": 40,
+      "median_px": 4.483565955638555,
+      "p95_px": 6.138988631194199,
+      "max_px": 6.793224742151863,
+      "instantaneous_status": "invalid_candidate",
+      "warning_streak": 4,
+      "invalid_streak": 3,
+      "operational_status": "invalid"
+    }
+  ],
+  "capability_impact": [
+    {
+      "capability": "classification",
+      "state": "VALID",
+      "missing": [],
+      "invalid": [],
+      "degraded": []
+    },
+    {
+      "capability": "metric_position",
+      "state": "INVALID",
+      "missing": [],
+      "invalid": [
+        "calibration"
+      ],
+      "degraded": []
+    },
+    {
+      "capability": "cross_camera_fusion",
+      "state": "INVALID",
+      "missing": [],
+      "invalid": [
+        "calibration"
+      ],
+      "degraded": []
+    },
+    {
+      "capability": "manual_retrieval",
+      "state": "VALID",
+      "missing": [],
+      "invalid": [],
+      "degraded": []
+    }
+  ],
+  "kill_switch": {
+    "disabled_capabilities": [
+      "cross_camera_fusion",
+      "metric_position"
+    ],
+    "remaining_capabilities": [
+      "classification",
+      "manual_retrieval"
+    ],
+    "decision": {
+      "operation": "calibration_incident_containment",
+      "outcome": "DISABLE_CAPABILITY",
+      "checks": [
+        {
+          "name": "classification_dependency_state",
+          "status": "PASS",
+          "detail": "VALID"
+        },
+        {
+          "name": "metric_position_dependency_state",
+          "status": "FAIL",
+          "detail": "INVALID"
+        },
+        {
+          "name": "cross_camera_fusion_dependency_state",
+          "status": "FAIL",
+          "detail": "INVALID"
+        },
+        {
+          "name": "manual_retrieval_dependency_state",
+          "status": "PASS",
+          "detail": "VALID"
+        }
+      ],
+      "policy_hash": "05eeea9680f796a61f6f2c401d75deb1b4ac86ac36f3695a81943ec15a453f57",
+      "actor": "trusted_control_plane_proxy",
+      "authorization": "none"
+    }
+  },
+  "outcome_join": {
+    "decisions": 80,
+    "unique_labeled": 19,
+    "label_coverage": 0.2375,
+    "unmatched_decisions": 61,
+    "duplicate_outcome_ids": [
+      "decision-0000"
+    ],
+    "median_label_delay_hours": 18.0,
+    "review_share_labeled": 0.631578947368421,
+    "review_share_population": 0.15
+  },
+  "canary_decision": {
+    "operation": "canary_promotion",
+    "outcome": "HOLD",
+    "checks": [
+      {
+        "name": "availability",
+        "status": "PASS",
+        "detail": "0.9997"
+      },
+      {
+        "name": "p95_latency",
+        "status": "PASS",
+        "detail": "74 ms <= 90 ms"
+      },
+      {
+        "name": "calibration_health",
+        "status": "PASS",
+        "detail": "healthy"
+      },
+      {
+        "name": "small_defect_recall_24h",
+        "status": "MISSING",
+        "detail": "labels arrive after 24h; only 6 observed"
+      }
+    ],
+    "policy_hash": "05eeea9680f796a61f6f2c401d75deb1b4ac86ac36f3695a81943ec15a453f57",
+    "actor": "trusted_control_plane_proxy",
+    "authorization": "none"
+  },
+  "rollback": {
+    "model_only": [
+      {
+        "name": "known_model_contract",
+        "status": "PASS",
+        "detail": "inspection-model@1.3.0"
+      },
+      {
+        "name": "processor_compatibility",
+        "status": "FAIL",
+        "detail": "inspection-processor@2.1.0"
+      },
+      {
+        "name": "runtime_compatibility",
+        "status": "FAIL",
+        "detail": "edge-runtime@8"
+      },
+      {
+        "name": "memory_schema_readable",
+        "status": "FAIL",
+        "detail": "schema=3"
+      },
+      {
+        "name": "index_encoder_compatibility",
+        "status": "PASS",
+        "detail": "query=text-embed-4; index=text-embed-4"
+      },
+      {
+        "name": "calibration_sensor_binding",
+        "status": "PASS",
+        "detail": "camera-17-calibration"
+      }
+    ],
+    "complete_bundle": [
+      {
+        "name": "known_model_contract",
+        "status": "PASS",
+        "detail": "inspection-model@1.3.0"
+      },
+      {
+        "name": "processor_compatibility",
+        "status": "PASS",
+        "detail": "inspection-processor@2.0.0"
+      },
+      {
+        "name": "runtime_compatibility",
+        "status": "PASS",
+        "detail": "edge-runtime@7"
+      },
+      {
+        "name": "memory_schema_readable",
+        "status": "PASS",
+        "detail": "schema=2"
+      },
+      {
+        "name": "index_encoder_compatibility",
+        "status": "PASS",
+        "detail": "query=text-embed-4; index=text-embed-4"
+      },
+      {
+        "name": "calibration_sensor_binding",
+        "status": "PASS",
+        "detail": "camera-17-calibration"
+      }
+    ]
+  },
+  "incident_durations": {
+    "time_to_detect_minutes": 3.7,
+    "time_to_recover_minutes": 37.7,
+    "reporting_note": "per-incident duration; not a statistically meaningful mean"
+  },
+  "recovery_decision": {
+    "operation": "restore_metric_capability",
+    "outcome": "RESTORE_CAPABILITY",
+    "checks": [
+      {
+        "name": "configuration_compatibility",
+        "status": "PASS",
+        "detail": "structural references and reader contracts compatible"
+      },
+      {
+        "name": "calibration_time_validity",
+        "status": "PASS",
+        "detail": "calibration 009 valid at probe time"
+      },
+      {
+        "name": "calibration_health",
+        "status": "PASS",
+        "detail": "healthy after persistence-aware probe"
+      },
+      {
+        "name": "landmark_p95",
+        "status": "PASS",
+        "detail": "0.91 px <= 2.0 px warning threshold"
+      },
+      {
+        "name": "frame_cycle_translation",
+        "status": "PASS",
+        "detail": "0.003 m <= 0.01 m"
+      },
+      {
+        "name": "metric_position_probe",
+        "status": "PASS",
+        "detail": "p95 0.9 cm <= 1.5 cm"
+      },
+      {
+        "name": "classification_regression",
+        "status": "PASS",
+        "detail": "unchanged within declared tolerance"
+      }
+    ],
+    "policy_hash": "05eeea9680f796a61f6f2c401d75deb1b4ac86ac36f3695a81943ec15a453f57",
+    "actor": "trusted_control_plane_proxy",
+    "authorization": "none"
+  },
+  "deployment_convergence": {
+    "expected_deployment_id": "inspection-prod-043",
+    "observed_distribution": {
+      "inspection-prod-042": 3,
+      "inspection-prod-043": 7
+    },
+    "expected_share": 0.7,
+    "unexpected_deployments": {
+      "inspection-prod-042": 3
+    },
+    "status": "FAIL",
+    "incident_class": "deployment_convergence_failure"
+  },
+  "site_c_report": [
+    {
+      "capability": "classification",
+      "component_state": "VALID",
+      "slo_status": "MISSING",
+      "operating_action": "continue with existing reliability policy",
+      "evidence": "processor/model/runtime healthy; delayed task labels incomplete"
+    },
+    {
+      "capability": "metric_position",
+      "component_state": "INVALID",
+      "slo_status": "FAIL",
+      "operating_action": "kill capability; recalibrate; independently verify",
+      "evidence": "persistent calibration residual and position error"
+    },
+    {
+      "capability": "cross_camera_fusion",
+      "component_state": "INVALID",
+      "slo_status": "MISSING",
+      "operating_action": "kill capability",
+      "evidence": "depends on invalid extrinsics"
+    },
+    {
+      "capability": "current_policy_retrieval",
+      "component_state": "INVALID",
+      "slo_status": "MISSING",
+      "operating_action": "disable current-only answers; rebuild",
+      "evidence": "source/index revision lag"
+    }
+  ],
+  "postmortem": {
+    "incident_id": "INC-2026-0918-CAMERA17",
+    "impact": "metric position and cross-camera fusion invalid for 36 minutes; classification remained available",
+    "trigger": "camera_17 physically moved",
+    "root_cause": "metric capability initially lacked a persistence-aware calibration dependency gate",
+    "contributing_factors": [
+      "transform health was not linked to capability state",
+      "label-aware geometry outcome arrived later"
+    ],
+    "what_worked": [
+      "structured deployment-bound telemetry",
+      "selective kill switch",
+      "known landmark fixture"
+    ],
+    "what_failed": [
+      "initial deployment permitted metric decisions during warning persistence"
+    ],
+    "corrective_actions": [
+      {
+        "action": "enforce calibration dependency gate",
+        "owner": "spatial-platform",
+        "due": "2026-09-30",
+        "verification": "quarterly camera-movement drill"
+      },
+      {
+        "action": "add transform-cycle alert",
+        "owner": "robotics-platform",
+        "due": "2026-10-07",
+        "verification": "fault-injection test"
+      }
+    ]
+  },
+  "privacy": {
+    "raw_images_stored": false,
+    "private_reasoning_stored": false,
+    "decision_ids_in_metrics": false
+  },
+  "site_c_role": "reporting_only_no_changes",
+  "authorization": "none"
+}
