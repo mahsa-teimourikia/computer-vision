@@ -122,6 +122,8 @@ Shift detection asks whether the input distribution changed. Capability evaluati
 
 These are useful conceptual categories, not perfectly observable labels. Predictive entropy, margins, ensembles, and dropout are evidence about predictive behavior; they do not uniquely identify the source of uncertainty.
 
+The notebook makes that limitation executable with three labelled development slices: **ambiguous but familiar**, **clean but unsupported**, and **corrupted plus unsupported**. It compares entropy, ensemble disagreement, embedding distance, the selected OOD score, and task error side by side. No single scalar reliably explains *why* a system is uncertain.
+
 ## 7. Confidence is not uncertainty
 
 Maximum softmax probability is the baseline:
@@ -227,13 +229,13 @@ $$
 E(x)=-T_s\log\sum_k e^{z_k/T_s}.
 $$
 
-Score orientation must be explicit. The lab converts every method to “higher means more OOD” before comparison. No method is claimed universally superior.
+Score orientation must be explicit. `MetricSpec` records whether task metrics are higher- or lower-is-better. A separate `ScoreSpec` records the raw OOD orientation and permitted normalization—for example, raw MSP is lower-is-more-OOD and becomes `1 - MSP`, while distance is already higher-is-more-OOD. Scores enter AUROC, AUPR, thresholding, and policy only after this explicit normalization. No method is claimed universally superior.
 
 ## 13. OOD metrics and threshold policy
 
 With OOD defined as the positive class, report AUROC, AUPR, and FPR at 95% TPR. The positive-class convention matters: different implementations use different score orientations and names.
 
-AUROC ranks cases; it does not choose an operating threshold. Site B chooses a threshold against a risk objective such as 95% OOD recall, then reports ID false-reject rate. A detector that rejects everything is not useful.
+AUROC ranks cases; it does not choose an operating threshold. Site B chooses a threshold against a risk objective such as 95% OOD recall, then reports ID false-reject rate. The notebook assertion-tests an adversarial threshold of negative infinity: it attains 100% OOD recall by also rejecting 100% of ID inputs. A detector that rejects everything is not useful.
 
 ## 14. OOD detection is not error detection
 
@@ -270,6 +272,18 @@ $$
 $$
 
 Always report both. Zero risk at zero coverage is useless. Threshold selection belongs to Site B and a declared cost model, not to Site C or a prettier curve.
+
+The empty accepted set is a mathematical boundary, not a perfect result:
+
+$$
+|A_\tau|=0
+\quad\Longrightarrow\quad
+\operatorname{coverage}(\tau)=0,
+\qquad
+\operatorname{selective\ risk}(\tau)=\operatorname{undefined}.
+$$
+
+The notebook stores that risk as `NaN`, reports accepted count and coverage separately, and keeps its expected cost undefined. The Site-B optimizer first enforces `minimum_required_coverage = 0.55`, then compares finite-risk candidates. Known-answer assertions cover all accepted, none accepted, one wrong accepted, and one correct accepted.
 
 ## 17. Cost-sensitive risk policy
 
@@ -328,13 +342,24 @@ An alternate method should have a meaningfully different failure surface—for e
 
 ## 22. Recovery verification
 
-Attempted recovery is not successful recovery. A verified outcome requires:
+Attempted recovery is not successful recovery. The executable path enforces two stages:
+
+```text
+bounded_recovery_policy(case without labels or verifier)
+        ↓ candidate or terminal non-success
+independent finalizer + verification receipt
+        ↓ verified recovery or human review
+```
+
+A verified outcome requires:
 
 - fresh and schema-valid replacement evidence;
 - a completed alternate result when that path was used;
 - policy checks rerun on the recovered result;
 - a task-quality or simulated oracle check in the teaching lab; and
 - an explicit terminal state.
+
+The recovery candidate records method, prediction, and decision support. The separate receipt records `verification_source = synthetic_evaluation_oracle` and `verified_success`. Candidate confidence or support can admit a candidate to verification but cannot certify success. Assertion-backed counterexamples cover confident-but-wrong fallback, uncertain-but-correct fallback that remains subject to the declared support rule, and correct fallback with independent verification.
 
 Report `attempted`, `verified_success`, `false_success_claim`, `unresolved`, `human_review`, and `valid_work_blocked` separately. A fallback failure cannot return the original risky prediction.
 
@@ -405,6 +430,7 @@ No method is state of the art without naming the task, dataset/support definitio
 | --- | --- | --- |
 | high-confidence OOD | trust MSP | compare support and task evidence; abstain when policy requires |
 | good AUROC, bad threshold | deploy ranking metric | select threshold on Site B with false-reject cost |
+| perfect recall by rejecting all | optimize OOD recall alone | report ID rejection and enforce an operating contract |
 | lower ECE, same errors | claim model fixed | state calibration-only effect |
 | aggregate calibration hides class | report one ECE | class/source slices and sample counts |
 | conformal under shift | quote nominal coverage | report observed Site C coverage and assumption violation |
@@ -422,13 +448,13 @@ No method is state of the art without naming the task, dataset/support definitio
 4. tiny CNN ensemble, clean baseline, embeddings, and MC-dropout passes;
 5. six corruptions × five severities with curves and worst-slice evidence;
 6. ambiguous, near-OOD, far-OOD, operational-shift, stale, missing, contradictory, and unavailable cases;
-7. MSP, entropy, margin, disagreement, energy, centroid, and Mahalanobis scores;
+7. MSP, entropy, margin, disagreement, energy, centroid, and Mahalanobis scores plus a three-slice failure-source comparison;
 8. manual ECE/Brier/NLL, reliability diagrams, classwise slices, and Site-B temperature scaling;
 9. OOD metrics/thresholds and separate error-detection metrics;
 10. conformal prediction sets and coverage under reporting-only shift;
-11. risk–coverage, cost-sensitive policy, and missing-evidence assertions;
+11. risk–coverage with undefined empty-set risk, minimum coverage, cost-sensitive policy, and missing-evidence assertions;
 12. always-answer versus abstain-only versus bounded recovery;
-13. independent recovery verification and failure attribution; and
+13. label-free recovery proposals, independent verification receipts, adversarial recovery assertions, and failure attribution; and
 14. governed JSON/CSV evidence with no production authorization.
 
 ## 30. Production upgrade path

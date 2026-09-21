@@ -670,11 +670,12 @@ assert promotion_decision.authorization == "none"</code></pre>
         </div>
         <div class="view" id="robustness-recovery-lab" role="tabpanel" hidden>
           <div><p class="eyebrow">PRACTICAL LAB</p><p class="outcome">Stress a tiny inspection ensemble, expose high-confidence error, calibrate on Site B, compare OOD and error evidence, construct conformal sets and risk–coverage policy, then test verified and failed recovery paths before reporting on Site C.</p><a class="button primary" href="https://github.com/mahsa-teimourikia/computer-vision/blob/main/curriculum/advanced/07-robustness-uncertainty-failure-recovery/lab.ipynb">Run the guided notebook ↗</a></div>
-          <pre aria-label="Example Python"><code>checks = validate_sensor(case["observation"], now_s=100.0)
-state, reason = application_risk_gate(confidence, ood_score, checks)
-decision = run_bounded_recovery(case)
+          <pre aria-label="Example Python"><code>proposal = bounded_recovery_policy(case, now_s=100.0)
+decision = finalize_with_independent_verification(
+    proposal, synthetic_evaluation_oracle
+)
 assert decision.authorization == "none"
-assert decision.terminal_state != "verified_recovery" or decision.verified</code></pre>
+assert decision.terminal_state != "verified_recovery" or decision.verified_success</code></pre>
         </div>
         <div class="view" id="robustness-recovery-checkpoint" role="tabpanel" hidden>
           <form class="quiz-form" data-review="robustness, calibration, uncertainty, OOD versus error detection, conformal assumptions, risk coverage, abstention, and recovery verification">

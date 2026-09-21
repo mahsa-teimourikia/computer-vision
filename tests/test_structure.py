@@ -2132,9 +2132,13 @@ def test_advanced_07_contains_the_declared_robustness_uncertainty_and_recovery_l
     for required in [
         "SourceContract",
         "MetricSpec",
+        "ScoreSpec",
         "SensorObservation",
         "ReliabilityPolicy",
         "RiskDecision",
+        "RecoveryCandidate",
+        "RecoveryProposal",
+        "VerificationReceipt",
         "TinyReliabilityCNN",
         "ensemble_outputs",
         "expected_calibration_error",
@@ -2151,19 +2155,35 @@ def test_advanced_07_contains_the_declared_robustness_uncertainty_and_recovery_l
         "centroid_distance",
         "mahalanobis",
         "energy",
+        "normalize_ood_score",
         "fpr_at_target_tpr",
         '"positive_class": "OOD"',
+        "ALL_REJECT_OOD_THRESHOLD",
+        "all_reject_operating_point",
+        "uncertainty_failure_slices",
         "error_detection_auroc",
         "conformal_quantile",
         "conformal_report",
         "risk_coverage_curve",
+        "selective_point",
+        "accepted_count",
+        "known_answer_selective_risk",
+        "MINIMUM_REQUIRED_COVERAGE",
         'risk_coverage["expected_cost_proxy"]',
         "FROZEN_POLICY_HASH",
         'Literal["PASS", "FAIL", "MISSING"]',
         "application_risk_gate",
+        "bounded_recovery_policy",
+        "alternate_candidate_proposal",
+        "ALTERNATE_MINIMUM_SUPPORT",
+        "finalize_with_independent_verification",
         "run_bounded_recovery",
-        "fresh_reobservation_verified_by_simulation_oracle",
-        "alternate_centroid_verified_by_simulation_oracle",
+        "synthetic_evaluation_oracle",
+        "independent_recovery_verification_passed",
+        "independent_recovery_verification_failed",
+        "recovery_invariant_tests",
+        "json_records",
+        "allow_nan=False",
         "always_answer",
         "abstain_only",
         "bounded_recovery",
@@ -2181,7 +2201,14 @@ def test_advanced_07_contains_the_declared_robustness_uncertainty_and_recovery_l
     assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source
     assert "assert (gate_assertions.query(\"case != 'complete evidence'\")[\"result\"] != \"PASS\").all()" in source
     assert "assert (recovery_decisions[\"authorization\"] == \"none\").all()" in source
-    assert "assert not ((recovery_decisions[\"terminal_state\"] == \"verified_recovery\") & (~recovery_decisions[\"verified\"])).any()" in source
+    assert "assert not ((recovery_decisions[\"terminal_state\"] == \"verified_recovery\") & (~recovery_decisions[\"verified_success\"])).any()" in source
+    assert 'assert "verifier" not in bounded_recovery_policy.__code__.co_varnames' in source
+    assert 'assert "EVALUATION_ORACLE_LABELS" not in bounded_recovery_policy.__code__.co_names' in source
+    assert 'assert all("true_label" not in case for case in cases)' in source
+    assert 'known.loc["none accepted", "coverage"] == 0.0 and np.isnan(known.loc["none accepted", "selective_risk"])' in source
+    assert 'risk_coverage["selective_risk"].fillna(0)' not in source
+    assert 'assert all_reject_operating_point["id_false_reject_rate"] == 1.0' in source
+    assert len(notebook["cells"]) == 50
     assert not (course / "lab.py").exists()
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
     assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
