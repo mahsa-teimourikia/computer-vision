@@ -9,6 +9,6 @@ These diagrams are reusable course-native SVGs rendered deterministically from t
 - `compression-lineage.svg` — governed transformation ancestry;
 - `queueing-backpressure.svg` — dynamic batching, saturation, and bounded overload;
 - `cache-validity.svg` — digest/revision/scope-aware cache validity; and
-- `pareto-constraint-gate.svg` — domination analysis followed by a fail-closed gate.
+- `pareto-constraint-gate.svg` — hard feasibility gates followed by operational Pareto selection and an explicit keep/promote/reject decision.
 
 Each SVG includes a title, description, and meaningful alt text in the course README.

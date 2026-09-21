@@ -100,6 +100,8 @@ Latency and throughput are related but not interchangeable. Batching may increas
 
 Accelerator benchmarks must synchronize the device around measured regions. Otherwise host timers can stop before device work completes.
 
+Very short CPU regions are also fragile. Time many forward calls inside each measured region, normalize per batch afterward, and report the median, p95, IQR, repetition count, inner-loop count, and raw timed-region duration. In this course, measured host timing is diagnostic evidence only. Frozen release gates use a deterministic service-and-queue model so operating-system jitter cannot change the pedagogical decision. Production replaces both with synchronized target-hardware and load-test evidence.
+
 ## 4. Profile before optimizing
 
 Profiling asks where time, memory, and transfers are spent. The loop is:
@@ -208,7 +210,7 @@ Compilation may apply constant folding, dead-code elimination, fusion, kernel se
 
 `torch.compile` can optimize captured regions while graph breaks run eagerly. `torch.export` requires a single exportable graph and does not support graph breaks. Therefore, “compiled” is not evidence that the whole program was optimized.
 
-Declare shapes as static, bounded dynamic, or fully dynamic. A deployment artifact must bind source digest, export format, opset/runtime, precision, shape policy, optimization profile, and target. Compare with the reference using maximum and mean absolute difference, task disagreement, and capability metrics. Exact floating-point equality is not always required; behavioral evidence is.
+Declare shapes as static, bounded dynamic, or fully dynamic. A deployment artifact must bind source digest, export format, opset/runtime, precision, shape policy, optimization profile, and target. Compare with the reference using maximum and mean absolute difference, task disagreement, and capability metrics. Exact floating-point equality is not always required; behavioral evidence is. A tiny numeric difference can still flip an argmax at a decision boundary, so small numeric error does not imply behavioral parity.
 
 ## 14. Batching, queueing, and saturation
 
@@ -244,7 +246,7 @@ Caches can store decoded media, tensors, image/text embeddings, retrieval result
 
 ```text
 content digest + encoder revision + processor revision + configuration
-+ authorization scope + tenant when applicable
++ tenant + authenticated principal + authorization scope
 ```
 
 Report hit rate, **valid** hit rate, stale-hit rate, miss rate, and latency saved. A high hit rate with poor invalidation is a failure. Embeddings and tokens remain sensitive artifacts; they are not anonymous and must not cross tenants or principals simply because content hashes match.
@@ -261,9 +263,20 @@ Measure joules/request or power directly when hardware permits. FLOPs are not en
 
 Quality may include accuracy, recall, retrieval, grounding, calibration, OOD behavior, small-object evidence, and temporal consistency. Efficiency may include latency, throughput, memory, artifact size, tokens, bandwidth, and direct energy.
 
-![Pareto analysis removes dominated candidates before a fail-closed multi-constraint gate.](assets/pareto-constraint-gate.svg)
+![Hard feasibility constraints are checked before operational Pareto selection and an explicit keep, promote, or reject decision.](assets/pareto-constraint-gate.svg)
 
-Candidate A dominates B when A is no worse on every selected dimension and better on at least one. A Pareto front narrows choices but does not choose the deployment policy. A deployment candidate must satisfy all required constraints. Missing quality evidence is `MISSING`, not an assumed pass.
+Candidate A dominates B when A is no worse on every selected dimension and better on at least one. The notebook preserves two deliberately different flags:
+
+```text
+global_pareto_efficient
+→ unconstrained non-domination for teaching and diagnosis
+
+feasible_pareto_efficient
+→ non-domination only after every hard capability, reliability,
+  evidence, and resource constraint passes
+```
+
+Operational selection uses only the feasible frontier. A globally efficient candidate can still have zero small-defect recall and is never promoted through Pareto membership. Missing quality evidence is `MISSING`, not an assumed pass.
 
 ## 19. Optimization can invalidate reliability policy
 
@@ -302,7 +315,7 @@ Every optimized artifact records:
 - rollback artifact and policy version; and
 - evaluation evidence with no implicit production authority.
 
-The optimization job proposes an artifact. A trusted release service verifies lineage, signature, compatibility, complete evidence, and rollback readiness, then may allow a controlled shadow stage. Model code cannot self-promote.
+The optimization job proposes an artifact. A trusted release service verifies lineage, signature, compatibility, complete evidence, objective improvement, and rollback readiness. Its explicit decision is `PROMOTE_OPTIMIZED`, `KEEP_REFERENCE`, `REJECT`, or `MISSING_EVIDENCE`; none is production authorization. An eligible optimized candidate must provide a declared minimum service-latency or artifact-size benefit. If it does not, keeping the reference is the successful outcome. Model code cannot self-promote.
 
 ## 22. Failure taxonomy
 
@@ -353,27 +366,27 @@ Recent 2026 work such as IF-Prune, V2Drop, TransPrune, Dyna-ViT, and Edge-RecViT
 2. typed workload, source, metric, artifact, cache, and tri-state deployment contracts;
 3. synthetic Site A/B/C images, text descriptions, critical defect regions, repeated assets, and request streams;
 4. immutable tiny dual-encoder reference with capability and system evidence;
-5. stage profiler with cold-start and steady p50/p95;
+5. stage profiler plus repeated inner-loop host benchmarks with cold-start, median, p95, IQR, and timed-region duration;
 6. resolution sweep and dynamic-resolution cascade with false low-resolution acceptance;
 7. visual-token sweep and a low-salience critical-defect pruning failure;
 8. INT8-like PTQ proxy with task, retrieval, artifact, latency, and calibration regression;
 9. structured pruning curve with actual shape reduction;
 10. task-only versus multimodal distillation and a classification-preserved/retrieval-lost failure;
-11. compilation/export proxy, graph-coverage contract, numeric parity, and warm-up reporting;
+11. compilation/export proxy, graph-coverage contract, numeric parity, behavioral parity, and a near-boundary argmax-flip counterexample;
 12. batch sweep, dynamic-batch queue simulation, saturation, deadlines, and backpressure;
-13. digest-bound embedding cache plus a filename-key stale-cache attack;
+13. digest-bound embedding cache plus filename-key stale-cache and cross-principal reuse attacks;
 14. periodic versus adaptive temporal reuse with event recall and staleness;
-15. candidate matrix, domination flags, Pareto plots, and multi-constraint gate;
+15. feasibility gate, global and feasible Pareto frontiers, and a minimum-benefit comparison against the reference;
 16. fast-but-unsafe and same-accuracy/calibration failures;
 17. frozen Site-B policy hash, reporting-only Site C evaluation, and composition failure; and
-18. governed JSON/CSV artifacts with transformation lineage, rollback, and `authorization: none`.
+18. governed JSON/CSV artifacts with `PROMOTE_OPTIMIZED` / `KEEP_REFERENCE` / `REJECT` / `MISSING_EVIDENCE`, transformation lineage, rollback, and `authorization: none`.
 
 ## 26. Production upgrade path
 
 | Notebook | Production requirement |
 | --- | --- |
 | procedural small images | licensed source/time/site-isolated data with true tiny-object prevalence |
-| CPU timers | target-device synchronized profiler and representative load generator |
+| repeated CPU host timers + deterministic service simulation | target-device synchronized profiler and representative load generator; gates use measured target evidence |
 | memory/artifact proxies | device process telemetry, runtime workspaces, caches, replicas, and system memory |
 | manual INT8-like proxy | supported backend quantizer, representative calibration, QAT when justified |
 | transparent pruning | hardware-supported structures and kernel evidence |
@@ -417,7 +430,9 @@ Recent 2026 work such as IF-Prune, V2Drop, TransPrune, Dyna-ViT, and Edge-RecViT
 - Why is task-only teacher agreement insufficient for a multimodal student?
 - Why does dynamic batching trade queue delay for throughput?
 - Why is a cache hit not necessarily a valid hit?
-- Why can a Pareto-efficient candidate still be deployment-ineligible?
+- Why can a globally Pareto-efficient candidate still be deployment-ineligible?
+- Why is the feasible Pareto frontier computed only after hard gates?
+- Why can `KEEP_REFERENCE` be the correct optimization decision?
 - Why must Site C remain reporting-only after optimization?
 - Why does an optimized artifact need its own lineage, policy, and rollback evidence?
 

@@ -1,3 +1,4 @@
+import csv
 import json
 import tomllib
 from pathlib import Path
@@ -2095,7 +2096,6 @@ def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab
     ]:
         assert required in readme
 
-
 def test_advanced_06_diagrams_are_reusable_and_accessible():
     assets = Path("curriculum/advanced/06-multimodal-adaptation-continual-learning/assets")
     expected = {
@@ -2268,6 +2268,7 @@ def test_advanced_08_contains_the_declared_efficient_inference_lab():
         "GateCheck",
         "DeploymentDecision",
         'Literal["PASS", "FAIL", "MISSING"]',
+        'Literal["PROMOTE_OPTIMIZED", "KEEP_REFERENCE", "REJECT", "MISSING_EVIDENCE"]',
         "reporting_only_no_changes",
         "TinyDualEncoder",
         "image_to_text_recall",
@@ -2277,6 +2278,11 @@ def test_advanced_08_contains_the_declared_efficient_inference_lab():
         "profile_pipeline",
         "cold_start_ms",
         "steady_p95_ms",
+        "steady_iqr_ms",
+        "host_p95_ms_per_batch",
+        "host_iqr_ms_per_batch",
+        "timed_inner_loops",
+        "timed_region_p50_ms",
         "resolution_results",
         "false_low_resolution_acceptance_rate",
         "small_evidence_retention_rate",
@@ -2286,6 +2292,8 @@ def test_advanced_08_contains_the_declared_efficient_inference_lab():
         "task_only_student",
         "multimodal_student",
         "torch.export.export",
+        "behavioral_parity_counterexample",
+        "boundary_behavioral_disagreement",
         "RUN_OPTIONAL_COMPILE = False",
         "batch_results",
         "simulate_dynamic_batching",
@@ -2294,8 +2302,16 @@ def test_advanced_08_contains_the_declared_efficient_inference_lab():
         "cache_key",
         "STALE_HIT",
         "contract_digest_wrong_tenant",
+        "contract_digest_wrong_principal",
         "temporal_reuse_results",
         "pareto_mask",
+        "global_pareto_efficient",
+        "feasible_pareto_efficient",
+        "deterministic_service_latency",
+        "deterministic_end_to_end_p95_ms",
+        "meaningful_systems_benefit",
+        "select_optimized_or_reference",
+        "KEEP_REFERENCE",
         "candidate_matrix",
         "DEPLOYMENT_BUDGET",
         "POLICY_HASH_BEFORE_SITE_C",
@@ -2313,6 +2329,10 @@ def test_advanced_08_contains_the_declared_efficient_inference_lab():
     assert "not a foundation model or vlm benchmark" in source_lower
     assert "assert unsafe_stale_hit is true" in source_lower
     assert "assert safe_v2_hit is false" in source_lower
+    assert "assert wrong_principal_key not in safe_cache" in source_lower
+    assert "assert boundary_behavioral_disagreement is true" in source_lower
+    assert "assert not candidate_matrix.query(\"not eligible\")[\"feasible_pareto_efficient\"].any()" in source_lower
+    assert "assert keep_reference_demo[\"selection_outcome\"] == \"keep_reference\"" in source_lower
     assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source_lower
     assert "assert decision.authorization == \"none\"" in source_lower
     assert len(notebook["cells"]) == 57
@@ -2328,9 +2348,31 @@ def test_advanced_08_contains_the_declared_efficient_inference_lab():
         "task-only teacher agreement insufficient",
         "a cache hit not necessarily a valid hit",
         "pareto-efficient candidate still be deployment-ineligible",
+        "global_pareto_efficient",
+        "feasible_pareto_efficient",
+        "keeping the reference is the successful outcome",
+        "operating-system jitter cannot change the pedagogical decision",
+        "tiny numeric difference can still flip an argmax",
         "site c remain reporting-only",
     ]:
         assert required in readme
+
+    evidence = json.loads((course / ".artifacts/efficient_inference_evidence.json").read_text(encoding="utf-8"))
+    assert evidence["timing_method"]["host_measurement_role"] == "diagnostic only"
+    assert evidence["timing_method"]["host_inner_loops_per_timed_region"] == 100
+    assert evidence["timing_method"]["release_gate_source"] == "deterministic_workload_and_queue_model_v1"
+    assert evidence["keep_reference_counterexample"]["selection_outcome"] == "KEEP_REFERENCE"
+    assert evidence["behavioral_parity_counterexample"]["behavioral_disagreement"] is True
+    assert evidence["decision"]["outcome"] == "REJECT"
+    assert evidence["decision"]["authorization"] == "none"
+    assert "contract_digest_wrong_principal" in {row["cache"] for row in evidence["cache_attack"]}
+
+    with (course / ".artifacts/efficient_inference_candidates.csv").open(encoding="utf-8", newline="") as handle:
+        candidate_rows = list(csv.DictReader(handle))
+    assert all(row["feasible_pareto_efficient"] == "False" for row in candidate_rows if row["eligible"] == "False")
+    structured = next(row for row in candidate_rows if row["candidate"] == "structured_width_6")
+    assert structured["global_pareto_efficient"] == "True"
+    assert structured["feasible_pareto_efficient"] == "False"
 
 
 def test_advanced_08_diagrams_are_reusable_and_accessible():

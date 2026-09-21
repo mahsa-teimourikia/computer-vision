@@ -1,12 +1,12 @@
 {
   "version": 1,
   "id": "pareto-constraint-gate",
-  "title": "Pareto analysis and deployment gate",
-  "purpose": "Separate non-domination from eligibility.",
+  "title": "Feasibility, Pareto analysis, and deployment decision",
+  "purpose": "Separate unconstrained non-domination, hard feasibility, operational Pareto selection, and release decisions.",
   "output": {
     "svg": "curriculum/advanced/08-efficient-spatial-multimodal-inference/assets/pareto-constraint-gate.svg",
     "medium": "documentation and notebook",
-    "alt_text": "Measured candidates are filtered to a Pareto set and then checked against complete deployment constraints."
+    "alt_text": "Measured candidates first pass complete feasibility constraints, then enter a feasible Pareto comparison, followed by an explicit keep reference, promote optimized, or reject decision."
   },
   "canvas": {
     "width": 1400,
@@ -53,7 +53,7 @@
   "groups": [
     {
       "id": "g",
-      "label": "Pareto-efficient does not mean deployment-eligible",
+      "label": "Hard constraints precede operational Pareto selection",
       "bounds": {
         "x": 64,
         "y": 90,
@@ -99,9 +99,9 @@
     {
       "id": "n2",
       "group": "g",
-      "label": "PARETO SET",
-      "subtitle": "remove dominated",
-      "type": "agent",
+      "label": "FEASIBILITY GATE",
+      "subtitle": "capability + reliability",
+      "type": "action",
       "bounds": {
         "x": 408,
         "y": 220,
@@ -130,9 +130,9 @@
     {
       "id": "n3",
       "group": "g",
-      "label": "CONSTRAINT GATE",
-      "subtitle": "all required evidence",
-      "type": "action",
+      "label": "FEASIBLE PARETO",
+      "subtitle": "remove dominated",
+      "type": "agent",
       "bounds": {
         "x": 720,
         "y": 220,
@@ -161,7 +161,7 @@
     {
       "id": "n4",
       "group": "g",
-      "label": "SHADOW / REJECT",
+      "label": "KEEP / PROMOTE / REJECT",
       "subtitle": "authorization: none",
       "type": "operations",
       "bounds": {

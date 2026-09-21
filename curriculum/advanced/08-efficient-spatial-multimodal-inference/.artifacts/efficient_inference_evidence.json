@@ -29,6 +29,7 @@
     ],
     "warmup_runs": 5,
     "measured_runs": 30,
+    "timed_inner_loops": 100,
     "included_stages": [
       "preprocess",
       "vision_encoder",
@@ -58,9 +59,13 @@
   "reference_digest": "d336bfef2a142823ee3febbf7e81b4e5a1706e31522dd8b4166288e9e6695941",
   "site_b_policy": {
     "selected_candidate": "int8_like",
+    "site_b_selection_outcome": "PROMOTE_OPTIMIZED",
+    "minimum_latency_improvement_fraction": 0.05,
+    "minimum_artifact_reduction_fraction": 0.25,
     "deployment_budget": {
-      "notice": "Demonstration thresholds for this notebook runtime only",
-      "p95_ms_max": 0.08451672,
+      "notice": "Demonstration thresholds for this deterministic synthetic workload only",
+      "deterministic_service_p95_ms_max": 10.752,
+      "deterministic_end_to_end_p95_ms_max": 25.0,
       "peak_memory_mb_max": 0.02573076,
       "artifact_size_mb_max": 0.00711444,
       "accuracy_min": 0.97,
@@ -78,7 +83,7 @@
       "queue_limit": 16,
       "timeout_ms": 40.0
     },
-    "cache_policy": "content+encoder+processor+tenant+scope/v1",
+    "cache_policy": "content+encoder+processor+tenant+principal+scope/v2",
     "source_roles": [
       {
         "site": "Site A",
@@ -98,15 +103,49 @@
     ],
     "selection_source": "Site B only"
   },
-  "policy_hash": "c1f55d15f2d0639b3caa9dc0b839a29ec4690bef3c57ba4a6dbb172dd62f82ad",
+  "site_b_selection": {
+    "candidate": "int8_like",
+    "selection_outcome": "PROMOTE_OPTIMIZED"
+  },
+  "keep_reference_counterexample": {
+    "candidate": "reference",
+    "selection_outcome": "KEEP_REFERENCE"
+  },
+  "pareto_semantics": {
+    "global_pareto_efficient": "teaching-only unconstrained non-domination",
+    "feasible_pareto_efficient": "non-domination after every required gate passes"
+  },
+  "timing_method": {
+    "host_measurement_role": "diagnostic only",
+    "stage_profile_repetitions": 30,
+    "candidate_host_repetitions": 20,
+    "site_c_host_repetitions": 30,
+    "host_inner_loops_per_timed_region": 100,
+    "release_gate_source": "deterministic_workload_and_queue_model_v1"
+  },
+  "behavioral_parity_counterexample": {
+    "max_abs_difference": 9.000000000813912e-08,
+    "source_class": 0,
+    "runtime_class": 1,
+    "behavioral_disagreement": true
+  },
+  "policy_hash": "4bddea9539e26fb7917ed4bc40f75cd0b3b457dba7a55f7ac3a3beb428b25312",
   "policy_hash_unchanged_after_site_c": true,
   "selected_candidate": "int8_like",
   "site_c_system_metrics": {
-    "p50_ms": 0.0719995,
-    "p95_ms": 0.17119724999999994,
-    "mean_ms": 0.08775839999999999,
-    "cold_start_ms": 0.9235,
-    "throughput_requests_per_s": 33673.34431533336,
+    "host_p50_ms_per_batch": 0.06596041999999999,
+    "host_p95_ms_per_batch": 0.0689511845,
+    "host_mean_ms_per_batch": 0.06631311166666666,
+    "host_iqr_ms_per_batch": 0.0019467724999999991,
+    "benchmark_repetitions": 30,
+    "timed_inner_loops": 100,
+    "timed_region_p50_ms": 6.596042,
+    "deterministic_service_p50_ms": 7.568000000000001,
+    "deterministic_service_p95_ms": 8.476160000000002,
+    "service_latency_source": "deterministic_workload_model_v1",
+    "deterministic_end_to_end_p95_ms": 30.55973872454798,
+    "cold_start_ms": 1.044333,
+    "throughput_requests_per_s": 38303.9980217364,
     "cache_valid_hit_rate": 0.72,
     "queue_timeout_rate_at_shifted_load": 0.3688663282571912
   },
@@ -140,6 +179,13 @@
       "hit": false,
       "valid_hit": false,
       "outcome": "SAFE_MISS"
+    },
+    {
+      "cache": "contract_digest_wrong_principal",
+      "asset_changed": false,
+      "hit": false,
+      "valid_hit": false,
+      "outcome": "SAFE_MISS"
     }
   ],
   "composition": {
@@ -152,7 +198,7 @@
     "parent_digest": "d336bfef2a142823ee3febbf7e81b4e5a1706e31522dd8b4166288e9e6695941",
     "candidate_digest": "02d9a1a1d99ff2ee59d199f90d80c19539ff2779f1a62d6e227675f259e0c0df",
     "checks": {
-      "tail_latency": "PASS",
+      "service_latency": "PASS",
       "peak_memory": "PASS",
       "artifact_size": "PASS",
       "classification": "PASS",
@@ -192,12 +238,12 @@
   },
   "decision": {
     "candidate": "int8_like",
-    "outcome": "reject",
+    "outcome": "REJECT",
     "checks": [
       {
-        "name": "tail_latency",
-        "status": "FAIL",
-        "detail": "observed=0.171197; max=0.0845167"
+        "name": "service_latency",
+        "status": "PASS",
+        "detail": "observed=8.47616; max=10.752"
       },
       {
         "name": "peak_memory",
@@ -235,12 +281,17 @@
         "detail": "observed=1; min=0.9"
       },
       {
+        "name": "end_to_end_tail_latency",
+        "status": "FAIL",
+        "detail": "observed=30.5597; max=25"
+      },
+      {
         "name": "queue_timeout_rate",
         "status": "FAIL",
         "detail": "observed=0.368866; max=0.05"
       }
     ],
-    "policy_hash": "c1f55d15f2d0639b3caa9dc0b839a29ec4690bef3c57ba4a6dbb172dd62f82ad",
+    "policy_hash": "4bddea9539e26fb7917ed4bc40f75cd0b3b457dba7a55f7ac3a3beb428b25312",
     "authorization": "none"
   },
   "authorization": "none"
