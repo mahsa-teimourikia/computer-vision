@@ -2415,9 +2415,11 @@ def test_advanced_09_contains_the_declared_production_operations_lab():
         "DecisionTrace",
         "OutcomeTrace",
         "ControlDecision",
+        "ReadinessCheck",
         'Literal["PASS", "FAIL", "MISSING"]',
         "canonical_hash",
         "check_configuration_compatibility",
+        "check_deployment_readiness",
         "same_dimension_wrong_semantics",
         "TransformEdge",
         "resolve_transform",
@@ -2426,6 +2428,8 @@ def test_advanced_09_contains_the_declared_production_operations_lab():
         "rotation_closure_error_deg",
         "SITE_B_CALIBRATION_POLICY",
         "classify_calibration_windows",
+        "instantaneous_status",
+        "operational_status",
         "POLICY_HASH_BEFORE_SITE_C",
         "POLICY_HASH_AFTER_SITE_C",
         "CAPABILITY_DEPENDENCIES",
@@ -2449,6 +2453,8 @@ def test_advanced_09_contains_the_declared_production_operations_lab():
         "time_to_recover_minutes",
         "incident_catalog",
         "recovery_checks",
+        "detect_deployment_convergence",
+        "deployment_convergence_failure",
         "current_policy_retrieval",
         "site_c_report",
         "postmortem",
@@ -2483,6 +2489,10 @@ def test_advanced_09_contains_the_declared_production_operations_lab():
         "kill switches belong to a trusted control plane",
         "rollback is a configuration operation",
         "rollback changes future behavior",
+        "structural compatibility",
+        "temporal validity",
+        "operational health",
+        "deployment_convergence_failure",
         "recovery targets the actual failure",
         "trigger, root cause, and corrective action",
         "site c is reporting-only",
@@ -2500,6 +2510,18 @@ def test_advanced_09_contains_the_declared_production_operations_lab():
     assert any(check["status"] == "FAIL" for check in evidence["rollback"]["model_only"])
     assert all(check["status"] == "PASS" for check in evidence["rollback"]["complete_bundle"])
     assert all(check["status"] == "PASS" for check in evidence["recovery_decision"]["checks"])
+    assert next(check for check in evidence["deployment_readiness"]["expired"] if check["name"] == "calibration_time_validity")["status"] == "FAIL"
+    assert next(check for check in evidence["deployment_readiness"]["warning"] if check["name"] == "calibration_health")["status"] == "WARNING"
+    assert evidence["calibration_site_c"][2]["instantaneous_status"] == "warning_candidate"
+    assert evidence["calibration_site_c"][2]["operational_status"] == "healthy"
+    assert evidence["deployment_convergence"]["status"] == "FAIL"
+    assert evidence["deployment_convergence"]["incident_class"] == "deployment_convergence_failure"
+
+    with (course / ".artifacts/production_spatial_ai_telemetry.csv").open(encoding="utf-8", newline="") as handle:
+        telemetry = list(csv.DictReader(handle))
+    assert telemetry
+    assert {"instantaneous_status", "warning_streak", "invalid_streak", "operational_status"} <= set(telemetry[0])
+    assert any(row["instantaneous_status"] == "invalid_candidate" and row["operational_status"] == "warning" for row in telemetry)
 
     with (course / ".artifacts/production_spatial_ai_incident_timeline.csv").open(encoding="utf-8", newline="") as handle:
         timeline = list(csv.DictReader(handle))

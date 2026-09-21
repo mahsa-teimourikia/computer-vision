@@ -100,6 +100,14 @@ $$
 
 Monitor median, p95, maximum, trend, sample count, and persistence. One noisy landmark does not invalidate the system; persistent evidence can move calibration through `healthy → warning → invalid`.
 
+Keep the measurement and policy state separate:
+
+```text
+p95 residual → instantaneous_status → persistence counters → operational_status
+```
+
+For the lab policy, `< 2 px` is `healthy`, `2–4 px` is a `warning_candidate`, and `≥ 4 px` is an `invalid_candidate`. Two consecutive warning-or-worse candidates produce operational `warning`; two consecutive invalid candidates produce operational `invalid`. Telemetry exports both states and both streak counters, so a single high residual that has not yet satisfied persistence cannot look like a threshold bug.
+
 When calibration is invalid, metric geometry fails closed. Explicitly validated non-metric classification may remain available. This is capability-selective graceful degradation, not silent continuation.
 
 ## 4. Time-valid frame graphs
@@ -123,6 +131,16 @@ The configuration graph should reject combinations such as:
 - rollback model + unreadable current memory schema.
 
 Matching vector dimensions, file names, or interface signatures are not sufficient compatibility evidence. The notebook builds explicit compatibility checks and a complete rollback bundle.
+
+Deployment readiness answers three independent questions:
+
+| Layer | Question | Example result |
+| --- | --- | --- |
+| structural compatibility | Do the model, processor, runtime, index, schema, sensor, and calibration identities agree? | `PASS` |
+| temporal validity | Is the bound calibration valid at the observation timestamp? | `FAIL` after expiry |
+| operational health | What does current persisted evidence say? | `PASS`, `WARNING`, `FAIL`, or `MISSING` |
+
+A structurally compatible manifest can therefore be temporally invalid or operationally unhealthy. The notebook asserts all three cases rather than collapsing them into one boolean.
 
 ## 6. Capability dependency and impact analysis
 
@@ -221,7 +239,17 @@ OpenFeature is one useful mapping for typed flag evaluation, contextual targetin
 
 Rollback restores a previously validated configuration, not merely old weights. A rollback manifest can bind model, processor, runtime, policy, calibration compatibility, index, memory schema/snapshot, and cache invalidation rules.
 
+```text
+MODEL-ONLY ROLLBACK                    STATEFUL ROLLBACK
+old model + current processor          old model + compatible processor
+current runtime + current schema       compatible runtime + readable snapshot
+                ↓                                      ↓
+          INCOMPATIBLE                              COMPATIBLE
+```
+
 Stateful systems are harder. If v2 wrote memory schema v3 while v1 expects v2, options include a backward-compatible reader, governed migration, snapshot restore, or degraded stateless mode. Some side effects are forward-only: a sent ticket, executed physical action, or completed human decision is history. Rollback changes future behavior; it does not undo the past.
+
+A fleet also has a convergence contract. If 70% of replicas serve manifest `043` while 30% still serve individually valid manifest `042`, the incident is `deployment_convergence_failure`: valid artifact does not imply correctly deployed fleet.
 
 ## 15. Recovery targets the actual failure
 
@@ -335,6 +363,7 @@ Use signed artifact and provenance systems where required, but verify the config
 | memory/schema mismatch | reader/writer contract failure | load old weights only | compatible reader, migrate, snapshot, or stateless mode |
 | policy drift | unreviewed threshold/flag revision | treat as model drift | restore policy and audit control-plane change |
 | runtime regression | deployment-bound p99/queue/freshness | assume numeric correctness is enough | restore runtime bundle and load-test |
+| split-brain deployment | expected versus observed manifest distribution | accept each replica because its manifest is valid | stop promotion, converge fleet, then rerun probes |
 | delayed-label gap | low coverage/high delay | promote on proxy evidence | hold until declared evidence policy is satisfied |
 
 ## 24. Practical lab map
@@ -343,7 +372,7 @@ The notebook:
 
 1. defines registry records, immutable manifests, SLOs, decisions, outcomes, alerts, and incident events;
 2. builds Site A/B/C fixtures and freezes Site-B policy;
-3. validates configuration compatibility and content-addressed identity;
+3. separates structural compatibility, calibration time validity, and current operational health;
 4. resolves time-valid frame transforms and tests stale/missing/cycle failures;
 5. simulates calibration residuals and a persistence-aware health state machine;
 6. computes capability impact from dependencies and applies a trusted selective kill switch;
@@ -354,8 +383,9 @@ The notebook:
 11. holds an otherwise healthy canary when capability evidence is missing;
 12. rejects model-only rollback and validates a complete stateful bundle;
 13. rehearses camera-movement, stale-index, and runtime-regression incidents;
-14. verifies recovery independently, creates a new manifest, and exports an audit pack; and
-15. reports Site C once with `authorization: none`.
+14. verifies recovery independently, creates a new manifest, and detects a 70/30 split-brain fleet;
+15. exports an audit pack with instantaneous and persisted calibration state; and
+16. reports Site C once with `authorization: none`.
 
 ## 25. Production upgrade checklist
 
