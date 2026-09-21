@@ -11,6 +11,7 @@ Move from multimodal evidence systems into metric spatial representations, learn
 - [05 · Spatial Memory, Scene Graphs & Navigation: From Observations to Persistent World Knowledge](05-spatial-memory-scene-graphs-navigation/README.md) — combine noisy localization, occupancy evidence, persistent object identity, relation provenance, typed current/historical queries, semantic candidate verification, A*, topology, active perception, replanning, and governed memory updates.
 - [06 · Multimodal Adaptation & Continual Learning: From Domain Shift to Safe Capability Evolution](06-multimodal-adaptation-continual-learning/README.md) — characterize visual/language/task shift; compare adaptation surfaces; measure target gain, legacy regression, representation and alignment drift; control sequential forgetting; and issue lineage-bound shadow/reject/rollback decisions.
 - [07 · Robustness, Uncertainty & Failure Recovery: From Distribution Shift to Risk-Aware Vision Systems](07-robustness-uncertainty-failure-recovery/README.md) — measure task-specific degradation; expose false confidence and calibration drift; separate OOD from error detection; derive conformal sets and risk–coverage policy; and verify bounded recovery without granting operational authority.
+- [08 · Efficient Spatial & Multimodal Inference: From Profiling to Edge-Aware Deployment](08-efficient-spatial-multimodal-inference/README.md) — profile the complete service path; evaluate input, token, precision, sparsity, distillation, compilation, batching, caching, streaming, and edge trade-offs; then gate candidates on capability, reliability, load, and lineage evidence.
 
 ## Planned progression
 
@@ -22,7 +23,8 @@ Move from multimodal evidence systems into metric spatial representations, learn
   → 05 Spatial Memory, Scene Graphs & Navigation
   → 06 Multimodal Adaptation & Continual Learning
   → 07 Robustness, Uncertainty & Failure Recovery
-  → efficient inference and production spatial operations
+  → 08 Efficient Spatial & Multimodal Inference
+  → production spatial operations
 ```
 
 Complete Intermediate [Visual Agents](../intermediate/06-visual-agents/README.md) before starting this track. Preserve its evidence, authorization, and bounded-execution contracts when spatial systems later connect perception to action.

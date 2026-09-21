@@ -1,0 +1,17 @@
+# Tested together on 2026-09-20 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+scikit-learn==1.9.0
+torch==2.13.0
+
+# Optional deployment systems are disabled and belong in isolated target environments.
+# Review code, calibration data, checkpoints, device SDKs, transitive licenses, and export parity.
+# torchao (BSD-3-Clause):               df97218e877fb0c2f7e869d8e5c7853e1a9ea1ea
+# ExecuTorch (BSD-3-Clause):            3361b716c42e9f761eca7f6520e15e457bd5133d
+# ONNX Runtime (MIT):                   bca9d15b639cce1818ba5641c9bd6d7897af85c9
+# TensorRT (Apache-2.0 repository):      c93b7d4893184af4882f9f1862e13a5c64b8677d
+# OpenVINO (Apache-2.0):                d50cde8d246a31103c9bd0b2512e757fc24a0e28
+# NVIDIA Triton server (BSD-3-Clause):  7a512f555d86582c90f78b7a56dffb6d3f58d0a2
+# Core ML Tools (BSD-3-Clause):         01788ff832317a31a14053a05eab70127b14296d

@@ -539,4 +539,4 @@ No method is state of the art without naming the task, dataset/support definitio
 
 ## 34. Next course
 
-Advanced 08 moves from reliability evidence into efficient spatial inference: profiling, view/token budgets, quantization, compilation, streaming memory, and edge constraints. Reliability gates remain part of every optimization decision.
+[Advanced 08 — Efficient Spatial & Multimodal Inference](../08-efficient-spatial-multimodal-inference/README.md) moves from reliability evidence into profiling, resolution/token budgets, quantization, pruning, distillation, compilation, batching, caching, streaming, and edge-aware deployment. Reliability gates remain part of every optimization decision.
