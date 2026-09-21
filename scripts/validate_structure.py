@@ -77,6 +77,7 @@ def validate_hub() -> None:
         "Spatial Memory, Scene Graphs &amp; Navigation",
         "Multimodal Adaptation &amp; Continual Learning",
         "Robustness, Uncertainty &amp; Failure Recovery",
+        "Efficient Spatial &amp; Multimodal Inference",
         "oneplusi.io",
     ]
     for text in required:

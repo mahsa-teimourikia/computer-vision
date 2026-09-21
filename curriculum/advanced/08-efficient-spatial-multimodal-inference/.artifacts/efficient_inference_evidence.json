@@ -1,0 +1,247 @@
+{
+  "course": "Advanced 08 \u2014 Efficient Spatial & Multimodal Inference",
+  "generated_at_policy_date": "2026-09-20",
+  "teaching_measurements_only": true,
+  "environment": {
+    "python": "3.13.5",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "torch": "2.13.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit_learn": "1.9.0",
+    "device": "cpu",
+    "threads": 1,
+    "seed": 808,
+    "benchmark_claim": "CPU teaching measurements on this notebook host only"
+  },
+  "workload": {
+    "input_shape": [
+      1,
+      24,
+      24
+    ],
+    "service_mode": "interactive_cpu_teaching_proxy",
+    "batch_sizes": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "warmup_runs": 5,
+    "measured_runs": 30,
+    "included_stages": [
+      "preprocess",
+      "vision_encoder",
+      "task_heads",
+      "retrieval",
+      "postprocess"
+    ],
+    "benchmark_claim": "Demonstration thresholds and CPU measurements for this notebook runtime only"
+  },
+  "sources": [
+    {
+      "site": "Site A",
+      "role": "reference",
+      "revision": "camera-a-v1"
+    },
+    {
+      "site": "Site B",
+      "role": "optimization_development",
+      "revision": "camera-b-v1"
+    },
+    {
+      "site": "Site C",
+      "role": "reporting_only_no_changes",
+      "revision": "camera-c-v1"
+    }
+  ],
+  "reference_digest": "d336bfef2a142823ee3febbf7e81b4e5a1706e31522dd8b4166288e9e6695941",
+  "site_b_policy": {
+    "selected_candidate": "int8_like",
+    "deployment_budget": {
+      "notice": "Demonstration thresholds for this notebook runtime only",
+      "p95_ms_max": 0.08451672,
+      "peak_memory_mb_max": 0.02573076,
+      "artifact_size_mb_max": 0.00711444,
+      "accuracy_min": 0.97,
+      "small_defect_recall_min": 0.92,
+      "retrieval_recall_min": 0.92,
+      "ece_max": 0.1582362288236618,
+      "small_evidence_retention_rate_min": 0.9,
+      "queue_timeout_rate_max": 0.05
+    },
+    "defect_threshold": 0.6399999999999999,
+    "cascade_threshold": 0.92,
+    "batch_policy": {
+      "max_batch": 4,
+      "wait_ms": 3.0,
+      "queue_limit": 16,
+      "timeout_ms": 40.0
+    },
+    "cache_policy": "content+encoder+processor+tenant+scope/v1",
+    "source_roles": [
+      {
+        "site": "Site A",
+        "role": "reference",
+        "revision": "camera-a-v1"
+      },
+      {
+        "site": "Site B",
+        "role": "optimization_development",
+        "revision": "camera-b-v1"
+      },
+      {
+        "site": "Site C",
+        "role": "reporting_only_no_changes",
+        "revision": "camera-c-v1"
+      }
+    ],
+    "selection_source": "Site B only"
+  },
+  "policy_hash": "c1f55d15f2d0639b3caa9dc0b839a29ec4690bef3c57ba4a6dbb172dd62f82ad",
+  "policy_hash_unchanged_after_site_c": true,
+  "selected_candidate": "int8_like",
+  "site_c_system_metrics": {
+    "p50_ms": 0.0719995,
+    "p95_ms": 0.17119724999999994,
+    "mean_ms": 0.08775839999999999,
+    "cold_start_ms": 0.9235,
+    "throughput_requests_per_s": 33673.34431533336,
+    "cache_valid_hit_rate": 0.72,
+    "queue_timeout_rate_at_shifted_load": 0.3688663282571912
+  },
+  "site_c_capability_metrics": {
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "small_defect_recall": 1.0,
+    "image_to_text_recall": 1.0,
+    "text_to_image_recall_at_5": 1.0,
+    "retrieval_recall": 1.0,
+    "ece": 0.16584885120391846
+  },
+  "cache_attack": [
+    {
+      "cache": "filename_only",
+      "asset_changed": true,
+      "hit": true,
+      "valid_hit": false,
+      "outcome": "STALE_HIT"
+    },
+    {
+      "cache": "contract_digest",
+      "asset_changed": true,
+      "hit": false,
+      "valid_hit": false,
+      "outcome": "SAFE_MISS"
+    },
+    {
+      "cache": "contract_digest_wrong_tenant",
+      "asset_changed": false,
+      "hit": false,
+      "valid_hit": false,
+      "outcome": "SAFE_MISS"
+    }
+  ],
+  "composition": {
+    "candidate": "combined_student_int8_lowres",
+    "ordered_transformations": [
+      "multimodal_distillation",
+      "int8_like_ptq",
+      "resolution_12"
+    ],
+    "parent_digest": "d336bfef2a142823ee3febbf7e81b4e5a1706e31522dd8b4166288e9e6695941",
+    "candidate_digest": "02d9a1a1d99ff2ee59d199f90d80c19539ff2779f1a62d6e227675f259e0c0df",
+    "checks": {
+      "tail_latency": "PASS",
+      "peak_memory": "PASS",
+      "artifact_size": "PASS",
+      "classification": "PASS",
+      "small_defect": "FAIL",
+      "retrieval": "FAIL",
+      "calibration": "PASS",
+      "critical_evidence": "PASS"
+    },
+    "eligible": false
+  },
+  "artifact_lineage": {
+    "source_model": {
+      "artifact_id": "reference-fp32",
+      "digest": "d336bfef2a142823ee3febbf7e81b4e5a1706e31522dd8b4166288e9e6695941"
+    },
+    "selected_candidate": {
+      "artifact_id": "int8_like",
+      "digest": "5f44bcbf01d1e8cdc32e39f9a748b0f8107e7f77d561f7f748082b835b8b1c54"
+    },
+    "ordered_transformations": [
+      "int8_like"
+    ],
+    "runtime": "pytorch_eager_cpu_teaching_proxy",
+    "hardware_compatibility": {
+      "python": "3.13.5",
+      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+      "torch": "2.13.0",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "scikit_learn": "1.9.0",
+      "device": "cpu",
+      "threads": 1,
+      "seed": 808,
+      "benchmark_claim": "CPU teaching measurements on this notebook host only"
+    },
+    "rollback_artifact": "reference-fp32"
+  },
+  "decision": {
+    "candidate": "int8_like",
+    "outcome": "reject",
+    "checks": [
+      {
+        "name": "tail_latency",
+        "status": "FAIL",
+        "detail": "observed=0.171197; max=0.0845167"
+      },
+      {
+        "name": "peak_memory",
+        "status": "PASS",
+        "detail": "observed=0.020193; max=0.0257308"
+      },
+      {
+        "name": "artifact_size",
+        "status": "PASS",
+        "detail": "observed=0.001761; max=0.00711444"
+      },
+      {
+        "name": "classification",
+        "status": "PASS",
+        "detail": "observed=1; min=0.97"
+      },
+      {
+        "name": "small_defect",
+        "status": "PASS",
+        "detail": "observed=1; min=0.92"
+      },
+      {
+        "name": "retrieval",
+        "status": "PASS",
+        "detail": "observed=1; min=0.92"
+      },
+      {
+        "name": "calibration",
+        "status": "FAIL",
+        "detail": "observed=0.165849; max=0.158236"
+      },
+      {
+        "name": "critical_evidence",
+        "status": "PASS",
+        "detail": "observed=1; min=0.9"
+      },
+      {
+        "name": "queue_timeout_rate",
+        "status": "FAIL",
+        "detail": "observed=0.368866; max=0.05"
+      }
+    ],
+    "policy_hash": "c1f55d15f2d0639b3caa9dc0b839a29ec4690bef3c57ba4a6dbb172dd62f82ad",
+    "authorization": "none"
+  },
+  "authorization": "none"
+}

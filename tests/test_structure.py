@@ -2252,3 +2252,109 @@ def test_advanced_07_diagrams_are_reusable_and_accessible():
         assert data["validation"]["status"] == "validated"
         assert "20px_clearance" in data["validation"]["checked"]
         assert data["source"]["deterministic"] is True
+
+
+def test_advanced_08_contains_the_declared_efficient_inference_lab():
+    course = Path("curriculum/advanced/08-efficient-spatial-multimodal-inference")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "SourceContract",
+        "MetricSpec",
+        "WorkloadContract",
+        "ArtifactContract",
+        "GateCheck",
+        "DeploymentDecision",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "reporting_only_no_changes",
+        "TinyDualEncoder",
+        "image_to_text_recall",
+        "text_to_image_recall_at_5",
+        "expected_calibration_error",
+        "select_defect_threshold",
+        "profile_pipeline",
+        "cold_start_ms",
+        "steady_p95_ms",
+        "resolution_results",
+        "false_low_resolution_acceptance_rate",
+        "small_evidence_retention_rate",
+        "quantize_dequantize_tensor",
+        "int8_like_with_output_scale_mismatch",
+        "structured_pruning_fraction",
+        "task_only_student",
+        "multimodal_student",
+        "torch.export.export",
+        "RUN_OPTIONAL_COMPILE = False",
+        "batch_results",
+        "simulate_dynamic_batching",
+        "saturation_region",
+        "bounded_queue_reject_stale",
+        "cache_key",
+        "STALE_HIT",
+        "contract_digest_wrong_tenant",
+        "temporal_reuse_results",
+        "pareto_mask",
+        "candidate_matrix",
+        "DEPLOYMENT_BUDGET",
+        "POLICY_HASH_BEFORE_SITE_C",
+        "POLICY_HASH_AFTER_SITE_C",
+        "combined_student_int8_lowres",
+        "queue_timeout_rate",
+        "efficient_inference_evidence.json",
+        "efficient_inference_candidates.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c remain reporting-only" in source_lower
+    assert "cpu teaching measurements on this notebook host" in source_lower
+    assert "not a foundation model or vlm benchmark" in source_lower
+    assert "assert unsafe_stale_hit is true" in source_lower
+    assert "assert safe_v2_hit is false" in source_lower
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source_lower
+    assert "assert decision.authorization == \"none\"" in source_lower
+    assert len(notebook["cells"]) == 57
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "performance optimization is a model change",
+        "flops, macs, and sparsity are proxies—not runtime",
+        "quantization is a capability change",
+        "task-only teacher agreement insufficient",
+        "a cache hit not necessarily a valid hit",
+        "pareto-efficient candidate still be deployment-ineligible",
+        "site c remain reporting-only",
+    ]:
+        assert required in readme
+
+
+def test_advanced_08_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/08-efficient-spatial-multimodal-inference/assets")
+    expected = {
+        "optimization-lifecycle.svg",
+        "pipeline-profile.svg",
+        "budget-cascade.svg",
+        "token-evidence-retention.svg",
+        "compression-lineage.svg",
+        "queueing-backpressure.svg",
+        "cache-validity.svg",
+        "pareto-constraint-gate.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
