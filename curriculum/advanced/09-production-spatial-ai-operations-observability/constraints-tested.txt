@@ -1,0 +1,17 @@
+# Tested together on 2026-09-21 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+scipy==1.17.1
+
+# Optional production systems are disabled and belong in isolated, governed environments.
+# Verify versions, security posture, licensing, data retention, compatibility, and target evidence.
+# MLflow registry: model versions, aliases, tags, artifacts, and environment separation.
+# OpenTelemetry: correlated traces, metrics, logs, events, and resource identity.
+# Prometheus/Grafana: bounded operational metrics, alerts, and dashboards.
+# ROS 2 tf2/rosbag2: time-aware transforms and replayable sensor records.
+# OpenLineage/SLSA/Sigstore: data/build lineage, provenance, and artifact verification.
+# OpenFeature: typed control-plane evaluations and audit hooks.
+# Evidently/NannyML: drift and delayed-label monitoring under explicit assumptions.
+# Argo Rollouts/Flagger/Kubernetes: progressive delivery and traffic assignment.

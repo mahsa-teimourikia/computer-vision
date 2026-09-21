@@ -2400,3 +2400,134 @@ def test_advanced_08_diagrams_are_reusable_and_accessible():
         assert data["validation"]["status"] == "validated"
         assert "20px_clearance" in data["validation"]["checked"]
         assert data["source"]["deterministic"] is True
+
+
+def test_advanced_09_contains_the_declared_production_operations_lab():
+    course = Path("curriculum/advanced/09-production-spatial-ai-operations-observability")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "RegistryRef",
+        "DeploymentManifest",
+        "CapabilitySLO",
+        "DecisionTrace",
+        "OutcomeTrace",
+        "ControlDecision",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "canonical_hash",
+        "check_configuration_compatibility",
+        "same_dimension_wrong_semantics",
+        "TransformEdge",
+        "resolve_transform",
+        "cycle_closure",
+        "translation_closure_error_m",
+        "rotation_closure_error_deg",
+        "SITE_B_CALIBRATION_POLICY",
+        "classify_calibration_windows",
+        "POLICY_HASH_BEFORE_SITE_C",
+        "POLICY_HASH_AFTER_SITE_C",
+        "CAPABILITY_DEPENDENCIES",
+        "capability_impact",
+        "apply_selective_kill_switch",
+        "trusted_control_plane_proxy",
+        "unsafe_metric_labels",
+        "histogram_js",
+        "join_decisions_to_outcomes",
+        "label_coverage",
+        "duplicate_outcome_ids",
+        "timestamp_counterexample",
+        "evaluate_slo",
+        "promotion_decision",
+        '"HOLD"',
+        "model_only_rollback",
+        "complete_rollback",
+        "rollback_reversible",
+        "incident_timeline",
+        "time_to_detect_minutes",
+        "time_to_recover_minutes",
+        "incident_catalog",
+        "recovery_checks",
+        "current_policy_retrieval",
+        "site_c_report",
+        "postmortem",
+        "production_spatial_ai_evidence.json",
+        "production_spatial_ai_incident_timeline.csv",
+        "production_spatial_ai_telemetry.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c is reporting-only" in source_lower
+    assert "private chain-of-thought is neither required nor stored" in source_lower
+    assert "model-only rollback fails" in source_lower
+    assert "recovery remains incomplete" in source_lower
+    assert "assert historical[\"lineage\"][-1] == \"calib-008\"" in source_lower
+    assert "assert missing[\"status\"] == \"missing\" and missing[\"transform\"] is none" in source_lower
+    assert "assert canary_decision.outcome == \"hold\"" in source_lower
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source_lower
+    assert "assert evidence_pack[\"authorization\"] == \"none\"" in source_lower
+    assert len(notebook["cells"]) == 55
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "production correctness is a property of the deployed system configuration",
+        "calibration health is not model health",
+        "drift means investigate",
+        "label coverage",
+        "shadow candidates",
+        "kill switches belong to a trusted control plane",
+        "rollback is a configuration operation",
+        "rollback changes future behavior",
+        "recovery targets the actual failure",
+        "trigger, root cause, and corrective action",
+        "site c is reporting-only",
+    ]:
+        assert required in readme
+
+    evidence = json.loads((course / ".artifacts/production_spatial_ai_evidence.json").read_text(encoding="utf-8"))
+    assert evidence["authorization"] == "none"
+    assert evidence["site_c_role"] == "reporting_only_no_changes"
+    assert evidence["policy_hash_before_site_c"] == evidence["policy_hash_after_site_c"]
+    assert evidence["canary_decision"]["outcome"] == "HOLD"
+    assert evidence["kill_switch"]["decision"]["actor"] == "trusted_control_plane_proxy"
+    assert "classification" in evidence["kill_switch"]["remaining_capabilities"]
+    assert "metric_position" in evidence["kill_switch"]["disabled_capabilities"]
+    assert any(check["status"] == "FAIL" for check in evidence["rollback"]["model_only"])
+    assert all(check["status"] == "PASS" for check in evidence["rollback"]["complete_bundle"])
+    assert all(check["status"] == "PASS" for check in evidence["recovery_decision"]["checks"])
+
+    with (course / ".artifacts/production_spatial_ai_incident_timeline.csv").open(encoding="utf-8", newline="") as handle:
+        timeline = list(csv.DictReader(handle))
+    assert {row["phase"] for row in timeline} >= {"trigger", "detection", "containment", "recovery", "closure"}
+
+
+def test_advanced_09_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/09-production-spatial-ai-operations-observability/assets")
+    expected = {
+        "deployment-configuration-graph.svg",
+        "registry-lifecycle.svg",
+        "time-valid-frame-graph.svg",
+        "capability-observability-graph.svg",
+        "drift-evidence-classes.svg",
+        "progressive-delivery-gates.svg",
+        "stateful-rollback.svg",
+        "incident-recovery-loop.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
