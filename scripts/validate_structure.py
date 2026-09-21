@@ -76,6 +76,8 @@ def validate_hub() -> None:
         "Embodied Vision &amp; Vision-Language-Action Models",
         "Spatial Memory, Scene Graphs &amp; Navigation",
         "Multimodal Adaptation &amp; Continual Learning",
+        "Robustness, Uncertainty &amp; Failure Recovery",
+        "Efficient Spatial &amp; Multimodal Inference",
         "oneplusi.io",
     ]
     for text in required:

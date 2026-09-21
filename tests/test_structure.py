@@ -1,3 +1,4 @@
+import csv
 import json
 import tomllib
 from pathlib import Path
@@ -2095,7 +2096,6 @@ def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab
     ]:
         assert required in readme
 
-
 def test_advanced_06_diagrams_are_reusable_and_accessible():
     assets = Path("curriculum/advanced/06-multimodal-adaptation-continual-learning/assets")
     expected = {
@@ -2107,6 +2107,285 @@ def test_advanced_06_diagrams_are_reusable_and_accessible():
         "stability-plasticity.svg",
         "continual-learning-strategies.svg",
         "capability-promotion-gate.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
+
+
+def test_advanced_07_contains_the_declared_robustness_uncertainty_and_recovery_lab():
+    course = Path("curriculum/advanced/07-robustness-uncertainty-failure-recovery")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "SourceContract",
+        "MetricSpec",
+        "ScoreSpec",
+        "SensorObservation",
+        "ReliabilityPolicy",
+        "RiskDecision",
+        "RecoveryCandidate",
+        "RecoveryProposal",
+        "VerificationReceipt",
+        "TinyReliabilityCNN",
+        "ensemble_outputs",
+        "expected_calibration_error",
+        "brier_score",
+        "negative_log_likelihood",
+        "Six corruption families × five severities",
+        "assert len(corruption_results) == 30",
+        "false_confidence_example",
+        "mc_dropout_scores",
+        "probabilities_at_temperature",
+        '"selected_on": "Site B development only"',
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "centroid_distance",
+        "mahalanobis",
+        "energy",
+        "normalize_ood_score",
+        "fpr_at_target_tpr",
+        '"positive_class": "OOD"',
+        "ALL_REJECT_OOD_THRESHOLD",
+        "all_reject_operating_point",
+        "uncertainty_failure_slices",
+        "error_detection_auroc",
+        "conformal_quantile",
+        "conformal_report",
+        "risk_coverage_curve",
+        "selective_point",
+        "accepted_count",
+        "known_answer_selective_risk",
+        "MINIMUM_REQUIRED_COVERAGE",
+        'risk_coverage["expected_cost_proxy"]',
+        "FROZEN_POLICY_HASH",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "application_risk_gate",
+        "bounded_recovery_policy",
+        "alternate_candidate_proposal",
+        "ALTERNATE_MINIMUM_SUPPORT",
+        "finalize_with_independent_verification",
+        "run_bounded_recovery",
+        "synthetic_evaluation_oracle",
+        "independent_recovery_verification_passed",
+        "independent_recovery_verification_failed",
+        "recovery_invariant_tests",
+        "json_records",
+        "allow_nan=False",
+        "always_answer",
+        "abstain_only",
+        "bounded_recovery",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "robustness_uncertainty_recovery_evidence.json",
+        "robustness_uncertainty_recovery_decisions.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c is reporting-only" in source_lower
+    assert "not a foundation-model benchmark, production reliability result, physical safety case, or deployment authorization" in source_lower
+    assert "simulation oracle" in source_lower
+    assert source.index("FROZEN_POLICY_HASH") < source.index("site_c_outputs")
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source
+    assert "assert (gate_assertions.query(\"case != 'complete evidence'\")[\"result\"] != \"PASS\").all()" in source
+    assert "assert (recovery_decisions[\"authorization\"] == \"none\").all()" in source
+    assert "assert not ((recovery_decisions[\"terminal_state\"] == \"verified_recovery\") & (~recovery_decisions[\"verified_success\"])).any()" in source
+    assert 'assert "verifier" not in bounded_recovery_policy.__code__.co_varnames' in source
+    assert 'assert "EVALUATION_ORACLE_LABELS" not in bounded_recovery_policy.__code__.co_names' in source
+    assert 'assert all("true_label" not in case for case in cases)' in source
+    assert 'known.loc["none accepted", "coverage"] == 0.0 and np.isnan(known.loc["none accepted", "selective_risk"])' in source
+    assert 'risk_coverage["selective_risk"].fillna(0)' not in source
+    assert 'assert all_reject_operating_point["id_false_reject_rate"] == 1.0' in source
+    assert len(notebook["cells"]) == 50
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "confidence is not uncertainty",
+        "calibration is population-dependent",
+        "ood detection is not error detection",
+        "exchangeability",
+        "risk–coverage",
+        "missing calibration, ood, freshness, dependency, or recovery-verification evidence cannot silently become `accept`",
+        "attempted recovery is not successful recovery",
+        "confidence never grants authority",
+    ]:
+        assert required in readme
+
+
+def test_advanced_07_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/07-robustness-uncertainty-failure-recovery/assets")
+    expected = {
+        "reliability-lifecycle.svg",
+        "failure-taxonomy.svg",
+        "uncertainty-sources.svg",
+        "calibration-reliability.svg",
+        "ood-vs-error.svg",
+        "risk-coverage.svg",
+        "recovery-state-machine.svg",
+        "enterprise-reliability-architecture.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
+
+
+def test_advanced_08_contains_the_declared_efficient_inference_lab():
+    course = Path("curriculum/advanced/08-efficient-spatial-multimodal-inference")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "SourceContract",
+        "MetricSpec",
+        "WorkloadContract",
+        "ArtifactContract",
+        "GateCheck",
+        "DeploymentDecision",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        'Literal["PROMOTE_OPTIMIZED", "KEEP_REFERENCE", "REJECT", "MISSING_EVIDENCE"]',
+        "reporting_only_no_changes",
+        "TinyDualEncoder",
+        "image_to_text_recall",
+        "text_to_image_recall_at_5",
+        "expected_calibration_error",
+        "select_defect_threshold",
+        "profile_pipeline",
+        "cold_start_ms",
+        "steady_p95_ms",
+        "steady_iqr_ms",
+        "host_p95_ms_per_batch",
+        "host_iqr_ms_per_batch",
+        "timed_inner_loops",
+        "timed_region_p50_ms",
+        "resolution_results",
+        "false_low_resolution_acceptance_rate",
+        "small_evidence_retention_rate",
+        "quantize_dequantize_tensor",
+        "int8_like_with_output_scale_mismatch",
+        "structured_pruning_fraction",
+        "task_only_student",
+        "multimodal_student",
+        "torch.export.export",
+        "behavioral_parity_counterexample",
+        "boundary_behavioral_disagreement",
+        "RUN_OPTIONAL_COMPILE = False",
+        "batch_results",
+        "simulate_dynamic_batching",
+        "saturation_region",
+        "bounded_queue_reject_stale",
+        "cache_key",
+        "STALE_HIT",
+        "contract_digest_wrong_tenant",
+        "contract_digest_wrong_principal",
+        "temporal_reuse_results",
+        "pareto_mask",
+        "global_pareto_efficient",
+        "feasible_pareto_efficient",
+        "deterministic_service_latency",
+        "deterministic_end_to_end_p95_ms",
+        "meaningful_systems_benefit",
+        "select_optimized_or_reference",
+        "KEEP_REFERENCE",
+        "candidate_matrix",
+        "DEPLOYMENT_BUDGET",
+        "POLICY_HASH_BEFORE_SITE_C",
+        "POLICY_HASH_AFTER_SITE_C",
+        "combined_student_int8_lowres",
+        "queue_timeout_rate",
+        "efficient_inference_evidence.json",
+        "efficient_inference_candidates.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c remain reporting-only" in source_lower
+    assert "cpu teaching measurements on this notebook host" in source_lower
+    assert "not a foundation model or vlm benchmark" in source_lower
+    assert "assert unsafe_stale_hit is true" in source_lower
+    assert "assert safe_v2_hit is false" in source_lower
+    assert "assert wrong_principal_key not in safe_cache" in source_lower
+    assert "assert boundary_behavioral_disagreement is true" in source_lower
+    assert "assert not candidate_matrix.query(\"not eligible\")[\"feasible_pareto_efficient\"].any()" in source_lower
+    assert "assert keep_reference_demo[\"selection_outcome\"] == \"keep_reference\"" in source_lower
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source_lower
+    assert "assert decision.authorization == \"none\"" in source_lower
+    assert len(notebook["cells"]) == 57
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "performance optimization is a model change",
+        "flops, macs, and sparsity are proxies—not runtime",
+        "quantization is a capability change",
+        "task-only teacher agreement insufficient",
+        "a cache hit not necessarily a valid hit",
+        "pareto-efficient candidate still be deployment-ineligible",
+        "global_pareto_efficient",
+        "feasible_pareto_efficient",
+        "keeping the reference is the successful outcome",
+        "operating-system jitter cannot change the pedagogical decision",
+        "tiny numeric difference can still flip an argmax",
+        "site c remain reporting-only",
+    ]:
+        assert required in readme
+
+    evidence = json.loads((course / ".artifacts/efficient_inference_evidence.json").read_text(encoding="utf-8"))
+    assert evidence["timing_method"]["host_measurement_role"] == "diagnostic only"
+    assert evidence["timing_method"]["host_inner_loops_per_timed_region"] == 100
+    assert evidence["timing_method"]["release_gate_source"] == "deterministic_workload_and_queue_model_v1"
+    assert evidence["keep_reference_counterexample"]["selection_outcome"] == "KEEP_REFERENCE"
+    assert evidence["behavioral_parity_counterexample"]["behavioral_disagreement"] is True
+    assert evidence["decision"]["outcome"] == "REJECT"
+    assert evidence["decision"]["authorization"] == "none"
+    assert "contract_digest_wrong_principal" in {row["cache"] for row in evidence["cache_attack"]}
+
+    with (course / ".artifacts/efficient_inference_candidates.csv").open(encoding="utf-8", newline="") as handle:
+        candidate_rows = list(csv.DictReader(handle))
+    assert all(row["feasible_pareto_efficient"] == "False" for row in candidate_rows if row["eligible"] == "False")
+    structured = next(row for row in candidate_rows if row["candidate"] == "structured_width_6")
+    assert structured["global_pareto_efficient"] == "True"
+    assert structured["feasible_pareto_efficient"] == "False"
+
+
+def test_advanced_08_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/08-efficient-spatial-multimodal-inference/assets")
+    expected = {
+        "optimization-lifecycle.svg",
+        "pipeline-profile.svg",
+        "budget-cascade.svg",
+        "token-evidence-retention.svg",
+        "compression-lineage.svg",
+        "queueing-backpressure.svg",
+        "cache-validity.svg",
+        "pareto-constraint-gate.svg",
     }
     assert {path.name for path in assets.glob("*.svg")} == expected
     assert {path.name for path in (assets / "specs").glob("*.json")} == {

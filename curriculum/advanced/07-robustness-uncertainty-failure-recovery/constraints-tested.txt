@@ -1,0 +1,15 @@
+# Tested together on 2026-09-20 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.3
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+scikit-learn==1.9.0
+torch==2.13.0
+
+# Optional systems are disabled and belong in isolated environments.
+# Review code, datasets, checkpoints, model cards, and transitive licenses separately.
+# TorchUncertainty (Apache-2.0): 3f82fe5d15a7bf877a821731baadef1e4731c31d
+# OpenOOD (Apache-2.0):         3c35632ee91b54b09d1f085d04f94744cece7d0b
+# Alibi Detect (Apache-2.0):    c2fd0e05c648d353467bdb15fd6149a103b3a981
+# MAPIE (BSD-3-Clause):         7e888f5249bf942912207d398525d3259a5f07c0
+# RobustBench (MIT):            review an exact commit before optional use

@@ -447,4 +447,4 @@ Primary research and official documentation:
 
 ## 35. Next course
 
-Advanced 07 will build on this lifecycle to study robustness and uncertainty: corruptions, distribution shift, calibration, OOD evidence, and failure recovery under a frozen release contract.
+[Advanced 07 — Robustness, Uncertainty & Failure Recovery](../07-robustness-uncertainty-failure-recovery/README.md) builds on this lifecycle with corruption and source degradation, calibration under shift, OOD and error evidence, selective prediction, conformal sets, and independently verified bounded recovery under a frozen reliability contract.

@@ -1,0 +1,332 @@
+{
+  "version": 1,
+  "id": "failure-taxonomy",
+  "title": "Failure conditions require different responses",
+  "purpose": "Organize operational failures before selecting a detector or fallback.",
+  "output": {
+    "svg": "curriculum/advanced/07-robustness-uncertainty-failure-recovery/assets/failure-taxonomy.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Eight failure families distinguish corruption, sensor, environment, semantic, temporal, multimodal, ambiguity, and system failures."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 620,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "g",
+      "label": "Do not call every failure OOD or solve every failure with the same threshold",
+      "bounds": {
+        "x": 64,
+        "y": 90,
+        "width": 1272,
+        "height": 460
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "corruption",
+      "group": "g",
+      "label": "CORRUPTION",
+      "subtitle": "blur \u00b7 noise \u00b7 exposure",
+      "type": "service",
+      "bounds": {
+        "x": 96,
+        "y": 180,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "sensor",
+      "group": "g",
+      "label": "SENSOR SHIFT",
+      "subtitle": "camera \u00b7 resolution \u00b7 drift",
+      "type": "service",
+      "bounds": {
+        "x": 416,
+        "y": 180,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "environment",
+      "group": "g",
+      "label": "ENVIRONMENT",
+      "subtitle": "weather \u00b7 light \u00b7 background",
+      "type": "data",
+      "bounds": {
+        "x": 736,
+        "y": 180,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "semantic",
+      "group": "g",
+      "label": "SEMANTIC SHIFT",
+      "subtitle": "novel class \u00b7 object",
+      "type": "agent",
+      "bounds": {
+        "x": 1056,
+        "y": 180,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "temporal",
+      "group": "g",
+      "label": "TEMPORAL SHIFT",
+      "subtitle": "process changes",
+      "type": "data",
+      "bounds": {
+        "x": 96,
+        "y": 350,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "multimodal",
+      "group": "g",
+      "label": "MULTIMODAL",
+      "subtitle": "missing \u00b7 contradiction",
+      "type": "agent",
+      "bounds": {
+        "x": 416,
+        "y": 350,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "ambiguity",
+      "group": "g",
+      "label": "AMBIGUITY",
+      "subtitle": "multiple plausible labels",
+      "type": "operations",
+      "bounds": {
+        "x": 736,
+        "y": 350,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "system",
+      "group": "g",
+      "label": "SYSTEM FAILURE",
+      "subtitle": "stale \u00b7 unavailable",
+      "type": "action",
+      "bounds": {
+        "x": 1056,
+        "y": 350,
+        "width": 250,
+        "height": 108
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "unique_ids",
+      "port_attachment",
+      "20px_clearance"
+    ],
+    "notes": "Deterministic coordinate layout; routes terminate at declared ports."
+  },
+  "source": {
+    "deterministic": true,
+    "renderer": "scripts/render_course_diagrams.py"
+  }
+}
