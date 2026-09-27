@@ -467,4 +467,4 @@ Recent 2026 work such as IF-Prune, V2Drop, TransPrune, Dyna-ViT, and Edge-RecViT
 
 ## 30. Next course
 
-Advanced 09 — Production Spatial Operations will move from one optimized artifact to fleet-scale calibration registries, frame graphs, observability, drift, deployment, rollback, and incident response.
+[Advanced 09 — Production Spatial AI Operations & Observability](../09-production-spatial-ai-operations-observability/README.md) moves from one optimized artifact to immutable deployment manifests, calibration and frame registries, capability SLOs, delayed-outcome observability, progressive delivery, stateful rollback, incident recovery, and audit.
