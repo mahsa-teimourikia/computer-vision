@@ -1,0 +1,10 @@
+event,timestamp,phase
+camera_bumped,2026-09-18 12:30:00+00:00,trigger
+first_bad_metric_decision,2026-09-18 12:30:18+00:00,impact
+persistent_calibration_signal,2026-09-18 12:33:00+00:00,first_detectable
+alert,2026-09-18 12:34:00+00:00,detection
+acknowledged,2026-09-18 12:37:00+00:00,response
+metric_capability_disabled,2026-09-18 12:39:00+00:00,containment
+recalibration_registered,2026-09-18 13:01:00+00:00,mitigation
+independent_probe_passed,2026-09-18 13:08:00+00:00,recovery
+closed,2026-09-18 13:22:00+00:00,closure

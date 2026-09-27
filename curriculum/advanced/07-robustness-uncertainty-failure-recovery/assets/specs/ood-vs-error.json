@@ -1,0 +1,208 @@
+{
+  "version": 1,
+  "id": "ood-vs-error",
+  "title": "OOD detection is not error detection",
+  "purpose": "Show the four-way relationship between support and correctness.",
+  "output": {
+    "svg": "curriculum/advanced/07-robustness-uncertainty-failure-recovery/assets/ood-vs-error.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Four quadrants show that in-distribution predictions can be wrong and out-of-distribution predictions can be correct."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 520,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "g",
+      "label": "Evaluate support detection and error detection as separate tasks",
+      "bounds": {
+        "x": 64,
+        "y": 90,
+        "width": 1272,
+        "height": 360
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "id_correct",
+      "group": "g",
+      "label": "ID + CORRECT",
+      "subtitle": "ordinary success",
+      "type": "service",
+      "bounds": {
+        "x": 96,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "id_wrong",
+      "group": "g",
+      "label": "ID + WRONG",
+      "subtitle": "error detector needed",
+      "type": "action",
+      "bounds": {
+        "x": 416,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "ood_correct",
+      "group": "g",
+      "label": "OOD + CORRECT",
+      "subtitle": "shift without task failure",
+      "type": "data",
+      "bounds": {
+        "x": 736,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "ood_wrong",
+      "group": "g",
+      "label": "OOD + WRONG",
+      "subtitle": "both signals",
+      "type": "agent",
+      "bounds": {
+        "x": 1056,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "unique_ids",
+      "port_attachment",
+      "20px_clearance"
+    ],
+    "notes": "Deterministic coordinate layout; routes terminate at declared ports."
+  },
+  "source": {
+    "deterministic": true,
+    "renderer": "scripts/render_course_diagrams.py"
+  }
+}

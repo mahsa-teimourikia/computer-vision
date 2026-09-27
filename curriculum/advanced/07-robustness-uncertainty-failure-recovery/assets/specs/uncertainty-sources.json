@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "id": "uncertainty-sources",
+  "title": "Uncertainty sources and evidence",
+  "purpose": "Distinguish conceptual sources from imperfect estimators.",
+  "output": {
+    "svg": "curriculum/advanced/07-robustness-uncertainty-failure-recovery/assets/uncertainty-sources.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Aleatoric and epistemic uncertainty motivate practical scores, but a trusted risk policy treats every score as fallible evidence."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 520,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "g",
+      "label": "Practical methods do not perfectly decompose uncertainty",
+      "bounds": {
+        "x": 64,
+        "y": 90,
+        "width": 1272,
+        "height": 360
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "aleatoric",
+      "group": "g",
+      "label": "ALEATORIC",
+      "subtitle": "observation ambiguity",
+      "type": "data",
+      "bounds": {
+        "x": 96,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "epistemic",
+      "group": "g",
+      "label": "EPISTEMIC",
+      "subtitle": "limited model support",
+      "type": "agent",
+      "bounds": {
+        "x": 416,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "scores",
+      "group": "g",
+      "label": "PRACTICAL SCORES",
+      "subtitle": "entropy \u00b7 margin \u00b7 disagreement",
+      "type": "service",
+      "bounds": {
+        "x": 736,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "policy",
+      "group": "g",
+      "label": "RISK DECISION",
+      "subtitle": "evidence, not truth",
+      "type": "action",
+      "bounds": {
+        "x": 1056,
+        "y": 220,
+        "width": 250,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "aleatoric",
+        "port": "right"
+      },
+      "to": {
+        "node": "epistemic",
+        "port": "left"
+      },
+      "route": [
+        [
+          346,
+          276
+        ],
+        [
+          416,
+          276
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "epistemic",
+        "port": "right"
+      },
+      "to": {
+        "node": "scores",
+        "port": "left"
+      },
+      "route": [
+        [
+          666,
+          276
+        ],
+        [
+          736,
+          276
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e3",
+      "from": {
+        "node": "scores",
+        "port": "right"
+      },
+      "to": {
+        "node": "policy",
+        "port": "left"
+      },
+      "route": [
+        [
+          986,
+          276
+        ],
+        [
+          1056,
+          276
+        ]
+      ],
+      "kind": "primary"
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "unique_ids",
+      "port_attachment",
+      "20px_clearance"
+    ],
+    "notes": "Deterministic coordinate layout; routes terminate at declared ports."
+  },
+  "source": {
+    "deterministic": true,
+    "renderer": "scripts/render_course_diagrams.py"
+  }
+}
