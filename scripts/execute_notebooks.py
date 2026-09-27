@@ -14,6 +14,7 @@ from nbclient import NotebookClient
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timeout", type=int, default=90)
+    parser.add_argument("--kernel-name", default="computer-vision-field-guide")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     notebooks = sorted((root / "curriculum").rglob("*.ipynb"))
@@ -29,7 +30,7 @@ def main() -> None:
             NotebookClient(
                 notebook,
                 timeout=args.timeout,
-                kernel_name="computer-vision-field-guide",
+                kernel_name=args.kernel_name,
                 resources={"metadata": {"path": str(lesson_copy)}},
             ).execute()
             print(f"executed: {source.relative_to(root)}")

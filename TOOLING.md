@@ -1,6 +1,8 @@
 # Computer vision tooling review
 
-> Reviewed: 2026-09-09. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
+> Reviewed: 2026-09-27. Recheck releases, hardware support, model licenses, and project health before standardizing a production stack.
+
+The supported teaching runtime is Python 3.12–3.13, with Python 3.13.5 used for the repository validation environment. The exact learner and contributor package sets, course-local constraints, and troubleshooting guidance are documented in [INSTALLATION.md](INSTALLATION.md). Package versions are reproducibility anchors for this curriculum, not blanket production recommendations.
 
 Tools are selected per lesson, not imposed as one universal framework. Every tooling decision should compare maintenance, portability, observability, licensing, reproducibility, hardware fit, exportability, and operational cost.
 
@@ -47,7 +49,7 @@ Intermediate 02 keeps the reasoning executor framework-free so learners can insp
 
 Intermediate 03 uses Pillow, NumPy, pandas, and Matplotlib for a fully observable synthetic document pipeline: page rendering, coordinate transforms, OCR error injection, reading-order graphs, span-aware tables, field binding, versioned normalization, provenance replay, template shift, and perturbation slices. Tesseract 5.5.3 is the optional local OCR baseline; Microsoft Table Transformer detection/structure checkpoints and PaddleOCR-VL-1.6 are immutable-revision, disabled-by-default comparisons. PyMuPDF is reviewed but not imposed because its AGPL/commercial licensing needs deployment-specific approval. Optional results remain separate from local proxy evidence until model, processor, license, artifact hashes, source data, and target runtime are recorded.
 
-Intermediate 04 implements BM25, semantic and visual feature proxies, structured retrieval, late interaction, reciprocal-rank fusion, deterministic reranking, canonical evidence assembly, retrieval metrics, ACL/freshness enforcement, bounded generation, and claim-level citation verification directly with standard Python, NumPy, pandas, Pillow, and Matplotlib. FAISS 1.15.0 remains course-local and optional; BGE-M3, SigLIP 2, BGE reranker v2 M3, ColQwen2.5/ColPali, and a non-authoritative Qwen3-VL relevance scorer are immutable-revision, disabled-by-default comparisons. A vector store or model is not considered ready until filter semantics, tenant isolation, updates/deletion, code/model/processor versions, artifact hashes, license, target runtime, and source-held-out evaluation are recorded.
+Intermediate 04 implements BM25, semantic and visual feature proxies, structured retrieval, late interaction, reciprocal-rank fusion, deterministic reranking, canonical evidence assembly, retrieval metrics, ACL/freshness enforcement, bounded generation, and claim-level citation verification directly with standard Python, NumPy, pandas, Pillow, and Matplotlib. FAISS 1.15.1 remains course-local and optional; BGE-M3, SigLIP 2, BGE reranker v2 M3, ColQwen2.5/ColPali, and a non-authoritative Qwen3-VL relevance scorer are immutable-revision, disabled-by-default comparisons. A vector store or model is not considered ready until filter semantics, tenant isolation, updates/deletion, code/model/processor versions, artifact hashes, license, target runtime, and source-held-out evaluation are recorded.
 
 ## Video-language systems
 

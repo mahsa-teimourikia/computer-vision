@@ -29,7 +29,7 @@ This is not a catalogue of SimCLR, MoCo, BYOL, DINO, MAE, and DINOv2. It is a st
 | Format | Technical chapter + one self-contained notebook + checkpoint |
 | Estimated time | 9–12 hours |
 | Runtime | CPU-safe bounded default; CUDA and Apple Silicon acceleration when available |
-| Tested stack | Python 3.13, PyTorch 2.13, torchvision 0.28, scikit-learn 1.9 |
+| Tested stack | Python 3.13.5, PyTorch 2.14, torchvision 0.29, scikit-learn 1.9.1 |
 | Research/tooling review | 2026-09-01; primary papers, model cards, and official SDK documentation |
 | Data | Deterministic procedural industrial-inspection corpus generated in the notebook |
 | External services | None in the default path; no credentials or hidden local module |

@@ -1,5 +1,6 @@
 -c constraints-tested.txt
 
+jupyterlab
 numpy
 matplotlib
 pillow
