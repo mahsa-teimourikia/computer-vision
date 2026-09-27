@@ -1,4 +1,6 @@
+import csv
 import json
+import re
 import tomllib
 from pathlib import Path
 
@@ -17,6 +19,90 @@ def test_available_topics_follow_the_learning_contract():
         assert (topic / "requirements.txt").is_file(), topic
         assert (topic / "constraints-tested.txt").is_file(), topic
         assert not list(topic.glob("*.py")), topic
+
+
+def test_repository_environment_and_installation_guides_are_consistent():
+    project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]
+    assert project["requires-python"] == ">=3.12,<3.14"
+    python_version = Path(".python-version").read_text(encoding="utf-8").strip()
+    assert python_version == "3.13.5"
+    assert "3.13" in json.loads(Path(".devcontainer/devcontainer.json").read_text(encoding="utf-8"))["image"]
+    workflow = Path(".github/workflows/validate-learning.yml").read_text(encoding="utf-8")
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert f"python-version: '{python_version}'" in workflow
+
+    declared = {}
+    for group in [project["dependencies"], *project["optional-dependencies"].values()]:
+        for requirement in group:
+            match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^;]+)", requirement)
+            if match:
+                declared[match.group(1).lower()] = match.group(2)
+    assert declared["torch"] == "2.14.0"
+    assert declared["torchvision"] == "0.29.0"
+    assert declared["numpy"] == "2.5.3"
+    assert declared["faiss-cpu"] == "1.15.1"
+
+    for constraints in Path("curriculum").glob("*/[0-9][0-9]-*/constraints-tested.txt"):
+        constraint_source = constraints.read_text(encoding="utf-8")
+        assert constraint_source.startswith("# Tested together on ")
+        assert "Python 3.13.5" in constraint_source.splitlines()[0]
+        for name, version in re.findall(r"^([A-Za-z0-9_.-]+)==([^\s#]+)", constraint_source, flags=re.MULTILINE):
+            if name.lower() in declared:
+                assert declared[name.lower()] == version, (constraints, name, version)
+
+    guide = Path("INSTALLATION.md").read_text(encoding="utf-8")
+    makefile = Path("Makefile").read_text(encoding="utf-8")
+    for guide_text, make_target in [
+        ("setup-learner", "setup-learner:"),
+        ("setup-course", "setup-course:"),
+        ("quiz-check", "quiz-check:"),
+        ("notebook-check", "notebook-check:"),
+        ("make check", "check:"),
+    ]:
+        assert guide_text in guide
+        assert make_target in makefile
+
+
+def test_hub_has_one_explanatory_checkpoint_per_published_course():
+    page = Path("hub/index.html").read_text(encoding="utf-8")
+    script = Path("hub/app.js").read_text(encoding="utf-8")
+    topics = sorted(Path("curriculum").glob("*/[0-9][0-9]-*/README.md"))
+    available = re.findall(r'<button class="lesson-card available(?: selected)?"[^>]+data-workspace="([^"]+)"', page)
+    workspaces = re.findall(r'data-workspace-panel="([^"]+)"', page)
+    forms = re.findall(r'<form class="quiz-form"[^>]*>(.*?)</form>', page, flags=re.DOTALL)
+
+    assert len(topics) == len(available) == len(workspaces) == len(forms) == 24
+    assert set(available) == set(workspaces)
+    assert sum(len(re.findall(r"<fieldset>", form)) for form in forms) == 137
+    for form in forms:
+        fieldsets = re.findall(r"<fieldset>(.*?)</fieldset>", form, flags=re.DOTALL)
+        assert len(fieldsets) >= 5
+        names = []
+        for fieldset in fieldsets:
+            options = re.findall(r'<input type="radio" name="([^"]+)" value="([01])"', fieldset)
+            assert len(options) >= 3
+            assert sum(value == "1" for _, value in options) == 1
+            names.append(options[0][0])
+        assert len(names) == len(set(names))
+
+    for behavior in ["localStorage", "answer-feedback", "completed", "selectedCourse", "reset-progress"]:
+        assert behavior in script or behavior in page
+    assert '<article class="lesson-card" data-level="enterprise">' in page
+    assert '<article class="lesson-card" data-level="capstone">' in page
+
+
+def test_oneplusi_branding_is_shared_by_readme_and_hub():
+    page = Path("hub/index.html").read_text(encoding="utf-8")
+    readme = Path("README.md").read_text(encoding="utf-8")
+    logo = Path("hub/assets/oneplusi-logo-v2.png")
+
+    assert logo.is_file() and logo.stat().st_size > 0
+    assert page.count('assets/oneplusi-logo-v2.png') == 2
+    assert 'One+i Computer Vision Field Guide home' in page
+    assert 'One+<em>i</em> Open Learning' in page
+    assert 'hub/assets/oneplusi-logo-v2.png' in readme
+    assert 'https://oneplusi.io' in readme
 
 
 def test_course_02_contains_the_declared_architecture_benchmark():
@@ -396,8 +482,9 @@ def test_course_07_contains_the_declared_retrieval_lab():
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
 
     project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
-    assert "faiss-cpu==1.15.0" not in project["project"]["optional-dependencies"]["learner"]
-    assert "faiss-cpu==1.15.0" in project["project"]["optional-dependencies"]["contributor"]
+    assert "faiss-cpu==1.15.1" not in project["project"]["optional-dependencies"]["learner"]
+    assert "faiss-cpu==1.15.1" in project["project"]["optional-dependencies"]["course-07"]
+    assert "computer-vision-field-guide[learner,course-07]" in project["project"]["optional-dependencies"]["contributor"]
 
 
 def test_course_07_diagrams_are_reusable_and_accessible():
@@ -1966,6 +2053,578 @@ def test_advanced_05_diagrams_are_reusable_and_accessible():
         "scene-graph-provenance.svg",
         "hierarchical-navigation.svg",
         "plan-invalidation.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
+
+
+def test_advanced_06_contains_the_declared_adaptation_and_continual_learning_lab():
+    course = Path("curriculum/advanced/06-multimodal-adaptation-continual-learning")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "BaseModelContract",
+        "ShiftContract",
+        "CapabilitySuiteContract",
+        "ReplayBufferContract",
+        "CandidateArtifact",
+        "MetricSpec",
+        "GateCheck",
+        "PromotionDecision",
+        "reporting_only_no_changes",
+        "TinyDualEncoder",
+        "immutable_baseline_hash",
+        "AdaptedDualEncoder",
+        "linear_probe",
+        "projector",
+        "adapter",
+        "visual_prompt",
+        "lora",
+        "partial_ft",
+        "full_ft",
+        "lora_parameter_count",
+        "for rank in (1, 2, 4, 8, 16)",
+        "rank_sweep",
+        "target_gain_B",
+        "legacy_regression_A",
+        "image_to_text_accuracy",
+        "text_to_image_accuracy",
+        "paired_cosine",
+        "neighborhood_retention",
+        "representation_drift",
+        "stability_plasticity_controls",
+        "pretext_vs_downstream",
+        "shortcut_only_full_ft",
+        "failure_injection",
+        "FROZEN_POLICY_HASH",
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "reporting only; no method, rank, prompt, threshold, buffer, epoch, seed, or rule changes",
+        "continual_run",
+        "sequential_full_finetune",
+        "replay_50",
+        "diagonal_fisher",
+        "ewc",
+        "distillation",
+        "forgetting_matrix",
+        "signed_improvement",
+        "metric_direction_assertions",
+        "continual_metric_evidence",
+        "reference_semantics",
+        "backward_transfer_A",
+        "forward_transfer_C_proxy",
+        "for capacity in (0, 10, 50, 200)",
+        "REPLAY_BUFFER_CONTRACT",
+        "source_class_balanced_replay",
+        "replay_selection_audit",
+        "isolated_adapters",
+        "route_adapter",
+        "ambiguous_domain",
+        "unknown_domain_abstention",
+        "wrong_base_blocked",
+        "base_checkpoint_digest_mismatch",
+        "promote_to_shadow",
+        "evaluate_promotion_gate",
+        "A_all_required_metrics_pass",
+        "B_legacy_metric_fails",
+        "C_alignment_metric_missing",
+        "D_rollback_artifact_missing",
+        "E_suite_version_mismatch",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "rollback_target_hash",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "CV_ENABLE_PEFT = False",
+        "CV_ENABLE_AVALANCHE = False",
+        "50a277e7c87db460ef7444055788f9da29f2da71",
+        "eb075be393e1f458b2c352514ff6c17b5a2c0f4e",
+        "multimodal_adaptation_evidence.json",
+        "multimodal_adaptation_decision.csv",
+        '"foundation_model": False',
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "not a foundation model, vlm benchmark, or production adaptation result" in source_lower
+    assert "site c is reporting-only" in source_lower
+    assert 'make_site("C", "continual_training_experience"' not in source
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source
+    assert "assert wrong_base_blocked" in source
+    assert "assert promotion_decision.authorization == \"none\"" in source
+    assert '"C_alignment_metric_missing": "needs_review"' in source
+    assert '"D_rollback_artifact_missing": "reject"' in source
+    assert '"E_suite_version_mismatch": "reject"' in source
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "improvement on the new task is not sufficient evidence",
+        "low rank not imply low forgetting",
+        "site c is then reporting-only",
+        "training job produces a candidate",
+        "replay buffer contract",
+        "metric direction is a hard contract",
+        "absence of regression evidence is not evidence of no regression",
+    ]:
+        assert required in readme
+
+def test_advanced_06_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/06-multimodal-adaptation-continual-learning/assets")
+    expected = {
+        "adaptation-lifecycle.svg",
+        "shift-taxonomy.svg",
+        "adaptation-methods.svg",
+        "lora-low-rank.svg",
+        "multimodal-alignment-drift.svg",
+        "stability-plasticity.svg",
+        "continual-learning-strategies.svg",
+        "capability-promotion-gate.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
+
+
+def test_advanced_07_contains_the_declared_robustness_uncertainty_and_recovery_lab():
+    course = Path("curriculum/advanced/07-robustness-uncertainty-failure-recovery")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "SourceContract",
+        "MetricSpec",
+        "ScoreSpec",
+        "SensorObservation",
+        "ReliabilityPolicy",
+        "RiskDecision",
+        "RecoveryCandidate",
+        "RecoveryProposal",
+        "VerificationReceipt",
+        "TinyReliabilityCNN",
+        "ensemble_outputs",
+        "expected_calibration_error",
+        "brier_score",
+        "negative_log_likelihood",
+        "Six corruption families × five severities",
+        "assert len(corruption_results) == 30",
+        "false_confidence_example",
+        "mc_dropout_scores",
+        "probabilities_at_temperature",
+        '"selected_on": "Site B development only"',
+        "policy_hash_before_site_c",
+        "policy_hash_after_site_c",
+        "centroid_distance",
+        "mahalanobis",
+        "energy",
+        "normalize_ood_score",
+        "fpr_at_target_tpr",
+        '"positive_class": "OOD"',
+        "ALL_REJECT_OOD_THRESHOLD",
+        "all_reject_operating_point",
+        "uncertainty_failure_slices",
+        "error_detection_auroc",
+        "conformal_quantile",
+        "conformal_report",
+        "risk_coverage_curve",
+        "selective_point",
+        "accepted_count",
+        "known_answer_selective_risk",
+        "MINIMUM_REQUIRED_COVERAGE",
+        'risk_coverage["expected_cost_proxy"]',
+        "FROZEN_POLICY_HASH",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "application_risk_gate",
+        "bounded_recovery_policy",
+        "alternate_candidate_proposal",
+        "ALTERNATE_MINIMUM_SUPPORT",
+        "finalize_with_independent_verification",
+        "run_bounded_recovery",
+        "synthetic_evaluation_oracle",
+        "independent_recovery_verification_passed",
+        "independent_recovery_verification_failed",
+        "recovery_invariant_tests",
+        "json_records",
+        "allow_nan=False",
+        "always_answer",
+        "abstain_only",
+        "bounded_recovery",
+        "OPTIONAL_TOOL_MANIFESTS",
+        "robustness_uncertainty_recovery_evidence.json",
+        "robustness_uncertainty_recovery_decisions.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c is reporting-only" in source_lower
+    assert "not a foundation-model benchmark, production reliability result, physical safety case, or deployment authorization" in source_lower
+    assert "simulation oracle" in source_lower
+    assert source.index("FROZEN_POLICY_HASH") < source.index("site_c_outputs")
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source
+    assert "assert (gate_assertions.query(\"case != 'complete evidence'\")[\"result\"] != \"PASS\").all()" in source
+    assert "assert (recovery_decisions[\"authorization\"] == \"none\").all()" in source
+    assert "assert not ((recovery_decisions[\"terminal_state\"] == \"verified_recovery\") & (~recovery_decisions[\"verified_success\"])).any()" in source
+    assert 'assert "verifier" not in bounded_recovery_policy.__code__.co_varnames' in source
+    assert 'assert "EVALUATION_ORACLE_LABELS" not in bounded_recovery_policy.__code__.co_names' in source
+    assert 'assert all("true_label" not in case for case in cases)' in source
+    assert 'known.loc["none accepted", "coverage"] == 0.0 and np.isnan(known.loc["none accepted", "selective_risk"])' in source
+    assert 'risk_coverage["selective_risk"].fillna(0)' not in source
+    assert 'assert all_reject_operating_point["id_false_reject_rate"] == 1.0' in source
+    assert len(notebook["cells"]) == 50
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "confidence is not uncertainty",
+        "calibration is population-dependent",
+        "ood detection is not error detection",
+        "exchangeability",
+        "risk–coverage",
+        "missing calibration, ood, freshness, dependency, or recovery-verification evidence cannot silently become `accept`",
+        "attempted recovery is not successful recovery",
+        "confidence never grants authority",
+    ]:
+        assert required in readme
+
+
+def test_advanced_07_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/07-robustness-uncertainty-failure-recovery/assets")
+    expected = {
+        "reliability-lifecycle.svg",
+        "failure-taxonomy.svg",
+        "uncertainty-sources.svg",
+        "calibration-reliability.svg",
+        "ood-vs-error.svg",
+        "risk-coverage.svg",
+        "recovery-state-machine.svg",
+        "enterprise-reliability-architecture.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
+
+
+def test_advanced_08_contains_the_declared_efficient_inference_lab():
+    course = Path("curriculum/advanced/08-efficient-spatial-multimodal-inference")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "SourceContract",
+        "MetricSpec",
+        "WorkloadContract",
+        "ArtifactContract",
+        "GateCheck",
+        "DeploymentDecision",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        'Literal["PROMOTE_OPTIMIZED", "KEEP_REFERENCE", "REJECT", "MISSING_EVIDENCE"]',
+        "reporting_only_no_changes",
+        "TinyDualEncoder",
+        "image_to_text_recall",
+        "text_to_image_recall_at_5",
+        "expected_calibration_error",
+        "select_defect_threshold",
+        "profile_pipeline",
+        "cold_start_ms",
+        "steady_p95_ms",
+        "steady_iqr_ms",
+        "host_p95_ms_per_batch",
+        "host_iqr_ms_per_batch",
+        "timed_inner_loops",
+        "timed_region_p50_ms",
+        "resolution_results",
+        "false_low_resolution_acceptance_rate",
+        "small_evidence_retention_rate",
+        "quantize_dequantize_tensor",
+        "int8_like_with_output_scale_mismatch",
+        "structured_pruning_fraction",
+        "task_only_student",
+        "multimodal_student",
+        "torch.export.export",
+        "behavioral_parity_counterexample",
+        "boundary_behavioral_disagreement",
+        "RUN_OPTIONAL_COMPILE = False",
+        "batch_results",
+        "simulate_dynamic_batching",
+        "saturation_region",
+        "bounded_queue_reject_stale",
+        "cache_key",
+        "STALE_HIT",
+        "contract_digest_wrong_tenant",
+        "contract_digest_wrong_principal",
+        "temporal_reuse_results",
+        "pareto_mask",
+        "global_pareto_efficient",
+        "feasible_pareto_efficient",
+        "deterministic_service_latency",
+        "deterministic_end_to_end_p95_ms",
+        "meaningful_systems_benefit",
+        "select_optimized_or_reference",
+        "KEEP_REFERENCE",
+        "candidate_matrix",
+        "DEPLOYMENT_BUDGET",
+        "POLICY_HASH_BEFORE_SITE_C",
+        "POLICY_HASH_AFTER_SITE_C",
+        "combined_student_int8_lowres",
+        "queue_timeout_rate",
+        "efficient_inference_evidence.json",
+        "efficient_inference_candidates.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c remain reporting-only" in source_lower
+    assert "cpu teaching measurements on this notebook host" in source_lower
+    assert "not a foundation model or vlm benchmark" in source_lower
+    assert "assert unsafe_stale_hit is true" in source_lower
+    assert "assert safe_v2_hit is false" in source_lower
+    assert "assert wrong_principal_key not in safe_cache" in source_lower
+    assert "assert boundary_behavioral_disagreement is true" in source_lower
+    assert "assert not candidate_matrix.query(\"not eligible\")[\"feasible_pareto_efficient\"].any()" in source_lower
+    assert "assert keep_reference_demo[\"selection_outcome\"] == \"keep_reference\"" in source_lower
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source_lower
+    assert "assert decision.authorization == \"none\"" in source_lower
+    assert len(notebook["cells"]) == 57
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "performance optimization is a model change",
+        "flops, macs, and sparsity are proxies—not runtime",
+        "quantization is a capability change",
+        "task-only teacher agreement insufficient",
+        "a cache hit not necessarily a valid hit",
+        "pareto-efficient candidate still be deployment-ineligible",
+        "global_pareto_efficient",
+        "feasible_pareto_efficient",
+        "keeping the reference is the successful outcome",
+        "operating-system jitter cannot change the pedagogical decision",
+        "tiny numeric difference can still flip an argmax",
+        "site c remain reporting-only",
+    ]:
+        assert required in readme
+
+    evidence = json.loads((course / ".artifacts/efficient_inference_evidence.json").read_text(encoding="utf-8"))
+    assert evidence["timing_method"]["host_measurement_role"] == "diagnostic only"
+    assert evidence["timing_method"]["host_inner_loops_per_timed_region"] == 100
+    assert evidence["timing_method"]["release_gate_source"] == "deterministic_workload_and_queue_model_v1"
+    assert evidence["keep_reference_counterexample"]["selection_outcome"] == "KEEP_REFERENCE"
+    assert evidence["behavioral_parity_counterexample"]["behavioral_disagreement"] is True
+    assert evidence["decision"]["outcome"] == "REJECT"
+    assert evidence["decision"]["authorization"] == "none"
+    assert "contract_digest_wrong_principal" in {row["cache"] for row in evidence["cache_attack"]}
+
+    with (course / ".artifacts/efficient_inference_candidates.csv").open(encoding="utf-8", newline="") as handle:
+        candidate_rows = list(csv.DictReader(handle))
+    assert all(row["feasible_pareto_efficient"] == "False" for row in candidate_rows if row["eligible"] == "False")
+    structured = next(row for row in candidate_rows if row["candidate"] == "structured_width_6")
+    assert structured["global_pareto_efficient"] == "True"
+    assert structured["feasible_pareto_efficient"] == "False"
+
+
+def test_advanced_08_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/08-efficient-spatial-multimodal-inference/assets")
+    expected = {
+        "optimization-lifecycle.svg",
+        "pipeline-profile.svg",
+        "budget-cascade.svg",
+        "token-evidence-retention.svg",
+        "compression-lineage.svg",
+        "queueing-backpressure.svg",
+        "cache-validity.svg",
+        "pareto-constraint-gate.svg",
+    }
+    assert {path.name for path in assets.glob("*.svg")} == expected
+    assert {path.name for path in (assets / "specs").glob("*.json")} == {
+        name.replace(".svg", ".json") for name in expected
+    }
+    for svg in assets.glob("*.svg"):
+        source = svg.read_text(encoding="utf-8")
+        assert "<title" in source and "<desc" in source
+        assert 'role="img"' in source
+    for spec in (assets / "specs").glob("*.json"):
+        data = json.loads(spec.read_text(encoding="utf-8"))
+        assert data["validation"]["status"] == "validated"
+        assert "20px_clearance" in data["validation"]["checked"]
+        assert data["source"]["deterministic"] is True
+
+
+def test_advanced_09_contains_the_declared_production_operations_lab():
+    course = Path("curriculum/advanced/09-production-spatial-ai-operations-observability")
+    notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    source_lower = source.lower()
+
+    for required in [
+        "RegistryRef",
+        "DeploymentManifest",
+        "CapabilitySLO",
+        "DecisionTrace",
+        "OutcomeTrace",
+        "ControlDecision",
+        "ReadinessCheck",
+        'Literal["PASS", "FAIL", "MISSING"]',
+        "canonical_hash",
+        "check_configuration_compatibility",
+        "check_deployment_readiness",
+        "same_dimension_wrong_semantics",
+        "TransformEdge",
+        "resolve_transform",
+        "cycle_closure",
+        "translation_closure_error_m",
+        "rotation_closure_error_deg",
+        "SITE_B_CALIBRATION_POLICY",
+        "classify_calibration_windows",
+        "instantaneous_status",
+        "operational_status",
+        "POLICY_HASH_BEFORE_SITE_C",
+        "POLICY_HASH_AFTER_SITE_C",
+        "CAPABILITY_DEPENDENCIES",
+        "capability_impact",
+        "apply_selective_kill_switch",
+        "trusted_control_plane_proxy",
+        "unsafe_metric_labels",
+        "histogram_js",
+        "join_decisions_to_outcomes",
+        "label_coverage",
+        "duplicate_outcome_ids",
+        "timestamp_counterexample",
+        "evaluate_slo",
+        "promotion_decision",
+        '"HOLD"',
+        "model_only_rollback",
+        "complete_rollback",
+        "rollback_reversible",
+        "incident_timeline",
+        "time_to_detect_minutes",
+        "time_to_recover_minutes",
+        "incident_catalog",
+        "recovery_checks",
+        "detect_deployment_convergence",
+        "deployment_convergence_failure",
+        "current_policy_retrieval",
+        "site_c_report",
+        "postmortem",
+        "production_spatial_ai_evidence.json",
+        "production_spatial_ai_incident_timeline.csv",
+        "production_spatial_ai_telemetry.csv",
+        '"authorization": "none"',
+    ]:
+        assert required in source
+
+    assert "site c is reporting-only" in source_lower
+    assert "private chain-of-thought is neither required nor stored" in source_lower
+    assert "model-only rollback fails" in source_lower
+    assert "recovery remains incomplete" in source_lower
+    assert "assert historical[\"lineage\"][-1] == \"calib-008\"" in source_lower
+    assert "assert missing[\"status\"] == \"missing\" and missing[\"transform\"] is none" in source_lower
+    assert "assert canary_decision.outcome == \"hold\"" in source_lower
+    assert "assert policy_hash_before_site_c == policy_hash_after_site_c" in source_lower
+    assert "assert evidence_pack[\"authorization\"] == \"none\"" in source_lower
+    assert len(notebook["cells"]) == 55
+    assert not (course / "lab.py").exists()
+    assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
+    assert all(cell.get("execution_count") is None for cell in notebook["cells"] if cell["cell_type"] == "code")
+
+    readme = (course / "README.md").read_text(encoding="utf-8").lower()
+    for required in [
+        "production correctness is a property of the deployed system configuration",
+        "calibration health is not model health",
+        "drift means investigate",
+        "label coverage",
+        "shadow candidates",
+        "kill switches belong to a trusted control plane",
+        "rollback is a configuration operation",
+        "rollback changes future behavior",
+        "structural compatibility",
+        "temporal validity",
+        "operational health",
+        "deployment_convergence_failure",
+        "recovery targets the actual failure",
+        "trigger, root cause, and corrective action",
+        "site c is reporting-only",
+    ]:
+        assert required in readme
+
+    evidence = json.loads((course / ".artifacts/production_spatial_ai_evidence.json").read_text(encoding="utf-8"))
+    assert evidence["authorization"] == "none"
+    assert evidence["site_c_role"] == "reporting_only_no_changes"
+    assert evidence["policy_hash_before_site_c"] == evidence["policy_hash_after_site_c"]
+    assert evidence["canary_decision"]["outcome"] == "HOLD"
+    assert evidence["kill_switch"]["decision"]["actor"] == "trusted_control_plane_proxy"
+    assert "classification" in evidence["kill_switch"]["remaining_capabilities"]
+    assert "metric_position" in evidence["kill_switch"]["disabled_capabilities"]
+    assert any(check["status"] == "FAIL" for check in evidence["rollback"]["model_only"])
+    assert all(check["status"] == "PASS" for check in evidence["rollback"]["complete_bundle"])
+    assert all(check["status"] == "PASS" for check in evidence["recovery_decision"]["checks"])
+    assert next(check for check in evidence["deployment_readiness"]["expired"] if check["name"] == "calibration_time_validity")["status"] == "FAIL"
+    assert next(check for check in evidence["deployment_readiness"]["warning"] if check["name"] == "calibration_health")["status"] == "WARNING"
+    assert evidence["calibration_site_c"][2]["instantaneous_status"] == "warning_candidate"
+    assert evidence["calibration_site_c"][2]["operational_status"] == "healthy"
+    assert evidence["deployment_convergence"]["status"] == "FAIL"
+    assert evidence["deployment_convergence"]["incident_class"] == "deployment_convergence_failure"
+
+    with (course / ".artifacts/production_spatial_ai_telemetry.csv").open(encoding="utf-8", newline="") as handle:
+        telemetry = list(csv.DictReader(handle))
+    assert telemetry
+    assert {"instantaneous_status", "warning_streak", "invalid_streak", "operational_status"} <= set(telemetry[0])
+    assert any(row["instantaneous_status"] == "invalid_candidate" and row["operational_status"] == "warning" for row in telemetry)
+
+    with (course / ".artifacts/production_spatial_ai_incident_timeline.csv").open(encoding="utf-8", newline="") as handle:
+        timeline = list(csv.DictReader(handle))
+    assert {row["phase"] for row in timeline} >= {"trigger", "detection", "containment", "recovery", "closure"}
+
+
+def test_advanced_09_diagrams_are_reusable_and_accessible():
+    assets = Path("curriculum/advanced/09-production-spatial-ai-operations-observability/assets")
+    expected = {
+        "deployment-configuration-graph.svg",
+        "registry-lifecycle.svg",
+        "time-valid-frame-graph.svg",
+        "capability-observability-graph.svg",
+        "drift-evidence-classes.svg",
+        "progressive-delivery-gates.svg",
+        "stateful-rollback.svg",
+        "incident-recovery-loop.svg",
     }
     assert {path.name for path in assets.glob("*.svg")} == expected
     assert {path.name for path in (assets / "specs").glob("*.json")} == {

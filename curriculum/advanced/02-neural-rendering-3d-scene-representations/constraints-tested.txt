@@ -1,10 +1,10 @@
-# Tested together on 2026-09-12 (Python 3.13.5, CPU-safe and credential-free).
-jupyterlab==4.6.3
-matplotlib==3.11.1
-numpy==2.5.2
-pandas==3.0.5
+# Tested together on 2026-09-27 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.4
+matplotlib==3.11.2
+numpy==2.5.3
+pandas==3.0.6
 pillow==12.3.0
-scipy==1.17.1
+scipy==1.18.1
 
 # Optional GPU integrations are disabled and belong in isolated environments.
 # Pin the exact repository, submodules, code/data/scene licenses, camera converter,

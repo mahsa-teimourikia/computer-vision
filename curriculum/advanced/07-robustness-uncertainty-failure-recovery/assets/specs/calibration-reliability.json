@@ -1,0 +1,222 @@
+{
+  "version": 1,
+  "id": "calibration-reliability",
+  "title": "Calibration is population-bound",
+  "purpose": "Separate confidence calibration from task correction.",
+  "output": {
+    "svg": "curriculum/advanced/07-robustness-uncertainty-failure-recovery/assets/calibration-reliability.svg",
+    "medium": "documentation and notebook",
+    "alt_text": "Site B selects one temperature, the policy is frozen, and Site C reports calibration without changing the argmax prediction."
+  },
+  "canvas": {
+    "width": 1400,
+    "height": 520,
+    "background": "#F7F9FC",
+    "margin": 64,
+    "grid": 8
+  },
+  "layout": {
+    "primary_flow": "left-to-right",
+    "min_node_gap": 48,
+    "min_layer_gap": 72,
+    "node_padding": {
+      "x": 20,
+      "y": 14
+    }
+  },
+  "style": {
+    "font_family": "Inter, Arial, sans-serif",
+    "title_color": "#16324F",
+    "semantic_colors": {
+      "service": {
+        "fill": "#EAF1FF",
+        "stroke": "#2F6BFF"
+      },
+      "agent": {
+        "fill": "#F0EEFF",
+        "stroke": "#7667E8"
+      },
+      "data": {
+        "fill": "#E5F7F6",
+        "stroke": "#16A3A5"
+      },
+      "action": {
+        "fill": "#FFF1DF",
+        "stroke": "#F59E42"
+      },
+      "operations": {
+        "fill": "#FFFFFF",
+        "stroke": "#D7DEE8"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "g",
+      "label": "Calibration adjusts probability meaning; it does not repair classification",
+      "bounds": {
+        "x": 64,
+        "y": 90,
+        "width": 1272,
+        "height": 360
+      },
+      "fill": "#FFFFFF",
+      "stroke": "#D7DEE8"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "group": "g",
+      "label": "RAW LOGITS",
+      "subtitle": "same argmax",
+      "type": "agent",
+      "bounds": {
+        "x": 104,
+        "y": 220,
+        "width": 260,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n2",
+      "group": "g",
+      "label": "SITE B TEMPERATURE",
+      "subtitle": "development only",
+      "type": "data",
+      "bounds": {
+        "x": 570,
+        "y": 220,
+        "width": 260,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    },
+    {
+      "id": "n3",
+      "group": "g",
+      "label": "SITE C REPORT",
+      "subtitle": "ECE \u00b7 Brier \u00b7 NLL",
+      "type": "service",
+      "bounds": {
+        "x": 1036,
+        "y": 220,
+        "width": 260,
+        "height": 112
+      },
+      "ports": {
+        "left": {
+          "side": "left",
+          "offset": 0.5
+        },
+        "right": {
+          "side": "right",
+          "offset": 0.5
+        },
+        "top": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "bottom": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": {
+        "node": "n1",
+        "port": "right"
+      },
+      "to": {
+        "node": "n2",
+        "port": "left"
+      },
+      "route": [
+        [
+          364,
+          276
+        ],
+        [
+          570,
+          276
+        ]
+      ],
+      "kind": "primary"
+    },
+    {
+      "id": "e2",
+      "from": {
+        "node": "n2",
+        "port": "right"
+      },
+      "to": {
+        "node": "n3",
+        "port": "left"
+      },
+      "route": [
+        [
+          830,
+          276
+        ],
+        [
+          1036,
+          276
+        ]
+      ],
+      "kind": "primary"
+    }
+  ],
+  "validation": {
+    "status": "validated",
+    "checked": [
+      "canvas_bounds",
+      "unique_ids",
+      "port_attachment",
+      "20px_clearance"
+    ],
+    "notes": "Deterministic coordinate layout; routes terminate at declared ports."
+  },
+  "source": {
+    "deterministic": true,
+    "renderer": "scripts/render_course_diagrams.py"
+  }
+}
