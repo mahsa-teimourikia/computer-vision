@@ -92,6 +92,19 @@ def test_hub_has_one_explanatory_checkpoint_per_published_course():
     assert '<article class="lesson-card" data-level="capstone">' in page
 
 
+def test_oneplusi_branding_is_shared_by_readme_and_hub():
+    page = Path("hub/index.html").read_text(encoding="utf-8")
+    readme = Path("README.md").read_text(encoding="utf-8")
+    logo = Path("hub/assets/oneplusi-logo-v2.png")
+
+    assert logo.is_file() and logo.stat().st_size > 0
+    assert page.count('assets/oneplusi-logo-v2.png') == 2
+    assert 'One+i Computer Vision Field Guide home' in page
+    assert 'One+<em>i</em> Open Learning' in page
+    assert 'hub/assets/oneplusi-logo-v2.png' in readme
+    assert 'https://oneplusi.io' in readme
+
+
 def test_course_02_contains_the_declared_architecture_benchmark():
     course = Path("curriculum/beginner/02-modern-cnn-architectures-efficient-vision")
     notebook = json.loads((course / "lab.ipynb").read_text(encoding="utf-8"))

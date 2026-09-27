@@ -1,6 +1,14 @@
+<p align="center">
+  <a href="https://oneplusi.io" aria-label="Visit One+i">
+    <img src="hub/assets/oneplusi-logo-v2.png" alt="One+i" width="132" />
+  </a>
+</p>
+
+<p align="center"><strong>ONE+<em>i</em> OPEN LEARNING</strong><br /><sub>Real-world intelligence, imaginatively applied.</sub></p>
+
 # Computer Vision & Multimodal AI Field Guide
 
-> A notebook-first path from pixels and learned representations to dependable multimodal, spatial, embodied, and enterprise vision systems.
+> A notebook-first path from pixels and learned representations to dependable multimodal, spatial, embodied, and enterprise vision systems—created as an open learning project by [One+i](https://oneplusi.io).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Learning materials](https://github.com/mahsa-teimourikia/computer-vision/actions/workflows/validate-learning.yml/badge.svg)](https://github.com/mahsa-teimourikia/computer-vision/actions/workflows/validate-learning.yml)
@@ -237,4 +245,6 @@ Every completed lesson should let a learner:
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a lesson. Contributions should deepen the connected learning path rather than add disconnected links or demos.
 
-Built as an open learning project by [One+i](https://oneplusi.io).
+## About One+i Open Learning
+
+[One+i](https://oneplusi.io) creates practical, technically rigorous learning paths that connect modern AI concepts to runnable experiments, responsible decisions, and real operating constraints. This Field Guide is open source so learners and practitioners can inspect the evidence, reproduce the labs, and improve the material in public.
