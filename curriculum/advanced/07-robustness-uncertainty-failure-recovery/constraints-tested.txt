@@ -1,10 +1,10 @@
-# Tested together on 2026-09-20 (Python 3.13.5, CPU-safe and credential-free).
-jupyterlab==4.6.3
-matplotlib==3.11.1
-numpy==2.5.2
-pandas==3.0.5
-scikit-learn==1.9.0
-torch==2.13.0
+# Tested together on 2026-09-27 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.4
+matplotlib==3.11.2
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+torch==2.14.0
 
 # Optional systems are disabled and belong in isolated environments.
 # Review code, datasets, checkpoints, model cards, and transitive licenses separately.

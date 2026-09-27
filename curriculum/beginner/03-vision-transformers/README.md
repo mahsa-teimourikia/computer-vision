@@ -18,7 +18,7 @@ Course 02 established architecture and systems measurement. Course 03 uses the s
 | Format | Theory + one self-contained notebook + checkpoint |
 | Estimated time | 8–10 hours |
 | Runtime | CPU-safe default; CUDA and Apple Silicon acceleration when available |
-| Tested stack | Python 3.13, PyTorch 2.13, torchvision 0.28, scikit-learn 1.9 |
+| Tested stack | Python 3.13.5, PyTorch 2.14, torchvision 0.29, scikit-learn 1.9.1 |
 | Architecture/tooling review | 2026-09-01; primary papers and official SDK documentation |
 | Data | Deterministic synthetic industrial inspection dataset generated in the notebook |
 | Pretrained models | Official `torchvision` weights; no private data, API key, or hidden local module |

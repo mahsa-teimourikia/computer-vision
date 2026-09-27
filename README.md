@@ -11,6 +11,8 @@ Computer vision turns images and video into measurable decisions. This repositor
 
 Open the [Computer Vision Learning Hub](https://mahsa-teimourikia.github.io/computer-vision/) for the guided **Learn → Lab → Checkpoint** experience, or browse the [curriculum index](curriculum/README.md) directly on GitHub.
 
+The Hub contains all **24 published courses and 24 focused checkpoints**, saves completed-course progress in the browser, and gives answer-level review feedback. For local notebooks, use the [installation guide](INSTALLATION.md).
+
 The nine complete Beginner courses lead into six Intermediate courses and nine Advanced courses:
 
 1. [Modern Computer Vision Foundations](curriculum/beginner/01-modern-computer-vision-foundations/README.md) moves from image contracts and convolution to scratch CNNs, real pretrained encoders, embeddings, source shift, failure analysis, and enterprise decision policy.
@@ -38,7 +40,7 @@ The nine complete Beginner courses lead into six Intermediate courses and nine A
 23. [Efficient Spatial & Multimodal Inference: From Profiling to Edge-Aware Deployment](curriculum/advanced/08-efficient-spatial-multimodal-inference/README.md) profiles the full service path; compares resolution, token, precision, pruning, distillation, compilation, batching, caching, and streaming choices; and rejects fast candidates that lose critical evidence, retrieval, calibration, reliability, or lineage.
 24. [Production Spatial AI Operations & Observability: From Deployment Contracts to Incident Recovery](curriculum/advanced/09-production-spatial-ai-operations-observability/README.md) binds model, processor, sensor, calibration, frame, index, memory, policy, runtime, and hardware identity; then operates capability SLOs, delayed outcomes, drift, canaries, kill switches, stateful rollback, verified recovery, and incident audit.
 
-All twenty-four CPU-friendly notebooks use common PyTorch, torchvision, NumPy, pandas, Matplotlib, Pillow, SciPy, scikit-learn, and course-scoped graph APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on other learners; Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate courses preserve multimodal evidence and bounded-agent contracts while keeping heavyweight models disabled. Advanced 01–02 expose metric geometry and neural-rendering mechanics. Advanced 03 uses a transparent action-conditioned world-model proxy. Advanced 04 uses typed dataclasses and standard CPU libraries for a simulation-only embodied policy lab. Advanced 05 adds NetworkX for transparent place routing while implementing pose, occupancy, association, query, and A* primitives directly. Advanced 06 implements a tiny dual encoder, PEFT primitives, drift diagnostics, replay, regularization, distillation, routing, and promotion gates directly. Advanced 07 implements corruption stress tests, calibration, uncertainty/OOD/error diagnostics, conformal sets, selective policy, and verified recovery directly. Advanced 08 implements a tiny multimodal pipeline, real host timing, token/evidence budgets, compression proxies, export parity, queue/load simulation, cache invalidation, temporal reuse, Pareto analysis, and fail-closed deployment evidence. Advanced 09 implements registries, immutable manifests, time-valid transforms, capability dependencies, delayed-outcome joins, progressive delivery, stateful rollback, incident timelines, selective kill switches, and verified recovery directly; production platforms remain disabled mappings.
+All twenty-four CPU-friendly notebooks use common PyTorch, torchvision, Transformers, NumPy, pandas, Matplotlib, Pillow, SciPy, scikit-learn, and course-scoped graph APIs and keep all teaching code inside the notebook. Course 07 adds FAISS through its course-local requirements rather than imposing the native dependency on the common learner environment; the complete contributor/CI environment includes it so every notebook can be verified together. Courses 08–09 keep heavyweight official trackers, pose models, foundation checkpoints, and remote code optional. Intermediate courses preserve multimodal evidence and bounded-agent contracts while keeping heavyweight models disabled. Advanced 01–02 expose metric geometry and neural-rendering mechanics. Advanced 03 uses a transparent action-conditioned world-model proxy. Advanced 04 uses typed dataclasses and standard CPU libraries for a simulation-only embodied policy lab. Advanced 05 adds NetworkX for transparent place routing while implementing pose, occupancy, association, query, and A* primitives directly. Advanced 06 implements a tiny dual encoder, PEFT primitives, drift diagnostics, replay, regularization, distillation, routing, and promotion gates directly. Advanced 07 implements corruption stress tests, calibration, uncertainty/OOD/error diagnostics, conformal sets, selective policy, and verified recovery directly. Advanced 08 implements a tiny multimodal pipeline, real host timing, token/evidence budgets, compression proxies, export parity, queue/load simulation, cache invalidation, temporal reuse, Pareto analysis, and fail-closed deployment evidence. Advanced 09 implements registries, immutable manifests, time-valid transforms, capability dependencies, delayed-outcome joins, progressive delivery, stateful rollback, incident timelines, selective kill switches, and verified recovery directly; production platforms remain disabled mappings.
 
 The research-grounded [curriculum architecture](docs/CURRICULUM_ARCHITECTURE.md) defines the complete beginner, intermediate, advanced, enterprise, and capstone journey before additional course content is generated.
 
@@ -143,10 +145,10 @@ curriculum/
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
 │   ├── 05-video-language-understanding/
-│       ├── README.md
-│       ├── lab.ipynb
-│       ├── requirements.txt
-│       └── assets/            # deterministic SVGs + coordinate specs
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
 │   └── 06-visual-agents/
 │       ├── README.md
 │       ├── lab.ipynb
@@ -183,7 +185,17 @@ curriculum/
 │   │   ├── lab.ipynb
 │   │   ├── requirements.txt
 │   │   └── assets/            # deterministic SVGs + coordinate specs
-│   └── 07-robustness-uncertainty-failure-recovery/
+│   ├── 07-robustness-uncertainty-failure-recovery/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   ├── 08-efficient-spatial-multimodal-inference/
+│   │   ├── README.md
+│   │   ├── lab.ipynb
+│   │   ├── requirements.txt
+│   │   └── assets/            # deterministic SVGs + coordinate specs
+│   └── 09-production-spatial-ai-operations-observability/
 │       ├── README.md
 │       ├── lab.ipynb
 │       ├── requirements.txt
@@ -195,22 +207,21 @@ assets/              # shared brand and global diagrams
 data/                # small, redistributable datasets and fixtures
 docs/                # curriculum architecture and design references
 hub/                 # GitHub Pages learning experience
-quiz/                # course-wide knowledge check as the curriculum grows
+quiz/                # guide to the 24 Hub checkpoints and scoring behavior
 scripts/             # validation and notebook execution
 tests/               # deterministic tests for labs and structure
 ```
 
-Each topic owns its README, one self-contained primary notebook, a focused `requirements.txt`, and local assets. All teaching code stays in the notebook so the learning sequence can run from top to bottom without hidden local modules. Shared data fixtures belong in `curriculum/shared/` only after at least two lessons genuinely use them.
+Each topic owns its README, one self-contained primary notebook, `requirements.txt`, `constraints-tested.txt`, and local assets. All teaching code stays in the notebook so the learning sequence can run from top to bottom without hidden local modules. Shared data fixtures belong in `curriculum/shared/` only after at least two lessons genuinely use them.
 
 ## Run locally
 
 ```bash
 make setup
-make test
-make notebook-check
+make check
 ```
 
-Use `make notebooks` to launch JupyterLab and `make pages` to preview the Hub at `http://localhost:8000`.
+Use `make setup-course COURSE=curriculum/<level>/<course>` for a smaller course-only environment, `make notebooks` to launch JupyterLab, and `make pages` to preview the Hub at `http://localhost:8000`. See [INSTALLATION.md](INSTALLATION.md) for Python support, Windows commands, dependency policy, optional integrations, and troubleshooting.
 
 ## Learning contract
 

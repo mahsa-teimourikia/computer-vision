@@ -490,7 +490,7 @@ The notebook thresholds are clearly labeled **demonstration thresholds for this 
 | PyTorch + torchvision | primitive losses, tiny metric model, official supervised baseline | transparent tensors/autograd and maintained weight enums | sampler and evaluation remain your responsibility |
 | `pytorch-metric-learning` | production experiments with packaged losses/miners/samplers | broad metric-learning components | abstraction can hide pair counts, label semantics, and reducer behavior |
 | scikit-learn neighbours | portable exact/tree baselines and small datasets | familiar metric APIs and evaluation ecosystem | not a billion-scale vector service |
-| FAISS 1.15.0 | local exact and ANN indexing | Flat, IVF, HNSW, PQ, CPU/GPU families | filtering/tenancy live outside many indexes; recall and deletion must be designed |
+| FAISS 1.15.1 | local exact and ANN indexing | Flat, IVF, HNSW, PQ, CPU/GPU families | filtering/tenancy live outside many indexes; recall and deletion must be designed |
 | Hugging Face Transformers | model/processor access to reusable features | model cards, cached artifacts, common APIs | revisions, preprocessing, licenses, remote artifacts |
 | `timm` | broad pretrained encoder catalogue | consistent creation and many recipes | recipe/model-name/license/preprocessing provenance |
 | Official DINOv2 | governed optional self-supervised features | reusable global and patch representations | source/checkpoint pinning, download, memory, domain transfer |

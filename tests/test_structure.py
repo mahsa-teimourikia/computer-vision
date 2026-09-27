@@ -1,5 +1,6 @@
 import csv
 import json
+import re
 import tomllib
 from pathlib import Path
 
@@ -18,6 +19,77 @@ def test_available_topics_follow_the_learning_contract():
         assert (topic / "requirements.txt").is_file(), topic
         assert (topic / "constraints-tested.txt").is_file(), topic
         assert not list(topic.glob("*.py")), topic
+
+
+def test_repository_environment_and_installation_guides_are_consistent():
+    project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]
+    assert project["requires-python"] == ">=3.12,<3.14"
+    python_version = Path(".python-version").read_text(encoding="utf-8").strip()
+    assert python_version == "3.13.5"
+    assert "3.13" in json.loads(Path(".devcontainer/devcontainer.json").read_text(encoding="utf-8"))["image"]
+    workflow = Path(".github/workflows/validate-learning.yml").read_text(encoding="utf-8")
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert f"python-version: '{python_version}'" in workflow
+
+    declared = {}
+    for group in [project["dependencies"], *project["optional-dependencies"].values()]:
+        for requirement in group:
+            match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^;]+)", requirement)
+            if match:
+                declared[match.group(1).lower()] = match.group(2)
+    assert declared["torch"] == "2.14.0"
+    assert declared["torchvision"] == "0.29.0"
+    assert declared["numpy"] == "2.5.3"
+    assert declared["faiss-cpu"] == "1.15.1"
+
+    for constraints in Path("curriculum").glob("*/[0-9][0-9]-*/constraints-tested.txt"):
+        constraint_source = constraints.read_text(encoding="utf-8")
+        assert constraint_source.startswith("# Tested together on ")
+        assert "Python 3.13.5" in constraint_source.splitlines()[0]
+        for name, version in re.findall(r"^([A-Za-z0-9_.-]+)==([^\s#]+)", constraint_source, flags=re.MULTILINE):
+            if name.lower() in declared:
+                assert declared[name.lower()] == version, (constraints, name, version)
+
+    guide = Path("INSTALLATION.md").read_text(encoding="utf-8")
+    makefile = Path("Makefile").read_text(encoding="utf-8")
+    for guide_text, make_target in [
+        ("setup-learner", "setup-learner:"),
+        ("setup-course", "setup-course:"),
+        ("quiz-check", "quiz-check:"),
+        ("notebook-check", "notebook-check:"),
+        ("make check", "check:"),
+    ]:
+        assert guide_text in guide
+        assert make_target in makefile
+
+
+def test_hub_has_one_explanatory_checkpoint_per_published_course():
+    page = Path("hub/index.html").read_text(encoding="utf-8")
+    script = Path("hub/app.js").read_text(encoding="utf-8")
+    topics = sorted(Path("curriculum").glob("*/[0-9][0-9]-*/README.md"))
+    available = re.findall(r'<button class="lesson-card available(?: selected)?"[^>]+data-workspace="([^"]+)"', page)
+    workspaces = re.findall(r'data-workspace-panel="([^"]+)"', page)
+    forms = re.findall(r'<form class="quiz-form"[^>]*>(.*?)</form>', page, flags=re.DOTALL)
+
+    assert len(topics) == len(available) == len(workspaces) == len(forms) == 24
+    assert set(available) == set(workspaces)
+    assert sum(len(re.findall(r"<fieldset>", form)) for form in forms) == 137
+    for form in forms:
+        fieldsets = re.findall(r"<fieldset>(.*?)</fieldset>", form, flags=re.DOTALL)
+        assert len(fieldsets) >= 5
+        names = []
+        for fieldset in fieldsets:
+            options = re.findall(r'<input type="radio" name="([^"]+)" value="([01])"', fieldset)
+            assert len(options) >= 3
+            assert sum(value == "1" for _, value in options) == 1
+            names.append(options[0][0])
+        assert len(names) == len(set(names))
+
+    for behavior in ["localStorage", "answer-feedback", "completed", "selectedCourse", "reset-progress"]:
+        assert behavior in script or behavior in page
+    assert '<article class="lesson-card" data-level="enterprise">' in page
+    assert '<article class="lesson-card" data-level="capstone">' in page
 
 
 def test_course_02_contains_the_declared_architecture_benchmark():
@@ -397,8 +469,9 @@ def test_course_07_contains_the_declared_retrieval_lab():
     assert all(not cell.get("outputs") for cell in notebook["cells"] if cell["cell_type"] == "code")
 
     project = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
-    assert "faiss-cpu==1.15.0" not in project["project"]["optional-dependencies"]["learner"]
-    assert "faiss-cpu==1.15.0" in project["project"]["optional-dependencies"]["contributor"]
+    assert "faiss-cpu==1.15.1" not in project["project"]["optional-dependencies"]["learner"]
+    assert "faiss-cpu==1.15.1" in project["project"]["optional-dependencies"]["course-07"]
+    assert "computer-vision-field-guide[learner,course-07]" in project["project"]["optional-dependencies"]["contributor"]
 
 
 def test_course_07_diagrams_are_reusable_and_accessible():

@@ -1,11 +1,11 @@
-# Tested together on 2026-09-17 (Python 3.13.5, CPU-safe and credential-free).
-jupyterlab==4.6.3
-matplotlib==3.11.1
-networkx==3.6.1
-numpy==2.5.2
-pandas==3.0.5
+# Tested together on 2026-09-27 (Python 3.13.5, CPU-safe and credential-free).
+jupyterlab==4.6.4
+matplotlib==3.11.2
+networkx==3.7
+numpy==2.5.3
+pandas==3.0.6
 pillow==12.3.0
-scikit-learn==1.9.0
+scikit-learn==1.9.1
 
 # Optional systems are disabled and belong in isolated environments.
 # Review code, data, checkpoint, asset, and transitive licenses separately.
